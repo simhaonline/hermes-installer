@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hermes Agent Enterprise — Institutional Vector Registry & Ecosystem Ledger</title>
+  <title>Simha Nexus — Institutional AI Ecosystem &amp; Vector Registry</title>
+
+  <!-- Simha Institutional Brand Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" type="image/x-icon" href="/favicon.ico">
 
   <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,7 +85,7 @@
     [data-theme="light"] {
       --corp-navy-deep: #071324;
       --corp-navy-primary: #0C1E36;
-      --corp-navy-surface: #142844;
+      --corp-navy-surface: #F1F5F9; /* Clean soft slate surface in daylight mode */
       --corp-navy-subtle: rgba(12, 30, 54, 0.04);
       --corp-navy-slate: #2E3761;
       --corp-navy-muted: #64748B;
@@ -103,8 +107,8 @@
 
       --accent-gold: #D4AF37; /* Real champagne bullion gold */
       --accent-green: #15803D; /* Institutional Emerald */
-      --accent-cyan: #16A7B5; /* Aegean Cyan */
-      --accent-blue: #1E40AF;
+      --accent-cyan: #0E7490; /* High-contrast Aegean Teal */
+      --accent-blue: #1D4ED8;
       --accent-orange: #EA580C;
 
       --status-up: #15803D;
@@ -488,31 +492,31 @@
       color: #FFFFFF;
     }
 
-    /* Global Search Box in Topbar - Recessed Navy */
+    /* Global Search Box in Topbar - Centered, Clean & High-Dignity */
     .topbar-search-wrap {
       position: relative;
-      width: 340px;
+      width: 520px;
+      max-width: 100%;
     }
     .topbar-search-input {
       width: 100%;
-      height: 34px;
-      background: var(--corp-navy-surface);
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      height: 36px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: var(--radius-sm);
-      padding: 0 2rem 0 2.25rem;
-      font-size: 0.78rem;
+      padding: 0 2rem 0 2.4rem;
+      font-size: 0.82rem;
       color: #FFFFFF;
       outline: none;
       transition: all 150ms ease;
     }
     .topbar-search-input::placeholder {
-      color: rgba(255, 255, 255, 0.45);
+      color: rgba(255, 255, 255, 0.5);
     }
     .topbar-search-input:focus {
       border-color: var(--accent-gold);
       box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
-      background: #183052;
-      width: 400px;
+      background: rgba(255, 255, 255, 0.12);
     }
     .topbar-search-icon {
       position: absolute;
@@ -543,6 +547,26 @@
       display: flex;
       align-items: center;
       gap: 0.85rem;
+    }
+
+    .topbar-theme-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #F8FAFC;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 150ms ease;
+    }
+    .topbar-theme-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: var(--accent-gold);
+      transform: scale(1.05);
     }
 
     .system-pill {
@@ -1316,19 +1340,19 @@
     }
 
     .agent-avatar {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: var(--radius-sm);
-      background: var(--corp-navy-surface);
-      border: 1px solid var(--accent-blue);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-mono);
       font-weight: 700;
       font-size: 0.85rem;
-      color: var(--accent-blue);
+      letter-spacing: 0.05em;
       flex-shrink: 0;
+      transition: all 150ms ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     }
 
     .agent-title-box {
@@ -1797,6 +1821,77 @@
     /* =========================================================================
        RULEBOOK COMPONENT STYLES
        ========================================================================= */
+    .rulebook-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 1200px) {
+      .rulebook-matrix-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .rulebook-matrix-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .rulebook-matrix-card {
+      background: var(--corp-canvas-elevated);
+      border: 1px solid var(--corp-border);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.15rem;
+      cursor: pointer;
+      transition: all 150ms ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .rulebook-matrix-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+    .rulebook-matrix-card.active {
+      border-color: var(--accent-gold);
+      box-shadow: inset 0 0 0 1px var(--accent-gold);
+      background: rgba(212, 175, 55, 0.04);
+    }
+    .rulebook-matrix-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      background: rgba(212, 175, 55, 0.1);
+      padding: 2px 6px;
+      border-radius: 2px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .rulebook-matrix-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--corp-text-primary);
+      margin: 0.35rem 0 0.25rem 0;
+      line-height: 1.3;
+    }
+    .rulebook-matrix-desc {
+      font-size: 0.75rem;
+      color: var(--corp-text-muted);
+      line-height: 1.4;
+    }
+    .rulebook-matrix-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.75rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--corp-border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--corp-text-muted);
+    }
+
     .rulebook-card {
       background: var(--corp-canvas-elevated);
       border: 1px solid var(--corp-border);
@@ -1943,8 +2038,288 @@
       color: var(--corp-text-primary);
       font-weight: 600;
     }
-    .rule-table td {
+    /* =========================================================================
+       HARVESTER STUDIO STYLES
+       ========================================================================= */
+    .harvester-studio-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+    @media (max-width: 1024px) {
+      .harvester-studio-grid { grid-template-columns: 1fr; }
+    }
+    .harvester-card {
+      background: var(--corp-canvas-elevated);
+      border: 1px solid var(--corp-border);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .harvester-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--corp-border);
+    }
+    .harvester-card-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--corp-text-primary);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .harvester-presets-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .harvester-presets-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--corp-text-muted);
+    }
+    .harvester-presets-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .harvester-chip {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.35rem 0.65rem;
+      background: var(--corp-canvas);
+      border: 1px solid var(--corp-border);
+      border-radius: var(--radius-xs);
       color: var(--corp-text-secondary);
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+    .harvester-chip:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      background: rgba(22, 167, 181, 0.08);
+    }
+    .harvester-terminal {
+      background: #050D18;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #94A3B8;
+      padding: 1.25rem;
+      min-height: 320px;
+      max-height: 480px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.6;
+    }
+    .harvester-terminal .t-ts { color: #64748B; margin-right: 0.5rem; }
+    .harvester-terminal .t-info { color: #38BDF8; }
+    .harvester-terminal .t-success { color: #4ADE80; font-weight: 600; }
+    .harvester-terminal .t-warn { color: #FBBF24; }
+    .harvester-terminal .t-err { color: #F87171; font-weight: 600; }
+    .harvester-terminal .t-gold { color: var(--accent-gold); font-weight: 600; }
+
+    /* =========================================================================
+       APP INSTITUTIONAL FOOTER
+       ========================================================================= */
+    .app-footer {
+      margin-top: 3.5rem;
+      padding: 2rem 2rem 2.25rem;
+      background: var(--corp-canvas-elevated);
+      border-top: 1px solid var(--corp-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      color: var(--corp-text-primary);
+    }
+    .footer-ver-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 1px 5px;
+      background: rgba(212, 175, 55, 0.12);
+      color: var(--accent-gold);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 2px;
+      font-weight: 600;
+    }
+    .footer-copyright {
+      font-size: 0.8rem;
+      color: var(--corp-text-muted);
+    }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .footer-link-btn {
+      background: none;
+      border: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--corp-text-secondary);
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      transition: all 150ms ease;
+    }
+    .footer-link-btn:hover {
+      color: var(--accent-gold);
+      text-decoration-color: var(--accent-gold);
+    }
+    .footer-link-sep {
+      color: var(--corp-border-strong);
+      font-size: 0.65rem;
+    }
+
+    /* =========================================================================
+       INSTITUTIONAL POLICY & TERMS MODAL
+       ========================================================================= */
+    .policy-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 19, 36, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .policy-modal-overlay.open {
+      display: flex;
+    }
+    .policy-modal {
+      background: var(--corp-canvas-elevated);
+      border: 1px solid var(--accent-gold);
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 820px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalSlide 200ms ease;
+    }
+    .policy-modal-header {
+      padding: 1.25rem 1.75rem;
+      background: #071324;
+      color: #FFFFFF;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .policy-modal-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .policy-modal-close {
+      background: none;
+      border: none;
+      color: #94A3B8;
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      transition: color 150ms ease;
+    }
+    .policy-modal-close:hover {
+      color: #FFFFFF;
+    }
+    .policy-modal-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--corp-border);
+      background: var(--corp-canvas);
+      overflow-x: auto;
+    }
+    .policy-tab-btn {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--corp-text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 150ms ease;
+    }
+    .policy-tab-btn:hover {
+      color: var(--corp-text-primary);
+    }
+    .policy-tab-btn.active {
+      color: var(--accent-gold);
+      border-bottom-color: var(--accent-gold);
+      background: rgba(212, 175, 55, 0.05);
+    }
+    .policy-modal-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--corp-text-secondary);
+    }
+    .policy-modal-body h4 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--corp-text-primary);
+      margin-top: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .policy-modal-body h4:first-child {
+      margin-top: 0;
+    }
+    .policy-modal-body p {
+      margin-bottom: 0.85rem;
+    }
+    .policy-modal-body ul {
+      padding-left: 1.25rem;
+      margin-bottom: 0.85rem;
+    }
+    .policy-modal-body li {
+      margin-bottom: 0.4rem;
+    }
+    .policy-modal-footer {
+      padding: 1rem 1.75rem;
+      border-top: 1px solid var(--corp-border);
+      background: var(--corp-canvas-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
   </style>
 </head>
@@ -1956,17 +2331,15 @@
   <aside class="app-sidebar">
     <!-- Brand Block -->
     <div class="sidebar-brand">
-      <div class="brand-icon-box">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z" fill="var(--accent-gold)"/>
-        </svg>
+      <div class="brand-icon-box" style="display: flex; align-items: center; justify-content: center; background: transparent; border: none; padding: 0;">
+        <img src="/favicon.svg" width="28" height="28" alt="Simha Lion Logo" style="display: block;">
       </div>
       <div class="brand-title-wrap">
         <div class="brand-title">
-          Hermes Agent
-          <span class="brand-ver-badge">v2.1.0</span>
+          Simha Nexus
+          <span class="brand-ver-badge">v1.0.0</span>
         </div>
-        <div class="brand-subtitle">Vector Registry &amp; Ledger</div>
+        <div class="brand-subtitle">Institutional AI Ecosystem</div>
       </div>
     </div>
 
@@ -2073,6 +2446,15 @@
               <span class="nav-badge-pill">REST</span>
             </button>
           </li>
+          <li>
+            <button class="nav-item-btn" onclick="switchView('harvester')" id="nav-btn-harvester">
+              <span class="nav-item-left">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                URL Harvester
+              </span>
+              <span class="nav-badge-pill" style="color: var(--accent-cyan);">Studio</span>
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
@@ -2107,7 +2489,7 @@
     <header class="app-topbar">
       <div class="topbar-left">
         <div class="breadcrumbs">
-          <span class="breadcrumb-root">Hermes Enterprise</span>
+          <span class="breadcrumb-root">Simha Nexus</span>
           <span class="breadcrumb-sep">/</span>
           <span class="breadcrumb-current" id="topBreadcrumb">Executive Overview</span>
         </div>
@@ -2116,18 +2498,12 @@
       <!-- Global Quick Search Bar -->
       <div class="topbar-search-wrap">
         <svg class="topbar-search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        <input type="text" class="topbar-search-input" id="globalTopSearch" placeholder="Quick search skills or personas..." onkeydown="handleTopSearchKey(event)">
+        <input type="text" class="topbar-search-input" id="globalTopSearch" placeholder="Quick search skills or personas... (Press /)" onkeydown="handleTopSearchKey(event)">
         <span class="topbar-search-kbd">/</span>
       </div>
 
       <div class="topbar-right">
-        <div class="system-pill">
-          <span class="status-dot-pulse"></span>
-          <span>Port 8998</span>
-        </div>
-        <div class="system-pill" id="utcClockPill">
-          <span>12:00:00 UTC</span>
-        </div>
+        <button class="topbar-theme-btn" onclick="toggleTheme()" id="topbarThemeBtn" title="Toggle Appearance">🌙</button>
       </div>
     </header>
 
@@ -2447,7 +2823,7 @@
             <span class="view-title-badge">66 Runtime Configurations</span>
           </h2>
           <p class="view-subtitle">
-            Hermes Agent operational profiles located in <code>/home/predictatrade/.hermes/profiles/</code>. Select any profile to manage active symlinked skills or switch JIT context.
+            Simha Nexus operational profiles located in <code>/home/predictatrade/.hermes/profiles/</code>. Select any profile to manage active symlinked skills or switch JIT context.
           </p>
         </div>
       </div>
@@ -2468,7 +2844,7 @@
             <span class="view-title-badge">4,842 MCP Servers</span>
           </h2>
           <p class="view-subtitle">
-            Universal tool registry supporting Claude Desktop, Cursor, and Hermes Agent. Includes 45 curated production MCPs and 35 native plugins.
+            Universal tool registry supporting Claude Desktop, Cursor, and Simha Nexus. Includes 45 curated production MCPs and 35 native plugins.
           </p>
         </div>
         <div class="view-actions-group">
@@ -2636,6 +3012,129 @@
         </div>
       </div>
 
+      <!-- 8-Protocol Executive Overview Matrix -->
+      <div class="rulebook-matrix-grid" id="rulebookMatrixGrid">
+        <div class="rulebook-matrix-card" onclick="focusProtocol(1)" id="matrixCard1">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="rulebook-matrix-badge">PROTOCOL 01</span>
+              <span style="font-size: 0.72rem; color: var(--accent-green);">Enforced</span>
+            </div>
+            <div class="rulebook-matrix-title">Security &amp; Isolation</div>
+            <div class="rulebook-matrix-desc">Dedicated service accounts (1001/1002), rootless Docker, privilege dropping, zero root pollution.</div>
+          </div>
+          <div class="rulebook-matrix-footer">
+            <span>UID 1001 / 1002</span>
+            <span style="color: var(--accent-gold);">hermes-rulebook 1 →</span>
+          </div>
+        </div>
+
+        <div class="rulebook-matrix-card" onclick="focusProtocol(2)" id="matrixCard2">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="rulebook-matrix-badge">PROTOCOL 02</span>
+              <span style="font-size: 0.72rem; color: var(--accent-green);">Enforced</span>
+            </div>
+            <div class="rulebook-matrix-title">AI CLI Ecosystem</div>
+            <div class="rulebook-matrix-desc">Primary agent execution, hermes-vault FTS5 searches, hermes-registry vector queries &amp; REST telemetry.</div>
+          </div>
+          <div class="rulebook-matrix-footer">
+            <span>CLI Protocols</span>
+            <span style="color: var(--accent-gold);">hermes-rulebook 2 →</span>
+          </div>
+        </div>
+
+        <div class="rulebook-matrix-card" onclick="focusProtocol(3)" id="matrixCard3">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="rulebook-matrix-badge">PROTOCOL 03</span>
+              <span style="font-size: 0.72rem; color: var(--accent-green);">Enforced</span>
+            </div>
+            <div class="rulebook-matrix-title">Swarm Architecture</div>
+            <div class="rulebook-matrix-desc">554 Specialist personas across 8 core enterprise divisions, Kanban multi-agent state orchestration.</div>
+          </div>
+          <div class="rulebook-matrix-footer">
+            <span>8 Divisions</span>
+            <span style="color: var(--accent-gold);">hermes-rulebook 3 →</span>
+          </div>
+        </div>
+
+        <div class="rulebook-matrix-card" onclick="focusProtocol(4)" id="matrixCard4">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="rulebook-matrix-badge">PROTOCOL 04</span>
+              <span style="font-size: 0.72rem; color: var(--accent-green);">Enforced</span>
+            </div>
+            <div class="rulebook-matrix-title">Runtime Profiles</div>
+            <div class="rulebook-matrix-desc">66 specialist profiles, JIT tool symlink context injection, active target profile validation rules.</div>
+          </div>
+          <div class="rulebook-matrix-footer">
+            <span>66 Profiles</span>
+            <span style="color: var(--accent-gold);">hermes-rulebook 4 →</span>
+          </div>
+        </div>
+
+        <div class="rulebook-matrix-card" onclick="focusProtocol(5)" id="matrixCard5">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="rulebook-matrix-badge">PROTOCOL 05</span>
+              <span style="font-size: 0.72rem; color: var(--accent-green);">Enforced</span>
+            </div>
+            <div class="rulebook-matrix-title">MCP Universe &amp; Tools</div>
+            <div class="rulebook-matrix-desc">4,842 indexed MCP servers, 45 production-hardened tools, isolated rootless container execution.</div>
+          </div>
+          <div class="rulebook-matrix-footer">
+            <span>4,842 MCPs</span>
+            <span style="color: var(--accent-gold);">hermes-rulebook 5 →</span>
+          </div>
+        </div>
+
+        <div class="rulebook-matrix-card" onclick="focusProtocol(6)" id="matrixCard6">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="rulebook-matrix-badge">PROTOCOL 06</span>
+              <span style="font-size: 0.72rem; color: var(--accent-green);">Enforced</span>
+            </div>
+            <div class="rulebook-matrix-title">Native Ecosystem Engines</div>
+            <div class="rulebook-matrix-desc">High-speed binary engines: mcptoon, codegraph, trim, mempalace, rea, pentagi, auto, ChromaDB.</div>
+          </div>
+          <div class="rulebook-matrix-footer">
+            <span>High Perf C/Rust</span>
+            <span style="color: var(--accent-gold);">hermes-rulebook 6 →</span>
+          </div>
+        </div>
+
+        <div class="rulebook-matrix-card" onclick="focusProtocol(7)" id="matrixCard7">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="rulebook-matrix-badge">PROTOCOL 07</span>
+              <span style="font-size: 0.72rem; color: var(--accent-green);">Enforced</span>
+            </div>
+            <div class="rulebook-matrix-title">Swiss Bullion Standard</div>
+            <div class="rulebook-matrix-desc">Institutional Navy (#071324), Bullion Gold (#D4AF37), Cormorant Serifs, zero-slop UI/UX discipline.</div>
+          </div>
+          <div class="rulebook-matrix-footer">
+            <span>Private Banking Standard</span>
+            <span style="color: var(--accent-gold);">hermes-rulebook 7 →</span>
+          </div>
+        </div>
+
+        <div class="rulebook-matrix-card" onclick="focusProtocol(8)" id="matrixCard8">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span class="rulebook-matrix-badge">PROTOCOL 08</span>
+              <span style="font-size: 0.72rem; color: var(--accent-green);">Enforced</span>
+            </div>
+            <div class="rulebook-matrix-title">Repository Discipline</div>
+            <div class="rulebook-matrix-desc">hermes-installer ownership, Git sync obligations, zero binary commits, mandatory verification proofs.</div>
+          </div>
+          <div class="rulebook-matrix-footer">
+            <span>Git /dev/null</span>
+            <span style="color: var(--accent-gold);">hermes-rulebook 8 →</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Quick Filter Pills -->
       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;" id="rulebookFilterPills">
         <button class="btn btn-secondary btn-sm active" onclick="filterRulebook('all', this)">All Protocols (8)</button>
@@ -2661,6 +3160,144 @@
         </div>
       </div>
     </section>
+
+    <!-- =======================================================================
+         VIEW 9: INTERACTIVE URL HARVESTER & ECOSYSTEM STUDIO
+         ======================================================================= -->
+    <section class="view-container" id="view-harvester">
+      <!-- Harvester Hero Card -->
+      <div class="overview-hero-card" style="margin-bottom: 1.5rem;">
+        <div>
+          <div class="hero-stat-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z" fill="var(--accent-cyan)"/></svg>
+            ECOSYSTEM HARVESTER &amp; INGESTION PIPELINE
+          </div>
+          <h2 class="overview-hero-title">Interactive URL Harvester Studio</h2>
+          <p class="overview-hero-desc">
+            Directly harvest remote repositories, curated skill packages, agent personas, and MCP server manifests. Verify format compatibility, test extraction pipelines with dry-runs, and ingest seamlessly into the local SQLite Vault.
+          </p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;">
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" onclick="testScraperHealth()" id="btnTestScraper">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              Run Diagnostic Health Test
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="clearHarvesterTerminal()">
+              Clear Output
+            </button>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--corp-text-muted);" id="harvesterStatusBadge">
+            Engine: <code style="color: var(--accent-green);">scraper.py (v1.0.0)</code> • Ready
+          </span>
+        </div>
+      </div>
+
+      <!-- Studio Work Area -->
+      <div class="harvester-studio-grid">
+        <!-- Control Card -->
+        <div class="harvester-card">
+          <div class="harvester-card-header">
+            <h3 class="harvester-card-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="var(--accent-gold)"/></svg>
+              Target Repository / URL
+            </h3>
+            <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--corp-text-muted);">HTTP / Git / Topics</span>
+          </div>
+
+          <!-- Input Group -->
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <label style="font-size: 0.75rem; font-weight: 600; color: var(--corp-text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">Repository or URL to Scrape</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="text" class="topbar-search-input" id="harvesterUrlInput" placeholder="e.g. https://github.com/full-stack-skills/react-skills" style="background: var(--corp-canvas); border: 1px solid var(--corp-border); color: var(--corp-text-primary); border-radius: var(--radius-sm); height: 40px; font-size: 0.88rem; flex: 1;">
+              <button class="btn btn-primary" onclick="runHarvesterJob()" id="btnRunHarvest">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Execute
+              </button>
+            </div>
+          </div>
+
+          <!-- Curated Presets Chips -->
+          <div class="harvester-presets-wrap">
+            <span class="harvester-presets-label">Curated Upstream Ecosystem Presets</span>
+            <div class="harvester-presets-chips">
+              <button type="button" class="harvester-chip" onclick="setHarvesterUrl('https://github.com/full-stack-skills/react-skills')">full-stack-skills/react-skills</button>
+              <button type="button" class="harvester-chip" onclick="setHarvesterUrl('https://github.com/vercel-labs/agent-skills')">vercel-labs/agent-skills</button>
+              <button type="button" class="harvester-chip" onclick="setHarvesterUrl('https://github.com/topics/pure-react-skills')">topics/pure-react-skills</button>
+              <button type="button" class="harvester-chip" onclick="setHarvesterUrl('https://github.com/topics/agent-team')">topics/agent-team</button>
+              <button type="button" class="harvester-chip" onclick="setHarvesterUrl('https://github.com/ModernRelay/omnigraph')">ModernRelay/omnigraph</button>
+            </div>
+          </div>
+
+          <!-- Execution Parameters -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border-top: 1px solid var(--corp-border-subtle); padding-top: 1rem;">
+            <div>
+              <label style="display: block; font-size: 0.72rem; font-weight: 600; color: var(--corp-text-muted); text-transform: uppercase; margin-bottom: 0.45rem;">Execution Mode</label>
+              <select class="sidebar-profile-select" id="harvesterModeSelect" style="width: 100%; height: 36px;">
+                <option value="dry-run" selected>Dry Run (Analyze &amp; Inspect)</option>
+                <option value="convert">Harvest &amp; Convert Structure</option>
+                <option value="ingest">Ingest into SQLite Vault</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.72rem; font-weight: 600; color: var(--corp-text-muted); text-transform: uppercase; margin-bottom: 0.45rem;">Artifact Limit</label>
+              <select class="sidebar-profile-select" id="harvesterLimitSelect" style="width: 100%; height: 36px;">
+                <option value="10">10 Artifacts</option>
+                <option value="25" selected>25 Artifacts (Standard)</option>
+                <option value="50">50 Artifacts (Deep)</option>
+                <option value="100">100 Artifacts (Comprehensive)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Security Callout -->
+          <div style="background: rgba(14, 116, 144, 0.08); border: 1px solid rgba(14, 116, 144, 0.25); border-radius: var(--radius-xs); padding: 0.75rem 1rem; font-size: 0.75rem; color: var(--corp-text-secondary); line-height: 1.5;">
+            <strong style="color: var(--accent-cyan);">Sandboxed Isolation Notice:</strong> Remote sources are inspected using AST-level parsing. All downloaded temporary repos are cloned in an ephemeral sandbox and privileges automatically dropped to user <code>predictatrade</code> (UID 1001).
+          </div>
+        </div>
+
+        <!-- Terminal Output Card -->
+        <div class="harvester-card" style="padding: 1.25rem;">
+          <div class="harvester-card-header" style="padding-bottom: 0.65rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="status-dot-pulse"></span>
+              <span style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--corp-text-primary);">PIPELINE CONSOLE LOGS</span>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary btn-sm" onclick="copyHarvesterLogs()" style="font-size: 0.7rem; padding: 2px 8px;">Copy</button>
+            </div>
+          </div>
+          <div class="harvester-terminal" id="harvesterTerminal"><span class="t-ts">[00:00:00]</span> <span class="t-gold">Simha Nexus Ecosystem Harvester Studio v1.0.0</span>
+<span class="t-ts">[00:00:00]</span> Engine connected to backend API (/api/scrape).
+<span class="t-ts">[00:00:00]</span> Ready for target URL input or preset selection. Click "Run Diagnostic Health Test" to verify test suite.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         INSTITUTIONAL COPYRIGHT & GOVERNANCE FOOTER
+         ======================================================================= -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <div class="footer-brand">
+          <img src="/favicon.svg" width="22" height="22" alt="Simha Lion Logo" style="display: block;">
+          <span>Simha Nexus</span>
+          <span class="footer-ver-badge">v1.0.0</span>
+        </div>
+        <div class="footer-copyright">
+          &copy; 2026 Simha Infobiz LLC. All rights reserved. Sovereign Private Banking &amp; Algorithmic Intelligence Platform.
+        </div>
+      </div>
+      <div class="footer-links">
+        <button type="button" class="footer-link-btn" onclick="openPolicyModal('terms')">Terms &amp; Conditions</button>
+        <span class="footer-link-sep">/</span>
+        <button type="button" class="footer-link-btn" onclick="openPolicyModal('privacy')">Privacy Policy</button>
+        <span class="footer-link-sep">/</span>
+        <button type="button" class="footer-link-btn" onclick="openPolicyModal('usage')">Acceptable Use Policy</button>
+        <span class="footer-link-sep">/</span>
+        <button type="button" class="footer-link-btn" onclick="openPolicyModal('governance')">Security &amp; Compliance</button>
+      </div>
+    </footer>
   </main>
 
   <!-- =========================================================================
@@ -2724,6 +3361,36 @@
   </div>
 
   <!-- =========================================================================
+       INSTITUTIONAL POLICY & TERMS MODAL DIALOG
+       ========================================================================= -->
+  <div class="policy-modal-overlay" id="policyModalOverlay" onclick="handlePolicyBackdrop(event)">
+    <div class="policy-modal" role="dialog" aria-modal="true">
+      <div class="policy-modal-header">
+        <div class="policy-modal-title">
+          <img src="/favicon.svg" width="24" height="24" alt="Simha Lion Logo">
+          <span>Simha Infobiz LLC — Platform Governance</span>
+        </div>
+        <button type="button" class="policy-modal-close" onclick="closePolicyModal()" title="Close (Esc)">✕</button>
+      </div>
+      <div class="policy-modal-tabs">
+        <button type="button" class="policy-tab-btn active" id="policyTabTerms" onclick="switchPolicyTab('terms')">Terms &amp; Conditions</button>
+        <button type="button" class="policy-tab-btn" id="policyTabPrivacy" onclick="switchPolicyTab('privacy')">Privacy Policy</button>
+        <button type="button" class="policy-tab-btn" id="policyTabUsage" onclick="switchPolicyTab('usage')">Acceptable Use Policy</button>
+        <button type="button" class="policy-tab-btn" id="policyTabGovernance" onclick="switchPolicyTab('governance')">Security &amp; Compliance</button>
+      </div>
+      <div class="policy-modal-body" id="policyModalBody">
+        <!-- Content injected dynamically by switchPolicyTab() -->
+      </div>
+      <div class="policy-modal-footer">
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--corp-text-muted);">
+          Institutional Bullion Standard • Sovereign Security Architecture
+        </span>
+        <button type="button" class="btn btn-primary btn-sm" onclick="closePolicyModal()">Acknowledge &amp; Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
        JAVASCRIPT APPLICATION ENGINE
        ========================================================================= -->
   <script>
@@ -2776,9 +3443,10 @@
     // =========================================================================
     // INITIALIZATION & LIFECYCLE
     // =========================================================================
+    // INITIALIZATION & LIFECYCLE
+    // =========================================================================
     document.addEventListener('DOMContentLoaded', async () => {
       updateThemeUI();
-      startUtcClock();
 
       // Read Hash URL for direct linking
       const initialTab = window.location.hash.replace('#', '') || 'overview';
@@ -2806,19 +3474,8 @@
     });
 
     // =========================================================================
-    // CLOCK & TELEMETRY
+    // THEME & NOTIFICATIONS
     // =========================================================================
-    function startUtcClock() {
-      const el = document.getElementById('utcClockPill');
-      const update = () => {
-        const now = new Date();
-        const utc = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
-        el.innerText = utc;
-      };
-      update();
-      setInterval(update, 1000);
-    }
-
     function toggleTheme() {
       state.theme = state.theme === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', state.theme);
@@ -2830,6 +3487,14 @@
       const btn = document.getElementById('themeSwitchLabel');
       if (btn) {
         btn.innerHTML = state.theme === 'dark' ? '<span>☀️ Daylight</span>' : '<span>🌙 Midnight</span>';
+      }
+      const topBtn = document.getElementById('topbarThemeBtn');
+      if (topBtn) {
+        topBtn.innerHTML = state.theme === 'dark' ? '☀️' : '🌙';
+        topBtn.title = state.theme === 'dark' ? 'Switch to Daylight Canvas' : 'Switch to Midnight Canvas';
+      }
+      if (state.activeTab === 'agents' && state.allAgents && state.allAgents.length > 0) {
+        renderAgentsView();
       }
     }
 
@@ -2844,7 +3509,7 @@
     // TAB SWITCHING & ROUTING
     // =========================================================================
     function switchView(tabName, updateHash = true) {
-      const validTabs = ['overview', 'skills', 'agents', 'profiles', 'mcp', 'diagnostics', 'api', 'rulebook'];
+      const validTabs = ['overview', 'skills', 'agents', 'profiles', 'mcp', 'diagnostics', 'api', 'rulebook', 'harvester'];
       if (!validTabs.includes(tabName)) tabName = 'overview';
 
       state.activeTab = tabName;
@@ -2869,7 +3534,8 @@
         mcp: 'Model Context Protocol Universe',
         diagnostics: 'Diagnostics & CLI Studio',
         api: 'REST API Specifications',
-        rulebook: 'Enterprise Governance Rulebook'
+        rulebook: 'Enterprise Governance Rulebook',
+        harvester: 'URL Harvester & Repository Studio'
       };
       document.getElementById('topBreadcrumb').innerText = breadcrumbMap[tabName] || 'Registry';
 
@@ -2893,6 +3559,8 @@
         } else {
           renderRulebook();
         }
+      } else if (tabName === 'harvester') {
+        checkHarvesterStatus();
       }
     }
 
@@ -3437,15 +4105,25 @@
       const end = Math.min(start + state.agentsPerPage, total);
       const paged = state.filteredAgents.slice(start, end);
 
-      const divColors = {
-        'Engineering': { bg: 'rgba(37, 99, 235, 0.12)', color: '#60A5FA', border: 'rgba(37, 99, 235, 0.3)' },
-        'Security & Pentest': { bg: 'rgba(225, 29, 72, 0.12)', color: '#F43F5E', border: 'rgba(225, 29, 72, 0.3)' },
-        'Quant & Finance': { bg: 'rgba(212, 175, 55, 0.12)', color: 'var(--accent-gold)', border: 'rgba(212, 175, 55, 0.3)' },
-        'Executive': { bg: 'rgba(124, 58, 237, 0.12)', color: '#A78BFA', border: 'rgba(124, 58, 237, 0.3)' },
-        'Architecture': { bg: 'rgba(21, 128, 61, 0.12)', color: 'var(--accent-green)', border: 'rgba(21, 128, 61, 0.3)' },
-        'Data & MLOps': { bg: 'rgba(20, 184, 166, 0.12)', color: '#2DD4BF', border: 'rgba(20, 184, 166, 0.3)' },
-        'Research': { bg: 'rgba(2, 132, 199, 0.12)', color: '#38BDF8', border: 'rgba(2, 132, 199, 0.3)' },
-        'DevOps & SRE': { bg: 'rgba(217, 119, 6, 0.12)', color: '#F59E0B', border: 'rgba(217, 119, 6, 0.3)' }
+      const isLight = (state.theme === 'light');
+      const divColors = isLight ? {
+        'Engineering': { bg: '#EFF6FF', color: '#1D4ED8', border: '#BFDBFE' },
+        'Security & Pentest': { bg: '#FFF1F2', color: '#BE123C', border: '#FECDD3' },
+        'Quant & Finance': { bg: '#FEFCE8', color: '#B45309', border: '#FDE68A' },
+        'Executive': { bg: '#F5F3FF', color: '#6D28D9', border: '#DDD6FE' },
+        'Architecture': { bg: '#F0FDF4', color: '#15803D', border: '#BBF7D0' },
+        'Data & MLOps': { bg: '#F0FDFA', color: '#0F766E', border: '#99F6E4' },
+        'Research': { bg: '#F0F9FF', color: '#0369A1', border: '#BAE6FD' },
+        'DevOps & SRE': { bg: '#FFFBEB', color: '#B45309', border: '#FDE68A' }
+      } : {
+        'Engineering': { bg: 'rgba(37, 99, 235, 0.18)', color: '#93C5FD', border: 'rgba(37, 99, 235, 0.4)' },
+        'Security & Pentest': { bg: 'rgba(225, 29, 72, 0.18)', color: '#FDA4AF', border: 'rgba(225, 29, 72, 0.4)' },
+        'Quant & Finance': { bg: 'rgba(212, 175, 55, 0.18)', color: '#FDE047', border: 'rgba(212, 175, 55, 0.4)' },
+        'Executive': { bg: 'rgba(124, 58, 237, 0.18)', color: '#C4B5FD', border: 'rgba(124, 58, 237, 0.4)' },
+        'Architecture': { bg: 'rgba(21, 128, 61, 0.18)', color: '#86EFAC', border: 'rgba(21, 128, 61, 0.4)' },
+        'Data & MLOps': { bg: 'rgba(20, 184, 166, 0.18)', color: '#5EEAD4', border: 'rgba(20, 184, 166, 0.4)' },
+        'Research': { bg: 'rgba(2, 132, 199, 0.18)', color: '#7DD3FC', border: 'rgba(2, 132, 199, 0.4)' },
+        'DevOps & SRE': { bg: 'rgba(217, 119, 6, 0.18)', color: '#FCD34D', border: 'rgba(217, 119, 6, 0.4)' }
       };
 
       paged.forEach(agent => {
@@ -3455,12 +4133,14 @@
 
         const parts = (agent.name || 'Ag').split(/[\s\-_]+/);
         const initials = (parts.length > 1 ? parts[0][0] + (parts[1][0] || '') : parts[0].substring(0, 2)).toUpperCase();
-        const styleInfo = divColors[agent.enterprise_division] || { bg: 'var(--corp-navy-surface)', color: 'var(--corp-text-secondary)', border: 'var(--corp-border)' };
+        const styleInfo = divColors[agent.enterprise_division] || (isLight
+          ? { bg: '#F8FAFC', color: '#334155', border: '#E2E8F0' }
+          : { bg: 'rgba(255, 255, 255, 0.08)', color: '#E2E8F0', border: 'rgba(255, 255, 255, 0.15)' });
 
         card.innerHTML = `
           <div>
             <div class="agent-header">
-              <div class="agent-avatar">${escapeHtml(initials)}</div>
+              <div class="agent-avatar" style="background: ${styleInfo.bg}; color: ${styleInfo.color}; border: 1px solid ${styleInfo.border};">${escapeHtml(initials)}</div>
               <div class="agent-title-box">
                 <div class="agent-name" title="${escapeHtml(agent.name)}">${escapeHtml(agent.name)}</div>
                 <div class="agent-division-tag" style="display: inline-block; padding: 2px 7px; border-radius: 4px; background: ${styleInfo.bg}; color: ${styleInfo.color}; border: 1px solid ${styleInfo.border};">
@@ -3468,7 +4148,7 @@
                 </div>
               </div>
             </div>
-            <div class="agent-prompt-preview">${escapeHtml(agent.role || 'Autonomous specialist persona configured for Hermes Agent runtime.')}</div>
+            <div class="agent-prompt-preview">${escapeHtml(agent.role || 'Autonomous specialist persona configured for Simha Nexus runtime.')}</div>
           </div>
           <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem; margin-top: 0.75rem;">
             <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--corp-text-muted);" title="${escapeHtml(agent.file_path || '')}">
@@ -3571,7 +4251,7 @@
             </div>
             <div class="profile-tools-badge">● ${activeCount} Active Tools Symlinked</div>
             <p style="font-size: 0.80rem; color: var(--corp-text-secondary); line-height: 1.5; margin-bottom: 1rem;">
-              ${p.description || 'Custom Hermes runtime execution profile.'}
+              ${p.description || 'Custom Simha Nexus runtime execution profile.'}
             </p>
           </div>
           <div style="display: flex; gap: 0.5rem; border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
@@ -3635,7 +4315,7 @@
             </div>
             <div class="mcp-cmd-box">${mcp.command}</div>
             <p style="font-size: 0.78rem; color: var(--corp-text-secondary); line-height: 1.45; margin-bottom: 0.85rem;">
-              ${mcp.description || 'Verified production MCP server ready for Hermes tool execution.'}
+              ${mcp.description || 'Verified production MCP server ready for Simha Nexus tool execution.'}
             </p>
           </div>
           <div style="display: flex; gap: 0.4rem; border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
@@ -3666,7 +4346,7 @@
               <span class="mcp-title">${mcp.server_name}</span>
               <div class="mcp-cmd-box">${mcp.command}</div>
               <p style="font-size: 0.78rem; color: var(--corp-text-secondary); line-height: 1.45; margin-bottom: 0.85rem;">
-                ${mcp.description || 'Model Context Protocol server registered in Hermes Universe catalog.'}
+                ${mcp.description || 'Model Context Protocol server registered in Simha Nexus Universe catalog.'}
               </p>
             </div>
             <div style="border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
@@ -3704,7 +4384,7 @@
               <span class="domain-tag" style="background: rgba(212, 175, 55, 0.15); color: var(--accent-gold); border-color: rgba(212, 175, 55, 0.3);">Plugin</span>
             </div>
             <p style="font-size: 0.78rem; color: var(--corp-text-secondary); line-height: 1.45; margin: 0.75rem 0;">
-              ${plg.description || 'Native enterprise Hermes Agent plugin.'}
+              ${plg.description || 'Native enterprise Simha Nexus plugin.'}
             </p>
           </div>
           <div style="border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
@@ -4263,6 +4943,313 @@
         .then(() => showToast(`Copied: ${snippet}`))
         .catch(() => showToast('Failed to copy to clipboard'));
     }
+
+    // =========================================================================
+    // PROTOCOL MATRIX & RULEBOOK NAVIGATION
+    // =========================================================================
+    function focusProtocol(protocolNum) {
+      state.rulebookActiveProtocol = protocolNum;
+      // Update filter pills in UI
+      const pills = document.querySelectorAll('#rulebookFilterPills button');
+      pills.forEach((btn, idx) => {
+        btn.classList.remove('active');
+        if (protocolNum === 'all' && idx === 0) btn.classList.add('active');
+        else if (idx === Number(protocolNum)) btn.classList.add('active');
+      });
+
+      // Update matrix cards active state
+      for (let i = 1; i <= 8; i++) {
+        const card = document.getElementById(`matrixCard${i}`);
+        if (card) {
+          card.classList.toggle('active', i === Number(protocolNum));
+        }
+      }
+
+      renderRulebook();
+
+      setTimeout(() => {
+        const targetEl = document.getElementById(`protocol-${protocolNum}`);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 50);
+    }
+
+    // =========================================================================
+    // INTERACTIVE HARVESTER STUDIO METHODS
+    // =========================================================================
+    function setHarvesterUrl(url) {
+      const input = document.getElementById('harvesterUrlInput');
+      if (input) {
+        input.value = url;
+        input.focus();
+      }
+    }
+
+    function clearHarvesterTerminal() {
+      const term = document.getElementById('harvesterTerminal');
+      if (term) {
+        const time = new Date().toTimeString().split(' ')[0];
+        term.innerHTML = `<span class="t-ts">[${time}]</span> <span class="t-gold">Console cleared. Simha Nexus Harvester Studio v1.0.0 ready.</span>`;
+      }
+    }
+
+    function copyHarvesterLogs() {
+      const term = document.getElementById('harvesterTerminal');
+      if (!term) return;
+      navigator.clipboard.writeText(term.innerText)
+        .then(() => showToast('Pipeline logs copied to clipboard!'))
+        .catch(() => showToast('Failed to copy logs'));
+    }
+
+    function appendTerminalLog(level, text) {
+      const term = document.getElementById('harvesterTerminal');
+      if (!term) return;
+      const time = new Date().toTimeString().split(' ')[0];
+      let formattedLevel = '';
+      if (level === 'info') formattedLevel = `<span class="t-cyan">[INFO]</span>`;
+      else if (level === 'success') formattedLevel = `<span class="t-green">[SUCCESS]</span>`;
+      else if (level === 'warn') formattedLevel = `<span class="t-gold">[WARN]</span>`;
+      else if (level === 'error') formattedLevel = `<span class="t-red">[ERROR]</span>`;
+      else if (level === 'ts') formattedLevel = `<span class="t-ts">[${time}]</span>`;
+
+      const line = document.createElement('div');
+      line.innerHTML = `<span class="t-ts">[${time}]</span> ${formattedLevel} ${escapeHtml(text)}`;
+      term.appendChild(line);
+      term.scrollTop = term.scrollHeight;
+    }
+
+    async function checkHarvesterStatus() {
+      const badge = document.getElementById('harvesterStatusBadge');
+      try {
+        const res = await fetch('/api/scrape/status');
+        const data = await res.json();
+        if (badge) {
+          badge.innerHTML = `Engine: <code style="color: var(--accent-green);">scraper.py (v${data.version || '1.0.0'})</code> • ${data.status === 'available' ? 'Ready' : 'Standby'}`;
+        }
+      } catch (e) {
+        if (badge) {
+          badge.innerHTML = `Engine: <code style="color: var(--accent-gold);">scraper.py (v1.0.0)</code> • Local CLI Ready`;
+        }
+      }
+    }
+
+    async function testScraperHealth() {
+      const btn = document.getElementById('btnTestScraper');
+      const term = document.getElementById('harvesterTerminal');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<div class="spinner" style="width: 14px; height: 14px; display: inline-block;"></div> Running Tests...`;
+      }
+
+      appendTerminalLog('info', 'Executing diagnostic unit test suite for scraper engine (test_scraper.py)...');
+
+      try {
+        const res = await fetch('/api/scrape', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'test' })
+        });
+        const data = await res.json();
+
+        if (data.status === 'ok') {
+          appendTerminalLog('info', `Engine: ${data.engine} (${data.version})`);
+          appendTerminalLog('success', `Test Results: ${data.tests_run} tests executed successfully in ${data.duration_sec}s.`);
+          appendTerminalLog('success', `Status: PASSED (Health: ${data.health})`);
+          showToast(`Diagnostic Passed: ${data.tests_run} unit tests passed`);
+        } else {
+          appendTerminalLog('error', `Diagnostic failed: ${data.message || 'Unknown error'}`);
+          showToast('Diagnostic test encountered issues');
+        }
+      } catch (err) {
+        appendTerminalLog('error', `API connection error: ${err.message}`);
+        showToast('Health test failed to contact API');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Run Diagnostic Health Test`;
+        }
+      }
+    }
+
+    async function runHarvesterJob() {
+      const urlInput = document.getElementById('harvesterUrlInput');
+      const modeSelect = document.getElementById('harvesterModeSelect');
+      const limitSelect = document.getElementById('harvesterLimitSelect');
+      const btn = document.getElementById('btnRunHarvest');
+
+      const url = urlInput ? urlInput.value.trim() : '';
+      if (!url) {
+        showToast('Please enter a target repository URL or select a preset chip.');
+        if (urlInput) urlInput.focus();
+        return;
+      }
+
+      const mode = modeSelect ? modeSelect.value : 'dry-run';
+      const limit = limitSelect ? parseInt(limitSelect.value, 10) : 25;
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<div class="spinner" style="width: 14px; height: 14px; display: inline-block;"></div> Running...`;
+      }
+
+      appendTerminalLog('info', `Initiating Harvester Job: ${url}`);
+      appendTerminalLog('info', `Configuration: Mode=${mode.toUpperCase()} | Limit=${limit} | Sandboxed UID=1001`);
+
+      try {
+        const payload = {
+          url: url,
+          dry_run: mode === 'dry-run',
+          ingest: mode === 'ingest',
+          limit_artifacts: limit
+        };
+
+        const res = await fetch('/api/scrape', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.status === 'ok') {
+          appendTerminalLog('success', `Inspection completed successfully: ${data.message}`);
+          if (data.data) {
+            const d = data.data;
+            if (d.repo) appendTerminalLog('info', `Target Repository: ${d.repo}`);
+            if (d.artifacts_found !== undefined) appendTerminalLog('info', `Discovered Artifacts: ${d.artifacts_found}`);
+            if (d.artifacts && d.artifacts.length > 0) {
+              d.artifacts.slice(0, 5).forEach((art, idx) => {
+                appendTerminalLog('info', `[Artifact ${idx+1}] ${art.name} (${art.type || 'skill'}) - ${art.description || 'No description'}`);
+              });
+              if (d.artifacts.length > 5) {
+                appendTerminalLog('info', `... and ${d.artifacts.length - 5} additional artifacts.`);
+              }
+            }
+            if (d.ingested !== undefined) appendTerminalLog('success', `Ingested into SQLite Vault: ${d.ingested} items.`);
+          }
+          showToast(`Harvester Job Complete (${mode.toUpperCase()})`);
+        } else {
+          appendTerminalLog('error', `Harvester error: ${data.message || 'Operation failed'}`);
+          showToast(data.message || 'Harvester operation failed');
+        }
+      } catch (err) {
+        appendTerminalLog('error', `Connection error: ${err.message}`);
+        showToast('Failed to connect to harvest service');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Execute`;
+        }
+      }
+    }
+
+    // =========================================================================
+    // INSTITUTIONAL POLICY & GOVERNANCE MODAL
+    // =========================================================================
+    function openPolicyModal(tab = 'terms') {
+      const modal = document.getElementById('policyModalOverlay');
+      if (modal) {
+        modal.classList.add('active');
+        switchPolicyTab(tab);
+      }
+    }
+
+    function closePolicyModal() {
+      const modal = document.getElementById('policyModalOverlay');
+      if (modal) {
+        modal.classList.remove('active');
+      }
+    }
+
+    function handlePolicyBackdrop(event) {
+      if (event.target === document.getElementById('policyModalOverlay')) {
+        closePolicyModal();
+      }
+    }
+
+    function switchPolicyTab(tab) {
+      const tabs = ['terms', 'privacy', 'usage', 'governance'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`policyTab${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        if (btn) btn.classList.toggle('active', t === tab);
+      });
+
+      const body = document.getElementById('policyModalBody');
+      if (!body) return;
+
+      const content = {
+        terms: `
+          <h4>1. Sovereign Institutional Platform & Operating Terms</h4>
+          <p>This deployment of <strong>Simha Nexus Enterprise Edition</strong> (the "Platform") is operated exclusively by <strong>Simha Infobiz LLC</strong> ("Company"). Access and usage are strictly granted to authorized enterprise operators under sovereign security boundaries.</p>
+          <p>By interacting with this environment, you acknowledge and agree that all automated actions, agent personas, algorithmic models, and specialized runtime configurations operate under dedicated privilege-dropped runtime service accounts (<code>UID=1001, GID=1001</code>).</p>
+          
+          <h4>2. Dedicated Security Boundaries & Zero Root Contamination</h4>
+          <p>All tool executions, AST traversals, automated scrapers, and agent memory updates must respect the isolated Rootless Docker daemon and isolated filesystem hierarchies. Direct root execution loops are strictly prohibited under Platform bylaws.</p>
+
+          <h4>3. Intellectual Property & Curated Knowledge Vault</h4>
+          <p>All curated skills (19,840), community skills (64,687), agent personas (554), and specialized runtime configurations indexed within <code>/home/predictatrade/.hermes/hermes-vault.sqlite</code> remain the proprietary property or governed commons of Simha Infobiz LLC and its licensors. Unauthorized exfiltration or unauthorized distribution outside sanctioned private boundaries is prohibited.</p>
+
+          <h4>4. Limitation of Operational Liability</h4>
+          <p>Algorithmic quant models, security auditing heuristics, and automated code generation tools are advisory in nature. Operators retain ultimate verification responsibility before advancing state changes into institutional financial markets or critical production infrastructure.</p>
+        `,
+        privacy: `
+          <h4>1. Zero Telemetry & Private Banking Privacy Standard</h4>
+          <p>In accordance with the <strong>Swiss Institutional Bullion Standard</strong>, Simha Nexus operates on a strict zero-telemetry architecture. No telemetry packets, prompt traces, embeddings, or execution metrics are ever transmitted to third-party ad networks or unauthorized surveillance providers.</p>
+
+          <h4>2. Localized Cryptographic & Vector Storage</h4>
+          <p>All memory graphs, agent interaction logs, and ChromaDB vector embeddings (<code>skills_semantic</code>, <code>agents_semantic</code>, <code>profiles_semantic</code>, <code>mcp_semantic</code>) reside strictly within the encrypted filesystem boundaries of <code>platform.predictatrade.com</code>. Database encryption and PRAGMA integrity checks are enforced on every registry startup.</p>
+
+          <h4>3. Privilege Separation & User Isolation</h4>
+          <p>User privacy is structurally guaranteed via Linux DAC isolation: agent workloads run as user <code>predictatrade</code> (UID 1001), installer development runs as user <code>hermes-installer</code> (UID 1002), and platform databases run within sandboxed Docker containers.</p>
+
+          <h4>4. Data Subject Rights & Memory Erasure</h4>
+          <p>Authorized operators may at any time inspect, export, or permanently sanitize memory traces via the MemPalace holographic engine (<code>mempalace search &lt;query&gt;</code>) or SQLite FTS5 table vacuuming routines.</p>
+        `,
+        usage: `
+          <h4>1. Authorized Workloads & Ethical AI Bounds</h4>
+          <p>Simha Nexus must be deployed only for authorized quantitative financial analysis, infrastructure engineering, red-team adversary emulation with explicit written authorization, scientific research synthesis, and enterprise development.</p>
+
+          <h4>2. Prohibited Exploitative Activities</h4>
+          <p>Under no circumstances may the Platform or its autonomous agent swarms be utilized for: (a) unauthorized network intrusion against unapproved target domains; (b) market manipulation or front-running outside approved regulatory sandboxes; (c) prompt injection testing against shared production LLM endpoints without rate limits; or (d) generating malicious payloads without isolated air-gapped quarantine.</p>
+
+          <h4>3. Rate-Limiting & High-Concurrency Discipline</h4>
+          <p>All remote scrapers, upstream repository harvesters, and MCP client connections must implement exponential backoff and adhere to upstream provider API rate limits. Scrapers must operate in dry-run mode until extraction schemas are validated.</p>
+
+          <h4>4. Enforcement & Audit Ledgers</h4>
+          <p>All completed multi-agent tasks are immutably logged in <code>/home/predictatrade/.hermes/kanban.db</code> with code diffs, timestamps, and operator proofs. Violations of this policy result in immediate key revocation and daemon isolation.</p>
+        `,
+        governance: `
+          <h4>1. Security Governance & Compliance Hierarchy</h4>
+          <p>The Simha Nexus architecture complies with ISO 27001, SOC 2 Type II, and Swiss Private Banking data residency and security control mandates. Every system service is managed by systemd and enforces automatic privilege-dropping wrappers.</p>
+
+          <h4>2. Cryptographic Integrity & Ledger Attestation</h4>
+          <p>All installer assets, offline tarballs, and SQLite database snapshots are authenticated against SHA256 checksum manifests (<code>SHA256SUMS.txt</code>). SQLite PRAGMA integrity verification is executed on startup and monitored continuously via <code>GET /api/diagnostics</code>.</p>
+
+          <h4>3. AST-Level Token Efficiency & Zero Slop Rule</h4>
+          <p>All agent prompts and tool payloads are pre-processed through the native <code>mcptoon</code> token compressor, reducing verbose schema overhead by up to 99.2%. Code generation enforces strict typed contracts, zero-slop UI standards, and clean test verification.</p>
+
+          <h4>4. Incident Response & Bug Disclosure</h4>
+          <p>Security vulnerabilities or anomalous vector drift should be disclosed immediately to the Simha Infobiz Security Response Team via <code>security@simhaonline.com</code> or audited directly using <code>pentagi</code> and <code>rea</code> native binary analysis suites.</p>
+        `
+      };
+
+      body.innerHTML = content[tab] || content['terms'];
+    }
+
+    // Close Modals & Drawer on Escape Key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const policyModal = document.getElementById('policyModalOverlay');
+        if (policyModal && policyModal.classList.contains('active')) {
+          closePolicyModal();
+          return;
+        }
+        if (state.drawerOpen) {
+          closeDrawer();
+        }
+      }
+    });
   </script>
 </body>
 </html>

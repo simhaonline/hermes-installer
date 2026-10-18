@@ -1,7 +1,7 @@
 # Hermes Agent Enterprise Edition: Global Rulebook & Governance Protocols
 **Platform**: platform.predictatrade.com (Ubuntu Linux LTS)  
 **Standard**: Swiss Institutional Bullion Standard (simharefinery.com & Predict-A-Trade)  
-**Version**: 2.5.0 Enterprise Production  
+**Version**: 1.0.0 Enterprise Production  
 **Last Updated**: 2026-10-18  
 
 ---

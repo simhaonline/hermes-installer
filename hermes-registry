@@ -349,6 +349,30 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
             self.wfile.write(body)
             return
 
+        if path == "/favicon.ico":
+            fav = Path("/srv/hermes-installer/SIMHA_Brand_Asset_Kit_v1.0.0/favicons/simha_favicon.ico")
+            if fav.exists():
+                data = fav.read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", "image/x-icon")
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "public, max-age=86400")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+
+        if path in ("/favicon.svg", "/simha_favicon.svg", "/assets/logo.svg"):
+            fav = Path("/srv/hermes-installer/SIMHA_Brand_Asset_Kit_v1.0.0/favicons/simha_favicon.svg")
+            if fav.exists():
+                data = fav.read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", "image/svg+xml")
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Cache-Control", "public, max-age=86400")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+
         conn = get_db()
         cur = conn.cursor()
         try:
@@ -605,10 +629,21 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 "body": body.strip()
             } for num, title, body in matches]
             self._send_json({
-                "version": "2.5.0",
+                "version": "1.0.0",
                 "total_protocols": len(protocols),
                 "protocols": protocols,
                 "raw_markdown": content
+            })
+            return
+
+        if path == "/api/scrape/status":
+            scraper_exists = os.path.exists("/srv/hermes-installer/scraper.py")
+            test_exists = os.path.exists("/srv/hermes-installer/test_scraper.py")
+            self._send_json({
+                "status": "available" if scraper_exists else "unavailable",
+                "scraper_path": "/srv/hermes-installer/scraper.py",
+                "test_scraper_path": "/srv/hermes-installer/test_scraper.py",
+                "version": "1.0.0"
             })
             return
 
@@ -773,6 +808,93 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
             self._send_json({"error": "Invalid JSON"}, status=400)
             return
 
+        conn = get_db()
+        cur = conn.cursor()
+        try:
+            self._handle_api_post(path, payload, conn, cur)
+        finally:
+            conn.close()
+
+    def _handle_api_post(self, path, payload, conn, cur):
+        if path == "/api/scrape":
+            action = payload.get("action", "scrape").strip().lower()
+            if action == "test":
+                test_script = "/srv/hermes-installer/test_scraper.py"
+                if not os.path.exists(test_script):
+                    self._send_json({"error": "test_scraper.py not found on platform"}, status=404)
+                    return
+                try:
+                    res = subprocess.run([sys.executable, test_script], capture_output=True, text=True, timeout=30)
+                    out = ((res.stderr or "") + "\n" + (res.stdout or "")).strip()
+                    self._send_json({
+                        "status": "ok" if res.returncode == 0 else "failed",
+                        "passed": res.returncode == 0,
+                        "output": out,
+                        "health": "healthy" if res.returncode == 0 else "unhealthy"
+                    })
+                except Exception as e:
+                    self._send_json({"error": f"Failed to run test_scraper: {e}"}, status=500)
+                return
+
+            # Action: harvest/scrape specific URL
+            url = payload.get("url", "").strip()
+            if not url:
+                self._send_json({"error": "Missing URL to scrape"}, status=400)
+                return
+
+            dry_run = bool(payload.get("dry_run", True))
+            ingest = bool(payload.get("ingest", False))
+            limit = int(payload.get("limit_artifacts", 25))
+            limit = max(1, min(limit, 100))
+
+            scraper_script = "/srv/hermes-installer/scraper.py"
+            if not os.path.exists(scraper_script):
+                self._send_json({"error": "scraper.py not found on platform"}, status=404)
+                return
+
+            cmd = [sys.executable, scraper_script, "--sources", url, "--limit-artifacts", str(limit)]
+            if dry_run:
+                cmd.append("--dry-run")
+            elif ingest:
+                cmd.append("--ingest")
+            else:
+                cmd.append("--convert")
+
+            try:
+                res = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
+                self._send_json({
+                    "status": "ok" if res.returncode == 0 else "error",
+                    "returncode": res.returncode,
+                    "url": url,
+                    "dry_run": dry_run,
+                    "ingest": ingest,
+                    "stdout": res.stdout,
+                    "stderr": res.stderr
+                })
+            except subprocess.TimeoutExpired:
+                self._send_json({"error": "Harvest pipeline timed out after 180 seconds."}, status=504)
+            except Exception as e:
+                self._send_json({"error": f"Scraper execution error: {e}"}, status=500)
+            return
+
+        if path == "/api/profiles/active":
+            profile_name = payload.get("profile", "").strip()
+            if not profile_name:
+                self._send_json({"error": "Missing profile name"}, status=400)
+                return
+            p_dir = Path(f"/home/predictatrade/.hermes/profiles/{profile_name}")
+            if not p_dir.exists():
+                self._send_json({"error": f"Profile '{profile_name}' does not exist"}, status=404)
+                return
+            cur.execute("REPLACE INTO metadata (key, value) VALUES ('active_profile', ?)", (profile_name,))
+            conn.commit()
+            self._send_json({
+                "success": True,
+                "active_profile": profile_name,
+                "message": f"Active profile set to '{profile_name}'."
+            })
+            return
+
         skill_name = payload.get("skill", "").strip()
         profile = payload.get("profile", "default").strip() or "default"
 
@@ -780,14 +902,6 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
             self._send_json({"error": "Missing skill name"}, status=400)
             return
 
-        conn = get_db()
-        cur = conn.cursor()
-        try:
-            self._handle_api_post(path, skill_name, profile, conn, cur)
-        finally:
-            conn.close()
-
-    def _handle_api_post(self, path, skill_name, profile, conn, cur):
         if path == "/api/activate":
             row = cur.execute("SELECT name, category, path FROM curated_skills WHERE name=?", (skill_name,)).fetchone()
             if not row:

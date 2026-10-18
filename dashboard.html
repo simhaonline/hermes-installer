@@ -2073,9 +2073,9 @@
         <!-- Category Quick Chips -->
         <div class="filter-chips-row">
           <button class="chip-btn active" onclick="filterByChip('')" id="chip-all">All Skills</button>
-          <button class="chip-btn" onclick="filterByChip('react-skills')" id="chip-react">React Suite</button>
-          <button class="chip-btn" onclick="filterByChip('agent-team')" id="chip-team">Agent Teams</button>
-          <button class="chip-btn" onclick="filterByChip('omnigraph')" id="chip-omni">Omnigraph DB</button>
+          <button class="chip-btn" onclick="filterByChip('react-ecosystem')" id="chip-react">React Suite</button>
+          <button class="chip-btn" onclick="filterByChip('agent-teams')" id="chip-team">Agent Teams</button>
+          <button class="chip-btn" onclick="filterByChip('graph-database')" id="chip-omni">Omnigraph DB</button>
           <button class="chip-btn" onclick="filterByChip('foundation-skills')" id="chip-foundation">Foundation Suite</button>
           <button class="chip-btn" onclick="filterByChip('minimax-audio-voice')" id="chip-voice">Audio &amp; Voice</button>
           <button class="chip-btn" onclick="filterByChip('office-excel-pdf')" id="chip-office">Office &amp; PDF</button>
@@ -2717,9 +2717,9 @@
     function updateActiveChipUI(cat) {
       document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
       const chipId = cat === '' ? 'chip-all' :
-                     cat === 'react-skills' ? 'chip-react' :
-                     cat === 'agent-team' ? 'chip-team' :
-                     cat === 'omnigraph' ? 'chip-omni' :
+                     cat === 'react-ecosystem' ? 'chip-react' :
+                     cat === 'agent-teams' ? 'chip-team' :
+                     cat === 'graph-database' ? 'chip-omni' :
                      cat === 'foundation-skills' ? 'chip-foundation' :
                      cat === 'minimax-audio-voice' ? 'chip-voice' :
                      cat === 'office-excel-pdf' ? 'chip-office' :

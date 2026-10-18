@@ -1,6 +1,5 @@
-2413ac78ba6566f7c81125fb173d32df190a07d691eade67a1e98698f355cb19  hermes-self-contained-installer.tar.gz
 38c190fb7711f9f7f7940a3201c829ccc332faf5772e6490db8e919d1fc96860  hermes-agent-production.sh
 ce989e1e3b81d2e8b5aa640d5c9c874983d6236607162d0504048088e96157da  hermes-assets.tar.gz
 439d46065d072f9a6e946a1f8c1c5dfe9ffc7d2bee645c1e6db5f5d3433bea29  install-hermes-local.sh
-0e3205f343d3007c35a272ff7b7b8a171e1f041a110c9d1b197de590a42d25a9  hermes-content-vault-v1.1.0.tar.gz
+31c1e1aad8e36055a422bbcb76d3109fa6603dd72ad23276448cc0b055ff2b6a  hermes-content-vault-v1.0.0.tar.gz
 d3316c93a4f9164afff005bd83b78715bbe02ebe716015830764b0bb915489a0  hermes-vault.sqlite

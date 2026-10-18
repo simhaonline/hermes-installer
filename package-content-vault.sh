@@ -7,7 +7,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 DIST_DIR="$SCRIPT_DIR/dist"
-ARCHIVE_NAME="hermes-content-vault-v1.1.0.tar.gz"
+VERSION="${1:-v1.0.0}"
+ARCHIVE_NAME="hermes-content-vault-${VERSION}.tar.gz"
 TARGET_ARCHIVE="$DIST_DIR/$ARCHIVE_NAME"
 
 mkdir -p "$DIST_DIR"

@@ -24,14 +24,13 @@ curl -fsSL https://raw.githubusercontent.com/simhaonline/hermes-installer/main/q
 
 ---
 
-## 📦 Release Downloads (Option A: Standalone Archive)
+## 📦 Release Downloads (Option A: Pure Content Vault)
 
-Download the complete pre-built offline bundle directly from [**GitHub Releases v1.0.0**](https://github.com/simhaonline/hermes-installer/releases/tag/v1.0.0):
+Download the pre-built content vault archive directly from [**GitHub Releases v1.0.0**](https://github.com/simhaonline/hermes-installer/releases/tag/v1.0.0):
 
 | Release Asset | Size | SHA-256 Checksum | Description |
 |---|---|---|---|
-| [**`hermes-content-vault-v1.1.0.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.1.0/hermes-content-vault-v1.1.0.tar.gz) | **151 MB** | `0e3205f343d3007c35a272ff7b7b8a171e1f041a110c9d1b197de590a42d25a9` | **Option A Pure Content & Vector Vault**: Lightweight release containing SQLite FTS5 database, ChromaDB dense vector embeddings, manifests, and dynamic execution tools (Zero binary bloat). |
-| [**`hermes-self-contained-installer.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-self-contained-installer.tar.gz) | **1.5 GB** | `2413ac78ba6566f7c81125fb173d32df190a07d691eade67a1e98698f355cb19` | **Complete Standalone Offline Installer**: Pre-built core, 16 compiled engines, all 19,453 skills, 64.5k community pool, 4.8k MCPs, 462 personas, 54 profiles, and SQLite vault. |
+| [**`hermes-content-vault-v1.0.0.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-content-vault-v1.0.0.tar.gz) | **151 MB** | `31c1e1aad8e36055a422bbcb76d3109fa6603dd72ad23276448cc0b055ff2b6a` | **Option A Pure Content & Vector Vault**: Standalone lightweight release containing SQLite FTS5 database, ChromaDB dense vector embeddings, manifests, and dynamic execution tools (Zero binary bloat). |
 | [**`hermes-vault.sqlite`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-vault.sqlite) | **301 MB** | `d3316c93a4f9164afff005bd83b78715bbe02ebe716015830764b0bb915489a0` | **SQLite Knowledge Vault**: Master database with FTS5 BM25 search tables, auto-sync triggers, and relational schemas. |
 | [**`hermes-agent-production.sh`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-agent-production.sh) | **181 MB** | `38c190fb7711f9f7f7940a3201c829ccc332faf5772e6490db8e919d1fc96860` | Production deployment script with embedded base64 payload. |
 | [**`hermes-assets.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-assets.tar.gz) | **134 MB** | `ce989e1e3b81d2e8b5aa640d5c9c874983d6236607162d0504048088e96157da` | Core asset tarball. |
@@ -39,23 +38,25 @@ Download the complete pre-built offline bundle directly from [**GitHub Releases 
 
 ---
 
-## ⚙️ Manual Offline Installation on Air-Gapped / New Devices
+## ⚙️ Deploying Content Vault on Any Hermes Machine
 
-If you downloaded the installer archive or transferred it via USB/SCP:
+To unpack the complete 19.6k+ skill registry and vector index onto any server running Hermes:
 
 ```bash
-# 1. Extract the package
-tar -xzf hermes-self-contained-installer.tar.gz
-cd hermes-self-contained-installer
+# 1. Extract the lightweight content archive
+tar -xzf hermes-content-vault-v1.0.0.tar.gz
 
-# 2. Run the offline installer (takes ~30 seconds)
-sudo bash install-hermes-local.sh
+# 2. Inspect hybrid registry stats (relational + ChromaDB vectors)
+./hermes-registry stats
 
-# 3. Verify installation (0 errors, 0 warnings)
-sudo bash install-hermes-local.sh --validate-only
+# 3. Dynamically resolve skills from natural language intent
+./hermes-registry resolve "audit smart contract reentrancy"
+
+# 4. Activate skills on-demand without duplicating files
+./hermes-registry activate audit-reentrancy --profile default
 ```
 
-*Zero external network calls, zero `git clone`, zero `uv` download, and zero `pip`/`npm` downloads.*
+*100% portable, zero binary bloat, and zero external embedding API costs.*
 
 ---
 

@@ -9,25 +9,22 @@
   2. Download/compile the 16 specialized AI engines (AutoAgent, PentAGI, REA, Trim-1, CodeGraph, MemPalace, etc.).
   3. Clone community repositories from GitHub.
 
-### The New Offline Self-Local Solution
-To eliminate all GitHub and internet dependencies when installing on other devices, two standardized backup tiers are provided:
+### The New Lightweight Content & Vector Vault Solution
+To eliminate all GitHub and internet dependencies when installing or backing up on other devices, two standardized options are provided:
 
-1. **Tier 1: Minimal Data & Knowledge Backup (230 MB)**:
-   - **File**: `hermes-vault.sqlite`
-   - **What it contains**: All 19,453 curated skills (full markdown text and YAML headers across 47 categories), 64,569 community skill packages, 4,827 MCP universe servers (including 35 recommended production servers), 462 agent persona definitions, 54 specialist profiles, 26 plugins, and 17 extended engines.
-   - **Use case**: Quick backup to Google Drive, S3, or USB drive to preserve the full collected database.
-
-2. **Tier 2: Complete Self-Contained Offline Installer (~1.7 GB)**:
-   - **Directory**: `/root/hermes-self-contained-installer/`
-   - **Archive**: `/root/hermes-self-contained-installer.tar.gz`
+1. **Option A: Pure Content & Vector Vault (151 MB, Recommended)**:
+   - **Archive**: `hermes-content-vault-v1.0.0.tar.gz`
    - **What it contains**:
-     - `install-hermes-local.sh` — The 100% offline installation script.
-     - `hermes-vault.sqlite` — The unified SQLite knowledge vault (230 MB).
-     - `hermes-vault` — Standalone CLI utility to query the vault.
-     - `hermes-engines.tar.gz` — All 16 pre-compiled binary engines, Node libraries, and Python site-packages (107 MB).
-     - `hermes-agent-core.tar.gz` — Pre-built Hermes Agent core engine with `node_modules` and Python launchers (333 MB).
-     - `hermes-system-assets.tar.gz` — All 19,453 skills, 64,500+ community packages, MCP universe catalog, and pre-compiled runtimes (1.1 GB).
-   - **Use case**: Transfer this single archive to any other Ubuntu machine (offline or air-gapped) and install in under 30 seconds with **zero GitHub downloads**.
+     - `hermes-vault.sqlite` — Master database with 19,691 curated skills, 64,687 community skills, 4,837 MCPs, 480 personas, 66 profiles, 32 plugins, and FTS5 BM25 search tables (301 MB uncompressed).
+     - `vector-registry/` — ChromaDB dense vector store with local ONNX embeddings across all skills, personas, profiles, and MCPs (69 MB uncompressed).
+     - `hermes-registry` & `hermes-vault` — Dynamic JIT execution and query CLIs.
+     - `assets/` — Complete collection manifests and JSON configurations.
+   - **Advantage**: **Zero binary bloat**, fast transfer, instant semantic search, and zero-copy JIT dynamic activation without duplicating files across profiles.
+
+2. **Option B: Standalone SQLite Knowledge Vault (301 MB)**:
+   - **File**: `hermes-vault.sqlite`
+   - **What it contains**: Full relational schema, B-Tree indexes, and FTS5 full-text tables.
+   - **Use case**: Database-only backup or embedding in custom pipelines.
 
 ---
 
@@ -35,14 +32,13 @@ To eliminate all GitHub and internet dependencies when installing on other devic
 
 ### Step 1: Copy Archive to Target Machine
 ```bash
-scp /root/hermes-self-contained-installer.tar.gz root@your-new-server:/root/
+scp /srv/hermes-installer/dist/hermes-content-vault-v1.0.0.tar.gz user@your-server:~
 ```
 
 ### Step 2: Extract the Package
 ```bash
-cd /root
-tar -xzf hermes-self-contained-installer.tar.gz
-cd hermes-self-contained-installer
+tar -xzf hermes-content-vault-v1.0.0.tar.gz
+cd hermes-content-vault-v1.0.0
 ```
 
 ### Step 3: Run the Local Installer

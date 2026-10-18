@@ -1,9 +1,9 @@
 # 🌌 Hermes Agent Enterprise Platform & Hybrid Vector Registry
 
 [![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg?style=for-the-badge&logo=github)](https://github.com/simhaonline/hermes-installer/releases/tag/v1.0.0)
-[![Curated Skills](https://img.shields.io/badge/curated_skills-19%2C691-success.svg?style=for-the-badge&logo=codementor)](https://github.com/simhaonline/hermes-installer)
+[![Curated Skills](https://img.shields.io/badge/curated_skills-19%2C775-success.svg?style=for-the-badge&logo=codementor)](https://github.com/simhaonline/hermes-installer)
 [![Community Skills](https://img.shields.io/badge/community_skills-64%2C687-purple.svg?style=for-the-badge&logo=buffer)](https://github.com/simhaonline/hermes-installer)
-[![Domain Classifications](https://img.shields.io/badge/skill_domains-49_categories-blueviolet.svg?style=for-the-badge&logo=databricks)](https://github.com/simhaonline/hermes-installer)
+[![Domain Classifications](https://img.shields.io/badge/skill_domains-51_categories-blueviolet.svg?style=for-the-badge&logo=databricks)](https://github.com/simhaonline/hermes-installer)
 [![Specialist Profiles](https://img.shields.io/badge/specialist_profiles-66-orange.svg?style=for-the-badge&logo=probot)](https://github.com/simhaonline/hermes-installer)
 [![Agent Personas](https://img.shields.io/badge/agent_personas-480-informational.svg?style=for-the-badge&logo=openai)](https://github.com/simhaonline/hermes-installer)
 [![Production MCPs](https://img.shields.io/badge/production_mcps-45_%2F_4%2C837-yellow.svg?style=for-the-badge&logo=fastapi)](https://github.com/simhaonline/hermes-installer)
@@ -13,7 +13,7 @@
 [![Architecture](https://img.shields.io/badge/security-Rootless_Docker_%2B_UID_1001-brightgreen.svg?style=for-the-badge&logo=docker)](https://github.com/simhaonline/hermes-installer)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=for-the-badge)](LICENSE)
 
-An enterprise-grade AI agent platform and hybrid vector ecosystem engineered for high-assurance autonomous workflows. Features **19,691 curated skills** meticulously indexed across **49 operational domains**, **64,687 community packages**, **480 agent personas**, **66 specialist profiles**, **45 production MCP servers** (from an indexed universe of 4,837), **32 active plugins**, and **17 pre-compiled native engines** (AST parsing, 99.2% token context compression, binary reverse engineering, autonomous penetration testing, and holographic AI memory).
+An enterprise-grade AI agent platform and hybrid vector ecosystem engineered for high-assurance autonomous workflows. Features **19,775 curated skills** meticulously indexed across **51 operational domains**, **64,687 community packages**, **480 agent personas**, **66 specialist profiles**, **45 production MCP servers** (from an indexed universe of 4,837), **32 active plugins**, and **17 pre-compiled native engines** (AST parsing, 99.2% token context compression, binary reverse engineering, autonomous penetration testing, and holographic AI memory).
 
 Operates with **strict non-root process isolation** (`predictatrade`, `UID=1001`), **Rootless Docker**, an **Interactive Web Dashboard / UI (`0.0.0.0:8888`)**, and a **hybrid dense-sparse vector registry** (SQLite FTS5 + ChromaDB ONNX embeddings) for zero-copy, just-in-time (JIT) skill discovery and execution.
 
@@ -32,8 +32,8 @@ Operates with **strict non-root process isolation** (`predictatrade`, `UID=1001`
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        HYBRID DENSE-SPARSE KNOWLEDGE VAULT                             │
 │  ┌────────────────────────────────────────────────┐  ┌───────────────────────────────┐ │
-│  │   Master SQLite FTS5 Database (301 MB)        │  │  ChromaDB Dense Vectors (69MB)│ │
-│  │   • 19,691 Curated Skills (Full Text Markdown)│  │  • all-MiniLM-L6-v2 Embeddings│ │
+│  │   Master SQLite FTS5 Database (303 MB)        │  │  ChromaDB Dense Vectors (70MB)│ │
+│  │   • 19,775 Curated Skills (Full Text Markdown)│  │  • all-MiniLM-L6-v2 Embeddings│ │
 │  │   • 64,687 Community Skill Package Pool       │  │  • Cosine Similarity Search   │ │
 │  │   • 480 Personas & 66 Specialist Profiles      │  │  • Instant Intent Resolution  │ │
 │  │   • BM25 Porter Stemmer Full-Text Indexes     │  │  • Zero External API Calls    │ │
@@ -68,25 +68,29 @@ Hermes includes a built-in, zero-dependency **Interactive Web Dashboard** served
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │  🌌 HERMES HYBRID VECTOR REGISTRY                                  [Port 8888: ACTIVE] │
-│  [ 🔎 Search across 19,691 Skills, 480 Personas, 45 MCPs... ] [ Filter: 49 Domains ▼ ] │
+│  [ 🔎 Search across 19,775 Skills, 480 Personas, 45 MCPs... ] [ Filter: 51 Domains ▼ ] │
 ├────────────────────────────────────────────────────────────────────────────────────────┤
-│  📊 19,691 Curated Skills  •  64,687 Community Pool  •  66 Profiles  •  32 Plugins     │
+│  📊 19,775 Curated Skills  •  64,687 Community Pool  •  66 Profiles  •  32 Plugins     │
 ├────────────────────────────────────────┬───────────────────────────────────────────────┤
 │  CATEGORIES & DOMAINS                  │  SKILL DETAILS & JIT ACTIONS                  │
-│  ► Foundation Systems (13,748)         │  Name: web3-audit                             │
+│  ► Foundation Systems (13,741)         │  Name: web3-audit                             │
 │  ► MiniMax Audio & Voice (1,292)       │  Category: security-audit                     │
 │  ► Laravel & PHP Ecosystem (810)       │  Vector Similarity: 0.942 [Dense ChromaDB]    │
-│  ► Quantitative Trading (574)          │  Full Description: Smart contract security    │
+│  ► Quantitative Trading (553)          │  Full Description: Smart contract security    │
 │  ► Office, Excel & PDF (383)           │  auditing suite covering reentrancy, oracle   │
-│  ► Community Elite (321)               │  manipulation, and liquidation math.          │
+│  ► Community Elite (74)                │  manipulation, and liquidation math.          │
 │  ► Kimi Suite Long-Context (309)       │  ───────────────────────────────────────────  │
 │  ► SEO & GEO Optimization (262)        │  [ ⚡ Install to Profile ]  [ 📖 View SKILL ]  │
-│  ► Manus Autonomous Agent (238)        │  [ 🗑️ Evict from Profile ]  [ 📋 Copy Prompt ] │
+│  ► Manus Autonomous Agent (241)        │  [ 🗑️ Evict from Profile ]  [ 📋 Copy Prompt ] │
+│  ► OpenAI Plugins (55)                 │                                               │
+│  ► Claude Skills (11)                  │                                               │
+│  ► Qwen Suite (9)                      │                                               │
+│  ► GLM Suite (5)                       │                                               │
 └────────────────────────────────────────┴───────────────────────────────────────────────┘
 ```
 
 ### Dashboard Capabilities
-- **🔎 Real-Time Hybrid Search**: Combines semantic vector cosine similarity (ChromaDB) with keyword full-text indexing (SQLite FTS5 BM25) across all 19,691 skills.
+- **🔎 Real-Time Hybrid Search**: Combines semantic vector cosine similarity (ChromaDB) with keyword full-text indexing (SQLite FTS5 BM25) across all 19,775 skills.
 - **⚡ 1-Click Dynamic Install & Activate**: Activate any tool into any of the 66 specialist profiles (`orchestrator`, `security-audit`, `metatrader-quant`, etc.) without copying files or bloating workspace directories.
 - **🗑️ 1-Click Eviction & Uninstall**: Evict tools from profile context cleanly when tasks complete to prevent token ceiling degradation.
 - **📖 Full `SKILL.md` Inspector**: View complete markdown instructions, YAML frontmatter, input/output schemas, and script bindings in a clean modal.
@@ -143,62 +147,133 @@ hermes-registry stats
 
 ---
 
-## 🎯 Complete Master Skill Ecosystem: 19,691 Skills Across ALL 49 Domains
+## 🎯 Complete Master Skill Ecosystem: 19,775 Skills Across ALL 51 Domains
 
-The ecosystem contains **19,691 curated, production-ready skills** with full YAML frontmatter, execution instructions, input/output schemas, and script bindings. Every single domain is cataloged below:
+The ecosystem contains **19,775 curated, production-ready skills** with full YAML frontmatter, execution instructions, input/output schemas, and script bindings. Every single domain is cataloged below:
 
 | # | Domain Classification | Skill Count | Focus & Core Capabilities | Representative Skills |
 |:---:|---|:---:|---|---|
-| 1 | **`foundation-skills`** | **13,748** | Complete systems engineering, Linux internals, network defense, CI/CD, cloud architecture, containerization, fullstack patterns, algorithms, API design. | `bash`, `go`, `cpp`, `csharp`, `kubernetes-ops`, `aws-well-architected`, `dockerfile`, `jwt`, `csrf`, `sqli`, `git-advanced`, `linux-hardening` |
+| 1 | **`foundation-skills`** | **13,741** | Complete systems engineering, Linux internals, network defense, CI/CD, cloud architecture, containerization, fullstack patterns, algorithms, API design. | `bash`, `go`, `cpp`, `csharp`, `kubernetes-ops`, `aws-well-architected`, `dockerfile`, `jwt`, `csrf`, `sqli`, `git-advanced`, `linux-hardening` |
 | 2 | **`minimax-audio-voice`** | **1,292** | Multi-modal audio synthesis, MiniMax TTS/Music3, podcast production, voiceover, sound design, audio DSP, video synchronization. | `voiceover`, `music-generation`, `sound-synthesis`, `captions`, `video-production`, `podcast-studio`, `audio-video-to-text` |
 | 3 | **`laravel-php-ecosystem`** | **810** | Modern PHP 8.3/8.4, Laravel 11/12 architecture, Bagisto e-commerce, Livewire, Eloquent query optimization, Pest testing, Sanctum auth. | `laravel-expert`, `bagisto-code-review`, `eloquent-chunking`, `pest-datasets`, `blade-vue-events`, `saloon-api-sdk` |
-| 4 | **`quant-trading`** | **574** | Quantitative analysis, MetaTrader MQL4/MQL5 Expert Advisors, TradingView Pine Script v5, options volatility modeling, DEX arbitrage, risk parity. | `mql5-docs-lookup`, `tradingview-pine-indicators`, `options-volatility`, `pairs-trading`, `backtest-strategy`, `risk-engine` |
+| 4 | **`quant-trading`** | **553** | Quantitative analysis, MetaTrader MQL4/MQL5 Expert Advisors, TradingView Pine Script v5, options volatility modeling, DEX arbitrage, risk parity. | `mql5-docs-lookup`, `tradingview-pine-indicators`, `options-volatility`, `pairs-trading`, `backtest-strategy`, `risk-engine` |
 | 5 | **`office-excel-pdf`** | **383** | Enterprise spreadsheet automation, Excel-DNA C# UDFs, DCF valuation, WeasyPrint PDF layout, ComPDFKit OCR, DOCX parsing, table extraction. | `excel-dna-addins`, `excel-dcf-modeler`, `compdf-ocr`, `pdf-merge-split`, `table-extractor`, `docx-generator`, `sheetsmith` |
-| 6 | **`community-elite`** | **321** | Strict linting, high-assurance development patterns, AST transformation, static code quality enforcement. | `anyesh-bad-python`, `code-quality-reviewer`, `python-patterns`, `refactoring-catalog` |
-| 7 | **`submitted`** | **318** | Peer-reviewed community submissions across specialized scientific, industrial, and production workflows. | `specialized-testing`, `domain-modeling`, `system-assessment`, `scientific-schematics` |
-| 8 | **`kimi-suite`** | **309** | Ultra-long context reasoning, recursive multi-document synthesis, Kimi Code CLI tools, problem decomposition, citation verification. | `gen-docs`, `tests`, `latex`, `pull-request`, `mocking`, `dcf_skill`, `report-qa`, `benchmarks` |
-| 9 | **`seo-growth-marketing`** | **262** | Generative Engine Optimization (GEO), AI search visibility (Perplexity/ChatGPT), programmatic SEO, keyword clusters, technical SEO audits. | `seo-aeo-geo`, `seo-technical-audit`, `seo-content-cluster`, `geo-platform-optimizer`, `citation-verification`, `serp-overlap` |
-| 10 | **`manus-agent`** | **238** | Autonomous web execution, multi-query exploratory research, stealth browser automation, structured citation synthesis. | `workflows`, `reference`, `platforms`, `yahoo-api`, `deep-research`, `browser-pilot` |
-| 11 | **`workbuddy-suite`** | **193** | Enterprise corporate productivity, calendar defragmentation, executive brief synthesis, automated document triage. | `workbuddy-agent-briefings`, `kb-lint`, `tracing`, `value`, `cowork-rfp-response`, `cowork-deal-room` |
-| 12 | **`official-optional`** | **152** | Vendor-specific integrations, official cloud SDK bindings, infrastructure orchestration across hyperscalers. | `aws-modules`, `azure-common-patterns`, `gcp-cloud-functions`, `docker-compose-creator` |
-| 13 | **`backend-languages`** | **135** | High-performance backend engineering across Go, Rust, Java, C#, C++, Python, TypeScript. | `golang-pro`, `rust-async-patterns`, `spring-boot-engineer`, `dotnet-backend-patterns` |
-| 14 | **`ui-ux-design`** | **127** | Figma Code Connect, design token systems, Radix UI, Tailwind CSS, micro-interactions, WCAG accessibility, typography hierarchy. | `figma-code-connect`, `tailwind-best-practices`, `framer-motion`, `design-tokens-sync`, `color-palette-extractor` |
-| 15 | **`mathematics-ai`** | **116** | Mathematical theorem proving, Lean/Coq formalization, LaTeX paper reading, symbolic derivation, AI4Math research workflows. | `ai4math-paper-reading`, `latex-paper-conversion`, `graph-theory-researcher`, `sympy`, `scipy-optimization` |
-| 16 | **`tencent-cloud-ecosystem`** | **103** | Serverless Tencent CloudBase (TCB), TRTC real-time communications, Tencent Maps WebGL, WeChat Mini-Programs. | `cloudbase-agent`, `trtc-sdk`, `tencentmap-jsapi-gl`, `wechat-miniprogram`, `wechatpay-basic` |
-| 17 | **`knowledge-graph`** | **92** | Graph RAG, Neo4j / FalkorDB Cypher queries, ontology modeling, semantic link prediction, Memstack graph stores. | `knowledge-graph-neo4j`, `lightrag`, `cypher-query-builder`, `ontology-mapper`, `mempalace` |
-| 18 | **`predictatrade`** | **76** | Proprietary quantitative infrastructure, MT5 Wine operations, real-time signal reconciliation, broker cost accounting. | `pat-operations`, `pat-monitoring-deck`, `pat-signal-delivery-audit`, `pat-ev-math-accuracy`, `windows-mt5-linux-wine` |
-| 19 | **`omnichannel-messaging`** | **47** | Discord bots, Telegram mini-apps, WhatsApp Wassenger automation, Slack event listeners, Gmail pipelines. | `discord-bot-architect`, `telegram-mini-app-skill`, `whatsapp-cloud-api`, `slack-workflows`, `laya` |
-| 20 | **`databases-timeseries`** | **45** | High-throughput time-series databases, QuestDB ingestion, TimescaleDB hypertables, ClickHouse analytics, Redis pub/sub. | `questdb-tsbs-benchmark`, `timescaledb-hyperfunctions`, `clickhouse-io`, `redis-semantic-cache` |
-| 21 | **`astro-web-framework`** | **43** | Astro 4/5 development, content collections, edge middleware, islands architecture, hybrid SSR/SSG rendering. | `astro-content-collections`, `astro-ssr-rule`, `astro-edge-middleware-scope`, `astro-images-rule` |
-| 22 | **`nginx-caddy-infrastructure`** | **35** | High-performance reverse proxies, Nginx load balancing, Caddy Zero-Trust TLS, rate limiting, DDoS mitigation. | `nginx-hardening`, `caddy-security`, `ssl-tls-management`, `reverse-proxy` |
-| 23 | **`security-audit`** | **33** | Penetration testing, OWASP ASVS verification, smart contract auditing, IAM role least-privilege, threat modeling. | `owasp-asvs`, `smart-contract-formal-verification`, `iam-policy-reviewer`, `threat-model-creator`, `audit-reentrancy` |
-| 24 | **`translation-localization`** | **33** | Multi-agent neural translation, terminology verification, RTL layouts, bilingual book translation, continuous PO/JSON sync. | `translation-localization`, `terminology-checker`, `bilingual-aligner`, `rtl-layout-validator` |
-| 25 | **`web-scraping`** | **31** | Anti-bot bypass, stealth headless browsers, Scrapling DOM parsing, Scrapfly proxy pools, Apify actors. | `scrapling-crawler`, `playwright-interactive`, `stealth-browser`, `anti-bot-scraping`, `hasdata-cli` |
-| 26 | **`workflow-automation`** | **31** | n8n workflow construction, Temporal distributed workflows, Airflow DAG generation, background job queues. | `n8n-workflow-patterns`, `temporal-golang-pro`, `airflow-dag-generator`, `bullmq-specialist` |
-| 27 | **`safe-agent-runtime`** | **30** | NVIDIA OpenShell sandboxing, policy enforcement, container network firewalls, token consumption governors. | `openshell-policy-advisor`, `token-efficiency-optimizer`, `audit-integrity-gate`, `openshell-cli` |
-| 28 | **`enterprise-data-cloud`** | **25** | Cloud data warehouses, Microsoft Fabric Lakehouse, Snowflake RBAC, BigQuery ML, Databricks Unity Catalog. | `microsoft-fabric`, `snowflake-governance-coverage`, `bigquery-view-generator`, `databricks-bundle` |
-| 29 | **`chart-visualization`** | **13** | AntV G2/G6 infographics, Apache ECharts, ApexCharts, GPT-Vis dynamic SVG chart generation. | `antv-g2-chart`, `antv-g6-graph`, `antv-infographic`, `antv-x6-editor`, `apexcharts-skill`, `lime-echart` |
-| 30 | **`context-optimization`** | **10** | Context window compression, TOON serialization, prompt trimming, AST surgical extraction. | `mcptoon`, `mcptoon-cli`, `mcptoon-triage`, `mcptoon-connect`, `mcptoon-authoring` |
-| 31 | **`enterprise-operations`** | **10** | Autonomous browser tasks, proxy configuration, Crawlee scrapers, and enterprise search APIs. | `browser-skill`, `crawlee-scraper-skill`, `proxy-config-skill`, `serper-search-skill`, `brave-search-skill` |
-| 32 | **`skill-forge`** | **9** | Skill development tooling, Conda-Forge recipes, Pydantic Evals, Ratler build, Typst typesetting. | `conda-forge`, `pydantic-evals`, `rattler-build`, `typst`, `sqlalchemy`, `textual` |
-| 33 | **`skill-tutorials`** | **6** | Documentation frameworks, Fumadocs i18n sync, philosophical illustration, skill article publishing. | `fumadocs-i18n`, `fumadocs-article-importer`, `philosophical-illustrator`, `skill-article-publisher` |
-| 34 | **`token-saving`** | **6** | Ultra-fast token trimming, progressive disclosure, prompt budget governance, and context pruning. | `trim-1`, `token-efficiency-optimizer`, `token-saver`, `token-saver-config`, `skill-progressive-disclosure` |
-| 35 | **`agent-orchestration-flows`** | **3** | Cyclic state-machine agents, swarm consensus algorithms, DSPy prompt optimization pipelines. | `agentic-flow-engine`, `agent-orchestration-swarm`, `dspy-prompt-optimizer` |
-| 36 | **`cybersecurity-red-blue`** | **3** | Atomic Red Team simulation, authorized ethical hacking playbooks, and LLM security audits. | `atomic-red-team-testing`, `ethical-hacking-playbook`, `llm-security-audit` |
-| 37 | **`data-analytics-engineering`** | **3** | Advanced time-series aggregation, automated data engineering agents, spreadsheet formula engines. | `advanced-data-analytics`, `data-engineering-agent`, `spreadsheet-specialist` |
-| 38 | **`geo-search-optimization`** | **3** | Generative Engine Optimization audits, AI citation optimization, and programmatic e-commerce SEO. | `geo-search-audit`, `ai-citation-optimizer`, `ecommerce-seo-analyzer` |
-| 39 | **`legal-clm-procurement`** | **3** | Contract lifecycle management, clause auto-redlining, RFP procurement scoring, logistics AI. | `clm-contract-lifecycle`, `procurement-rfp-evaluation`, `supply-chain-logistics-ai` |
-| 40 | **`social-media-growth`** | **3** | Social intelligence, viral hook engineering, and cross-platform publishing pipelines. | `social-listening-intelligence`, `viral-hook-creator`, `social-media-automation` |
-| 41 | **`ai-governance-compliance`** | **2** | EU AI Act and NIST AI RMF regulatory auditing, runtime safety guardrails, and risk registries. | `ai-governance-eu-nist`, `ai-guardrails-safety` |
-| 42 | **`computer-vision-ai`** | **2** | Roboflow vision pipelines, multimodal OCR, visual defect inspection, and document layout parsing. | `computer-vision-roboflow`, `multimodal-vision-ocr` |
-| 43 | **`deep-learning-nlp`** | **2** | End-to-end NLP pipelines, transformer fine-tuning, and modern deep learning training recipes. | `nlp-pipeline-engineering`, `deep-learning-recipes` |
-| 44 | **`executive-corporate-governance`** | **2** | C-suite executive decision advisory, board decks, talent ops, and strategic management frameworks. | `c-suite-executive-advisory`, `hr-talent-management` |
-| 45 | **`fact-checking-verification`** | **2** | Multi-source claim decomposition, citation verification, and formal problem-solving protocols. | `openfactcheck-verification`, `formal-problem-solving-fpf` |
-| 46 | **`finance-investment-ops`** | **2** | LBO/DCF valuation modeling, corporate forensic accounting, and audit trail automation. | `financial-modeling-valuation`, `accounting-automation-forensics` |
-| 47 | **`gtm-customer-success`** | **2** | B2B outbound pipeline acceleration, lead scoring, and automated customer churn prevention. | `gtm-pipeline-automation`, `customer-success-retention` |
-| 48 | **`mlops-infrastructure`** | **2** | High-throughput model serving (vLLM, Triton), GPU cluster right-sizing, and MLOps pipelines. | `model-serving-vllm-triton`, `mlops-pipeline-orchestration` |
-| 49 | **`document-automation`** | **1** | Enterprise multi-format document parser, schema-driven data extraction, and contract synthesis. | `document-specialist-pro` |
-| 50 | **Community Skill Pool** | **64,687** | Massive indexed database of developer tools, CLI utilities, and community skill packages. | *Full pool indexed in `community_skills` with BM25 FTS5* |
+| 6 | **`custom`** | **352** | Custom enterprise automations, internal workflows, and domain-specific agent playbooks. | `custom-workflow`, `custom-pipeline`, `internal-tools` |
+| 7 | **`kimi-suite`** | **309** | Ultra-long context reasoning, recursive multi-document synthesis, Kimi Code CLI tools, problem decomposition, citation verification. | `gen-docs`, `tests`, `latex`, `pull-request`, `mocking`, `dcf_skill`, `report-qa`, `benchmarks` |
+| 8 | **`seo-growth-marketing`** | **262** | Generative Engine Optimization (GEO), AI search visibility (Perplexity/ChatGPT), programmatic SEO, keyword clusters, technical SEO audits. | `seo-aeo-geo`, `seo-technical-audit`, `seo-content-cluster`, `geo-platform-optimizer`, `citation-verification`, `serp-overlap` |
+| 9 | **`manus-agent`** | **241** | Autonomous web execution, multi-query exploratory research, stealth browser automation, structured citation synthesis. | `workflows`, `reference`, `platforms`, `yahoo-api`, `deep-research`, `browser-pilot` |
+| 10 | **`workbuddy-suite`** | **192** | Enterprise corporate productivity, calendar defragmentation, executive brief synthesis, automated document triage. | `workbuddy-agent-briefings`, `kb-lint`, `tracing`, `value`, `cowork-rfp-response`, `cowork-deal-room` |
+| 11 | **`backend-languages`** | **135** | High-performance backend engineering across Go, Rust, Java, C#, C++, Python, TypeScript. | `golang-pro`, `rust-async-patterns`, `spring-boot-engineer`, `dotnet-backend-patterns` |
+| 12 | **`official-optional`** | **128** | Vendor-specific integrations, official cloud SDK bindings, infrastructure orchestration across hyperscalers. | `aws-modules`, `azure-common-patterns`, `gcp-cloud-functions`, `docker-compose-creator` |
+| 13 | **`ui-ux-design`** | **117** | Figma Code Connect, design token systems, Radix UI, Tailwind CSS, micro-interactions, WCAG accessibility, typography hierarchy. | `figma-code-connect`, `tailwind-best-practices`, `framer-motion`, `design-tokens-sync`, `color-palette-extractor` |
+| 14 | **`mathematics-ai`** | **116** | Mathematical theorem proving, Lean/Coq formalization, LaTeX paper reading, symbolic derivation, AI4Math research workflows. | `ai4math-paper-reading`, `latex-paper-conversion`, `graph-theory-researcher`, `sympy`, `scipy-optimization` |
+| 15 | **`tencent-cloud-ecosystem`** | **103** | Serverless Tencent CloudBase (TCB), TRTC real-time communications, Tencent Maps WebGL, WeChat Mini-Programs. | `cloudbase-agent`, `trtc-sdk`, `tencentmap-jsapi-gl`, `wechat-miniprogram`, `wechatpay-basic` |
+| 16 | **`community-elite`** | **74** | Strict linting, high-assurance development patterns, AST transformation, static code quality enforcement. | `anyesh-bad-python`, `code-quality-reviewer`, `python-patterns`, `refactoring-catalog` |
+| 17 | **`openai-plugins`** | **55** | Converted OpenAI ChatGPT plugin manifests, GPT Actions, OpenAPI tool definitions, and procedural workflows. | `zapier-ai-actions`, `wolfram-alpha`, `speak`, `klarna-shopping`, `expedia` |
+| 18 | **`knowledge-graph`** | **47** | Graph RAG, Neo4j / FalkorDB Cypher queries, ontology modeling, semantic link prediction, Memstack graph stores. | `knowledge-graph-neo4j`, `lightrag`, `cypher-query-builder`, `ontology-mapper`, `mempalace` |
+| 19 | **`astro-web-framework`** | **43** | Astro 4/5 development, content collections, edge middleware, islands architecture, hybrid SSR/SSG rendering. | `astro-content-collections`, `astro-ssr-rule`, `astro-edge-middleware-scope`, `astro-images-rule` |
+| 20 | **`omnichannel-messaging`** | **43** | Discord bots, Telegram mini-apps, WhatsApp Wassenger automation, Slack event listeners, Gmail pipelines. | `discord-bot-architect`, `telegram-mini-app-skill`, `whatsapp-cloud-api`, `slack-workflows`, `laya` |
+| 21 | **`nginx-caddy-infrastructure`** | **35** | High-performance reverse proxies, Nginx load balancing, Caddy Zero-Trust TLS, rate limiting, DDoS mitigation. | `nginx-hardening`, `caddy-security`, `ssl-tls-management`, `reverse-proxy` |
+| 22 | **`translation-localization`** | **32** | Multi-agent neural translation, terminology verification, RTL layouts, bilingual book translation, continuous PO/JSON sync. | `translation-localization`, `terminology-checker`, `bilingual-aligner`, `rtl-layout-validator` |
+| 23 | **`safe-agent-runtime`** | **28** | NVIDIA OpenShell sandboxing, policy enforcement, container network firewalls, token consumption governors. | `openshell-policy-advisor`, `token-efficiency-optimizer`, `audit-integrity-gate`, `openshell-cli` |
+| 24 | **`security-audit`** | **26** | Penetration testing, OWASP ASVS verification, smart contract auditing, IAM role least-privilege, threat modeling. | `owasp-asvs`, `smart-contract-formal-verification`, `iam-policy-reviewer`, `threat-model-creator`, `audit-reentrancy` |
+| 25 | **`web-scraping`** | **26** | Anti-bot bypass, stealth headless browsers, Scrapling DOM parsing, Scrapfly proxy pools, Apify actors. | `scrapling-crawler`, `playwright-interactive`, `stealth-browser`, `anti-bot-scraping`, `hasdata-cli` |
+| 26 | **`workflow-automation`** | **26** | n8n workflow construction, Temporal distributed workflows, Airflow DAG generation, background job queues. | `n8n-workflow-patterns`, `temporal-golang-pro`, `airflow-dag-generator`, `bullmq-specialist` |
+| 27 | **`enterprise-data-cloud`** | **25** | Cloud data warehouses, Microsoft Fabric Lakehouse, Snowflake RBAC, BigQuery ML, Databricks Unity Catalog. | `microsoft-fabric`, `snowflake-governance-coverage`, `bigquery-view-generator`, `databricks-bundle` |
+| 28 | **`databases-timeseries`** | **23** | High-throughput time-series databases, QuestDB ingestion, TimescaleDB hypertables, ClickHouse analytics, Redis pub/sub. | `questdb-tsbs-benchmark`, `timescaledb-hyperfunctions`, `clickhouse-io`, `redis-semantic-cache` |
+| 29 | **`chart-visualization`** | **12** | AntV G2/G6 infographics, Apache ECharts, ApexCharts, GPT-Vis dynamic SVG chart generation. | `antv-g2-chart`, `antv-g6-graph`, `antv-infographic`, `antv-x6-editor`, `apexcharts-skill`, `lime-echart` |
+| 30 | **`claude-skills`** | **11** | Anthropic Claude Code plugins and skill adapters extracted from official and community sources. | `claude-code-guide`, `claude-code-sessions`, `claude-code-expert`, `claude-design` |
+| 31 | **`productivity`** | **11** | Developer productivity, desktop helpers, terminal utilities, clipboard and window managers. | `maccy`, `velja`, `shottr`, `eartrumpet` |
+| 32 | **`creative`** | **10** | Creative writing, generative visual arts, p5.js generative shaders, Manim mathematical animations. | `manim-video`, `p5js`, `humanizer`, `brand-voice` |
+| 33 | **`enterprise-operations`** | **10** | Autonomous browser tasks, proxy configuration, Crawlee scrapers, and enterprise search APIs. | `browser-skill`, `crawlee-scraper-skill`, `proxy-config-skill`, `serper-search-skill`, `brave-search-skill` |
+| 34 | **`software-development`** | **9** | Advanced software patterns, TDD loops, refactoring guides, architecture decision records. | `clean-code`, `refactoring`, `tdd-guide`, `adr-generator` |
+| 35 | **`qwen-suite`** | **9** | Alibaba Qwen Code skills, Qwen-Agent multi-turn reasoning, tool calling, and multimodal enhancements. | `qwen-agent`, `qwen-image-enhance`, `qwen-coding-standards` |
+| 36 | **`skill-forge`** | **9** | Skill development tooling, Conda-Forge recipes, Pydantic Evals, Ratler build, Typst typesetting. | `conda-forge`, `pydantic-evals`, `rattler-build`, `typst`, `sqlalchemy`, `textual` |
+| 37 | **`skill-tutorials`** | **6** | Documentation frameworks, Fumadocs i18n sync, philosophical illustration, skill article publishing. | `fumadocs-i18n`, `fumadocs-article-importer`, `philosophical-illustrator`, `skill-article-publisher` |
+| 38 | **`autonomous-ai-agents`** | **5** | Autonomous agent frameworks, recursive self-improvement loops, plan execution monitors. | `autoagent`, `goal-loop`, `agentic-verifier` |
+| 39 | **`glm-suite`** | **5** | Zhipu AI GLM multi-modal agents, image generation, paper research, and code assistants. | `glm-image-gen`, `glm-researcher`, `glm-code-reviewer` |
+| 40 | **`apple`** | **4** | Apple macOS/iOS native integrations: Apple Notes (memo CLI), FindMy, iMessage, and Reminders. | `apple-notes`, `findmy`, `imessage`, `apple-reminders` |
+| 41 | **`research`** | **4** | ArXiv paper search, scientific citation graph traversal, LLM wiki note-taking. | `arxiv`, `llm-wiki`, `research-assistant` |
+| 42 | **`context-optimization`** | **4** | Context window compression, TOON serialization, prompt trimming, AST surgical extraction. | `mcptoon`, `mcptoon-cli`, `mcptoon-triage`, `mcptoon-connect` |
+| 43 | **`token-saving`** | **4** | Ultra-fast token trimming, progressive disclosure, prompt budget governance, and context pruning. | `trim-1`, `token-efficiency-optimizer`, `token-saver`, `token-saver-config` |
+| 44 | **`media`** | **3** | Audio spectrogram visualization (Songsee), GIF search (Tenor), and YouTube content synthesis. | `songsee`, `gif-search`, `youtube-content` |
+| 45 | **`email`** | **2** | Terminal email management via Himalaya CLI (IMAP/SMTP) and automated email composer. | `himalaya`, `email-composer` |
+| 46 | **`devops`** | **1** | Software development lifecycle review, verified Kanban handoffs, CI/CD promotion. | `sdlc-review` |
+| 47 | **`note-taking`** | **1** | Markdown knowledge base note curation and cross-referencing. | `notes` |
+| 48 | **`ops`** | **1** | Production site reliability, incident response, and runtime observability. | `ops-inspector` |
+| 49 | **`pat-fresh-server-bringup`** | **1** | Predict-A-Trade automated server provisioning and MT5 container bootstrap. | `pat-fresh-server-bringup` |
+| 50 | **`social-media`** | **1** | X/Twitter CLI automation (xurl): raw post search, thread generation, media uploads. | `xurl` |
+| 51 | **`web`** | **1** | Web API integration and HTTP transport security patterns. | `web-access` |
+| - | **Community Skill Pool** | **64,687** | Massive indexed database of developer tools, CLI utilities, and community skill packages. | *Full pool indexed in `community_skills` with BM25 FTS5* |
+
+---
+
+## 🔄 Multi-Provider GitHub Scraper & Harvester (`agentskills.io` Spec)
+
+Hermes includes a production-grade, zero-dependency Python 3.11+ scraper (`scraper.py`) and conversion module (`converter.py`) designed to discover, extract, normalize, and integrate AI skills, MCP servers, and plugin manifests across public AI providers:
+
+```text
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│               MULTI-PROVIDER REPOSITORY SCRAPER & CONVERTER (agentskills.io)           │
+│                                                                                        │
+│   OpenAI        Anthropic       Moonshot       Manus        Zhipu      Tencent  Alibaba│
+│   (ChatGPT)     (Claude Code)   (Kimi CLI)     (OpenManus)  (GLM)      (TCB)    (Qwen) │
+│   ai-plugin     .claude-plugin  kimi-skills    skills/      SKILL.md   skills/  agent/ │
+└───────┬─────────────┬──────────────┬──────────────┬───────────┬──────────┬─────────┬───┘
+        │             │              │              │           │          │         │
+        ▼             ▼              ▼              ▼           ▼          ▼         ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        ARTEFACT NORMALIZATION & CONVERTER (converter.py)               │
+│   • agentskills.io Frontmatter: name (<=64 chars, a-z0-9-), description (<=1024 chars) │
+│   • Mandatory Actionable Sections: ## When to Use, ## Procedure, ## Pitfalls, ## Verify│
+│   • Provider Metadata Preservation: metadata.hermes (category, provider, license, repo)│
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │
+                                            ▼
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        HYBRID VAULT & VECTOR REGISTRY INGESTION                        │
+│   • Disk Sync        : /srv/hermes-installer/harvested-skills/ & ~/.hermes/skill-library│
+│   • SQLite FTS5 Vault: hermes-vault.sqlite (curated_skills + curated_skills_fts)      │
+│   • ChromaDB Vectors : vector-registry/ (skills_semantic all-MiniLM-L6-v2 embeddings)  │
+│   • Instant JIT Exec : hermes-registry resolve "<intent>" -> hermes-registry activate │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Supported Provider Formats
+- **OpenAI Plugins & Actions (`ai-plugin.json`)**: Converts OpenAI plugin manifests and OpenAPI endpoints into procedural, step-by-step Hermes execution instructions.
+- **Anthropic Claude Code (`.claude-plugin/plugin.json`, `skills/`)**: Extracts nested skills, tool calls, and agent definitions into standalone agentskills.io format.
+- **Moonshot Kimi (`kimi-skills`, `kimi-cli`)**: Normalizes long-context reasoning tools, LaTeX parsers, and financial valuation modules.
+- **Manus & OpenManus (`ai-manus`, `OpenManus`)**: Extracts autonomous web navigation, stealth browser control, and research workflows.
+- **Zhipu GLM (`GLM-skills`)**: Integrates multi-modal generation and visual agent skills.
+- **Tencent CloudBase (`TencentCloudBase/skills`)**: Ingests serverless TCB APIs, TRTC real-time tools, and WeChat mini-program modules.
+- **Alibaba Qwen (`qwen-agent`, `agent-skills`)**: Converts multi-agent reasoning, coding tools, and visual enhancers.
+- **Cross-Provider Repositories**: Scrapes `sickn33/agentic-awesome-skills`, `vivy-yi/awesome-skills`, and `mcp-manifest/mcp-manifest-spec`.
+
+### Production Hardening & Rate-Limit Management
+- **Automatic Token Discovery**: Automatically extracts GitHub Personal Access Tokens from `GITHUB_TOKEN`, `GH_TOKEN`, or local git credentials (`/root/.git-credentials`) for up to 5,000 requests/hour.
+- **Recursive Git Trees API**: Fetches entire repository directory structures in a single HTTP request (`/git/trees/{branch}?recursive=1`), bypassing per-file API limits.
+- **HTTP ETag Conditional Requests**: Stores response ETags in `.cache/github_scraper/` so subsequent runs on unchanged repositories consume 0 rate limit tokens.
+- **Open-Source License Auditing**: Inspects repository licenses (MIT, Apache-2.0, BSD, GPL, etc.) and skips repositories without explicit open-source authorization.
+
+### Harvester CLI Usage
+```bash
+# 1. Run unit test suite for converter and scraper (11 passing tests)
+python3 -m unittest test_converter.py test_scraper.py -v
+
+# 2. Scrape curated seeds and convert to agentskills.io format
+python3 scraper.py --seeds-only --limit-artifacts 10
+
+# 3. Harvest and directly ingest into SQLite Vault and ChromaDB Vector Registry
+python3 scraper.py --seeds-only --ingest
+
+# 4. Scrape a specific provider
+python3 scraper.py --provider kimi --ingest
+python3 scraper.py --provider openai --ingest
+
+# 5. Resolve and activate a freshly harvested skill
+hermes-registry resolve "glm image generation"
+hermes-registry activate glm-image-gen --profile default
+```
 
 ---
 

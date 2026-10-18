@@ -1,0 +1,233 @@
+{
+  "$schema": "https://raw.githubusercontent.com/design-tokens/community-group/main/specs/design-tokens.json",
+  "name": "Sovereign Institutional Design Tokens",
+  "version": "1.0.0",
+  "system": {
+    "aesthetic": "Swiss Private Banking & High-End Institutional Editorial",
+    "usage": "Brand-agnostic / White-label enterprise, fintech, SaaS, and luxury platform foundation"
+  },
+  "color": {
+    "navy": {
+      "deep": {
+        "value": "#071324",
+        "rgb": "rgb(7, 19, 36)",
+        "hsl": "hsl(215, 67%, 8%)",
+        "cmyk": "81, 47, 0, 86",
+        "role": "Deepest midnight canvas, dark hero sections, footers"
+      },
+      "primary": {
+        "value": "#0C1E36",
+        "rgb": "rgb(12, 30, 54)",
+        "hsl": "hsl(214, 64%, 13%)",
+        "cmyk": "78, 44, 0, 79",
+        "role": "Primary corporate identity, action headers, primary buttons"
+      },
+      "surface": {
+        "value": "#142844",
+        "rgb": "rgb(20, 40, 68)",
+        "hsl": "hsl(215, 55%, 17%)",
+        "cmyk": "71, 41, 0, 73",
+        "role": "Elevated navy surface, tooltips, dark card containers"
+      },
+      "slate": {
+        "value": "#2E3761",
+        "rgb": "rgb(46, 55, 97)",
+        "hsl": "hsl(229, 36%, 28%)",
+        "role": "Secondary deep navy tone"
+      },
+      "muted": {
+        "value": "#344069",
+        "rgb": "rgb(52, 64, 105)",
+        "hsl": "hsl(226, 34%, 31%)",
+        "role": "Tertiary slate navy tone"
+      },
+      "subtle": {
+        "value": "rgba(12, 30, 54, 0.04)",
+        "role": "Soft navy hover tint on light surfaces"
+      },
+      "border": {
+        "value": "rgba(12, 30, 54, 0.12)",
+        "role": "Hairline navy border on light surfaces"
+      }
+    },
+    "accents": {
+      "gold": {
+        "value": "#FBBA03",
+        "rgb": "rgb(251, 186, 3)",
+        "hsl": "hsl(44, 98%, 50%)",
+        "cmyk": "0, 26, 99, 2",
+        "role": "Prestige gold accent, verification badges, stars, premium tier"
+      },
+      "yellow": {
+        "value": "#E8E006",
+        "rgb": "rgb(232, 224, 6)",
+        "hsl": "hsl(58, 95%, 47%)",
+        "role": "Apex dynamic highlight"
+      },
+      "green": {
+        "value": "#88BD31",
+        "rgb": "rgb(136, 189, 49)",
+        "hsl": "hsl(83, 59%, 47%)",
+        "role": "ESG compliance, verified status, positive growth"
+      },
+      "cyan": {
+        "value": "#16A7B5",
+        "rgb": "rgb(22, 167, 181)",
+        "hsl": "hsl(185, 78%, 40%)",
+        "role": "Technical precision, telemetry, calibration"
+      },
+      "orange": {
+        "value": "#F18D58",
+        "rgb": "rgb(241, 141, 88)",
+        "hsl": "hsl(21, 85%, 65%)",
+        "role": "Energy, active process, heat warning"
+      },
+      "blue": {
+        "value": "#156BA6",
+        "rgb": "rgb(21, 107, 166)",
+        "hsl": "hsl(204, 78%, 37%)",
+        "role": "Security custody, logistics, freight transport"
+      }
+    },
+    "canvas": {
+      "white": {
+        "value": "#FFFFFF",
+        "role": "Pure white base canvas, crisp form fields"
+      },
+      "warm": {
+        "value": "#FBFBFC",
+        "role": "Warm prestige editorial alternating section background"
+      },
+      "elevated": {
+        "value": "#F4F6F9",
+        "role": "Hover states, table row alternates, elevated light cards"
+      }
+    },
+    "border": {
+      "standard": {
+        "value": "#E5E9F0",
+        "role": "1px hairline divider lines, table rows, section splits"
+      },
+      "subtle": {
+        "value": "#F0F3F7",
+        "role": "Quiet internal grid dividers"
+      },
+      "strong": {
+        "value": "#CBD5E1",
+        "role": "Button outlines, input focus rings, active elements"
+      }
+    },
+    "text": {
+      "primary": {
+        "value": "#0F172A",
+        "role": "Pitch charcoal for headings and authoritative titles"
+      },
+      "secondary": {
+        "value": "#334155",
+        "role": "Slate body reading paragraphs"
+      },
+      "muted": {
+        "value": "#64748B",
+        "role": "Metadata, table labels, timestamps, eyebrows"
+      },
+      "onDark": {
+        "value": "#F8FAFC",
+        "role": "High contrast body text on dark canvas"
+      },
+      "inverse": {
+        "value": "#FFFFFF",
+        "role": "Pure white headlines on dark canvas"
+      }
+    },
+    "status": {
+      "up": {
+        "value": "#15803D",
+        "role": "Positive trend, verified integrity"
+      },
+      "down": {
+        "value": "#B91C1C",
+        "role": "Negative trend, warning alert"
+      },
+      "danger": {
+        "value": "#DC2626",
+        "role": "Critical security error or system halt"
+      },
+      "neutral": {
+        "value": "#475569",
+        "role": "Inactive, closed, escrow locked"
+      }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "display": "'Cormorant Garamond', Garamond, Georgia, serif",
+      "body": "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      "mono": "'IBM Plex Mono', 'SF Mono', Consolas, monospace"
+    },
+    "googleFonts": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap",
+    "scale": {
+      "h1": {
+        "fontSize": "clamp(2.6rem, 5.2vw, 4.2rem)",
+        "lineHeight": 1.12,
+        "fontWeight": 600,
+        "letterSpacing": "-0.01em"
+      },
+      "h2": {
+        "fontSize": "clamp(2.0rem, 3.6vw, 3.0rem)",
+        "lineHeight": 1.18,
+        "fontWeight": 600,
+        "letterSpacing": "-0.01em"
+      },
+      "h3": {
+        "fontSize": "clamp(1.4rem, 2.4vw, 2.0rem)",
+        "lineHeight": 1.25,
+        "fontWeight": 600,
+        "letterSpacing": "-0.005em"
+      },
+      "lead": {
+        "fontSize": "1.15rem",
+        "lineHeight": 1.75,
+        "fontWeight": 400
+      },
+      "body": {
+        "fontSize": "1.0rem",
+        "lineHeight": 1.75,
+        "fontWeight": 400
+      },
+      "small": {
+        "fontSize": "0.85rem",
+        "lineHeight": 1.5,
+        "fontWeight": 500
+      },
+      "eyebrow": {
+        "fontSize": "0.75rem",
+        "lineHeight": 1.2,
+        "fontWeight": 600,
+        "letterSpacing": "0.16em",
+        "textTransform": "uppercase"
+      }
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1.0rem",
+    "lg": "1.5rem",
+    "xl": "2.0rem",
+    "2xl": "3.5rem",
+    "3xl": "5.0rem",
+    "4xl": "6.5rem"
+  },
+  "borderRadius": {
+    "sm": "4px",
+    "md": "6px",
+    "full": "9999px"
+  },
+  "layout": {
+    "containerMax": "1240px",
+    "containerWide": "1360px",
+    "containerNarrow": "860px",
+    "navHeight": "74px",
+    "utilityHeight": "36px"
+  }
+}

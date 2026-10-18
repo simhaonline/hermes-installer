@@ -25,6 +25,7 @@
       --corp-navy-muted: #334155;
 
       --corp-canvas: #071324;
+      --corp-canvas-warm: #0A1B30;
       --corp-canvas-elevated: #0C1E36;
       --corp-canvas-card: #0F233D;
       --corp-canvas-hover: #142844;
@@ -36,18 +37,19 @@
       --corp-text-primary: #F8FAFC;
       --corp-text-secondary: #CBD5E1;
       --corp-text-muted: #94A3B8;
+      --corp-text-on-dark: #F8FAFC;
 
-      /* Jewel Accents */
-      --accent-gold: #FBBA03;
-      --accent-green: #88BD31;
+      /* Jewel Accents (Accurate Swiss bullion & emerald from simharefinery.com) */
+      --accent-gold: #D4AF37;
+      --accent-green: #15803D;
       --accent-cyan: #16A7B5;
-      --accent-orange: #F18D58;
+      --accent-orange: #EA580C;
       --accent-blue: #38BDF8;
 
       /* Status Signals */
-      --status-up: #88BD31;
-      --status-down: #F87171;
-      --status-warn: #FBBA03;
+      --status-up: #15803D;
+      --status-down: #B91C1C;
+      --status-warn: #D4AF37;
       --status-neutral: #64748B;
 
       /* Typography */
@@ -71,33 +73,43 @@
 
       /* Dimensions */
       --sidebar-width: 260px;
-      --topbar-height: 56px;
+      --topbar-height: 60px;
       --drawer-width: 680px;
     }
 
-    /* Light Theme: Editorial Daylight */
+    /* Light Theme: Swiss Institutional Daylight (Strict simharefinery.com & PAT Ledger standard) */
     [data-theme="light"] {
-      --corp-navy-deep: #0C1E36;
+      --corp-navy-deep: #071324;
       --corp-navy-primary: #0C1E36;
       --corp-navy-surface: #142844;
       --corp-navy-subtle: rgba(12, 30, 54, 0.04);
       --corp-navy-slate: #2E3761;
       --corp-navy-muted: #64748B;
 
-      --corp-canvas: #F8FAFC;
-      --corp-canvas-elevated: #FFFFFF;
+      --corp-canvas: #FBFBFC; /* Warm luxury paper canvas from simharefinery.com */
+      --corp-canvas-warm: #F8FAFC;
+      --corp-canvas-elevated: #FFFFFF; /* Crisp pure white resting cards */
       --corp-canvas-card: #FFFFFF;
-      --corp-canvas-hover: #F1F5F9;
+      --corp-canvas-hover: #F8FAFC;
 
-      --corp-border: #E2E8F0;
-      --corp-border-subtle: #F1F5F9;
+      --corp-border: #E5E9F0; /* Razor hairline border */
+      --corp-border-subtle: #F0F3F7;
       --corp-border-strong: #CBD5E1;
 
       --corp-text-primary: #0F172A;
       --corp-text-secondary: #334155;
       --corp-text-muted: #64748B;
+      --corp-text-on-dark: #F8FAFC;
 
-      --accent-blue: #156BA6;
+      --accent-gold: #D4AF37; /* Real champagne bullion gold */
+      --accent-green: #15803D; /* Institutional Emerald */
+      --accent-cyan: #16A7B5; /* Aegean Cyan */
+      --accent-blue: #1E40AF;
+      --accent-orange: #EA580C;
+
+      --status-up: #15803D;
+      --status-down: #B91C1C;
+      --status-warn: #D4AF37;
     }
 
     /* =========================================================================
@@ -188,7 +200,7 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 0 12px rgba(251, 186, 3, 0.15);
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.15);
     }
 
     .brand-title-wrap {
@@ -214,8 +226,8 @@
       font-size: 0.65rem;
       font-weight: 600;
       color: var(--accent-gold);
-      background: rgba(251, 186, 3, 0.12);
-      border: 1px solid rgba(251, 186, 3, 0.25);
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.25);
       padding: 1px 4px;
       border-radius: 2px;
       letter-spacing: 0;
@@ -438,16 +450,17 @@
 
     .app-topbar {
       height: var(--topbar-height);
-      background: var(--corp-canvas-elevated);
-      border-bottom: 1px solid var(--corp-border);
+      background: var(--corp-navy-primary);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       position: sticky;
       top: 0;
       z-index: 50;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 1.75rem;
+      padding: 0 2rem;
       backdrop-filter: blur(8px);
+      color: #FFFFFF;
     }
 
     .topbar-left {
@@ -459,66 +472,71 @@
     .breadcrumbs {
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 0.5rem;
       font-size: 0.78rem;
-      color: var(--corp-text-muted);
+      color: rgba(255, 255, 255, 0.6);
     }
     .breadcrumb-root {
       font-weight: 500;
-      color: var(--corp-text-secondary);
+      color: rgba(255, 255, 255, 0.75);
     }
     .breadcrumb-sep {
-      color: var(--corp-border-strong);
+      color: rgba(255, 255, 255, 0.25);
     }
     .breadcrumb-current {
       font-weight: 600;
-      color: var(--corp-text-primary);
+      color: #FFFFFF;
     }
 
-    /* Global Search Box in Topbar */
+    /* Global Search Box in Topbar - Recessed Navy */
     .topbar-search-wrap {
       position: relative;
-      width: 320px;
+      width: 340px;
     }
     .topbar-search-input {
       width: 100%;
-      height: 32px;
-      background: var(--corp-canvas);
-      border: 1px solid var(--corp-border-strong);
+      height: 34px;
+      background: var(--corp-navy-surface);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: var(--radius-sm);
-      padding: 0 2rem 0 2rem;
+      padding: 0 2rem 0 2.25rem;
       font-size: 0.78rem;
-      color: var(--corp-text-primary);
+      color: #FFFFFF;
       outline: none;
       transition: all 150ms ease;
     }
+    .topbar-search-input::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
     .topbar-search-input:focus {
-      border-color: var(--accent-cyan);
-      box-shadow: 0 0 0 2px rgba(22, 167, 181, 0.15);
-      width: 380px;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
+      background: #183052;
+      width: 400px;
     }
     .topbar-search-icon {
       position: absolute;
-      left: 0.65rem;
+      left: 0.75rem;
       top: 50%;
       transform: translateY(-50%);
       width: 14px;
       height: 14px;
-      fill: var(--corp-text-muted);
+      fill: rgba(255, 255, 255, 0.45);
       pointer-events: none;
     }
     .topbar-search-kbd {
       position: absolute;
-      right: 0.5rem;
+      right: 0.65rem;
       top: 50%;
       transform: translateY(-50%);
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      background: var(--corp-border);
-      color: var(--corp-text-muted);
-      padding: 1px 4px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      padding: 1px 5px;
       border-radius: 2px;
       pointer-events: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .topbar-right {
@@ -530,15 +548,15 @@
     .system-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.45rem;
       font-family: var(--font-mono);
       font-size: 0.72rem;
       font-weight: 500;
-      padding: 0.25rem 0.6rem;
+      padding: 0.3rem 0.65rem;
       border-radius: var(--radius-sm);
-      background: var(--corp-canvas);
-      border: 1px solid var(--corp-border);
-      color: var(--corp-text-secondary);
+      background: var(--corp-navy-surface);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #CBD5E1;
     }
 
     .status-dot-pulse {
@@ -546,13 +564,13 @@
       height: 6px;
       border-radius: 50%;
       background: var(--accent-green);
-      box-shadow: 0 0 0 0 rgba(136, 189, 49, 0.7);
+      box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.7);
       animation: pulse-green 2s infinite;
     }
     @keyframes pulse-green {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(136, 189, 49, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 4px rgba(136, 189, 49, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(136, 189, 49, 0); }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 4px rgba(21, 128, 61, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.7); }
     }
 
     /* =========================================================================
@@ -605,9 +623,9 @@
       font-weight: 600;
       padding: 2px 8px;
       border-radius: var(--radius-sm);
-      background: rgba(251, 186, 3, 0.12);
+      background: rgba(212, 175, 55, 0.12);
       color: var(--accent-gold);
-      border: 1px solid rgba(251, 186, 3, 0.25);
+      border: 1px solid rgba(212, 175, 55, 0.25);
     }
 
     .view-subtitle {
@@ -624,17 +642,17 @@
       flex-shrink: 0;
     }
 
-    /* Standard Button Styles */
+    /* Standard Button Styles - simharefinery.com & PAT standard */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.45rem;
-      padding: 0.5rem 1rem;
-      font-size: 0.8rem;
+      gap: 0.5rem;
+      padding: 0.6rem 1.15rem;
+      font-size: 0.82rem;
       font-weight: 600;
       border-radius: var(--radius-sm);
-      transition: all 120ms ease;
+      transition: all 140ms ease;
       cursor: pointer;
       line-height: 1;
       white-space: nowrap;
@@ -643,36 +661,41 @@
     .btn-primary {
       background: var(--corp-navy-primary);
       color: #FFFFFF;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid var(--corp-navy-deep);
     }
     .btn-primary:hover {
-      background: #071324;
+      background: var(--corp-navy-deep);
       border-color: var(--accent-gold);
-    }
-
-    .btn-gold {
-      background: var(--accent-gold);
-      color: #071324;
-      font-weight: 700;
-    }
-    .btn-gold:hover {
-      background: #e5a902;
+      box-shadow: 0 2px 8px rgba(12, 30, 54, 0.25);
+      color: #FFFFFF;
     }
 
     .btn-secondary {
       background: var(--corp-canvas-elevated);
-      color: var(--corp-text-secondary);
+      color: var(--corp-text-primary);
       border: 1px solid var(--corp-border-strong);
     }
     .btn-secondary:hover {
       background: var(--corp-canvas-hover);
-      color: var(--corp-text-primary);
-      border-color: var(--corp-text-muted);
+      color: var(--corp-navy-primary);
+      border-color: var(--corp-navy-primary);
+    }
+
+    .btn-gold {
+      background: var(--corp-navy-primary);
+      color: #FFFFFF;
+      border: 1px solid var(--accent-gold);
+      box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.25);
+    }
+    .btn-gold:hover {
+      background: var(--corp-navy-deep);
+      border-color: #F59E0B;
+      color: #FFFFFF;
     }
 
     .btn-sm {
-      padding: 0.35rem 0.65rem;
-      font-size: 0.74rem;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.75rem;
     }
 
     /* =========================================================================
@@ -682,49 +705,44 @@
       background: var(--corp-canvas-elevated);
       border: 1px solid var(--corp-border);
       border-radius: var(--radius-sm);
-      padding: 1.5rem 1.75rem;
+      padding: 1.65rem 2rem;
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1.5rem;
       position: relative;
-      overflow: hidden;
-    }
-    .overview-hero-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: linear-gradient(180deg, var(--accent-gold), var(--accent-cyan));
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
     }
 
     .hero-stat-badge {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--accent-green);
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent-gold);
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 0.4rem;
+      gap: 0.45rem;
+      margin-bottom: 0.45rem;
     }
 
     .overview-hero-title {
-      font-size: 1.25rem;
-      font-weight: 700;
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 600;
       color: var(--corp-text-primary);
       letter-spacing: -0.015em;
-      margin-bottom: 0.35rem;
+      line-height: 1.2;
+      margin-bottom: 0.45rem;
     }
 
     .overview-hero-desc {
-      font-size: 0.84rem;
-      color: var(--corp-text-muted);
-      max-width: 760px;
-      line-height: 1.5;
+      font-size: 0.88rem;
+      color: var(--corp-text-secondary);
+      max-width: 820px;
+      line-height: 1.65;
     }
 
     /* Master KPI Metrics Grid (Only on Overview Tab!) */
@@ -737,15 +755,17 @@
       border-radius: var(--radius-sm);
       overflow: hidden;
       margin-bottom: 1.75rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     }
 
     .kpi-cell {
       background: var(--corp-canvas-elevated);
-      padding: 1.25rem 1.35rem;
+      padding: 1.35rem 1.5rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: background 120ms ease;
+      position: relative;
     }
     .kpi-cell:hover {
       background: var(--corp-canvas-hover);
@@ -755,38 +775,43 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.65rem;
     }
 
     .kpi-label {
-      font-size: 0.72rem;
-      font-weight: 600;
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       color: var(--corp-text-muted);
     }
 
     .kpi-pill {
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      padding: 1px 5px;
+      font-weight: 600;
+      padding: 2px 6px;
       border-radius: var(--radius-xs);
+      letter-spacing: 0.04em;
     }
 
     .kpi-number {
-      font-family: var(--font-mono);
-      font-size: 2rem;
+      font-family: var(--font-display);
+      font-size: 2.6rem;
       font-weight: 600;
       color: var(--corp-text-primary);
-      line-height: 1.1;
+      line-height: 1.05;
       letter-spacing: -0.02em;
+      font-feature-settings: 'tnum' 1, 'lnum' 1;
     }
 
     .kpi-sub {
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       color: var(--corp-text-muted);
-      margin-top: 0.4rem;
+      margin-top: 0.5rem;
       font-family: var(--font-mono);
+      letter-spacing: -0.01em;
     }
 
     /* Two-Column Workbench */
@@ -806,10 +831,11 @@
       border: 1px solid var(--corp-border);
       border-radius: var(--radius-sm);
       overflow: hidden;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     }
 
     .ledger-card-header {
-      padding: 1rem 1.25rem;
+      padding: 1.1rem 1.35rem;
       border-bottom: 1px solid var(--corp-border);
       display: flex;
       align-items: center;
@@ -818,9 +844,9 @@
     }
 
     .ledger-card-title {
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--corp-text-primary);
       display: flex;
@@ -829,15 +855,15 @@
     }
 
     .ledger-card-body {
-      padding: 1.25rem;
+      padding: 1.35rem;
     }
 
-    /* Domain Distribution Progress Bars */
+    /* Domain Distribution Progress Bars - Sleek Jewel Tracks */
     .domain-bar-row {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
-      margin-bottom: 0.85rem;
+      gap: 0.35rem;
+      margin-bottom: 0.95rem;
     }
     .domain-bar-row:last-child {
       margin-bottom: 0;
@@ -851,7 +877,7 @@
     }
     .domain-name {
       font-weight: 600;
-      color: var(--corp-text-secondary);
+      color: var(--corp-text-primary);
     }
     .domain-count {
       font-family: var(--font-mono);
@@ -860,27 +886,27 @@
     }
 
     .bar-track {
-      height: 6px;
+      height: 5px;
       width: 100%;
-      background: var(--corp-border);
-      border-radius: var(--radius-xs);
+      background: var(--corp-border-subtle);
+      border-radius: 999px;
       overflow: hidden;
     }
     .bar-fill {
       height: 100%;
-      background: var(--corp-navy-primary);
-      border-radius: var(--radius-xs);
+      background: linear-gradient(90deg, #16A7B5 0%, #0D9488 100%);
+      border-radius: 999px;
       transition: width 400ms ease;
     }
     [data-theme="dark"] .bar-fill {
-      background: var(--accent-cyan);
+      background: linear-gradient(90deg, #16A7B5 0%, #38BDF8 100%);
     }
 
     /* Spec Ledger Table */
     .spec-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
     }
     .spec-table tr {
       border-bottom: 1px solid var(--corp-border-subtle);
@@ -889,7 +915,7 @@
       border-bottom: none;
     }
     .spec-table td {
-      padding: 0.75rem 0.25rem;
+      padding: 0.8rem 0.25rem;
     }
     .spec-table td:first-child {
       color: var(--corp-text-muted);
@@ -944,7 +970,7 @@
     }
     .search-input-field:focus {
       border-color: var(--accent-gold);
-      box-shadow: 0 0 0 2px rgba(251, 186, 3, 0.15);
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.15);
     }
 
     .search-field-icon {
@@ -1549,13 +1575,13 @@
     }
 
     .drawer-header {
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--corp-border);
+      padding: 1.35rem 1.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 1rem;
-      background: var(--corp-canvas);
+      background: var(--corp-navy-primary);
     }
 
     .drawer-title-box {
@@ -1566,17 +1592,18 @@
       font-size: 0.68rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent-cyan);
+      letter-spacing: 0.12em;
+      color: var(--accent-gold);
       margin-bottom: 0.35rem;
     }
 
     .drawer-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--corp-text-primary);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #FFFFFF;
       line-height: 1.2;
-      font-family: var(--font-body);
+      font-family: var(--font-display);
+      letter-spacing: -0.01em;
     }
 
     .drawer-close-btn {
@@ -1586,35 +1613,44 @@
       align-items: center;
       justify-content: center;
       border-radius: var(--radius-sm);
-      border: 1px solid var(--corp-border);
-      color: var(--corp-text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.7);
       font-size: 1.1rem;
       transition: all 120ms ease;
     }
     .drawer-close-btn:hover {
-      background: var(--corp-canvas-hover);
-      color: var(--corp-text-primary);
+      background: rgba(255, 255, 255, 0.14);
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
     .drawer-tabs {
       display: flex;
       border-bottom: 1px solid var(--corp-border);
-      background: var(--corp-canvas);
-      padding: 0 1.5rem;
+      background: var(--corp-canvas-elevated);
+      padding: 0 1.25rem;
+      gap: 0.5rem;
     }
 
     .drawer-tab-btn {
-      padding: 0.75rem 1.15rem;
-      font-size: 0.78rem;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: var(--corp-text-muted);
       border-bottom: 2px solid transparent;
       transition: all 120ms ease;
+      background: transparent;
     }
     .drawer-tab-btn:hover {
       color: var(--corp-text-primary);
     }
     .drawer-tab-btn.active {
+      color: var(--corp-navy-primary);
+      border-bottom-color: var(--accent-gold);
+      font-weight: 700;
+    }
+    [data-theme="dark"] .drawer-tab-btn.active {
       color: var(--accent-gold);
       border-bottom-color: var(--accent-gold);
     }
@@ -1622,7 +1658,8 @@
     .drawer-body {
       flex: 1;
       overflow-y: auto;
-      padding: 1.5rem;
+      padding: 1.75rem;
+      background: var(--corp-canvas-elevated);
     }
 
     .drawer-tab-pane {
@@ -1633,9 +1670,9 @@
     }
 
     .drawer-footer {
-      padding: 1rem 1.5rem;
+      padding: 1.1rem 1.75rem;
       border-top: 1px solid var(--corp-border);
-      background: var(--corp-canvas);
+      background: var(--corp-canvas-elevated);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1724,7 +1761,7 @@
     <div class="sidebar-brand">
       <div class="brand-icon-box">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z" fill="#FBBA03"/>
+          <path d="M12 2L14.8 9.2L22 12L14.8 14.8L12 22L9.2 14.8L2 12L9.2 9.2L12 2Z" fill="var(--accent-gold)"/>
         </svg>
       </div>
       <div class="brand-title-wrap">
@@ -1898,7 +1935,7 @@
           </p>
         </div>
         <div style="text-align: right; flex-shrink: 0;">
-          <button class="btn btn-gold" onclick="switchView('skills')">
+          <button class="btn btn-primary" onclick="switchView('skills')">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l-5.5 9h11zM7 13l-5 9h10zm10 0l-5 9h10z"/></svg>
             Explore Skills
           </button>
@@ -1910,7 +1947,7 @@
         <div class="kpi-cell">
           <div class="kpi-top-row">
             <span class="kpi-label">Curated Skills</span>
-            <span class="kpi-pill" style="background: rgba(251, 186, 3, 0.15); color: var(--accent-gold);">PRODUCTION</span>
+            <span class="kpi-pill" style="background: rgba(212, 175, 55, 0.15); color: var(--accent-gold);">PRODUCTION</span>
           </div>
           <div class="kpi-number" id="kpiCurated">19,840</div>
           <div class="kpi-sub">+ 64,687 Community Pool</div>
@@ -2306,7 +2343,7 @@
 
         <div style="position: relative;">
           <pre class="diag-code-box" id="cliGeneratedSnippet" style="padding: 1.15rem; font-size: 0.85rem; color: #FFFFFF; background: #071324;">hermes -p agentic-search-optimizer</pre>
-          <button class="btn btn-gold btn-sm" onclick="copyCliSnippet()" style="position: absolute; right: 0.75rem; top: 0.75rem;">
+          <button class="btn btn-secondary btn-sm" onclick="copyCliSnippet()" style="position: absolute; right: 0.75rem; top: 0.75rem;">
             Copy Command
           </button>
         </div>
@@ -2371,7 +2408,7 @@
           Direct Execution with Target Profile
         </div>
         <pre><code id="drawerCliCmd"></code></pre>
-        <button class="btn btn-gold btn-sm" onclick="copyDrawerCli()" style="margin-top: 0.75rem;">
+        <button class="btn btn-secondary btn-sm" onclick="copyDrawerCli()" style="margin-top: 0.75rem;">
           Copy Execution Command
         </button>
       </div>
@@ -2383,7 +2420,7 @@
       </div>
       <div style="display: flex; gap: 0.5rem;">
         <button class="btn btn-secondary btn-sm" onclick="closeDrawer()">Close</button>
-        <button class="btn btn-gold btn-sm" id="drawerActivateBtn" onclick="toggleActiveSkill()">
+        <button class="btn btn-primary btn-sm" id="drawerActivateBtn" onclick="toggleActiveSkill()">
           Activate in Profile
         </button>
       </div>
@@ -2608,6 +2645,17 @@
 
           if (idx < 8) {
             const pct = Math.max(8, Math.round((c.count / maxCount) * 100));
+            const jewelPalettes = [
+              'linear-gradient(90deg, #16A7B5 0%, #0D9488 100%)', // Turquoise / Teal
+              'linear-gradient(90deg, #D4AF37 0%, #B45309 100%)', // Bullion Gold / Amber
+              'linear-gradient(90deg, #15803D 0%, #047857 100%)', // Emerald / Forest
+              'linear-gradient(90deg, #2563EB 0%, #1D4ED8 100%)', // Royal Cobalt
+              'linear-gradient(90deg, #7C3AED 0%, #6D28D9 100%)', // Sovereign Violet
+              'linear-gradient(90deg, #0284C7 0%, #0369A1 100%)', // Aegean Blue
+              'linear-gradient(90deg, #D97706 0%, #B45309 100%)', // Bronze
+              'linear-gradient(90deg, #475569 0%, #334155 100%)'  // Slate Steel
+            ];
+            const jewel = jewelPalettes[idx % jewelPalettes.length];
             const barRow = document.createElement('div');
             barRow.className = 'domain-bar-row';
             barRow.innerHTML = `
@@ -2616,7 +2664,7 @@
                 <span class="domain-count">${c.count.toLocaleString()} skills (${((c.count / 19840) * 100).toFixed(1)}%)</span>
               </div>
               <div class="bar-track">
-                <div class="bar-fill" style="width: ${pct}%;"></div>
+                <div class="bar-fill" style="width: ${pct}%; background: ${jewel};"></div>
               </div>
             `;
             barsBox.appendChild(barRow);
@@ -3109,7 +3157,7 @@
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <span class="mcp-title">${plg.name}</span>
-              <span class="domain-tag" style="background: rgba(251, 186, 3, 0.15); color: var(--accent-gold); border-color: rgba(251, 186, 3, 0.3);">Plugin</span>
+              <span class="domain-tag" style="background: rgba(212, 175, 55, 0.15); color: var(--accent-gold); border-color: rgba(212, 175, 55, 0.3);">Plugin</span>
             </div>
             <p style="font-size: 0.78rem; color: var(--corp-text-secondary); line-height: 1.45; margin: 0.75rem 0;">
               ${plg.description || 'Native enterprise Hermes Agent plugin.'}
@@ -3293,7 +3341,7 @@
         const activeList = state.activeSkillsMap[state.targetProfile] || [];
         const isActive = activeList.includes(name);
         document.getElementById('drawerActivateBtn').innerText = isActive ? 'Deactivate from Profile' : 'Activate in Profile';
-        document.getElementById('drawerActivateBtn').className = `btn ${isActive ? 'btn-secondary' : 'btn-gold'} btn-sm`;
+        document.getElementById('drawerActivateBtn').className = `btn ${isActive ? 'btn-secondary' : 'btn-primary'} btn-sm`;
 
         document.getElementById('drawerCliCmd').innerText = `hermes -p ${state.targetProfile} --skill ${skill.name}\n# Or query directly via SQLite Vault:\nhermes-vault skills "${skill.name}"`;
       } catch (e) {
@@ -3364,7 +3412,7 @@
       const isActive = activeList.includes(state.activeDrawerSkill);
       await toggleActiveSkillDirect(state.activeDrawerSkill, isActive);
       document.getElementById('drawerActivateBtn').innerText = !isActive ? 'Deactivate from Profile' : 'Activate in Profile';
-      document.getElementById('drawerActivateBtn').className = `btn ${!isActive ? 'btn-secondary' : 'btn-gold'} btn-sm`;
+      document.getElementById('drawerActivateBtn').className = `btn ${!isActive ? 'btn-secondary' : 'btn-primary'} btn-sm`;
     }
 
     async function toggleActiveSkillDirect(name, currentActive) {

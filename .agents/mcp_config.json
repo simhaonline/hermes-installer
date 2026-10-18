@@ -2,15 +2,346 @@
   "mcpServers": {
     "codegraph": {
       "command": "/usr/local/bin/codegraph",
-      "args": ["serve"]
+      "args": [
+        "serve",
+        "--mcp"
+      ]
     },
     "mcptoon": {
       "command": "/usr/local/bin/mcptoon",
-      "args": ["serve"]
+      "args": [
+        "serve"
+      ]
     },
     "mempalace": {
       "command": "/usr/local/bin/mempalace-mcp",
-      "args": ["--palace", "/home/predictatrade/.hermes/memories", "--read-only"]
+      "args": [
+        "--palace",
+        "/home/predictatrade/.hermes/memories",
+        "--read-only"
+      ]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/srv"
+      ]
+    },
+    "memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git"
+      ]
+    },
+    "metatrader5": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "metatrader_mcp.cli"
+      ],
+      "env": {
+        "MT5_LOGIN": "${MT5_LOGIN:-}",
+        "MT5_PASSWORD": "${MT5_PASSWORD:-}",
+        "MT5_SERVER": "${MT5_SERVER:-}"
+      }
+    },
+    "timescaledb": {
+      "command": "node",
+      "args": [
+        "/srv/predictatrade/.hermes/mcp-library/timescale-tiger-skills/dist/index.js"
+      ],
+      "env": {
+        "TIMESCALE_CONNECTION_STRING": "${TIMESCALE_CONNECTION_STRING:-postgresql://localhost:5432/predictatrade}"
+      }
+    },
+    "questdb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://admin:quest@localhost:8812/qdb"
+      ]
+    },
+    "redis": {
+      "command": "uvx",
+      "args": [
+        "redis-mcp-server",
+        "--url",
+        "${REDIS_URL:-redis://127.0.0.1:6379/0}"
+      ]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://localhost/predictatrade"
+      ]
+    },
+    "sqlite": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-sqlite",
+        "--db-path",
+        "/srv/predictatrade.db"
+      ]
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ]
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY:-}"
+      }
+    },
+    "docker": {
+      "command": "uvx",
+      "args": [
+        "docker-mcp-server"
+      ]
+    },
+    "whatsapp-wassenger": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "wassenger-mcp"
+      ],
+      "env": {
+        "WASSENGER_API_KEY": "${WASSENGER_API_KEY:-}"
+      }
+    },
+    "telegram-bot": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "telegram-bot-mcp"
+      ],
+      "env": {
+        "TELEGRAM_BOT_TOKEN": "${TELEGRAM_BOT_TOKEN:-}"
+      }
+    },
+    "discord": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "discord-mcp"
+      ],
+      "env": {
+        "DISCORD_BOT_TOKEN": "${DISCORD_BOT_TOKEN:-}"
+      }
+    },
+    "tradingview-signals": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "http.server",
+        "8088"
+      ]
+    },
+    "conda-cli": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "conda.plugins.mcp"
+      ]
+    },
+    "microsoft-fabric": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@microsoft/fabric-mcp"
+      ],
+      "env": {
+        "FABRIC_TENANT_ID": "${FABRIC_TENANT_ID:-}",
+        "FABRIC_CLIENT_ID": "${FABRIC_CLIENT_ID:-}"
+      }
+    },
+    "scrapling-crawler": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "scrapling.cli"
+      ]
+    },
+    "knowledge-graph-neo4j": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-neo4j"
+      ],
+      "env": {
+        "NEO4J_URI": "${NEO4J_URI:-bolt://localhost:7687}",
+        "NEO4J_USER": "${NEO4J_USER:-neo4j}",
+        "NEO4J_PASSWORD": "${NEO4J_PASSWORD:-}"
+      }
+    },
+    "agent-cron": {
+      "command": "node",
+      "args": [
+        "/srv/predictatrade/.hermes/plugins/agent-cron/src/index.js"
+      ]
+    },
+    "deer-flow": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "deer_flow.server"
+      ]
+    },
+    "2captcha": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "2captcha-mcp"
+      ],
+      "env": {
+        "TWO_CAPTCHA_KEY": "${TWO_CAPTCHA_KEY:-}"
+      }
+    },
+    "rea": {
+      "command": "/usr/local/bin/rea",
+      "args": [
+        "mcp"
+      ]
+    },
+    "laya": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "laya.api.mcp_api"
+      ]
+    },
+    "mcp-server-excel": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-excel"
+      ]
+    },
+    "compdf-mcp": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "compdf_mcp"
+      ]
+    },
+    "caddy-security": {
+      "command": "caddy",
+      "args": [
+        "run",
+        "--config",
+        "/etc/caddy/Caddyfile"
+      ]
+    },
+    "pi-voice": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "pi_voice.server"
+      ]
+    },
+    "manus-research": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "manus_research.server"
+      ]
+    },
+    "geo-search-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ]
+    },
+    "social-media-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-social-media"
+      ]
+    },
+    "openfactcheck-mcp": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "openfactcheck_mcp.server"
+      ]
+    },
+    "roboflow-vision-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "roboflow-mcp-server"
+      ]
+    },
+    "huggingface-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-huggingface"
+      ]
+    },
+    "legal-clm-mcp": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "clm_mcp.server"
+      ]
+    },
+    "supplychain-mcp": {
+      "command": "node",
+      "args": [
+        "/usr/local/lib/supplychain-mcp/index.js"
+      ]
+    },
+    "gtm-sales-mcp": {
+      "command": "uvx",
+      "args": [
+        "gtm-sales-mcp"
+      ]
+    },
+    "ai-guardrails-mcp": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "guardrails_mcp.server"
+      ]
+    },
+    "document-specialist-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "document-specialist-mcp"
+      ]
     }
   }
 }

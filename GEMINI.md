@@ -6,12 +6,12 @@ This workspace houses the repository for the **Hermes Agent Production Installer
 * **Workspace Directory**: `/srv/hermes-installer`
 * **Dedicated Service User**: `hermes-installer` (`UID=1002`, `GID=1002`)
 * **Hermes Agent Runtime**: `/home/predictatrade/.hermes` (`predictatrade`, `UID=1001`)
-* **Live Knowledge Vault**: `/home/predictatrade/.hermes/hermes-vault.sqlite` (229 MB)
+* **Live Knowledge Vault**: `/home/predictatrade/.hermes/hermes-vault.sqlite` (232.75 MB)
 
 ## 2. Available Development Skills in `.agents/skills/`
 * `hermes-packager`: Build offline installer bundles, regenerate SHA256SUMS, and test asset payloads.
 * `hermes-vault-manager`: Search, audit, sync, and inspect the SQLite Knowledge Vault.
-* `hermes-profile-builder`: Validate, update, or add specialist profiles across the 54 profile configs.
+* `hermes-profile-builder`: Validate, update, or add specialist profiles across the 66 profile configs.
 * `hermes-ecosystem-tools`: Guide to CodeGraph AST indexing, MCPToon token compression, MemPalace memory search, and REA reverse engineering.
 
 ## 3. Development Workflow & Rules

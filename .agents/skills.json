@@ -1,5 +1,202 @@
 {
   "entries": [
-    { "path": ".agents/skills" }
+    {
+      "path": ".agents/skills"
+    },
+    {
+      "path": "/srv/hermes-installer/.agents/skills"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/apple"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/autonomous-ai-agents"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/creative"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/custom"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/devops"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/email"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/media"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/note-taking"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/ops"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/pat-fresh-server-bringup"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/productivity"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/research"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/social-media"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/software-development"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skills/web"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/agent-orchestration-flows"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/ai-governance-compliance"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/astro-web-framework"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/backend-languages"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/chart-visualization"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/community-elite"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/computer-vision-ai"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/context-optimization"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/cybersecurity-red-blue"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/data-analytics-engineering"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/databases-timeseries"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/deep-learning-nlp"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/document-automation"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/enterprise-data-cloud"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/enterprise-operations"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/executive-corporate-governance"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/fact-checking-verification"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/finance-investment-ops"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/foundation-skills"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/geo-search-optimization"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/gtm-customer-success"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/kimi-suite"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/knowledge-graph"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/laravel-php-ecosystem"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/legal-clm-procurement"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/manus-agent"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/mathematics-ai"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/minimax-audio-voice"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/mlops-infrastructure"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/nginx-caddy-infrastructure"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/office-excel-pdf"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/official-optional"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/omnichannel-messaging"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/predictatrade"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/quant-trading"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/safe-agent-runtime"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/security-audit"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/seo-growth-marketing"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/skill-forge"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/skill-tutorials"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/social-media-growth"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/submitted"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/tencent-cloud-ecosystem"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/token-saving"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/translation-localization"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/ui-ux-design"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/web-scraping"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/workbuddy-suite"
+    },
+    {
+      "path": "/home/predictatrade/.hermes/skill-library/workflow-automation"
+    }
   ]
 }

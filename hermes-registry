@@ -452,6 +452,7 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
 
             self._send_json({
                 "results": results,
+                "agents": results,
                 "total": total_count,
                 "limit": limit,
                 "offset": offset

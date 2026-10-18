@@ -2248,18 +2248,28 @@
       </div>
 
       <!-- Division Filter Chips -->
-      <div class="filter-chips-row" style="margin-bottom: 1.25rem;">
-        <button class="chip-btn active" onclick="filterAgentsByDivision('')">All Divisions (554)</button>
-        <button class="chip-btn" onclick="filterAgentsByDivision('Quantitative Finance')">Quant &amp; Finance</button>
-        <button class="chip-btn" onclick="filterAgentsByDivision('Security & Audit')">Security &amp; Pentest</button>
-        <button class="chip-btn" onclick="filterAgentsByDivision('Software Engineering')">Engineering</button>
-        <button class="chip-btn" onclick="filterAgentsByDivision('Systems & Architecture')">Architecture</button>
-        <button class="chip-btn" onclick="filterAgentsByDivision('Research & Science')">Research</button>
-        <button class="chip-btn" onclick="filterAgentsByDivision('Executive & Advisory')">Executive</button>
+      <div class="filter-chips-row" id="agentDivisionChips" style="margin-bottom: 1.25rem;">
+        <button class="chip-btn active" onclick="filterAgentsByDivision('', this)">All Divisions (554)</button>
+        <button class="chip-btn" onclick="filterAgentsByDivision('Engineering', this)">Engineering</button>
+        <button class="chip-btn" onclick="filterAgentsByDivision('Security & Pentest', this)">Security &amp; Pentest</button>
+        <button class="chip-btn" onclick="filterAgentsByDivision('Quant & Finance', this)">Quant &amp; Finance</button>
+        <button class="chip-btn" onclick="filterAgentsByDivision('Executive', this)">Executive</button>
+        <button class="chip-btn" onclick="filterAgentsByDivision('Architecture', this)">Architecture</button>
+        <button class="chip-btn" onclick="filterAgentsByDivision('Data & MLOps', this)">Data &amp; MLOps</button>
+        <button class="chip-btn" onclick="filterAgentsByDivision('Research', this)">Research</button>
+        <button class="chip-btn" onclick="filterAgentsByDivision('DevOps & SRE', this)">DevOps &amp; SRE</button>
       </div>
 
       <div class="agents-grid" id="agentsGridContainer">
         <!-- Rendered via JS -->
+      </div>
+
+      <!-- Agents Pagination -->
+      <div class="pagination-row" id="agentsPaginationRow" style="margin-top: 1.5rem; display: none;">
+        <span class="pagination-info" id="agentsPaginationInfo">Showing 1–36 of 554 Agent Personas</span>
+        <div class="pagination-buttons" id="agentsPaginationButtons">
+          <!-- buttons rendered via JS -->
+        </div>
       </div>
     </section>
 
@@ -2519,6 +2529,10 @@
       activeSkillsMap: {},
       allAgents: [],
       filteredAgents: [],
+      agentsQuery: '',
+      agentsDivision: '',
+      agentsCurrentPage: 1,
+      agentsPerPage: 36,
       mcpCurated: [],
       mcpPlugins: [],
       mcpUniverse: [],
@@ -2633,6 +2647,12 @@
       // Tab-specific trigger actions
       if (tabName === 'skills' && state.skills.length === 0) {
         fetchSkills(1);
+      } else if (tabName === 'agents') {
+        if (!state.allAgents || state.allAgents.length === 0) {
+          loadAgents();
+        } else {
+          renderAgentsView();
+        }
       } else if (tabName === 'diagnostics') {
         loadDiagnostics();
         updateCliSnippet();
@@ -2765,11 +2785,22 @@
       try {
         const res = await fetch('/api/agents?limit=600');
         const data = await res.json();
-        state.allAgents = data.agents || [];
+        const rawAgents = data.results || data.agents || [];
+        state.allAgents = rawAgents.map(a => {
+          return {
+            ...a,
+            enterprise_division: getAgentEnterpriseDivision(a)
+          };
+        });
         state.filteredAgents = [...state.allAgents];
+        updateAgentDivisionChips();
         renderAgentsView();
       } catch (e) {
         console.error('Failed to load agents:', e);
+        const box = document.getElementById('agentsGridContainer');
+        if (box) {
+          box.innerHTML = `<div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--accent-red);">Failed to load agent personas: ${escapeHtml(e.message || String(e))}</div>`;
+        }
       }
     }
 
@@ -3016,54 +3047,271 @@
     // =========================================================================
     // VIEW 3: AGENT PERSONAS (554 Agents)
     // =========================================================================
+    function getAgentEnterpriseDivision(agent) {
+      const text = ((agent.name || '') + ' ' + (agent.role || '') + ' ' + (agent.division || '') + ' ' + (agent.file_path || '')).toLowerCase();
+      if (/trading|quant|finance|market|portfolio|equity|options|metatrader|mql|orderbook|crypto|arbitrage|pricing|trader|backtest/.test(text)) {
+        return 'Quant & Finance';
+      }
+      if (/security|pentest|audit|reverse|forensic|vulnerability|exploit|malware|burp|threat|adversary|rea|pentagi|hardening|attack/.test(text)) {
+        return 'Security & Pentest';
+      }
+      if (/architecture|cloud|kubernetes|k8s|distributed|microservice|grpc|infra|fabric|network|aws|azure|docker/.test(text)) {
+        return 'Architecture';
+      }
+      if (/research|paper|math|scientific|literature|proof|patent|academic|synthesis|scholar/.test(text)) {
+        return 'Research';
+      }
+      if (/product|strategy|gtm|marketing|sales|business|metrics|prd|ceo|executive|employee|advisory|briefing/.test(text)) {
+        return 'Executive';
+      }
+      if (/devops|sre|ci\/cd|pipeline|observability|prometheus|grafana|incident|chaos|reliability|monitor/.test(text)) {
+        return 'DevOps & SRE';
+      }
+      if (/data|mlops|vector|embedding|spark|ray|dataset|sql|database|graph|omnigraph/.test(text)) {
+        return 'Data & MLOps';
+      }
+      return 'Engineering';
+    }
+
+    function updateAgentDivisionChips() {
+      const counts = {
+        '': state.allAgents.length,
+        'Engineering': 0,
+        'Security & Pentest': 0,
+        'Quant & Finance': 0,
+        'Executive': 0,
+        'Architecture': 0,
+        'Data & MLOps': 0,
+        'Research': 0,
+        'DevOps & SRE': 0
+      };
+      state.allAgents.forEach(a => {
+        const div = a.enterprise_division || 'Engineering';
+        if (counts[div] !== undefined) {
+          counts[div]++;
+        }
+      });
+
+      const chipsBox = document.getElementById('agentDivisionChips');
+      if (!chipsBox) return;
+
+      const divisions = [
+        { key: '', label: `All Divisions (${counts['']})` },
+        { key: 'Engineering', label: `Engineering (${counts['Engineering'] || 0})` },
+        { key: 'Security & Pentest', label: `Security & Pentest (${counts['Security & Pentest'] || 0})` },
+        { key: 'Quant & Finance', label: `Quant & Finance (${counts['Quant & Finance'] || 0})` },
+        { key: 'Executive', label: `Executive (${counts['Executive'] || 0})` },
+        { key: 'Architecture', label: `Architecture (${counts['Architecture'] || 0})` },
+        { key: 'Data & MLOps', label: `Data & MLOps (${counts['Data & MLOps'] || 0})` },
+        { key: 'Research', label: `Research (${counts['Research'] || 0})` },
+        { key: 'DevOps & SRE', label: `DevOps & SRE (${counts['DevOps & SRE'] || 0})` }
+      ];
+
+      chipsBox.innerHTML = divisions.map(d => {
+        const isActive = state.agentsDivision === d.key;
+        return `<button class="chip-btn ${isActive ? 'active' : ''}" onclick="filterAgentsByDivision('${d.key}', this)">${escapeHtml(d.label)}</button>`;
+      }).join('');
+    }
+
     function handleAgentsFilter(q) {
-      q = q.toLowerCase().trim();
+      state.agentsQuery = (q || '').trim();
+      state.agentsCurrentPage = 1;
+      applyAgentsFilter();
+    }
+
+    function filterAgentsByDivision(div, btn) {
+      state.agentsDivision = div || '';
+      state.agentsCurrentPage = 1;
+
+      // Update button active state
+      document.querySelectorAll('#agentDivisionChips .chip-btn').forEach(b => b.classList.remove('active'));
+      if (btn) {
+        btn.classList.add('active');
+      }
+
+      applyAgentsFilter();
+    }
+
+    function applyAgentsFilter() {
+      const q = state.agentsQuery.toLowerCase();
+      const div = state.agentsDivision;
+
       state.filteredAgents = state.allAgents.filter(a => {
+        const matchesDiv = !div || a.enterprise_division === div || a.division === div;
+        if (!matchesDiv) return false;
+
+        if (!q) return true;
         return (a.name && a.name.toLowerCase().includes(q)) ||
                (a.role && a.role.toLowerCase().includes(q)) ||
-               (a.division && a.division.toLowerCase().includes(q));
+               (a.division && a.division.toLowerCase().includes(q)) ||
+               (a.enterprise_division && a.enterprise_division.toLowerCase().includes(q));
       });
+
       renderAgentsView();
     }
 
-    function filterAgentsByDivision(div) {
-      if (!div) {
-        state.filteredAgents = [...state.allAgents];
-      } else {
-        state.filteredAgents = state.allAgents.filter(a => a.division === div);
-      }
-      renderAgentsView();
+    function resetAgentsFilter() {
+      state.agentsQuery = '';
+      state.agentsDivision = '';
+      state.agentsCurrentPage = 1;
+      const inp = document.getElementById('agentsSearchInput');
+      if (inp) inp.value = '';
+      updateAgentDivisionChips();
+      applyAgentsFilter();
     }
 
     function renderAgentsView() {
       const box = document.getElementById('agentsGridContainer');
+      if (!box) return;
       box.innerHTML = '';
 
-      state.filteredAgents.slice(0, 48).forEach(agent => {
+      if (!state.allAgents || state.allAgents.length === 0) {
+        box.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center;">
+            <div class="spinner" style="margin: 0 auto 1rem auto;"></div>
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--corp-text-muted);">
+              Loading 554 Agent Personas from SQLite Vault...
+            </div>
+          </div>
+        `;
+        renderAgentsPagination(0);
+        return;
+      }
+
+      if (state.filteredAgents.length === 0) {
+        box.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center; background: var(--corp-canvas-elevated); border: 1px solid var(--corp-border); border-radius: var(--radius-sm);">
+            <div style="font-size: 2.2rem; margin-bottom: 0.5rem; color: var(--accent-gold);">◇</div>
+            <div style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--corp-text-primary); margin-bottom: 0.5rem;">No Agent Personas Located</div>
+            <div style="font-size: 0.85rem; color: var(--corp-text-muted); max-width: 480px; margin: 0 auto 1.5rem auto;">
+              No autonomous specialist persona matched your filter or search query. Try broadening your keywords.
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="resetAgentsFilter()">Reset All Filters</button>
+          </div>
+        `;
+        renderAgentsPagination(0);
+        return;
+      }
+
+      const total = state.filteredAgents.length;
+      const totalPages = Math.max(1, Math.ceil(total / state.agentsPerPage));
+      if (state.agentsCurrentPage > totalPages) state.agentsCurrentPage = totalPages;
+      if (state.agentsCurrentPage < 1) state.agentsCurrentPage = 1;
+
+      const start = (state.agentsCurrentPage - 1) * state.agentsPerPage;
+      const end = Math.min(start + state.agentsPerPage, total);
+      const paged = state.filteredAgents.slice(start, end);
+
+      const divColors = {
+        'Engineering': { bg: 'rgba(37, 99, 235, 0.12)', color: '#60A5FA', border: 'rgba(37, 99, 235, 0.3)' },
+        'Security & Pentest': { bg: 'rgba(225, 29, 72, 0.12)', color: '#F43F5E', border: 'rgba(225, 29, 72, 0.3)' },
+        'Quant & Finance': { bg: 'rgba(212, 175, 55, 0.12)', color: 'var(--accent-gold)', border: 'rgba(212, 175, 55, 0.3)' },
+        'Executive': { bg: 'rgba(124, 58, 237, 0.12)', color: '#A78BFA', border: 'rgba(124, 58, 237, 0.3)' },
+        'Architecture': { bg: 'rgba(21, 128, 61, 0.12)', color: 'var(--accent-green)', border: 'rgba(21, 128, 61, 0.3)' },
+        'Data & MLOps': { bg: 'rgba(20, 184, 166, 0.12)', color: '#2DD4BF', border: 'rgba(20, 184, 166, 0.3)' },
+        'Research': { bg: 'rgba(2, 132, 199, 0.12)', color: '#38BDF8', border: 'rgba(2, 132, 199, 0.3)' },
+        'DevOps & SRE': { bg: 'rgba(217, 119, 6, 0.12)', color: '#F59E0B', border: 'rgba(217, 119, 6, 0.3)' }
+      };
+
+      paged.forEach(agent => {
         const card = document.createElement('div');
         card.className = 'agent-card';
         card.onclick = () => openAgentDrawer(agent.name);
 
-        const initials = agent.name.split('-').map(s => s[0]).join('').substring(0, 2).toUpperCase();
+        const parts = (agent.name || 'Ag').split(/[\s\-_]+/);
+        const initials = (parts.length > 1 ? parts[0][0] + (parts[1][0] || '') : parts[0].substring(0, 2)).toUpperCase();
+        const styleInfo = divColors[agent.enterprise_division] || { bg: 'var(--corp-navy-surface)', color: 'var(--corp-text-secondary)', border: 'var(--corp-border)' };
 
         card.innerHTML = `
           <div>
             <div class="agent-header">
-              <div class="agent-avatar">${initials}</div>
+              <div class="agent-avatar">${escapeHtml(initials)}</div>
               <div class="agent-title-box">
-                <div class="agent-name">${agent.name}</div>
-                <div class="agent-division-tag">${agent.division || 'Engineering Division'}</div>
+                <div class="agent-name" title="${escapeHtml(agent.name)}">${escapeHtml(agent.name)}</div>
+                <div class="agent-division-tag" style="display: inline-block; padding: 2px 7px; border-radius: 4px; background: ${styleInfo.bg}; color: ${styleInfo.color}; border: 1px solid ${styleInfo.border};">
+                  ${escapeHtml(agent.enterprise_division || agent.division || 'Specialist')}
+                </div>
               </div>
             </div>
-            <div class="agent-prompt-preview">${agent.role || 'Autonomous specialist persona configured for Hermes Agent runtime.'}</div>
+            <div class="agent-prompt-preview">${escapeHtml(agent.role || 'Autonomous specialist persona configured for Hermes Agent runtime.')}</div>
           </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
-            <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--corp-text-muted);">Hermes Persona</span>
-            <button class="btn btn-secondary btn-sm" onclick="openAgentDrawer('${agent.name}')">Inspect Prompt</button>
+          <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem; margin-top: 0.75rem;">
+            <span style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--corp-text-muted);" title="${escapeHtml(agent.file_path || '')}">
+              ${escapeHtml(agent.division || 'hermes')}
+            </span>
+            <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openAgentDrawer('${escapeAttr(agent.name)}')">Inspect Prompt</button>
           </div>
         `;
         box.appendChild(card);
       });
+
+      renderAgentsPagination(total, start + 1, end, totalPages);
+    }
+
+    function renderAgentsPagination(total, fromIdx = 0, toIdx = 0, totalPages = 1) {
+      let row = document.getElementById('agentsPaginationRow');
+      if (!row) return;
+
+      const info = document.getElementById('agentsPaginationInfo');
+      const btnBox = document.getElementById('agentsPaginationButtons');
+      if (!info || !btnBox) return;
+
+      if (total === 0) {
+        row.style.display = 'none';
+        return;
+      }
+      row.style.display = 'flex';
+
+      info.innerText = `Showing ${fromIdx.toLocaleString()}–${toIdx.toLocaleString()} of ${total.toLocaleString()} Personas`;
+      btnBox.innerHTML = '';
+
+      if (totalPages <= 1) return;
+
+      // Prev Button
+      const btnPrev = document.createElement('button');
+      btnPrev.className = 'page-btn';
+      btnPrev.innerText = '‹';
+      btnPrev.disabled = state.agentsCurrentPage <= 1;
+      btnPrev.onclick = () => {
+        state.agentsCurrentPage--;
+        renderAgentsView();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+      btnBox.appendChild(btnPrev);
+
+      // Page numbers window (max 5 pages)
+      let startP = Math.max(1, state.agentsCurrentPage - 2);
+      let endP = Math.min(totalPages, startP + 4);
+      if (endP - startP < 4) startP = Math.max(1, endP - 4);
+
+      for (let p = startP; p <= endP; p++) {
+        const pBtn = document.createElement('button');
+        pBtn.className = `page-btn ${p === state.agentsCurrentPage ? 'active' : ''}`;
+        pBtn.innerText = p;
+        pBtn.onclick = () => {
+          state.agentsCurrentPage = p;
+          renderAgentsView();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        btnBox.appendChild(pBtn);
+      }
+
+      // Next Button
+      const btnNext = document.createElement('button');
+      btnNext.className = 'page-btn';
+      btnNext.innerText = '›';
+      btnNext.disabled = state.agentsCurrentPage >= totalPages;
+      btnNext.onclick = () => {
+        state.agentsCurrentPage++;
+        renderAgentsView();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+      btnBox.appendChild(btnNext);
+    }
+
+    function escapeAttr(text) {
+      if (!text) return '';
+      return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
     }
 
     // =========================================================================

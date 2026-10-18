@@ -1,0 +1,266 @@
+#!/usr/bin/env python3
+"""Hermes Hybrid Vector & Dynamic Execution Registry CLI.
+
+Combines SQLite FTS5 Full-Text Search with ChromaDB Semantic Embeddings
+for on-demand skill resolution, dynamic activation, and package management.
+"""
+import argparse
+import json
+import os
+import sqlite3
+import sys
+from pathlib import Path
+
+DB_CANDIDATES = [
+    Path("/home/predictatrade/.hermes/hermes-vault.sqlite"),
+    Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "hermes-vault.sqlite",
+    Path("/root/hermes-vault.sqlite")
+]
+
+CHROMA_CANDIDATES = [
+    Path("/home/predictatrade/.hermes/vector-registry"),
+    Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "vector-registry"
+]
+
+db_path = next((p for p in DB_CANDIDATES if p.is_file()), None)
+chroma_path = next((p for p in CHROMA_CANDIDATES if p.is_dir()), None)
+
+def get_db():
+    if not db_path:
+        sys.exit("Error: hermes-vault.sqlite not found.")
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def get_chroma():
+    try:
+        import chromadb
+        path = str(chroma_path) if chroma_path else "/home/predictatrade/.hermes/vector-registry"
+        return chromadb.PersistentClient(path=path)
+    except Exception as e:
+        return None
+
+def cmd_stats(args):
+    conn = get_db()
+    cur = conn.cursor()
+    print("=" * 70)
+    print("      HERMES HYBRID REGISTRY (SQLITE + CHROMADB VECTOR ENGINE)      ")
+    print("=" * 70)
+    print(f"Relational & FTS5 Vault : {db_path} ({os.path.getsize(db_path)/(1024*1024):.2f} MB)")
+    chroma_size = 0
+    if chroma_path and chroma_path.exists():
+        chroma_size = sum(f.stat().st_size for f in chroma_path.rglob('*') if f.is_file())
+    print(f"ChromaDB Vector Store   : {chroma_path} ({chroma_size/(1024*1024):.2f} MB)")
+    print("-" * 70)
+    for row in cur.execute("SELECT key, value FROM metadata ORDER BY key"):
+        print(f"  {row['key']:<26}: {row['value']}")
+    print("-" * 70)
+    print("ChromaDB Semantic Vector Collections:")
+    client = get_chroma()
+    if client:
+        for col_name in ['profiles_semantic', 'plugins_semantic', 'mcp_semantic', 'agents_semantic', 'skills_semantic']:
+            try:
+                c = client.get_collection(col_name)
+                print(f"  {col_name:<26}: {c.count()} vector embeddings")
+            except Exception:
+                print(f"  {col_name:<26}: not initialized")
+    else:
+        print("  (Chroma client unavailable)")
+    print("=" * 70)
+
+def cmd_resolve(args):
+    query = args.query.strip()
+    if not query:
+        sys.exit("Error: Query text required.")
+    
+    limit = args.limit
+    print(f"\n🔍 Resolving optimal ecosystem tools for: \"{query}\"")
+    print("=" * 70)
+
+    conn = get_db()
+    cur = conn.cursor()
+    client = get_chroma()
+
+    # 1. Semantic Match via Chroma
+    semantic_skills = []
+    semantic_profiles = []
+    semantic_mcps = []
+    semantic_plugins = []
+
+    if client:
+        try:
+            c_skills = client.get_collection("skills_semantic")
+            res = c_skills.query(query_texts=[query], n_results=limit)
+            if res and res.get('ids') and res['ids'][0]:
+                for idx, doc, meta, dist in zip(res['ids'][0], res['documents'][0], res['metadatas'][0], res['distances'][0]):
+                    semantic_skills.append((meta['name'], meta['category'], float(dist), doc))
+        except Exception:
+            pass
+
+        try:
+            c_prof = client.get_collection("profiles_semantic")
+            res_p = c_prof.query(query_texts=[query], n_results=2)
+            if res_p and res_p.get('ids') and res_p['ids'][0]:
+                for doc, meta, dist in zip(res_p['documents'][0], res_p['metadatas'][0], res_p['distances'][0]):
+                    semantic_profiles.append((meta['name'], float(dist), doc))
+        except Exception:
+            pass
+
+        try:
+            c_mcp = client.get_collection("mcp_semantic")
+            res_m = c_mcp.query(query_texts=[query], n_results=2)
+            if res_m and res_m.get('ids') and res_m['ids'][0]:
+                for doc, meta, dist in zip(res_m['documents'][0], res_m['metadatas'][0], res_m['distances'][0]):
+                    semantic_mcps.append((meta['server_name'], float(dist), doc))
+        except Exception:
+            pass
+
+        try:
+            c_plg = client.get_collection("plugins_semantic")
+            res_pl = c_plg.query(query_texts=[query], n_results=2)
+            if res_pl and res_pl.get('ids') and res_pl['ids'][0]:
+                for doc, meta, dist in zip(res_pl['documents'][0], res_pl['metadatas'][0], res_pl['distances'][0]):
+                    semantic_plugins.append((meta['name'], float(dist), doc))
+        except Exception:
+            pass
+
+    # 2. BM25 Match via FTS5
+    fts_skills = []
+    try:
+        # Sanitize query for FTS5
+        clean_q = " ".join([w for w in query.replace('"', '').replace("'", '').split() if len(w) > 2])
+        if clean_q:
+            match_clause = " OR ".join(clean_q.split())
+            rows = cur.execute('''
+                SELECT c.name, c.category, c.description, bm25(curated_skills_fts) as score
+                FROM curated_skills_fts f
+                JOIN curated_skills c ON c.id = f.rowid
+                WHERE curated_skills_fts MATCH ?
+                ORDER BY score ASC LIMIT ?
+            ''', (match_clause, limit)).fetchall()
+            for r in rows:
+                fts_skills.append((r['name'], r['category'], float(r['score']), r['description']))
+    except Exception:
+        pass
+
+    # Output Profiles & Personas
+    if semantic_profiles:
+        print("\n🎯 RECOMMENDED SPECIALIST PROFILES:")
+        for name, dist, doc in semantic_profiles:
+            sim = max(0.0, 1.0 - dist)
+            print(f"  • {name:<28} (Confidence: {sim*100:.1f}%)")
+
+    # Output Plugins & MCP Servers
+    if semantic_plugins or semantic_mcps:
+        print("\n⚡ RECOMMENDED PLUGINS & MCP ENGINES:")
+        for name, dist, doc in semantic_plugins:
+            print(f"  • [Plugin] {name:<22} (Score: {(1.0-dist)*100:.1f}%)")
+        for name, dist, doc in semantic_mcps:
+            print(f"  • [MCP]    {name:<22} (Score: {(1.0-dist)*100:.1f}%)")
+
+    # Output Hybrid Skills
+    print(f"\n📦 TOP MATCHED SKILLS (Hybrid Dense + FTS5 BM25):")
+    seen = set()
+    count = 0
+    # First show top semantic
+    for name, cat, dist, doc in semantic_skills[:limit]:
+        seen.add(name)
+        sim = max(0.0, 1.0 - dist)
+        print(f"  [{sim*100:4.1f}% | Semantic] {name:<36} [{cat}]")
+        count += 1
+    # Add top BM25 if not already shown
+    for name, cat, score, desc in fts_skills:
+        if name not in seen and count < limit + 3:
+            print(f"  [BM25 | Keyword ] {name:<36} [{cat}]")
+            seen.add(name)
+            count += 1
+
+    print("\n💡 To dynamically inject a skill into the active session:")
+    print("   hermes-registry activate <skill-name>")
+    print("=" * 70)
+
+def cmd_activate(args):
+    skill_name = args.skill
+    profile = args.profile or "default"
+    
+    conn = get_db()
+    cur = conn.cursor()
+    row = cur.execute("SELECT name, category, path FROM curated_skills WHERE name=?", (skill_name,)).fetchone()
+    if not row:
+        sys.exit(f"Error: Skill '{skill_name}' not found in registry.")
+
+    source_path = Path(row['path'])
+    if not source_path.exists():
+        # Fallback to standard library location
+        candidate = Path(f"/home/predictatrade/.hermes/skill-library/{row['category']}/{row['name']}")
+        if candidate.exists():
+            source_path = candidate
+
+    target_dir = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills/{row['category']}")
+    target_dir.mkdir(parents=True, exist_ok=True)
+    target_link = target_dir / skill_name
+
+    if target_link.exists() or target_link.is_symlink():
+        print(f"Skill '{skill_name}' is already active in profile '{profile}'.")
+    else:
+        try:
+            target_link.symlink_to(source_path)
+            print(f"✅ Dynamically activated '{skill_name}' in profile '{profile}'.")
+            print(f"   Target: {target_link} -> {source_path}")
+        except Exception as e:
+            sys.exit(f"Activation failed: {e}")
+
+def cmd_deactivate(args):
+    skill_name = args.skill
+    profile = args.profile or "default"
+    
+    conn = get_db()
+    cur = conn.cursor()
+    row = cur.execute("SELECT category FROM curated_skills WHERE name=?", (skill_name,)).fetchone()
+    category = row['category'] if row else "*"
+
+    skill_path = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills/{category}/{skill_name}")
+    if skill_path.is_symlink() or skill_path.exists():
+        skill_path.unlink()
+        print(f"✅ Evicted '{skill_name}' from profile '{profile}' (context cleared).")
+    else:
+        # Search for symlink across categories
+        found = False
+        for p in Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills").rglob(skill_name):
+            if p.is_symlink() or p.exists():
+                p.unlink()
+                found = True
+                print(f"✅ Evicted '{skill_name}' from profile '{profile}'.")
+        if not found:
+            print(f"Skill '{skill_name}' was not active in profile '{profile}'.")
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    sub = p.add_subparsers(dest="subcommand", required=True)
+
+    sub.add_parser("stats", help="Display hybrid registry statistics")
+
+    p_res = sub.add_parser("resolve", help="Resolve tools dynamically from natural language intent")
+    p_res.add_argument("query", help="Natural language description of task or intent")
+    p_res.add_argument("--limit", type=int, default=5, help="Number of tools to return")
+
+    p_act = sub.add_parser("activate", help="Dynamically activate a skill into profile context")
+    p_act.add_argument("skill", help="Name of skill to activate")
+    p_act.add_argument("--profile", default="default", help="Target profile name")
+
+    p_deact = sub.add_parser("deactivate", help="Evict a skill from profile context")
+    p_deact.add_argument("skill", help="Name of skill to deactivate")
+    p_deact.add_argument("--profile", default="default", help="Target profile name")
+
+    args = p.parse_args()
+    if args.subcommand == "stats":
+        cmd_stats(args)
+    elif args.subcommand == "resolve":
+        cmd_resolve(args)
+    elif args.subcommand == "activate":
+        cmd_activate(args)
+    elif args.subcommand == "deactivate":
+        cmd_deactivate(args)
+
+if __name__ == "__main__":
+    main()

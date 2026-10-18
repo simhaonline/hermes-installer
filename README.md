@@ -30,11 +30,12 @@ Download the complete pre-built offline bundle directly from [**GitHub Releases 
 
 | Release Asset | Size | SHA-256 Checksum | Description |
 |---|---|---|---|
+| [**`hermes-content-vault-v1.1.0.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.1.0/hermes-content-vault-v1.1.0.tar.gz) | **151 MB** | `0e3205f343d3007c35a272ff7b7b8a171e1f041a110c9d1b197de590a42d25a9` | **Option A Pure Content & Vector Vault**: Lightweight release containing SQLite FTS5 database, ChromaDB dense vector embeddings, manifests, and dynamic execution tools (Zero binary bloat). |
 | [**`hermes-self-contained-installer.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-self-contained-installer.tar.gz) | **1.5 GB** | `2413ac78ba6566f7c81125fb173d32df190a07d691eade67a1e98698f355cb19` | **Complete Standalone Offline Installer**: Pre-built core, 16 compiled engines, all 19,453 skills, 64.5k community pool, 4.8k MCPs, 462 personas, 54 profiles, and SQLite vault. |
-| [**`hermes-vault.sqlite`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-vault.sqlite) | **230 MB** | `d43e0ed3544c739a565ef418df1dfe272a2cd5a024e3f6d05cc455709f4028af` | **SQLite Knowledge Vault**: Master database containing full markdown text for all skills, agents, MCPs, and plugins. |
+| [**`hermes-vault.sqlite`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-vault.sqlite) | **301 MB** | `d3316c93a4f9164afff005bd83b78715bbe02ebe716015830764b0bb915489a0` | **SQLite Knowledge Vault**: Master database with FTS5 BM25 search tables, auto-sync triggers, and relational schemas. |
 | [**`hermes-agent-production.sh`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-agent-production.sh) | **181 MB** | `38c190fb7711f9f7f7940a3201c829ccc332faf5772e6490db8e919d1fc96860` | Production deployment script with embedded base64 payload. |
 | [**`hermes-assets.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-assets.tar.gz) | **134 MB** | `ce989e1e3b81d2e8b5aa640d5c9c874983d6236607162d0504048088e96157da` | Core asset tarball. |
-| [**`SHA256SUMS.txt`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/SHA256SUMS.txt) | Text | `1b32aa42858253b3d7bd1bf0698b2026baacbb0f9cad471b3b867d92b8365936` (installer) | Cryptographic integrity verification file. |
+| [**`SHA256SUMS.txt`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/SHA256SUMS.txt) | Text | See SHA256SUMS.txt | Cryptographic integrity verification file. |
 
 ---
 
@@ -129,6 +130,26 @@ hermes-vault agents "computer vision"
 
 # Inspect the 17 pre-compiled extended engines
 hermes-vault engines
+```
+
+---
+
+## ⚡ Hybrid Vector Registry & Dynamic JIT Execution CLI (`hermes-registry`)
+
+Hermes provides dynamic on-demand tool resolution and execution via `/usr/local/bin/hermes-registry`, eliminating profile disk duplication:
+
+```bash
+# View combined relational (SQLite) and vector (ChromaDB) statistics
+hermes-registry stats
+
+# Natural language intent resolution (Hybrid Dense ChromaDB + Sparse SQLite FTS5)
+hermes-registry resolve "audit solana smart contract reentrancy and token bonding curves"
+
+# Dynamically link a resolved tool into the active profile
+hermes-registry activate audit-reentrancy --profile default
+
+# Cleanly evict the tool from profile context when task finishes
+hermes-registry deactivate audit-reentrancy --profile default
 ```
 
 ---

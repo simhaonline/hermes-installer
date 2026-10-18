@@ -37,6 +37,7 @@ All primary Hermes binaries installed into `/usr/local/bin` seamlessly drop priv
 - `/usr/local/bin/pentagi`
 - `/usr/local/bin/auto`
 - `/usr/local/bin/hermes-vault`
+- `/usr/local/bin/hermes-registry`
 
 ### D. User Execution Model: Running as Root vs. predictatrade
 
@@ -594,7 +595,66 @@ runuser -u predictatrade -- env XDG_RUNTIME_DIR=/run/user/1001 systemctl --user 
 
 ---
 
-## 11. Verification Checklist & Health Status
+## 11. Hybrid Vector Registry & Dynamic Execution Architecture (`hermes-registry`)
+
+To prevent agent context degradation and disk bloat (eliminating 12+ GB of redundant copies across 66 specialist profiles), Hermes features a **Hybrid Vector Registry & Dynamic Just-In-Time (JIT) Execution Engine**:
+
+```
+                                USER NATURAL LANGUAGE INTENT
+                                              │
+                      ┌───────────────────────┴───────────────────────┐
+                      ▼                                               ▼
+         [SQLite FTS5 Full-Text Engine]                  [ChromaDB Dense Vector Store]
+         • Exact keywords, tools, tags                   • Semantic conceptual similarity
+         • Sub-10ms BM25 ranking                         • Local ONNX all-MiniLM-L6-v2 embeddings
+         • 19,691 Curated Skills                         • 19,691 Skills + 480 Personas + 66 Profiles
+                      │                                               │
+                      └───────────────────────┬───────────────────────┘
+                                              ▼
+                                 [Reciprocal Rank Fusion]
+                                              ▼
+                         [Top Ranked Tools & Persona Match]
+                                              │
+                          ┌───────────────────┴───────────────────┐
+                          ▼                                       ▼
+             [JIT Dynamic Activation]                 [Zero-Bloat Context Eviction]
+        `hermes-registry activate <skill>`       `hermes-registry deactivate <skill>`
+         Symlinks tool into active context         Evicts symlink when goal finishes
+```
+
+### Key CLI Capabilities:
+- **Registry Statistics**:
+  ```bash
+  hermes-registry stats
+  ```
+  Reports counts and storage footprint across SQLite (relational + FTS5 BM25) and ChromaDB (vector embeddings).
+
+- **Natural Language Intent Resolution**:
+  ```bash
+  hermes-registry resolve "audit solana smart contract reentrancy and token bonding curves"
+  ```
+  Instantly performs dual-stage ranking:
+  1. Dense semantic matching via ChromaDB (`skills_semantic`, `profiles_semantic`, `mcp_semantic`, `plugins_semantic`).
+  2. Sparse keyword matching via SQLite FTS5 (`curated_skills_fts`).
+  3. Outputs recommended specialist profile, enterprise plugins, MCP engines, and ranked skills.
+
+- **Dynamic JIT Activation & Eviction**:
+  ```bash
+  # Dynamically link a skill into the active profile
+  hermes-registry activate audit-reentrancy --profile default
+
+  # Evict skill when task finishes to keep agent context clean
+  hermes-registry deactivate audit-reentrancy --profile default
+  ```
+
+- **Option A: Pure Content Vault Release (`hermes-content-vault-v1.1.0.tar.gz`)**:
+  - Contains SQLite FTS5 database (`hermes-vault.sqlite`), ChromaDB pre-computed vector embeddings (`vector-registry`), manifests, and CLI utilities (151 MB compressed).
+  - Packaged via `bash /srv/hermes-installer/package-content-vault.sh`.
+  - Zero binary bloat: 100% portable across machines without large runtimes or C/Rust binaries.
+
+---
+
+## 12. Verification Checklist & Health Status
 
 | Component | Status | Verification Details |
 |---|---|---|
@@ -608,7 +668,9 @@ runuser -u predictatrade -- env XDG_RUNTIME_DIR=/run/user/1001 systemctl --user 
 | MCP Universe Catalog | **PASSED** | 4,837 servers indexed + 45 recommended production configurations |
 | 17 Extended AI Engines | **PASSED** | All binaries, libraries, and Python modules verified under user `predictatrade` |
 | Active Plugins | **PASSED** | 32 active enterprise plugins including `agentic-flow`, `geo-optimizer`, `openfactcheck`, `ai-governance`, `contract-lifecycle`, `gtm-engine`, `mcptoon`, `codegraph`, `mempalace`, `rea`, `openshell` |
-| SQLite Knowledge Vault | **PASSED** | `hermes-vault.sqlite` (233 MB) indexed and verified with `hermes-vault` CLI |
-| Self-Local Installer | **PASSED** | `/root/hermes-self-contained-installer.tar.gz` (1.4 GB) 100% offline verified |
+| SQLite Knowledge Vault | **PASSED** | `hermes-vault.sqlite` (301 MB with FTS5 BM25 index & triggers) |
+| ChromaDB Vector Registry | **PASSED** | `/home/predictatrade/.hermes/vector-registry` (69 MB, all 19,691 skills + 480 personas + 66 profiles + 45 MCPs + 32 plugins) |
+| Dynamic JIT Registry CLI | **PASSED** | `/usr/local/bin/hermes-registry` (hybrid resolve, activate, deactivate, stats) |
+| Option A Content Vault | **PASSED** | `hermes-content-vault-v1.1.0.tar.gz` (151 MB) in `dist/` verified with SHA-256 |
+| Self-Local Full Installer | **PASSED** | `hermes-self-contained-installer.tar.gz` (1.4 GB) 100% offline verified |
 | Helper CLI Binaries | **PASSED** | All multi-user binaries in `/usr/local/bin` dropping root privileges safely |
-| Production Installer Run | **PASSED** | Exited `0`, **0 errors**, **0 warnings** |

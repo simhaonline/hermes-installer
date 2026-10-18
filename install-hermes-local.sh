@@ -21,7 +21,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         -h|--help)
             cat <<'HELP'
-Hermes Agent Self-Local Offline Installer
+Hermes Agent Enterprise Platform & Hybrid Vector Registry Installer
 
 Usage:
   bash install-hermes-local.sh [options]

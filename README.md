@@ -3,17 +3,19 @@
 [![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg?style=for-the-badge&logo=github)](https://github.com/simhaonline/hermes-installer/releases/tag/v1.0.0)
 [![Curated Skills](https://img.shields.io/badge/curated_skills-19%2C691-success.svg?style=for-the-badge&logo=codementor)](https://github.com/simhaonline/hermes-installer)
 [![Community Skills](https://img.shields.io/badge/community_skills-64%2C687-purple.svg?style=for-the-badge&logo=buffer)](https://github.com/simhaonline/hermes-installer)
+[![Domain Classifications](https://img.shields.io/badge/skill_domains-49_categories-blueviolet.svg?style=for-the-badge&logo=databricks)](https://github.com/simhaonline/hermes-installer)
 [![Specialist Profiles](https://img.shields.io/badge/specialist_profiles-66-orange.svg?style=for-the-badge&logo=probot)](https://github.com/simhaonline/hermes-installer)
 [![Agent Personas](https://img.shields.io/badge/agent_personas-480-informational.svg?style=for-the-badge&logo=openai)](https://github.com/simhaonline/hermes-installer)
 [![Production MCPs](https://img.shields.io/badge/production_mcps-45_%2F_4%2C837-yellow.svg?style=for-the-badge&logo=fastapi)](https://github.com/simhaonline/hermes-installer)
 [![Active Plugins](https://img.shields.io/badge/active_plugins-32-blueviolet.svg?style=for-the-badge&logo=puzzle)](https://github.com/simhaonline/hermes-installer)
 [![Precompiled Engines](https://img.shields.io/badge/native_engines-17-red.svg?style=for-the-badge&logo=gnubash)](https://github.com/simhaonline/hermes-installer)
+[![Interactive Dashboard](https://img.shields.io/badge/web_ui-port_8888-brightgreen.svg?style=for-the-badge&logo=html5)](http://localhost:8888)
 [![Architecture](https://img.shields.io/badge/security-Rootless_Docker_%2B_UID_1001-brightgreen.svg?style=for-the-badge&logo=docker)](https://github.com/simhaonline/hermes-installer)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=for-the-badge)](LICENSE)
 
-An enterprise-grade, production-hardened AI agent platform and hybrid vector ecosystem. Features **19,691 curated skills** across **48 operational domains**, **64,687 community packages**, **480 agent personas**, **66 specialist profiles**, **45 production MCP servers** (catalog of 4,837), **32 active plugins**, and **17 pre-compiled native engines** (AST parsing, token compression, reverse engineering, penetration testing, and holographic memory).
+An enterprise-grade AI agent platform and hybrid vector ecosystem engineered for high-assurance autonomous workflows. Features **19,691 curated skills** meticulously indexed across **49 operational domains**, **64,687 community packages**, **480 agent personas**, **66 specialist profiles**, **45 production MCP servers** (from an indexed universe of 4,837), **32 active plugins**, and **17 pre-compiled native engines** (AST parsing, 99.2% token context compression, binary reverse engineering, autonomous penetration testing, and holographic AI memory).
 
-Operates with **strict non-root process isolation** (`predictatrade`, `UID=1001`), **Rootless Docker**, and a **hybrid dense-sparse vector registry** (SQLite FTS5 + ChromaDB ONNX embeddings) for zero-copy, just-in-time (JIT) skill execution.
+Operates with **strict non-root process isolation** (`predictatrade`, `UID=1001`), **Rootless Docker**, an **Interactive Web Dashboard / UI (`0.0.0.0:8888`)**, and a **hybrid dense-sparse vector registry** (SQLite FTS5 + ChromaDB ONNX embeddings) for zero-copy, just-in-time (JIT) skill discovery and execution.
 
 ---
 
@@ -21,20 +23,20 @@ Operates with **strict non-root process isolation** (`predictatrade`, `UID=1001`
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                        HERMES ENTERPRISE CLI INTERFACE                                  │
-│   hermes              hermes-registry          hermes-vault       codegraph / mcptoon  │
-│   (Interactive Agent) (Dense + Sparse Search)  (FTS5 Database)    (AST / Token Trimmer)│
+│                        HERMES ENTERPRISE USER INTERFACES                               │
+│   Web Dashboard (Port 8888)    hermes CLI             hermes-registry     hermes-vault │
+│   (Visual Search & 1-Click)    (Interactive Agent)    (Dense/Sparse JIT)  (FTS5 SQLite)│
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                        HYBRID VECTOR KNOWLEDGE VAULT                                   │
+│                        HYBRID DENSE-SPARSE KNOWLEDGE VAULT                             │
 │  ┌────────────────────────────────────────────────┐  ┌───────────────────────────────┐ │
 │  │   Master SQLite FTS5 Database (301 MB)        │  │  ChromaDB Dense Vectors (69MB)│ │
-│  │   • 19,691 Curated Skills (Full Markdown Text) │  │  • all-MiniLM-L6-v2 Embeddings│ │
-│  │   • 64,687 Community Skill Pool               │  │  • Cosine Similarity Search   │ │
+│  │   • 19,691 Curated Skills (Full Text Markdown)│  │  • all-MiniLM-L6-v2 Embeddings│ │
+│  │   • 64,687 Community Skill Package Pool       │  │  • Cosine Similarity Search   │ │
 │  │   • 480 Personas & 66 Specialist Profiles      │  │  • Instant Intent Resolution  │ │
-│  │   • BM25 Porter Stemmer Full-Text Indexes     │  │  • Zero External API Costs     │ │
+│  │   • BM25 Porter Stemmer Full-Text Indexes     │  │  • Zero External API Calls    │ │
 │  └────────────────────────────────────────────────┘  └───────────────────────────────┘ │
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │
@@ -59,156 +61,282 @@ Operates with **strict non-root process isolation** (`predictatrade`, `UID=1001`
 
 ---
 
+## 🖥️ Interactive Web Dashboard & UI (`hermes-registry`)
+
+Hermes includes a built-in, zero-dependency **Interactive Web Dashboard** served on port `8888` via `hermes-registry.service`:
+
+```text
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│  🌌 HERMES HYBRID VECTOR REGISTRY                                  [Port 8888: ACTIVE] │
+│  [ 🔎 Search across 19,691 Skills, 480 Personas, 45 MCPs... ] [ Filter: 49 Domains ▼ ] │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│  📊 19,691 Curated Skills  •  64,687 Community Pool  •  66 Profiles  •  32 Plugins     │
+├────────────────────────────────────────┬───────────────────────────────────────────────┤
+│  CATEGORIES & DOMAINS                  │  SKILL DETAILS & JIT ACTIONS                  │
+│  ► Foundation Systems (13,748)         │  Name: web3-audit                             │
+│  ► MiniMax Audio & Voice (1,292)       │  Category: security-audit                     │
+│  ► Laravel & PHP Ecosystem (810)       │  Vector Similarity: 0.942 [Dense ChromaDB]    │
+│  ► Quantitative Trading (574)          │  Full Description: Smart contract security    │
+│  ► Office, Excel & PDF (383)           │  auditing suite covering reentrancy, oracle   │
+│  ► Community Elite (321)               │  manipulation, and liquidation math.          │
+│  ► Kimi Suite Long-Context (309)       │  ───────────────────────────────────────────  │
+│  ► SEO & GEO Optimization (262)        │  [ ⚡ Install to Profile ]  [ 📖 View SKILL ]  │
+│  ► Manus Autonomous Agent (238)        │  [ 🗑️ Evict from Profile ]  [ 📋 Copy Prompt ] │
+└────────────────────────────────────────┴───────────────────────────────────────────────┘
+```
+
+### Dashboard Capabilities
+- **🔎 Real-Time Hybrid Search**: Combines semantic vector cosine similarity (ChromaDB) with keyword full-text indexing (SQLite FTS5 BM25) across all 19,691 skills.
+- **⚡ 1-Click Dynamic Install & Activate**: Activate any tool into any of the 66 specialist profiles (`orchestrator`, `security-audit`, `metatrader-quant`, etc.) without copying files or bloating workspace directories.
+- **🗑️ 1-Click Eviction & Uninstall**: Evict tools from profile context cleanly when tasks complete to prevent token ceiling degradation.
+- **📖 Full `SKILL.md` Inspector**: View complete markdown instructions, YAML frontmatter, input/output schemas, and script bindings in a clean modal.
+- **👥 Profile & Plugin Explorer**: Audit active tools across all 66 specialist profiles, 45 production MCP servers, and 32 plugins.
+
+### Accessing the Dashboard
+- **Web UI URL**: `http://localhost:8888` (or `http://platform.predictatrade.com:8888`)
+- **CLI Launcher**: `hermes-registry ui` or `hermes-registry dashboard --port 8888`
+- **Systemd Service**: Managed as a resilient background daemon:
+  ```bash
+  sudo systemctl status hermes-registry.service
+  sudo systemctl restart hermes-registry.service
+  ```
+
+---
+
 ## 📦 Release Downloads (GitHub Release `v1.0.0`)
 
 Download pre-built production bundles directly from [**GitHub Releases v1.0.0**](https://github.com/simhaonline/hermes-installer/releases/tag/v1.0.0):
 
 | Release Asset | Size | SHA-256 Checksum | Description |
 |---|---|---|---|
-| [**`hermes-content-vault-v1.0.0.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-content-vault-v1.0.0.tar.gz) | **152 MB** | `c8ec51542c3245acbaab979de9815b930a74f09f869a6a256b956d43caf43b40` | **Option A: Pure Content & Vector Vault (Recommended)**. Lightweight archive containing master SQLite FTS5 database (301 MB uncompressed), ChromaDB vector embeddings (69 MB), collection manifests, `install-hermes-local.sh`, and `hermes-registry` dynamic JIT CLI & Web UI. Zero binary bloat. |
-| [**`hermes-vault.sqlite`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-vault.sqlite) | **301 MB** | `d3316c93a4f9164afff005bd83b78715bbe02ebe716015830764b0bb915489a0` | **Master SQLite Knowledge Vault**. Standalone database containing relational tables, FTS5 BM25 search tables, auto-sync triggers, and complete skill text. |
+| [**`hermes-content-vault-v1.0.0.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-content-vault-v1.0.0.tar.gz) | **152 MB** | `405779fff528dad17d311e6148d91127d6e571a319ddc4f9b093091166e3873c` | **Option A: Pure Content & Vector Vault (Recommended)**. Lightweight archive containing master SQLite FTS5 database (301 MB uncompressed), ChromaDB vector embeddings (69 MB), collection manifests, `install-hermes-local.sh`, and `hermes-registry` dynamic JIT CLI & Web UI. Zero binary bloat. |
+| [**`hermes-vault.sqlite`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-vault.sqlite) | **301 MB** | `d3316c93a4f9164afff005bd83b78715bbe02ebe716015830764b0bb915489a0` | **Master SQLite Knowledge Vault**. Standalone database containing relational tables, FTS5 BM25 search tables, auto-sync triggers, and complete skill markdown text. |
 | [**`hermes-agent-production.sh`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-agent-production.sh) | **181 MB** | `38c190fb7711f9f7f7940a3201c829ccc332faf5772e6490db8e919d1fc96860` | Complete host deployment script with embedded runtime binaries, engine launchers, and base configuration. |
 | [**`hermes-assets.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-assets.tar.gz) | **134 MB** | `ce989e1e3b81d2e8b5aa640d5c9c874983d6236607162d0504048088e96157da` | Core runtime assets, configuration templates, and manifests. |
-| [**`SHA256SUMS.txt`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/SHA256SUMS.txt) | Text | `525 bytes` | Cryptographic integrity checksums for all distribution files. |
+| [**`SHA256SUMS.txt`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/SHA256SUMS.txt) | Text | `540 bytes` | Cryptographic integrity checksums for all distribution files. |
 
 ---
 
 ## 🚀 Quick Start & Installation
 
-### Option 1: Deploy Content Vault on Existing Hermes Machine (Option A)
-Unpack the complete 19.6k+ skill registry, vector index, and CLI tools onto any server running Hermes in seconds:
+### Option 1: 1-Line Automated Install
+Deploys user accounts, Rootless Docker, 17 compiled engines, system wrappers, hybrid vector registry, and systemd service on Ubuntu LTS (22.04 / 24.04 / 26.04):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/simhaonline/hermes-installer/main/quick-install.sh | bash
+```
+
+### Option 2: Deploy Content Vault on Existing Machine (Option A - 152 MB)
+Deploy the complete 19.6k+ skill registry, ChromaDB vectors, and Web UI onto any existing server in seconds:
 
 ```bash
 # 1. Download and extract lightweight content archive
 curl -LO https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-content-vault-v1.0.0.tar.gz
 tar -xzf hermes-content-vault-v1.0.0.tar.gz
 
-# 2. Inspect hybrid registry stats (relational + ChromaDB vectors)
-./hermes-registry stats
+# 2. Run local installer (automatically configures vault, vectors, wrappers & systemd service)
+sudo bash install-hermes-local.sh
 
-# 3. Resolve skills using natural language intent
-./hermes-registry resolve "audit smart contract reentrancy and token bonding curves"
-
-# 4. Activate skills on-demand without duplicating files
-./hermes-registry activate audit-reentrancy --profile default
-```
-
-### Option 2: 1-Line Full Host Automated Install
-Deploys user accounts, Rootless Docker, 17 compiled engines, system wrappers, and configuration on Ubuntu LTS (22.04 / 24.04 / 26.04):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/simhaonline/hermes-installer/main/quick-install.sh | bash
+# 3. Verify hybrid registry status
+hermes-registry stats
 ```
 
 ---
 
-## 🎯 Curated Skill Ecosystem: 19,691 Skills Across 48 Domains
+## 🎯 Complete Master Skill Ecosystem: 19,691 Skills Across ALL 49 Domains
 
-All **19,691 curated skills** contain full natural language instructions, execution guardrails, script bindings, and input/output contracts.
+The ecosystem contains **19,691 curated, production-ready skills** with full YAML frontmatter, execution instructions, input/output schemas, and script bindings. Every single domain is cataloged below:
 
-| Category / Domain | Skill Count | Focus & Core Capabilities | Representative Skills |
-|---|:---:|---|---|
-| **`foundation-skills`** | **13,748** | Complete system engineering, cloud architectures, Linux internals, network defense, CI/CD pipelines, containerization, fullstack patterns, algorithms, API design. | `bash`, `go`, `cpp`, `csharp`, `kubernetes-ops`, `aws-well-architected`, `dockerfile`, `jwt`, `csrf`, `sqli`, `git-advanced`, `linux-hardening` |
-| **`minimax-audio-voice`** | **1,292** | Multi-modal audio synthesis, MiniMax TTS/Music3, podcast production, voiceover, sound design, audio DSP, video synchronization. | `voiceover`, `music-generation`, `sound-synthesis`, `captions`, `video-production`, `podcast-studio`, `audio-video-to-text` |
-| **`laravel-php-ecosystem`** | **810** | Modern PHP 8.3/8.4, Laravel 11/12 architecture, Bagisto e-commerce, Livewire, Eloquent query optimization, Pest testing, Sanctum auth. | `laravel-expert`, `bagisto-code-review`, `eloquent-chunking`, `pest-datasets`, `blade-vue-events`, `saloon-api-sdk` |
-| **`quant-trading`** | **574** | Quantitative analysis, MetaTrader MQL4/MQL5 Expert Advisors, TradingView Pine Script v5, options volatility modeling, DEX arbitrage, risk parity. | `mql5-docs-lookup`, `tradingview-pine-indicators`, `options-volatility`, `pairs-trading`, `backtest-strategy`, `risk-engine` |
-| **`office-excel-pdf`** | **383** | Enterprise spreadsheet automation, Excel-DNA C# UDFs, DCF valuation, WeasyPrint PDF layout, ComPDFKit OCR, DOCX parsing, table extraction. | `excel-dna-addins`, `excel-dcf-modeler`, `compdf-ocr`, `pdf-merge-split`, `table-extractor`, `docx-generator`, `sheetsmith` |
-| **`community-elite`** | **321** | Strict linting, high-assurance development patterns, AST transformation, static code quality enforcement. | `anyesh-bad-python`, `code-quality-reviewer`, `python-patterns`, `refactoring-catalog` |
-| **`submitted`** | **318** | Peer-reviewed community submissions across specialized scientific and production workflows. | `specialized-testing`, `domain-modeling`, `system-assessment` |
-| **`kimi-suite`** | **309** | Ultra-long context reasoning, recursive multi-document synthesis, Kimi Code CLI tools, problem decomposition, citation verification. | `gen-docs`, `tests`, `latex`, `pull-request`, `mocking`, `dcf_skill`, `report-qa`, `benchmarks` |
-| **`seo-growth-marketing`** | **262** | Generative Engine Optimization (GEO), AI search visibility (Perplexity/ChatGPT), programmatic SEO, keyword clusters, technical SEO audits. | `seo-aeo-geo`, `seo-technical-audit`, `seo-content-cluster`, `geo-platform-optimizer`, `citation-verification`, `serp-overlap` |
-| **`manus-agent`** | **238** | Autonomous web execution, multi-query exploratory research, stealth browser automation, structured citation synthesis. | `workflows`, `reference`, `platforms`, `yahoo-api`, `deep-research`, `browser-pilot` |
-| **`workbuddy-suite`** | **193** | Enterprise corporate productivity, calendar defragmentation, executive brief synthesis, automated document triage. | `workbuddy-agent-briefings`, `kb-lint`, `tracing`, `value`, `cowork-rfp-response`, `cowork-deal-room` |
-| **`official-optional`** | **152** | Vendor-specific integrations, official SDK bindings, cloud provider orchestration. | `aws-modules`, `azure-common-patterns`, `gcp-cloud-functions` |
-| **`backend-languages`** | **135** | High-performance backend engineering across Go, Rust, Java, C#, C++, Python, TypeScript. | `golang-pro`, `rust-async-patterns`, `spring-boot-engineer`, `dotnet-backend-patterns` |
-| **`ui-ux-design`** | **127** | Figma Code Connect, design token systems, Radix UI, Tailwind CSS, micro-interactions, WCAG accessibility, typography hierarchy. | `figma-code-connect`, `tailwind-best-practices`, `framer-motion`, `design-tokens-sync`, `color-palette-extractor` |
-| **`mathematics-ai`** | **116** | Mathematical theorem proving, Lean/Coq formalization, LaTeX paper reading, symbolic derivation, AI4Math research workflows. | `ai4math-paper-reading`, `latex-paper-conversion`, `graph-theory-researcher`, `sympy`, `scipy-optimization` |
-| **`tencent-cloud-ecosystem`** | **103** | Serverless Tencent CloudBase (TCB), TRTC real-time communications, Tencent Maps WebGL, WeChat Mini-Programs. | `cloudbase-agent`, `trtc-sdk`, `tencentmap-jsapi-gl`, `wechat-miniprogram`, `wechatpay-basic` |
-| **`knowledge-graph`** | **92** | Graph RAG, Neo4j / FalkorDB Cypher queries, ontology modeling, semantic link prediction, Memstack graph stores. | `knowledge-graph-neo4j`, `lightrag`, `cypher-query-builder`, `ontology-mapper` |
-| **`predictatrade`** | **76** | Proprietary quantitative infrastructure, MT5 Wine operations, real-time signal reconciliation, broker cost accounting. | `pat-operations`, `pat-monitoring-deck`, `pat-signal-delivery-audit`, `pat-ev-math-accuracy` |
-| **`omnichannel-messaging`** | **47** | Discord bots, Telegram mini-apps, WhatsApp Wassenger automation, Slack event listeners, Gmail pipelines. | `discord-bot-architect`, `telegram-mini-app`, `whatsapp-cloud-api`, `slack-workflows` |
-| **`databases-timeseries`** | **45** | High-throughput time-series databases, QuestDB ingestion, TimescaleDB hypertables, ClickHouse analytics, Redis pub/sub. | `questdb-tsbs-benchmark`, `timescaledb-hyperfunctions`, `clickhouse-io`, `redis-semantic-cache` |
-| **`astro-web-framework`** | **43** | Astro 4/5 development, content collections, edge middleware, islands architecture, hybrid SSR/SSG rendering. | `astro-content-collections`, `astro-ssr-rule`, `astro-edge-middleware-scope`, `astro-images-rule` |
-| **`nginx-caddy-infrastructure`** | **35** | High-performance reverse proxies, Nginx load balancing, Caddy Zero-Trust TLS, rate limiting, DDoS mitigation. | `nginx-hardening`, `caddy-security`, `ssl-tls-management`, `reverse-proxy` |
-| **`security-audit`** | **33** | Penetration testing, OWASP ASVS verification, smart contract auditing, IAM role least-privilege, threat modeling. | `owasp-asvs`, `smart-contract-formal-verification`, `iam-policy-reviewer`, `threat-model-creator` |
-| **`translation-localization`** | **33** | Multi-agent neural translation, terminology verification, RTL layouts, bilingual book translation, continuous PO/JSON sync. | `translation-localization`, `terminology-checker`, `bilingual-aligner`, `rtl-layout-validator` |
-| **`web-scraping`** | **31** | Anti-bot bypass, stealth headless browsers, Scrapling DOM parsing, Scrapfly proxy pools, Apify actors. | `scrapling-crawler`, `playwright-interactive`, `stealth-browser`, `anti-bot-scraping` |
-| **`workflow-automation`** | **31** | n8n workflow construction, Temporal distributed workflows, Airflow DAG generation, background job queues. | `n8n-workflow-patterns`, `temporal-golang-pro`, `airflow-dag-generator`, `bullmq-specialist` |
-| **`safe-agent-runtime`** | **30** | NVIDIA OpenShell sandboxing, policy enforcement, container network firewalls, token consumption governors. | `openshell-policy-advisor`, `token-efficiency-optimizer`, `audit-integrity-gate` |
-| **`enterprise-data-cloud`** | **25** | Cloud data warehouses, Microsoft Fabric Lakehouse, Snowflake RBAC, BigQuery ML, Databricks Unity Catalog. | `microsoft-fabric`, `snowflake-governance-coverage`, `bigquery-view-generator`, `databricks-bundle` |
-| **Specialized Niches (20 Domains)** | **88** | AI Governance, Computer Vision (Roboflow), Deep Learning (vLLM/Triton), CLM Legal, GTM Sales, Document Automation. | `ai-governance-grc`, `roboflow-vision-mcp`, `deep-learning-nlp`, `contract-redliner`, `gtm-positioning` |
-| **Community Skill Pool** | **64,687** | Indexed repository of open-source agent skills, developer utilities, and tools searchable via FTS5 BM25. | *Full pool indexed in `community_skills` table* |
+| # | Domain Classification | Skill Count | Focus & Core Capabilities | Representative Skills |
+|:---:|---|:---:|---|---|
+| 1 | **`foundation-skills`** | **13,748** | Complete systems engineering, Linux internals, network defense, CI/CD, cloud architecture, containerization, fullstack patterns, algorithms, API design. | `bash`, `go`, `cpp`, `csharp`, `kubernetes-ops`, `aws-well-architected`, `dockerfile`, `jwt`, `csrf`, `sqli`, `git-advanced`, `linux-hardening` |
+| 2 | **`minimax-audio-voice`** | **1,292** | Multi-modal audio synthesis, MiniMax TTS/Music3, podcast production, voiceover, sound design, audio DSP, video synchronization. | `voiceover`, `music-generation`, `sound-synthesis`, `captions`, `video-production`, `podcast-studio`, `audio-video-to-text` |
+| 3 | **`laravel-php-ecosystem`** | **810** | Modern PHP 8.3/8.4, Laravel 11/12 architecture, Bagisto e-commerce, Livewire, Eloquent query optimization, Pest testing, Sanctum auth. | `laravel-expert`, `bagisto-code-review`, `eloquent-chunking`, `pest-datasets`, `blade-vue-events`, `saloon-api-sdk` |
+| 4 | **`quant-trading`** | **574** | Quantitative analysis, MetaTrader MQL4/MQL5 Expert Advisors, TradingView Pine Script v5, options volatility modeling, DEX arbitrage, risk parity. | `mql5-docs-lookup`, `tradingview-pine-indicators`, `options-volatility`, `pairs-trading`, `backtest-strategy`, `risk-engine` |
+| 5 | **`office-excel-pdf`** | **383** | Enterprise spreadsheet automation, Excel-DNA C# UDFs, DCF valuation, WeasyPrint PDF layout, ComPDFKit OCR, DOCX parsing, table extraction. | `excel-dna-addins`, `excel-dcf-modeler`, `compdf-ocr`, `pdf-merge-split`, `table-extractor`, `docx-generator`, `sheetsmith` |
+| 6 | **`community-elite`** | **321** | Strict linting, high-assurance development patterns, AST transformation, static code quality enforcement. | `anyesh-bad-python`, `code-quality-reviewer`, `python-patterns`, `refactoring-catalog` |
+| 7 | **`submitted`** | **318** | Peer-reviewed community submissions across specialized scientific, industrial, and production workflows. | `specialized-testing`, `domain-modeling`, `system-assessment`, `scientific-schematics` |
+| 8 | **`kimi-suite`** | **309** | Ultra-long context reasoning, recursive multi-document synthesis, Kimi Code CLI tools, problem decomposition, citation verification. | `gen-docs`, `tests`, `latex`, `pull-request`, `mocking`, `dcf_skill`, `report-qa`, `benchmarks` |
+| 9 | **`seo-growth-marketing`** | **262** | Generative Engine Optimization (GEO), AI search visibility (Perplexity/ChatGPT), programmatic SEO, keyword clusters, technical SEO audits. | `seo-aeo-geo`, `seo-technical-audit`, `seo-content-cluster`, `geo-platform-optimizer`, `citation-verification`, `serp-overlap` |
+| 10 | **`manus-agent`** | **238** | Autonomous web execution, multi-query exploratory research, stealth browser automation, structured citation synthesis. | `workflows`, `reference`, `platforms`, `yahoo-api`, `deep-research`, `browser-pilot` |
+| 11 | **`workbuddy-suite`** | **193** | Enterprise corporate productivity, calendar defragmentation, executive brief synthesis, automated document triage. | `workbuddy-agent-briefings`, `kb-lint`, `tracing`, `value`, `cowork-rfp-response`, `cowork-deal-room` |
+| 12 | **`official-optional`** | **152** | Vendor-specific integrations, official cloud SDK bindings, infrastructure orchestration across hyperscalers. | `aws-modules`, `azure-common-patterns`, `gcp-cloud-functions`, `docker-compose-creator` |
+| 13 | **`backend-languages`** | **135** | High-performance backend engineering across Go, Rust, Java, C#, C++, Python, TypeScript. | `golang-pro`, `rust-async-patterns`, `spring-boot-engineer`, `dotnet-backend-patterns` |
+| 14 | **`ui-ux-design`** | **127** | Figma Code Connect, design token systems, Radix UI, Tailwind CSS, micro-interactions, WCAG accessibility, typography hierarchy. | `figma-code-connect`, `tailwind-best-practices`, `framer-motion`, `design-tokens-sync`, `color-palette-extractor` |
+| 15 | **`mathematics-ai`** | **116** | Mathematical theorem proving, Lean/Coq formalization, LaTeX paper reading, symbolic derivation, AI4Math research workflows. | `ai4math-paper-reading`, `latex-paper-conversion`, `graph-theory-researcher`, `sympy`, `scipy-optimization` |
+| 16 | **`tencent-cloud-ecosystem`** | **103** | Serverless Tencent CloudBase (TCB), TRTC real-time communications, Tencent Maps WebGL, WeChat Mini-Programs. | `cloudbase-agent`, `trtc-sdk`, `tencentmap-jsapi-gl`, `wechat-miniprogram`, `wechatpay-basic` |
+| 17 | **`knowledge-graph`** | **92** | Graph RAG, Neo4j / FalkorDB Cypher queries, ontology modeling, semantic link prediction, Memstack graph stores. | `knowledge-graph-neo4j`, `lightrag`, `cypher-query-builder`, `ontology-mapper`, `mempalace` |
+| 18 | **`predictatrade`** | **76** | Proprietary quantitative infrastructure, MT5 Wine operations, real-time signal reconciliation, broker cost accounting. | `pat-operations`, `pat-monitoring-deck`, `pat-signal-delivery-audit`, `pat-ev-math-accuracy`, `windows-mt5-linux-wine` |
+| 19 | **`omnichannel-messaging`** | **47** | Discord bots, Telegram mini-apps, WhatsApp Wassenger automation, Slack event listeners, Gmail pipelines. | `discord-bot-architect`, `telegram-mini-app-skill`, `whatsapp-cloud-api`, `slack-workflows`, `laya` |
+| 20 | **`databases-timeseries`** | **45** | High-throughput time-series databases, QuestDB ingestion, TimescaleDB hypertables, ClickHouse analytics, Redis pub/sub. | `questdb-tsbs-benchmark`, `timescaledb-hyperfunctions`, `clickhouse-io`, `redis-semantic-cache` |
+| 21 | **`astro-web-framework`** | **43** | Astro 4/5 development, content collections, edge middleware, islands architecture, hybrid SSR/SSG rendering. | `astro-content-collections`, `astro-ssr-rule`, `astro-edge-middleware-scope`, `astro-images-rule` |
+| 22 | **`nginx-caddy-infrastructure`** | **35** | High-performance reverse proxies, Nginx load balancing, Caddy Zero-Trust TLS, rate limiting, DDoS mitigation. | `nginx-hardening`, `caddy-security`, `ssl-tls-management`, `reverse-proxy` |
+| 23 | **`security-audit`** | **33** | Penetration testing, OWASP ASVS verification, smart contract auditing, IAM role least-privilege, threat modeling. | `owasp-asvs`, `smart-contract-formal-verification`, `iam-policy-reviewer`, `threat-model-creator`, `audit-reentrancy` |
+| 24 | **`translation-localization`** | **33** | Multi-agent neural translation, terminology verification, RTL layouts, bilingual book translation, continuous PO/JSON sync. | `translation-localization`, `terminology-checker`, `bilingual-aligner`, `rtl-layout-validator` |
+| 25 | **`web-scraping`** | **31** | Anti-bot bypass, stealth headless browsers, Scrapling DOM parsing, Scrapfly proxy pools, Apify actors. | `scrapling-crawler`, `playwright-interactive`, `stealth-browser`, `anti-bot-scraping`, `hasdata-cli` |
+| 26 | **`workflow-automation`** | **31** | n8n workflow construction, Temporal distributed workflows, Airflow DAG generation, background job queues. | `n8n-workflow-patterns`, `temporal-golang-pro`, `airflow-dag-generator`, `bullmq-specialist` |
+| 27 | **`safe-agent-runtime`** | **30** | NVIDIA OpenShell sandboxing, policy enforcement, container network firewalls, token consumption governors. | `openshell-policy-advisor`, `token-efficiency-optimizer`, `audit-integrity-gate`, `openshell-cli` |
+| 28 | **`enterprise-data-cloud`** | **25** | Cloud data warehouses, Microsoft Fabric Lakehouse, Snowflake RBAC, BigQuery ML, Databricks Unity Catalog. | `microsoft-fabric`, `snowflake-governance-coverage`, `bigquery-view-generator`, `databricks-bundle` |
+| 29 | **`chart-visualization`** | **13** | AntV G2/G6 infographics, Apache ECharts, ApexCharts, GPT-Vis dynamic SVG chart generation. | `antv-g2-chart`, `antv-g6-graph`, `antv-infographic`, `antv-x6-editor`, `apexcharts-skill`, `lime-echart` |
+| 30 | **`context-optimization`** | **10** | Context window compression, TOON serialization, prompt trimming, AST surgical extraction. | `mcptoon`, `mcptoon-cli`, `mcptoon-triage`, `mcptoon-connect`, `mcptoon-authoring` |
+| 31 | **`enterprise-operations`** | **10** | Autonomous browser tasks, proxy configuration, Crawlee scrapers, and enterprise search APIs. | `browser-skill`, `crawlee-scraper-skill`, `proxy-config-skill`, `serper-search-skill`, `brave-search-skill` |
+| 32 | **`skill-forge`** | **9** | Skill development tooling, Conda-Forge recipes, Pydantic Evals, Ratler build, Typst typesetting. | `conda-forge`, `pydantic-evals`, `rattler-build`, `typst`, `sqlalchemy`, `textual` |
+| 33 | **`skill-tutorials`** | **6** | Documentation frameworks, Fumadocs i18n sync, philosophical illustration, skill article publishing. | `fumadocs-i18n`, `fumadocs-article-importer`, `philosophical-illustrator`, `skill-article-publisher` |
+| 34 | **`token-saving`** | **6** | Ultra-fast token trimming, progressive disclosure, prompt budget governance, and context pruning. | `trim-1`, `token-efficiency-optimizer`, `token-saver`, `token-saver-config`, `skill-progressive-disclosure` |
+| 35 | **`agent-orchestration-flows`** | **3** | Cyclic state-machine agents, swarm consensus algorithms, DSPy prompt optimization pipelines. | `agentic-flow-engine`, `agent-orchestration-swarm`, `dspy-prompt-optimizer` |
+| 36 | **`cybersecurity-red-blue`** | **3** | Atomic Red Team simulation, authorized ethical hacking playbooks, and LLM security audits. | `atomic-red-team-testing`, `ethical-hacking-playbook`, `llm-security-audit` |
+| 37 | **`data-analytics-engineering`** | **3** | Advanced time-series aggregation, automated data engineering agents, spreadsheet formula engines. | `advanced-data-analytics`, `data-engineering-agent`, `spreadsheet-specialist` |
+| 38 | **`geo-search-optimization`** | **3** | Generative Engine Optimization audits, AI citation optimization, and programmatic e-commerce SEO. | `geo-search-audit`, `ai-citation-optimizer`, `ecommerce-seo-analyzer` |
+| 39 | **`legal-clm-procurement`** | **3** | Contract lifecycle management, clause auto-redlining, RFP procurement scoring, logistics AI. | `clm-contract-lifecycle`, `procurement-rfp-evaluation`, `supply-chain-logistics-ai` |
+| 40 | **`social-media-growth`** | **3** | Social intelligence, viral hook engineering, and cross-platform publishing pipelines. | `social-listening-intelligence`, `viral-hook-creator`, `social-media-automation` |
+| 41 | **`ai-governance-compliance`** | **2** | EU AI Act and NIST AI RMF regulatory auditing, runtime safety guardrails, and risk registries. | `ai-governance-eu-nist`, `ai-guardrails-safety` |
+| 42 | **`computer-vision-ai`** | **2** | Roboflow vision pipelines, multimodal OCR, visual defect inspection, and document layout parsing. | `computer-vision-roboflow`, `multimodal-vision-ocr` |
+| 43 | **`deep-learning-nlp`** | **2** | End-to-end NLP pipelines, transformer fine-tuning, and modern deep learning training recipes. | `nlp-pipeline-engineering`, `deep-learning-recipes` |
+| 44 | **`executive-corporate-governance`** | **2** | C-suite executive decision advisory, board decks, talent ops, and strategic management frameworks. | `c-suite-executive-advisory`, `hr-talent-management` |
+| 45 | **`fact-checking-verification`** | **2** | Multi-source claim decomposition, citation verification, and formal problem-solving protocols. | `openfactcheck-verification`, `formal-problem-solving-fpf` |
+| 46 | **`finance-investment-ops`** | **2** | LBO/DCF valuation modeling, corporate forensic accounting, and audit trail automation. | `financial-modeling-valuation`, `accounting-automation-forensics` |
+| 47 | **`gtm-customer-success`** | **2** | B2B outbound pipeline acceleration, lead scoring, and automated customer churn prevention. | `gtm-pipeline-automation`, `customer-success-retention` |
+| 48 | **`mlops-infrastructure`** | **2** | High-throughput model serving (vLLM, Triton), GPU cluster right-sizing, and MLOps pipelines. | `model-serving-vllm-triton`, `mlops-pipeline-orchestration` |
+| 49 | **`document-automation`** | **1** | Enterprise multi-format document parser, schema-driven data extraction, and contract synthesis. | `document-specialist-pro` |
+| 50 | **Community Skill Pool** | **64,687** | Massive indexed database of developer tools, CLI utilities, and community skill packages. | *Full pool indexed in `community_skills` with BM25 FTS5* |
 
 ---
 
 ## 👥 66 Specialist Agent Profiles
 
-Hermes provides **66 pre-configured specialist profiles** in `~/.hermes/profiles/`. Switch execution context instantly with `hermes -p <profile>`:
+Hermes provides **66 pre-configured specialist profiles** located in `~/.hermes/profiles/`. Switch execution context instantly with `hermes -p <profile>`:
 
 ```text
-ORCHESTRATION & SYSTEMS             CYBERSECURITY (TEAM EXERCISES)        QUANT & ALGORITHMIC TRADING
+ORCHESTRATION & SYSTEMS             CYBERSECURITY (MULTI-TEAM)            QUANT & ALGORITHMIC TRADING
 ├── orchestrator                    ├── security-audit                   ├── metatrader-quant
 ├── coding-engineer                 ├── red-team                         ├── tradingview-quant
 ├── backend-architect               ├── blue-team                        ├── pat-operations
 ├── frontend-developer              ├── purple-team                      ├── quant-analyst
 ├── fullstack-guardian              ├── white-team                       ├── finance-investment-ops
-├── devops-deploy                   ├── orange-team                      └── crypto-bd-agent
-├── qa-testing                      ├── yellow-team
-└── system-architect                └── green-team
+├── devops-deploy                   ├── orange-team                      ├── analytics-finance
+├── qa-testing                      ├── yellow-team                      └── crypto-bd-agent
+├── system-architect                ├── green-team
+├── cloud-infrastructure            └── ethical-hacking-pentest
+└── code-reviewer
 
 AI, ML & COMPUTER VISION            SEARCH, SEO & MARKETING              ENTERPRISE & LEGAL
 ├── deep-learning-researcher        ├── geo-search-specialist            ├── legal-clm-specialist
 ├── mlops-platform-engineer         ├── seo-growth-marketer              ├── legal-corporate
-├── computer-vision-engineer        ├── social-media-strategist          ├── ai-governance-officer
-├── mathematics-ai                  ├── marketing-growth                 ├── executive-c-suite-advisor
-├── research-science                ├── content-marketer                 ├── hr-talent-operations
-└── multi-agent-architect           └── gtm-sales-engineer               ├── supply-chain-architect
-                                                                         └── product-manager
+├── computer-vision-engineer        ├── agentic-search-optimizer         ├── ai-governance-officer
+├── mathematics-ai                  ├── social-media-strategist          ├── executive-c-suite-advisor
+├── research-science                ├── marketing-growth                 ├── hr-talent-operations
+├── multi-agent-architect           ├── content-marketer                 ├── supply-chain-architect
+└── ai-research-mlops               └── gtm-sales-engineer               ├── product-manager
+                                                                         ├── business-operations
+                                                                         └── fact-checking-analyst
 
-ECOSYSTEM SPECIALISTS (FRAMEWORKS & CLOUDS)
+ECOSYSTEM & FRAMEWORK SPECIALISTS
 ├── minimax-voice-agent (TTS/Audio)  ├── astro-web-architect (Astro 5)    ├── token-optimizer (Context Budget)
 ├── kimi-reasoning-specialist (Docs) ├── nginx-caddy-infrastructure (Ops) ├── mcp-librarian (MCP Universe)
 ├── manus-autonomous-agent (Web)     ├── web-scraping-specialist (DOM)    ├── skill-librarian (Skill Catalog)
-├── workbuddy-enterprise (Desktop)   ├── knowledge-graph-architect (Neo4j)└── foundation-agent (Core Systems)
-├── tencent-cloud-architect (Cloud)  ├── office-excel-pdf (Financials)
-└── laravel-architect (PHP/Bagisto)
+├── workbuddy-enterprise (Desktop)   ├── knowledge-graph-architect (Neo4j)├── foundation-agent (Core Systems)
+├── tencent-cloud-architect (Cloud)  ├── office-excel-pdf (Financials)    ├── documents-office (Document AI)
+├── laravel-architect (PHP/Bagisto)  ├── database-optimizer (DBA)         ├── creative-media (Design/Media)
+├── fabric-engineer (MS Fabric)      ├── data-knowledge (Lakehouse)       ├── chart-visualization (AntV/Charts)
+└── devops-sre (Observability)       └── esoteric-advisor (Specialized)
 ```
 
 ---
 
 ## 🔌 45 Curated Production MCP Servers
 
-Pre-configured in `recommended-mcp-servers.json` with native tool bindings, security isolation, and environment variable substitution:
+All **45 production MCP servers** are pre-configured in `recommended-mcp-servers.json` with native command launchers, argument schemas, and environment isolation:
 
-```text
-WEB & RESEARCH                      MEMORY & KNOWLEDGE GRAPH             DEVELOPER TOOLS
-├── brave-search (Web Search)       ├── mempalace (AAAK Memory)          ├── git (Version Control)
-├── manus-research (Deep Crawl)     ├── codegraph (AST Indexing)         ├── docker (Container Engine)
-├── scrapling-crawler (Anti-Bot)    ├── knowledge-graph-neo4j (Cypher)   ├── filesystem (Scoped IO)
-└── fetch (HTTP Content Reader)     ├── memory (Entity-Relationship)     ├── conda-cli (Env Isolation)
-                                    └── sqlite (Relational DB)           └── document-specialist-mcp
-
-QUANT & FINANCIAL DATA              MULTIMODAL & COMPUTER VISION         ENTERPRISE PLATFORMS
-├── metatrader5 (MT5 Broker Bridge) ├── roboflow-vision-mcp (Inference)  ├── microsoft-fabric (OneLake)
-├── questdb (Ultra-Low-Latency TS)  ├── huggingface-mcp (Hub Models)     ├── caddy-security (TLS & Auth)
-├── timescaledb (Hypertables)       ├── pi-voice (Real-Time Audio)       ├── ai-guardrails-mcp (Safety)
-├── tradingview-signals (Alerts)    └── compdf-mcp (OCR & Layout)        ├── openfactcheck-mcp (Evidence)
-├── redis (Semantic Cache & PubSub)                                      ├── legal-clm-mcp (Redlining)
-├── postgres (Enterprise SQL)                                            ├── gtm-sales-mcp (Pipelines)
-└── mcp-server-excel (Formulas/UDF)                                      └── supplychain-mcp (Logistics)
-
-BROWSER AUTOMATION & CAPTCHA        MESSAGING & NOTIFICATIONS            WORKFLOWS & SCHEDULING
-├── playwright (Headless Browser)   ├── discord (Guild & Channels)       ├── agent-cron (Autonomous Jobs)
-├── puppeteer (Chromium Engine)     ├── telegram-bot (Mini-Apps)         └── deer-flow (Graph Execution)
-└── 2captcha (Turnstile Solver)     ├── whatsapp-wassenger (Omnichannel)
-                                    └── laya (Notification Hub)
-```
+| Category | Server Name | Command | Focus & Capabilities |
+|---|---|---|---|
+| **Web & Research** | `brave-search` | `npx` | Real-time web index search, news, local POIs. |
+| | `manus-research` | `python3` | Multi-hop autonomous crawling and structured synthesis. |
+| | `scrapling-crawler` | `python3` | Adaptive anti-bot web crawling and dynamic DOM extraction. |
+| | `fetch` | `uvx` | Direct HTTP/HTTPS content extraction and markdown conversion. |
+| **Knowledge & Memory**| `mempalace` | `mempalace-mcp` | Local-first AI memory retrieval with AAAK dialect. |
+| | `codegraph` | `codegraph` | AST knowledge graph, callers/callees impact traversal. |
+| | `knowledge-graph-neo4j` | `npx` | Enterprise Neo4j graph queries and Cypher execution. |
+| | `memory` | `npx` | Dynamic entity-relationship graph memory. |
+| | `sqlite` | `uvx` | Direct relational SQL operations and table inspection. |
+| **Developer Tools** | `git` | `uvx` | Branch inspection, diff review, commit auditing. |
+| | `docker` | `uvx` | Container lifecycle, Dockerfile building, volume inspect. |
+| | `filesystem` | `npx` | Scoped filesystem read/write operations. |
+| | `conda-cli` | `python3` | Python virtual environment isolation and package locking. |
+| | `document-specialist-mcp` | `npx` | Structured document parsing, validation, and conversion. |
+| **Quant & Financial** | `metatrader5` | `python3` | MT5 broker bridge, live tick data, order execution. |
+| | `questdb` | `npx` | Ultra-low latency time-series ingestion and ILP protocol. |
+| | `timescaledb` | `node` | Hypertable analytics, continuous aggregates. |
+| | `tradingview-signals` | `python3` | Pine Script indicator webhooks and trading alerts. |
+| | `redis` | `uvx` | Semantic cache, streaming queue, and pub/sub bus. |
+| | `postgres` | `npx` | Enterprise PostgreSQL database queries and migrations. |
+| | `mcp-server-excel` | `uvx` | Excel workbook manipulation and C# UDF automation. |
+| **Multimodal & Vision**| `roboflow-vision-mcp` | `npx` | Computer vision inference, object detection, segmentation. |
+| | `huggingface-mcp` | `uvx` | HuggingFace Hub model discovery and remote inference. |
+| | `pi-voice` | `python3` | Low-latency streaming voice conversation. |
+| | `compdf-mcp` | `python3` | PDF OCR, page manipulation, text table extraction. |
+| **Enterprise Cloud** | `microsoft-fabric` | `npx` | OneLake data lakehouse querying and PowerBI automation. |
+| | `caddy-security` | `caddy` | Automatic TLS, reverse proxy, and zero-trust authentication. |
+| | `ai-guardrails-mcp` | `python3` | Input/output sanitization and jailbreak defense. |
+| | `openfactcheck-mcp`| `python3` | Multi-source claim decomposition and fact verification. |
+| | `legal-clm-mcp` | `python3` | Contract redlining, clause risk scoring, and CLM pipelines. |
+| | `supplychain-mcp` | `node` | Supply chain telemetry, ERP integration, and logistics optimization. |
+| | `gtm-sales-mcp` | `uvx` | B2B pipeline automation, lead enrichment, CRM sync. |
+| **Browser & Automation**| `playwright` | `npx` | Full browser automation, end-to-end UI journey testing. |
+| | `puppeteer` | `npx` | Chromium headless automation, DOM screenshotting. |
+| | `2captcha` | `npx` | Automated CAPTCHA / Cloudflare Turnstile bypass. |
+| **Messaging & Ops** | `discord` | `npx` | Discord bot integration, channel management, webhooks. |
+| | `telegram-bot` | `npx` | Telegram bot communications and mini-app bridge. |
+| | `whatsapp-wassenger` | `npx` | WhatsApp omnichannel messaging and automated replies. |
+| | `laya` | `python3` | Centralized notification command center (Slack/Gmail/GitHub). |
+| **Workflows & Schedule**| `agent-cron` | `node` | Persistent cron job scheduling for autonomous agents. |
+| | `deer-flow` | `python3` | Cyclic graph execution and agentic state-machine workflows. |
 
 ---
 
-## ⚡ 17 Native Pre-compiled Engines
+## 🧩 32 Active Enterprise Plugins
 
-Pre-installed in `/usr/local/bin` with automatic privilege dropping to `predictatrade` (`UID=1001`):
+The platform includes **32 production plugins** registered in `~/.hermes/plugins/`:
+
+| Plugin | Version | Focus & Capabilities |
+|---|:---:|---|
+| **`agent-cron`** | 1.0.0 | Autonomous agent recurring task scheduler and heartbeat monitor. |
+| **`autoagent`** | 1.0.0 | Zero-code autonomous LLM agent execution framework. |
+| **`cactus`** | 1.0.0 | Low-latency edge inference runtime and quantization kernels. |
+| **`codegraph`** | 1.0.0 | AST knowledge graph indexing and callers/callees impact traversal. |
+| **`conda-plugins`** | 1.0.0 | Dynamic Python virtual environment manager. |
+| **`deer-flow`** | 1.0.0 | Cyclic state-machine agent workflow engine. |
+| **`fabric-plugins`**| 1.0.0 | Microsoft Fabric OneLake Lakehouse integration. |
+| **`homeassistant`** | 1.0.0 | IoT hardware automation and telemetry ingestion. |
+| **`laya`** | 1.0.0 | Central notification command center (Slack, Gmail, Jira, GitHub). |
+| **`manus-research`**| 1.0.0 | Multi-query exploratory autonomous research engine. |
+| **`mcptoon`** | 1.0.0 | Zero-dependency MCP gateway and 99.2% token context compressor. |
+| **`mempalace`** | 1.0.0 | Local holographic AI memory with AAAK dialect. |
+| **`memstack`** | 1.0.0 | Hierarchical semantic memory store. |
+| **`mirofish`** | 1.0.0 | Multi-agent predictive market simulation engine. |
+| **`mql5-libraries`** | 1.0.0 | MetaTrader 5 trading bridge and strategy backtesting libraries. |
+| **`open-company`** | 1.0.0 | Autonomous corporate organization and operations manager. |
+| **`openshell`** | 1.0.0 | NVIDIA agent sandbox security and policy enforcement runtime. |
+| **`pentagi`** | 1.0.0 | Autonomous penetration testing and vulnerability auditing agent. |
+| **`quantmind`** | 1.0.0 | Algorithmic trading and portfolio risk management plugin. |
+| **`rea`** | 1.0.0 | Binary reverse engineering, disassembly, and decompilation. |
+| **`scrapling`** | 1.0.0 | Stealth browser scraping and dynamic DOM parsing plugin. |
+| **`superpowers`** | 1.0.0 | Interactive debugging, reasoning boosts, and developer shortcuts. |
+| **`token-saver`** | 1.0.0 | Whitespace stripper, payload compressor, and context ceiling guard. |
+| **`tradingview-pinescript`** | 1.0.0 | TradingView Pine Script v5 code generator and strategy auditor. |
+| **`trim-1`** | 1.0.0 | Compiled Go context trimmer for prompt-relevant lines extraction. |
+| **`wookstar-plugins`**| 1.0.0 | Extended developer automation and tool integrations. |
+| **`geo-optimizer`** | 1.0.0 | Generative Engine Optimization audit, JSON-LD knowledge graph generator. |
+| **`gtm-engine`** | 1.0.0 | B2B outbound pipeline acceleration and lead scoring. |
+| **`ai-governance`** | 1.0.0 | EU AI Act & NIST AI RMF compliance auditor and prompt-injection defense. |
+| **`openfactcheck`** | 1.0.0 | Automated claim decomposition and multi-source evidence verification. |
+| **`agentic-flow`** | 1.0.0 | Multi-agent swarm coordination and hierarchical delegation engine. |
+| **`contract-lifecycle`** | 1.0.0 | Intelligent contract analysis, clause risk scoring, and auto-redlining. |
+
+---
+
+## ⚡ 17 Pre-compiled Native Engines
+
+All **17 engines** are pre-compiled and installed in `/usr/local/bin` with automatic privilege dropping to `predictatrade` (`UID=1001`):
 
 | # | Engine | Technology | CLI / Command | Capabilities |
 |---|---|---|---|---|
@@ -223,63 +351,40 @@ Pre-installed in `/usr/local/bin` with automatic privilege dropping to `predicta
 | 9 | **NVIDIA OpenShell** | Rust / Python | `openshell` | Sandboxed policy enforcement and private agent execution runtime. |
 | 10 | **Cactus Compute** | Python / C++ | `cactus` | Low-latency edge inference runtime and quantization kernels. |
 | 11 | **Laya** | Python / MCP | `laya` | Local-first AI notification command center (Slack, Gmail, GitHub, Jira). |
-| 12-17| **Skill Suites** | Markdown / Code | `skill-library/` | Product localization (23 skills), multi-agent translation with terminology verification, translation file sync, book translation, and skills curriculum. |
+| 12-17| **Localization Suites** | Markdown / Code | `skill-library/` | Product localization (23 skills), multi-agent translation with terminology verification, translation file sync, book translation, and skills curriculum. |
 
 ---
 
-## 🔍 Hybrid Vector Registry & Interactive Dashboard (`hermes-registry`)
+## 🔍 CLI Commands & Developer Query Reference
 
-Hermes provides `/usr/local/bin/hermes-registry` offering both an **Interactive Web Dashboard / UI** and an **autonomous CLI engine** for hybrid search (dense ChromaDB vector embeddings + sparse SQLite FTS5 BM25), package management, and dynamic JIT tool execution:
-
-### 1. Interactive Web Dashboard & UI
-
-Launch the embedded zero-dependency Web Dashboard:
-
+### 1. `hermes-registry` (Hybrid Vector Search & JIT Management)
 ```bash
-# Launch on default port 8888 (accessible locally or over network)
+# Launch interactive Web Dashboard on port 8888
 hermes-registry ui
 
-# Or specify custom host and port
-hermes-registry dashboard --host 0.0.0.0 --port 8888
-```
-
-The Web Dashboard (`http://localhost:8888` or `http://platform.predictatrade.com:8888`) provides:
-- **🔎 Hybrid Search Engine**: Instant search combining semantic vector cosine similarity with full-text keyword indexing across all 19,691 skills.
-- **📂 Category Explorer**: Filter across 48 domain classifications (Financial Quant, Security Audit, GEO, MLOps, Office/PDF, etc.).
-- **📖 Skill Inspector**: Full modal viewer for `SKILL.md` instructions, frontmatter, parameters, and code examples.
-- **⚡ 1-Click Install & Activate**: Dynamically activate any skill into any of the 66 specialist profiles (`orchestrator`, `security-audit`, `metatrader-quant`, etc.) without copying files.
-- **🗑️ 1-Click Uninstall & Deactivate**: Remove tools from profile context instantly to preserve prompt token ceilings.
-- **👥 Profile Manager**: Visual inspection of active tools across all 66 profiles.
-- **🔌 MCP & Plugins Hub**: Directory of 45 curated production MCP servers and 32 plugins.
-
-### 2. Autonomous CLI Usage
-
-```bash
-# 1. View combined relational (SQLite) and vector (ChromaDB) statistics
+# View combined relational (SQLite) and vector (ChromaDB) statistics
 hermes-registry stats
 
-# 2. Natural language intent resolution (Hybrid Dense ChromaDB + Sparse SQLite FTS5)
-hermes-registry resolve "audit solana smart contract reentrancy and token bonding curves"
+# Natural language intent resolution (ChromaDB Cosine + SQLite FTS5 BM25)
+hermes-registry resolve "audit smart contract reentrancy and token bonding curves"
 
-# 3. Dynamically install/activate a skill into profile context (aliases: activate / install)
+# Dynamically install/activate a skill into profile context (aliases: activate / install)
 hermes-registry install web3-audit --profile security-audit
 
-# 4. Evict the tool cleanly when the task finishes to keep prompt context clean (aliases: deactivate / uninstall)
+# Evict the tool cleanly when the task finishes to preserve token ceilings
 hermes-registry uninstall web3-audit --profile security-audit
+
+# List all active skills for a specific profile
+hermes-registry list --profile metatrader-quant
 ```
 
----
-
-## 🗄️ SQLite Knowledge Vault CLI (`hermes-vault`)
-
-The master SQLite vault at `/home/predictatrade/.hermes/hermes-vault.sqlite` (301 MB) can be queried instantly via `/usr/local/bin/hermes-vault`:
-
+### 2. `hermes-vault` (Master SQLite FTS5 CLI)
 ```bash
-# View ecosystem counts and system metadata
+# View ecosystem counts and database health
 hermes-vault stats
 
 # Search curated skills by keyword or category
-hermes-vault skills geo
+hermes-vault skills quant
 hermes-vault skills --category seo-growth-marketing
 
 # Search the 64,687 community skill pool
@@ -295,25 +400,40 @@ hermes-vault mcp --recommended
 hermes-vault engines
 ```
 
+### 3. Direct SQLite Database Queries
+```bash
+# Query curated skills by category
+sqlite3 /home/predictatrade/.hermes/hermes-vault.sqlite \
+  "SELECT category, count(*) FROM curated_skills GROUP BY category ORDER BY count(*) DESC;"
+
+# Query recommended production MCP servers
+sqlite3 /home/predictatrade/.hermes/hermes-vault.sqlite \
+  "SELECT server_name, command FROM mcp_servers WHERE is_recommended=1;"
+
+# Search agent personas by role
+sqlite3 /home/predictatrade/.hermes/hermes-vault.sqlite \
+  "SELECT name, division FROM agent_personas WHERE name LIKE '%quant%';"
+```
+
 ---
 
-## 🛡️ Enterprise Security & Isolation Rules
+## 🛡️ Enterprise Security & Process Isolation
 
 1. **Non-Root Execution**:
-   Hermes executes under the dedicated service user `predictatrade` (`UID=1001`, `GID=1001`). The account is excluded from `sudo` and privileged groups.
+   Hermes executes strictly as the dedicated non-root service account `predictatrade` (`UID=1001`, `GID=1001`). The account is excluded from `sudo` and privileged groups.
 2. **Rootless Docker Daemon**:
-   Containers run via `unix:///run/user/1001/docker.sock` in unprivileged user namespaces. Host Docker (`/var/run/docker.sock`) remains untouched.
+   Containers execute through `unix:///run/user/1001/docker.sock` in unprivileged user namespaces. Platform host Docker (`/var/run/docker.sock`) remains strictly reserved for system infrastructure.
 3. **Automatic Privilege Dropping**:
-   All CLI wrappers in `/usr/local/bin` automatically drop privileges from `root` to `predictatrade` using `runuser -u predictatrade`. Root users enjoy full ergonomics without host contamination.
+   All CLI wrappers in `/usr/local/bin` (`hermes`, `hermes-registry`, `hermes-vault`, `codegraph`, `mcptoon`, `trim`, `mempalace`, `rea`, `auto`, `pentagi`) automatically drop privileges from `root` to `predictatrade` using `runuser -u predictatrade`.
 4. **Zero API Key Leakage**:
-   Secrets reside strictly in `~/.hermes/.env` (mode `0600`). Never hardcode secrets in YAML configs or git repositories.
+   Secrets reside strictly in `/home/predictatrade/.hermes/.env` (mode `0600`). Never hardcode API keys in repository files or commit histories.
 
 ---
 
-## 📚 Master Documentation & Guides
+## 📚 Master Documentation & Runbooks
 
 - [**`README-HERMES.md`**](README-HERMES.md) — Comprehensive technical manual (architecture, engine benchmarks, profile configurations).
-- [**`README-LOCAL-INSTALL.md`**](README-LOCAL-INSTALL.md) — Offline deployment runbook, air-gapped installation, and SQLite schema.
+- [**`README-LOCAL-INSTALL.md`**](README-LOCAL-INSTALL.md) — Enterprise deployment runbook, air-gapped installation, and SQLite schema reference.
 
 ---
 

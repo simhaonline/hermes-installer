@@ -1,4 +1,4 @@
-# Hermes Agent Self-Local & Offline Installer
+# Hermes Agent Enterprise Deployment & Hybrid Vector Registry Runbook
 
 ## 1. Overview & Answers to Backup Strategy
 

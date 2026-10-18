@@ -500,41 +500,41 @@ hermes -p default plugins enable openshell
 
 ---
 
-## 9. Self-Local Offline Installer & SQLite Knowledge Vault
+## 9. Enterprise Content Vault & Hybrid Vector Registry
 
-### A. Backup Strategy Clarification: Do I need both files?
-- **Original Files**: `hermes-agent-production.sh` previously bundled `hermes-assets.tar.gz` as an embedded base64 payload. However, running that script on a brand new, separate device would still attempt to fetch from GitHub (cloning Hermes core, downloading `uv`, downloading pip wheels, and querying community Git repos).
-- **The Self-Local Solution**: To eliminate all external internet and GitHub dependencies when deploying on other devices, two clean backup options are provided:
+### A. Backup & Distribution: Lightweight Content Vault (Option A)
+- **Previous Approach**: Earlier builds bundled entire host binaries and node_modules into a monolithic 1.4+ GB archive.
+- **The Modern Pure Content & Vector Solution**: To provide an ultra-fast, zero-binary-bloat distribution format, the ecosystem is packaged as:
 
-1. **Option 1: Complete Offline Standalone Installer (`hermes-self-contained-installer.tar.gz`, 1.4 GB)**:
-   - **File**: `/root/hermes-self-contained-installer.tar.gz` (SHA-256: `39d3ae500da3ab94c1af6c63e4c93cf067952dd59dd4108d1adf95fe4387d5f3`)
+1. **Option A: Pure Content & Vector Vault (`hermes-content-vault-v1.0.0.tar.gz`, 152 MB - Recommended)**:
+   - **File**: `dist/hermes-content-vault-v1.0.0.tar.gz` (SHA-256: `405779fff528dad17d311e6148d91127d6e571a319ddc4f9b093091166e3873c`)
    - **Contents**:
-     - `install-hermes-local.sh`: 100% offline shell installer with zero GitHub/pip/npm calls.
-     - `hermes-vault.sqlite`: Unified SQLite database (75 MB).
-     - `hermes-engines.tar.gz`: Pre-compiled binaries and site-packages for all 16 engines (107 MB).
-     - `hermes-agent-core.tar.gz`: Pre-built Hermes Agent core engine (`4ed093c`) with all node_modules (333 MB).
-     - `hermes-system-assets.tar.gz`: 1,688 skills, 43,000+ community skills, MCP universe, and tools runtime (976 MB).
+     - `install-hermes-local.sh`: Production installer with zero external package dependency loops.
+     - `hermes-vault.sqlite`: Master database with 19,691 curated skills, 64,687 community skills, 4,837 MCPs, 480 personas, 66 profiles, 32 plugins, and FTS5 BM25 search tables (301 MB uncompressed).
+     - `vector-registry/`: ChromaDB vector database with dense embeddings across all skills and components (69 MB).
+     - `hermes-registry`: Dynamic JIT tool execution engine and Web UI (`0.0.0.0:8888`).
+     - `assets/`: Complete collection manifests and JSON configurations.
    - **Deployment to another device**:
      ```bash
-     scp /root/hermes-self-contained-installer.tar.gz root@new-server:/root/
-     cd /root && tar -xzf hermes-self-contained-installer.tar.gz
-     cd hermes-self-contained-installer && sudo bash install-hermes-local.sh
+     curl -LO https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-content-vault-v1.0.0.tar.gz
+     tar -xzf hermes-content-vault-v1.0.0.tar.gz
+     cd hermes-content-vault-v1.0.0 && sudo bash install-hermes-local.sh
      ```
-     Installs and verifies in under **30 seconds** without touching GitHub or the internet.
+     Installs and verifies in seconds without binary bloat.
 
-2. **Option 2: Single-File SQLite Knowledge Vault (`hermes-vault.sqlite`, 75 MB)**:
-   - **File**: `/root/hermes-vault.sqlite` (and `/home/predictatrade/.hermes/hermes-vault.sqlite`)
+2. **Option B: Master SQLite Knowledge Vault (`hermes-vault.sqlite`, 301 MB)**:
+   - **File**: `/home/predictatrade/.hermes/hermes-vault.sqlite`
    - **Contents**:
-     - `curated_skills`: All 1,688 skills with complete markdown text and YAML headers.
-     - `community_skills`: 43,370 indexed community packages with triage classifications and star counts.
-     - `mcp_servers`: 4,859 cataloged MCP servers + 30 curated production servers.
-     - `agent_personas`: 415 agent persona definitions with full markdown prompts.
-     - `profiles`: 42 specialist profile configurations.
-     - `plugins`: 24 active plugins.
-     - `engines`: 17 extended AI/reverse-engineering/quant engines.
-   - **Use case**: Lightweight, portable backup to cloud storage or USB stick for preserving all ecosystem metadata and knowledge.
+     - `curated_skills`: All 19,691 curated skills with complete markdown text and YAML frontmatter across 49 categories.
+     - `community_skills`: 64,687 indexed community packages with star counts and triage categories.
+     - `mcp_servers`: 4,837 cataloged MCP servers + 45 curated production servers.
+     - `agent_personas`: 480 agent persona definitions with full prompts.
+     - `profiles`: 66 specialist profile configurations.
+     - `plugins`: 32 active plugins.
+     - `engines`: 17 pre-compiled native engines.
+   - **Use case**: Database-only backup or embedding in custom analytics pipelines.
 
-### B. SQLite Vault CLI (`hermes-vault`)
+### B. Hybrid Vector Registry & SQLite Vault CLIs (`hermes-registry` & `hermes-vault`)
 
 The system provides `/usr/local/bin/hermes-vault` for querying the SQLite database:
 ```bash

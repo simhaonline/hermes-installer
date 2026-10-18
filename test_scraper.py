@@ -72,12 +72,14 @@ Calculates math formulas.
         )
 
         converted = pipeline.convert_artifacts([skill_artifact, mcp_artifact])
-        self.assertEqual(len(converted), 2)
-        self.assertEqual(converted[0]["name"], "math-calculator")
-        self.assertEqual(converted[1]["name"], "calc-service-mcp")
+        self.assertEqual(len(converted["skills"]), 2)
+        self.assertEqual(len(converted["mcps"]), 1)
+        self.assertEqual(converted["skills"][0]["name"], "math-calculator")
+        self.assertEqual(converted["skills"][1]["name"], "calc-service-mcp")
+        self.assertEqual(converted["mcps"][0]["server_name"], "calc-service")
 
         # Check agentskills.io sections
-        for s in converted:
+        for s in converted["skills"]:
             self.assertIn("## When to Use", s["body"])
             self.assertIn("## Procedure", s["body"])
             self.assertIn("## Pitfalls", s["body"])

@@ -1,0 +1,11 @@
+{
+  "server_name": "omnigraph-server",
+  "transport": "http",
+  "command": "omnigraph-server",
+  "args": "[\"--port\", \"8080\"]",
+  "env": "{}",
+  "source_repo": "ModernRelay/omnigraph",
+  "is_recommended": 0,
+  "description": "Model Context Protocol (MCP) server for omnigraph providing tool execution and context integration.",
+  "raw_config": "{\"name\": \"omnigraph-server\", \"transport\": \"http\", \"command\": \"omnigraph-server\", \"args\": [\"--port\", \"8080\"], \"description\": \"Model Context Protocol (MCP) server for omnigraph providing tool execution and context integration.\"}"
+}

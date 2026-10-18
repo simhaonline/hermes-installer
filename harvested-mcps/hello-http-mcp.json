@@ -1,0 +1,11 @@
+{
+  "server_name": "hello-http-mcp",
+  "transport": "http",
+  "command": "",
+  "args": "[]",
+  "env": "{}",
+  "source_repo": "iOfficeAI/AionUi",
+  "is_recommended": 0,
+  "description": "A demo MCP server using HTTP transport",
+  "raw_config": "{\"name\": \"hello-http-mcp\", \"description\": \"A demo MCP server using HTTP transport\", \"transport\": {\"type\": \"http\", \"url\": \"http://localhost:9090/mcp\"}, \"enabled\": false}"
+}

@@ -1,0 +1,11 @@
+{
+  "server_name": "react-skills-server",
+  "transport": "http",
+  "command": "react-skills-server",
+  "args": "[\"--port\", \"8080\"]",
+  "env": "{}",
+  "source_repo": "full-stack-skills/react-skills",
+  "is_recommended": 0,
+  "description": "Model Context Protocol (MCP) server for react-skills providing tool execution and context integration.",
+  "raw_config": "{\"name\": \"react-skills-server\", \"transport\": \"http\", \"command\": \"react-skills-server\", \"args\": [\"--port\", \"8080\"], \"description\": \"Model Context Protocol (MCP) server for react-skills providing tool execution and context integration.\"}"
+}

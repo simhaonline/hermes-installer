@@ -157,6 +157,52 @@ Some documentation.
         self.assertIn("## Pitfalls", result["body"])
         self.assertIn("## Verification", result["body"])
 
+    def test_convert_agent_persona(self):
+        from converter import convert_agent_persona
+        content = """---
+name: ReactFullStackSpecialist
+role: ReactFullStackSpecialist.Agent
+description: Specialist in React, Next.js, and Full-Stack architecture
+---
+# React Specialist
+Executes full-stack React workflows.
+"""
+        res = convert_agent_persona(content, {"division": "react-ecosystem"})
+        self.assertEqual(res["name"], "ReactFullStackSpecialist")
+        self.assertEqual(res["persona_id"], "ReactFullStackSpecialist.agent")
+        self.assertEqual(res["division"], "react-ecosystem")
+        self.assertIn("ReactFullStackSpecialist", res["system_prompt"])
+
+    def test_convert_plugin_manifest(self):
+        from converter import convert_plugin_manifest
+        manifest = {
+            "name": "react-skills",
+            "version": "1.0.0",
+            "description": "React ecosystem tools and skills"
+        }
+        res = convert_plugin_manifest(manifest)
+        self.assertEqual(res["name"], "react-skills")
+        self.assertEqual(res["version"], "1.0.0")
+    def test_convert_mcp_server_record(self):
+        from converter import convert_mcp_server_record
+        data = {
+            "name": "hello-echo-mcp",
+            "description": "Demo MCP server",
+            "transport": {
+                "type": "stdio",
+                "command": "echo",
+                "args": ["hello-mcp"]
+            }
+        }
+        res = convert_mcp_server_record(data, {"repo": "iOfficeAI/AionUi", "is_recommended": 1})
+        self.assertEqual(res["server_name"], "hello-echo-mcp")
+        self.assertEqual(res["transport"], "stdio")
+        self.assertEqual(res["command"], "echo")
+        self.assertEqual(res["args"], '["hello-mcp"]')
+        self.assertEqual(res["source_repo"], "iOfficeAI/AionUi")
+        self.assertEqual(res["is_recommended"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
+

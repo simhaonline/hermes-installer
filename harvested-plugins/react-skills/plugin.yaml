@@ -1,0 +1,5 @@
+name: react-skills
+version: 1.0.0
+path: plugins/react-skills
+is_active: 1
+description: React ecosystem skills

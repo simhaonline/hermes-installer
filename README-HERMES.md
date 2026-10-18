@@ -510,9 +510,9 @@ hermes -p default plugins enable openshell
    - **File**: `dist/hermes-content-vault-v1.0.0.tar.gz` (SHA-256: `405779fff528dad17d311e6148d91127d6e571a319ddc4f9b093091166e3873c`)
    - **Contents**:
      - `install-hermes-local.sh`: Production installer with zero external package dependency loops.
-     - `hermes-vault.sqlite`: Master database with 19,691 curated skills, 64,687 community skills, 4,837 MCPs, 480 personas, 66 profiles, 32 plugins, and FTS5 BM25 search tables (301 MB uncompressed).
-     - `vector-registry/`: ChromaDB vector database with dense embeddings across all skills and components (69 MB).
-     - `hermes-registry`: Dynamic JIT tool execution engine and Web UI (`0.0.0.0:8888`).
+     - `hermes-vault.sqlite`: Master database with 19,840 curated skills, 64,687 community skills, 4,842 MCPs, 554 personas, 66 profiles, 35 plugins, and FTS5 BM25 search tables (304 MB uncompressed).
+     - `vector-registry/`: ChromaDB vector database with dense embeddings across all skills and components (70 MB).
+     - `hermes-registry`: Dynamic JIT tool execution engine and Web UI (`0.0.0.0:8998`).
      - `assets/`: Complete collection manifests and JSON configurations.
    - **Deployment to another device**:
      ```bash

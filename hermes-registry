@@ -1352,11 +1352,11 @@ def main():
 
     p_ui = sub.add_parser("ui", help="Launch interactive Web Dashboard")
     p_ui.add_argument("--host", default="0.0.0.0", help="Binding host (default 0.0.0.0)")
-    p_ui.add_argument("--port", type=int, default=8888, help="Port to serve on (default 8888)")
+    p_ui.add_argument("--port", type=int, default=8998, help="Port to serve on (default 8998)")
 
     p_dash = sub.add_parser("dashboard", help="Alias for ui")
     p_dash.add_argument("--host", default="0.0.0.0", help="Binding host (default 0.0.0.0)")
-    p_dash.add_argument("--port", type=int, default=8888, help="Port to serve on (default 8888)")
+    p_dash.add_argument("--port", type=int, default=8998, help="Port to serve on (default 8998)")
 
     args = p.parse_args()
     if args.subcommand == "stats":

@@ -247,7 +247,7 @@ Type=simple
 User=${HERMES_USER}
 Group=${HERMES_USER}
 WorkingDirectory=${ACCOUNT_HOME}
-ExecStart=/usr/local/bin/hermes-registry ui --host 0.0.0.0 --port 8888
+ExecStart=/usr/local/bin/hermes-registry ui --host 0.0.0.0 --port 8998
 Restart=on-failure
 RestartSec=5
 Environment=HOME=${ACCOUNT_HOME}
@@ -302,14 +302,14 @@ printf 'Hermes Home      : %s\n' "$HERMES_BASE_HOME"
 printf 'SQLite Vault     : %s/hermes-vault.sqlite\n' "$HERMES_BASE_HOME"
 printf 'Vector Store     : %s/vector-registry\n' "$HERMES_BASE_HOME"
 printf 'Workspace        : %s\n' "$WORKSPACE"
-printf 'Curated Skills   : 19,691 Skills across 48 Categories\n'
+printf 'Curated Skills   : 19,840 Skills across 52 Categories\n'
 printf 'Community Pool   : 64,687 Indexed Packages\n'
-printf 'MCP Universe     : 4,837 Indexed Servers + 45 Curated Production Servers\n'
-printf 'Agent Library    : 480 Personas & 66 Specialist Profiles\n'
-printf 'Active Plugins   : 32 Enterprise Plugins\n'
+printf 'MCP Universe     : 4,842 Indexed Servers + 45 Curated Production Servers\n'
+printf 'Agent Library    : 554 Personas & 66 Specialist Profiles\n'
+printf 'Active Plugins   : 35 Enterprise Plugins\n'
 printf 'Hybrid Registry  : hermes-registry resolve "<intent>"\n'
 printf 'Web Dashboard    : hermes-registry ui (or systemctl status hermes-registry)\n'
-printf 'Web UI URL       : http://localhost:8888 (http://platform.predictatrade.com:8888)\n'
+printf 'Web UI URL       : http://localhost:8998 (http://platform.predictatrade.com:8998)\n'
 printf '==============================================================================\n'
 printf 'CLI Status       : hermes-vault stats | hermes-registry stats\n'
 printf 'Launch Agent     : hermes\n'

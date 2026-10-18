@@ -1,0 +1,5 @@
+name: timeline
+version: 1.0.0
+path: plugins/timeline
+is_active: 1
+description: Timeline view

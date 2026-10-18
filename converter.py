@@ -595,3 +595,155 @@ curl -I -s "{ai_plugin_json.get('api', {}).get('url', 'https://api.example.com')
         "skill_md": skill_md,
         "category": category,
     }
+
+
+def convert_agent_persona(
+    content: str,
+    metadata: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Convert an agent definition (AGENTS.md, .agent.md, or YAML) into a Hermes persona.
+
+    Args:
+        content: Markdown or YAML string describing the agent.
+        metadata: Optional metadata dictionary (name, division, role, repo, author).
+
+    Returns:
+        Dict with keys: persona_id, name, division, role, type, file_path, system_prompt
+    """
+    metadata = metadata or {}
+    raw_fm, body = parse_frontmatter(content)
+
+    raw_name = raw_fm.get("name") or metadata.get("name") or "CustomAgent"
+    # Clean persona name (CamelCase alphanumeric)
+    name = re.sub(r"[^a-zA-Z0-9]", "", raw_name)
+    if not name:
+        name = "CustomAgent"
+
+    division = metadata.get("division") or metadata.get("category") or "agent-teams"
+    role = raw_fm.get("role") or metadata.get("role") or f"{name}.Agent"
+    agent_type = metadata.get("type") or "general"
+    persona_id = f"{name}.agent"
+    file_path = f"agent-library/{division}/{persona_id}.md"
+
+    # Construct complete system prompt
+    desc = raw_fm.get("description") or metadata.get("description") or f"Autonomous specialist persona for {name}."
+    system_prompt = render_skill_md(
+        {
+            "name": name,
+            "description": normalize_description(desc, fallback_name=name),
+            "role": role,
+            "division": division,
+            "metadata": {
+                "hermes": {
+                    "source": metadata.get("repo", "community"),
+                    "version": "1.0.0",
+                }
+            }
+        },
+        body if body else f"# {name}\n\n{desc}\n\n## Capabilities\n- Autonomous execution within {division} domain.\n- Adheres to standard Hermes task and kanban protocol.\n"
+    )
+
+    return {
+        "persona_id": persona_id,
+        "name": name,
+        "division": division,
+        "role": role,
+        "type": agent_type,
+        "file_path": file_path,
+        "system_prompt": system_prompt,
+    }
+
+
+def convert_plugin_manifest(
+    data: Dict[str, Any],
+    metadata: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Convert a plugin manifest (JSON or YAML) into a Hermes plugin record.
+
+    Args:
+        data: Parsed dict of plugin.json, plugin.yaml, etc.
+        metadata: Optional metadata dictionary (repo, category, author).
+
+    Returns:
+        Dict with keys: name, version, path, is_active, description
+    """
+    metadata = metadata or {}
+    raw_name = data.get("name") or data.get("id") or metadata.get("name") or "hermes-plugin"
+    name = normalize_name(raw_name)
+    version = str(data.get("version") or metadata.get("version") or "1.0.0")
+    path = f"plugins/{name}"
+    desc = data.get("description") or metadata.get("description") or f"Hermes enterprise plugin: {name}"
+    clean_desc = normalize_description(desc, fallback_name=name)
+
+    return {
+        "name": name,
+        "version": version,
+        "path": path,
+        "is_active": 1,
+        "description": clean_desc,
+    }
+
+
+def convert_mcp_server_record(
+    data: Dict[str, Any],
+    metadata: Optional[Dict[str, Any]] = None,
+) -> Dict[str, Any]:
+    """Convert an MCP server definition into an mcp_servers table record.
+
+    Args:
+        data: Parsed dict of an MCP server config.
+        metadata: Optional metadata dictionary (repo, author, server_name).
+
+    Returns:
+        Dict with keys: server_name, transport, command, args, env, source_repo, is_recommended, description, raw_config
+    """
+    metadata = metadata or {}
+    raw_name = (
+        data.get("name")
+        or data.get("server_name")
+        or data.get("id")
+        or metadata.get("server_name")
+        or metadata.get("name")
+        or "mcp-server"
+    )
+    server_name = normalize_name(raw_name)
+
+    # Transport handling
+    raw_transport = data.get("transport", "stdio")
+    if isinstance(raw_transport, dict):
+        transport = str(raw_transport.get("type", "stdio"))
+        command = raw_transport.get("command") or data.get("command") or ""
+        args = raw_transport.get("args") or data.get("args") or []
+    else:
+        transport = str(raw_transport)
+        command = data.get("command") or ""
+        args = data.get("args") or []
+
+    if isinstance(args, str):
+        args = [args]
+    elif not isinstance(args, list):
+        args = []
+
+    env = data.get("env") or {}
+    if not isinstance(env, dict):
+        env = {}
+
+    desc = data.get("description") or metadata.get("description") or f"MCP server for {server_name}"
+    description = normalize_description(desc, fallback_name=server_name)
+    source_repo = metadata.get("repo") or metadata.get("source_repo") or ""
+    is_recommended = int(metadata.get("is_recommended", 0))
+
+    raw_config = json.dumps(data)
+
+    return {
+        "server_name": server_name,
+        "transport": transport,
+        "command": command,
+        "args": json.dumps(args),
+        "env": json.dumps(env),
+        "source_repo": source_repo,
+        "is_recommended": is_recommended,
+        "description": description,
+        "raw_config": raw_config,
+    }
+

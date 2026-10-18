@@ -1,0 +1,11 @@
+{
+  "server_name": "hello-echo-mcp",
+  "transport": "stdio",
+  "command": "echo",
+  "args": "[\"hello-mcp\"]",
+  "env": "{}",
+  "source_repo": "iOfficeAI/AionUi",
+  "is_recommended": 0,
+  "description": "A demo MCP server using stdio transport",
+  "raw_config": "{\"name\": \"hello-echo-mcp\", \"description\": \"A demo MCP server using stdio transport\", \"transport\": {\"type\": \"stdio\", \"command\": \"echo\", \"args\": [\"hello-mcp\"]}, \"enabled\": true}"
+}

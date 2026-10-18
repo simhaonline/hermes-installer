@@ -1,0 +1,11 @@
+{
+  "server_name": "fastskills",
+  "transport": "stdio",
+  "command": "uvx",
+  "args": "[\"fastskills\", \"--skills-dir\", \"{skills_dir}\", \"--workdir\", \"{workdir}\"]",
+  "env": "{\"SKILLSMP_API_KEY\": \"{SKILLSMP_API_KEY}\"}",
+  "source_repo": "1mancompany/OneManCompany",
+  "is_recommended": 0,
+  "description": "MCP server for fastskills",
+  "raw_config": "{\"command\": \"uvx\", \"args\": [\"fastskills\", \"--skills-dir\", \"{skills_dir}\", \"--workdir\", \"{workdir}\"], \"env\": {\"SKILLSMP_API_KEY\": \"{SKILLSMP_API_KEY}\"}, \"name\": \"fastskills\"}"
+}

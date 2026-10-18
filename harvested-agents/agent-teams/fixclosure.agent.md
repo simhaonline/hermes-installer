@@ -1,0 +1,39 @@
+---
+name: fixclosure
+description: Autonomous specialist persona for fixclosure.
+role: fixclosure.Agent
+division: agent-teams
+metadata:
+  hermes:
+    source: nrslib/takt
+    version: 1.0.0
+---
+
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+# TAKT facet eval: review-remediation / fix (coder, codex writes files).
+# Run via npm run eval:prompts:fix-closure
+
+description: 'TAKT facet eval: review-remediation / fix affected-path closure'
+
+prompts:
+  - file://../../prompts/fix-closure.phase1.md
+
+providers:
+  - id: openai:codex-sdk
+    label: codex
+    config:
+      working_dir: ../../.work/fix-closure
+      sandbox_mode: workspace-write
+      approval_policy: never
+      skip_git_repo_check: true
+      model_reasoning_effort: low
+
+tests:
+  - description: 'fix: close every atomic obligation across multiple fix units rather than only the verifier example'
+    vars:
+      task: file://../../cases/fix-closure-task.md
+      previous_response: ''
+    assert:
+      - type: javascript
+        metric: fix/affected-path-closure
+        value: file://../../asserts/fix-closure.mjs

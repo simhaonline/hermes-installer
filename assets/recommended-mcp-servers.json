@@ -297,6 +297,82 @@
         "manus_research.server"
       ],
       "description": "Manus autonomous deep-crawl web research, citation synthesis, and multi-query crawling"
+    },
+    "geo-search-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ],
+      "description": "Generative Engine Optimization (GEO) and AI search visibility audit MCP server"
+    },
+    "social-media-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-social-media"
+      ],
+      "description": "Social media automation and multi-platform publishing MCP server"
+    },
+    "openfactcheck-mcp": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "openfactcheck_mcp.server"
+      ],
+      "description": "Automated fact-checking, claim verification, and evidence retrieval MCP server"
+    },
+    "roboflow-vision-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "roboflow-mcp-server"
+      ],
+      "description": "Roboflow computer vision dataset, inference, and object detection MCP server"
+    },
+    "huggingface-mcp": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-huggingface"
+      ],
+      "description": "Hugging Face Hub model discovery, dataset querying, and spaces MCP server"
+    },
+    "legal-clm-mcp": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "clm_mcp.server"
+      ],
+      "description": "Contract Lifecycle Management (CLM) clause analysis and redlining MCP server"
+    },
+    "supplychain-mcp": {
+      "command": "node",
+      "args": [
+        "/usr/local/lib/supplychain-mcp/index.js"
+      ],
+      "description": "Supply chain network resilience, freight tracking, and logistics optimization MCP server"
+    },
+    "gtm-sales-mcp": {
+      "command": "uvx",
+      "args": [
+        "gtm-sales-mcp"
+      ],
+      "description": "Go-To-Market pipeline acceleration, lead scoring, and customer retention MCP server"
+    },
+    "ai-guardrails-mcp": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "guardrails_mcp.server"
+      ],
+      "description": "Runtime prompt-injection defense, output hallucination filter, and safety guardrails MCP server"
+    },
+    "document-specialist-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "document-specialist-mcp"
+      ],
+      "description": "Intelligent document processing, PDF form extraction, and layout analysis MCP server"
     }
   },
   "description": "Curated production-ready MCP servers for Hermes Agent. Use 'hermes mcp add' or hermes-mcp-universe to register."

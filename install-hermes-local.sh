@@ -53,11 +53,17 @@ log()  { printf '\n[hermes-local-installer] %s\n' "$*"; }
 fail() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
 warn() { printf 'WARNING: %s\n' "$*" >&2; }
 
-log '[1/6] Validating local payload and installer packages'
-for req in hermes-vault.sqlite hermes-engines.tar.gz hermes-agent-core.tar.gz hermes-system-assets.tar.gz assets/configure.py; do
-    [[ -f "$PAYLOAD_DIR/$req" ]] || fail "Required local payload missing: $req"
-done
-printf '  Local payload verified: 100%% offline bundle intact.\n'
+if [[ $VALIDATE_ONLY == 0 ]]; then
+    log '[1/6] Validating local payload and installer packages'
+    for req in hermes-vault.sqlite hermes-engines.tar.gz hermes-agent-core.tar.gz hermes-system-assets.tar.gz assets/configure.py; do
+        [[ -f "$PAYLOAD_DIR/$req" ]] || fail "Required local payload missing: $req"
+    done
+    printf '  Local payload verified: 100%% offline bundle intact.\n'
+else
+    log '[1/6] Running validation-only testbench against deployed Hermes runtime'
+    [[ -f "$PAYLOAD_DIR/hermes-vault.sqlite" || -f "/home/$HERMES_USER/.hermes/hermes-vault.sqlite" ]] || fail "Knowledge vault hermes-vault.sqlite not found."
+    printf '  Validation mode active: checking deployed system state.\n'
+fi
 
 # Provision dedicated user account if missing
 if ! id "$HERMES_USER" >/dev/null 2>&1; then
@@ -205,11 +211,11 @@ printf 'Account        : %s (UID %s)\n' "$HERMES_USER" "$ACCOUNT_UID"
 printf 'Hermes Home    : %s\n' "$HERMES_BASE_HOME"
 printf 'SQLite Vault   : %s/hermes-vault.sqlite\n' "$HERMES_BASE_HOME"
 printf 'Workspace      : %s\n' "$WORKSPACE"
-printf 'Curated Skills : 19,400+ Skills across 47 Categories\n'
-printf 'Community Pool : 64,500+ Indexed Packages\n'
-printf 'MCP Universe   : 4,800+ Indexed Servers + 35 Curated Production Servers\n'
-printf 'Agent Library  : 460+ Personas & 54 Specialist Profiles\n'
-printf 'Active Plugins : 26 Plugins\n'
+printf 'Curated Skills : 19,480+ Skills across 52 Categories\n'
+printf 'Community Pool : 64,650+ Indexed Packages\n'
+printf 'MCP Universe   : 4,830+ Indexed Servers + 45 Curated Production Servers\n'
+printf 'Agent Library  : 480+ Personas & 66 Specialist Profiles\n'
+printf 'Active Plugins : 32 Enterprise Plugins\n'
 printf 'Offline Engines: trim-1, codegraph, mcptoon, mempalace, rea, autoagent, pentagi, cactus, laya, openshell\n'
 printf 'Offline Mode   : Complete (Zero GitHub / Internet dependencies)\n'
 printf '==============================================================================\n'

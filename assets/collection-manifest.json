@@ -1485,6 +1485,54 @@
     {
       "name": "foundation-agent",
       "description": "Elite general reasoning, cross-model function calling, and deep workflow automation using foundation agent skill libraries."
+    },
+    {
+      "name": "geo-search-specialist",
+      "description": "Generative Engine Optimization (GEO) specialist. Audits and optimizes brand entity citations, Schema.org knowledge graphs, and RAG extractability across ChatGPT Search, Perplexity, Gemini, Claude, and Google AI Overviews."
+    },
+    {
+      "name": "social-media-strategist",
+      "description": "Multi-platform social media marketing and viral growth strategist. Crafts platform-native hooks, automates publishing cadences, monitors brand sentiment, and drives social engagement across X, LinkedIn, YouTube, and Instagram."
+    },
+    {
+      "name": "gtm-sales-engineer",
+      "description": "Go-To-Market acceleration and B2B sales automation specialist. Designs Ideal Customer Profiles, builds high-converting outbound sequences, implements MEDDIC qualification, and optimizes revenue pipelines."
+    },
+    {
+      "name": "mlops-platform-engineer",
+      "description": "Production MLOps and AI infrastructure specialist. Manages model registries, experiment tracking with MLflow, continuous training gates, and high-throughput model serving using vLLM and NVIDIA Triton."
+    },
+    {
+      "name": "computer-vision-engineer",
+      "description": "Computer vision and visual intelligence specialist for Ultralytics YOLO object detection, Roboflow dataset pipelines, OCR document intelligence, and multimodal visual question answering."
+    },
+    {
+      "name": "fact-checking-analyst",
+      "description": "Fact-checking and claim verification specialist. Decomposes statements into atomic claims, retrieves primary source evidence, evaluates authoritativeness, and delivers cited truthfulness verdicts."
+    },
+    {
+      "name": "ai-governance-officer",
+      "description": "Enterprise AI governance, ethics, and regulatory compliance specialist. Audits systems against the EU AI Act and NIST AI RMF, enforces runtime safety guardrails, mitigates algorithmic bias, and produces transparency documentation."
+    },
+    {
+      "name": "executive-c-suite-advisor",
+      "description": "Executive decision support and board governance advisor. Drafts formal board resolutions, executive strategy memos, cascades corporate OKRs, and formulates strategic acquisition due diligence frameworks."
+    },
+    {
+      "name": "hr-talent-operations",
+      "description": "Human Resources and talent operations specialist. Develops competency frameworks, structures objective interview rubrics, orchestrates employee onboarding journeys, and analyzes organizational retention."
+    },
+    {
+      "name": "legal-clm-specialist",
+      "description": "Contract Lifecycle Management (CLM) and commercial legal specialist. Extracts key legal clauses, executes automated redlining against standard playbooks, evaluates procurement RFPs, and monitors contractual obligations."
+    },
+    {
+      "name": "supply-chain-architect",
+      "description": "Global supply chain resilience and logistics specialist. Optimizes multi-echelon inventory levels, models freight routing, evaluates supplier concentration risk, and runs disruption contingency simulations."
+    },
+    {
+      "name": "deep-learning-researcher",
+      "description": "Advanced deep learning researcher specializing in neural architectures, transformers, state-space models, parameter-efficient fine-tuning (LoRA/QLoRA), and distributed training optimization (DeepSpeed/FSDP)."
     }
   ],
   "source_sha256": "b2b219ace4e4db62324a776566f7c0b85cafedd7c382bd40e757119113bd2174"

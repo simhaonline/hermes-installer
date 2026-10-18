@@ -72,11 +72,11 @@ All projects and code repositories should reside in `/srv/predictatrade/` (or su
 
 ## 2. Included Components & Features
 
-### A. Skill Libraries (19,222+ Curated Skills across 47 Categories + 64,569 Community Pool)
+### A. Skill Libraries (19,691+ Curated Skills across 52 Categories + 64,687 Community Pool)
 
 The installation provides a comprehensive two-tiered skill architecture:
 
-#### 1. Retained Curated Library: 19,222+ Skills across 47 Categories
+#### 1. Retained Curated Library: 19,691+ Skills across 52 Categories
 Located in `/home/predictatrade/.hermes/skill-library` and `/home/predictatrade/.hermes/skills`:
 
 | Category | Skill Count | Primary Capabilities |
@@ -160,34 +160,51 @@ Located in `/home/predictatrade/.hermes/skill-library` and `/home/predictatrade/
 
 ---
 
-## 4. Agent Library (434 Personas) & 42 Specialist Profiles
+## 4. Agent Library (480 Personas) & 66 Specialist Profiles
 
-### 1. Agent Library (434 Personas)
+### 1. Agent Library (480 Personas)
 Located in `/home/predictatrade/.hermes/agent-library`:
 - **329 Agency Agents**: Pre-configured specialized personas across Engineering, Design, Academic Research, Copywriting, and Marketing.
-- **72 Technical Specialists**: Located in `/home/predictatrade/.hermes/agent-library/specialist-agents/`, including 9 newly created specialist personas:
-  - `codegraph-intelligence.md` — Codebase AST knowledge graph, callers/callees impact traversal, and cross-repo architectural refactoring.
-  - `rea-reverse-engineering.md` — Binary disassembly, decompilation, control-flow recovery, and static binary security analysis.
-  - `mirofish-swarm.md` — Swarm intelligence, multi-agent predictive simulation, emergent strategy modeling, and scenario testing.
-  - `autoagent-autonomous.md` — Dynamic autonomous workflow synthesis, triage management, and zero-code agent orchestration.
-  - `mempalace-memory.md` — Holographic AI memory retrieval, AAAK dialect compression, room/wing categorization, and knowledge synthesis.
-  - `translation-localization.md` — Multi-agent product localization, terminology glossary verification, and i18n/l10n sync.
-  - `pentagi-pentest.md` — Autonomous penetration testing, vulnerability discovery, exploit verification, and defensive remediation.
-  - `laya-command-center.md` — Local-first AI notification triage center, alert prioritization, and omnichannel aggregation.
-  - `cactus-quant.md` — Low-latency edge inference optimization, kernel transpilation, low-precision quantization, and execution graph scheduling.
-- **13 Quantitative Trading Specialists**: Quant researchers, MQL5 EA developers, PineScript strategy engineers, prop-firm compliance auditors.
+- **90 Technical Specialists**: Located in `/home/predictatrade/.hermes/agent-library/specialist-agents/`, including:
+  - `GEOSearchSpecialist.agent.md` — Generative Engine Optimization, Schema.org entity graphs, and AI citation visibility.
+  - `SocialMediaStrategist.agent.md` — Autonomous social media marketing, viral hooks, and multi-channel scheduling.
+  - `GTMSalesEngineer.agent.md` — Go-To-Market acceleration, outbound sequences, and lead scoring.
+  - `CustomerSuccessSpecialist.agent.md` — Churn prevention, health scores, and customer onboarding.
+  - `DeepLearningResearcher.agent.md` — Neural architectures, transformers, and distributed training.
+  - `NLPPipelineEngineer.agent.md` — High-precision NLP pipelines, embeddings, and semantic search.
+  - `ComputerVisionEngineer.agent.md` — YOLO object detection, Roboflow datasets, OCR, and multimodal vision.
+  - `MLOpsPlatformEngineer.agent.md` — Production MLOps, MLflow registries, and vLLM/Triton serving.
+  - `DataAnalyticsSpecialist.agent.md` — Automated EDA, hypothesis testing, and executive BI dashboards.
+  - `DataEngineeringSpecialist.agent.md` — Modern data stack, DuckDB/ClickHouse pipelines, and dbt modeling.
+  - `AgentOrchestrationSwarm.agent.md` — Multi-agent swarm coordination and hierarchical delegation.
+  - `DocumentAutomationSpecialist.agent.md` — Intelligent document processing, PDF extraction, and contract redlines.
+  - `FactCheckingAnalyst.agent.md` — Automated fact-checking, claim verification, and source credibility rating.
+  - `FormalProblemSolver.agent.md` — First-principles formal problem solving, MECE trees, and decision matrices.
+  - `AIGovernanceOfficer.agent.md` — AI ethics, EU AI Act compliance, NIST AI RMF, and safety guardrails.
+  - `ExecutiveCSuiteAdvisor.agent.md` — Board governance, executive strategy memos, and corporate OKRs.
+  - `HRTalentOperations.agent.md` — HR workflows, competency modeling, and employee onboarding.
+  - `LegalCLMSpecialist.agent.md` — Contract lifecycle management, clause risk scoring, and RFP review.
+  - `codegraph-intelligence.md` — Codebase AST knowledge graph and impact traversal.
+  - `rea-reverse-engineering.md` — Binary disassembly, decompilation, and reverse engineering.
+  - `mirofish-swarm.md` — Swarm intelligence and predictive multi-agent simulation.
+  - `autoagent-autonomous.md` — Autonomous workflow synthesis and zero-code execution.
+  - `mempalace-memory.md` — Holographic AI memory retrieval and AAAK compression.
+  - `pentagi-pentest.md` — Autonomous penetration testing and security auditing.
+  - `laya-command-center.md` — Notification triage and omnichannel alert routing.
+  - `cactus-quant.md` — Edge quantization kernels and low-latency inference.
+- **13 Quantitative Trading Specialists**: Quant researchers, MQL5 EA developers, PineScript strategy engineers.
 - **Fabric, Personal AI Employee & PM Personas**: Project managers, sprint planners, enterprise data architects.
 
-### 2. 54 Dedicated Specialist Profiles
+### 2. 66 Dedicated Specialist Profiles
 Configured with independent memory stores and selective skill routing in `/home/predictatrade/.hermes/profiles/`:
-`orchestrator`, `coding-engineer`, `qa-testing`, `devops-sre`, `cloud-infrastructure`, `security-audit`, `ethical-hacking-pentest`, `red-team`, `blue-team`, `purple-team`, `white-team`, `yellow-team`, `green-team`, `orange-team`, `ai-llm-engineer`, `ai-research-mlops`, `data-knowledge`, `research-science`, `metatrader-quant`, `analytics-finance`, `business-operations`, `documents-office`, `legal-corporate`, `creative-media`, `marketing-growth`, `communications-sales`, `mcp-librarian`, `skill-librarian`, `esoteric-advisor`, `multi-agent-architect`, `backend-architect`, `database-optimizer`, `code-reviewer`, `agentic-search-optimizer`, `token-optimizer`, `tradingview-quant`, `fabric-engineer`, `web-scraping-specialist`, `knowledge-graph-architect`, `product-manager`, `chart-visualization`, `pat-operations`, `mathematics-ai`, `office-excel-pdf`, `nginx-caddy-infrastructure`, `astro-web-architect`, `minimax-voice-agent`, `kimi-reasoning-specialist`, `manus-autonomous-agent`, `workbuddy-enterprise`, `tencent-cloud-architect`, `laravel-architect`, `seo-growth-marketer`, and `foundation-agent`.
+`orchestrator`, `coding-engineer`, `qa-testing`, `devops-sre`, `cloud-infrastructure`, `security-audit`, `ethical-hacking-pentest`, `red-team`, `blue-team`, `purple-team`, `white-team`, `yellow-team`, `green-team`, `orange-team`, `ai-llm-engineer`, `ai-research-mlops`, `data-knowledge`, `research-science`, `metatrader-quant`, `analytics-finance`, `business-operations`, `documents-office`, `legal-corporate`, `creative-media`, `marketing-growth`, `communications-sales`, `mcp-librarian`, `skill-librarian`, `esoteric-advisor`, `multi-agent-architect`, `backend-architect`, `database-optimizer`, `code-reviewer`, `agentic-search-optimizer`, `token-optimizer`, `tradingview-quant`, `fabric-engineer`, `web-scraping-specialist`, `knowledge-graph-architect`, `product-manager`, `chart-visualization`, `pat-operations`, `mathematics-ai`, `office-excel-pdf`, `nginx-caddy-infrastructure`, `astro-web-architect`, `minimax-voice-agent`, `kimi-reasoning-specialist`, `manus-autonomous-agent`, `workbuddy-enterprise`, `tencent-cloud-architect`, `laravel-architect`, `seo-growth-marketer`, `foundation-agent`, `geo-search-specialist`, `social-media-strategist`, `gtm-sales-engineer`, `mlops-platform-engineer`, `computer-vision-engineer`, `fact-checking-analyst`, `ai-governance-officer`, `executive-c-suite-advisor`, `hr-talent-operations`, `legal-clm-specialist`, `supply-chain-architect`, and `deep-learning-researcher`.
 
 - **Multi-Agent Kanban Decomposition**: Pre-initialized on default profile via SQLite database at `/home/predictatrade/.hermes/kanban.db`.
 - **Subagent Parallelism**: Concurrency cap of 3 child agents, spawn depth limit of 2, 250 max turns.
 
 ---
 
-## 5. MCP (Model Context Protocol) Suite (35 Curated Servers)
+## 5. MCP (Model Context Protocol) Suite (45 Curated Servers)
 
 Stored in `/home/predictatrade/.hermes/mcp-library/recommended-mcp-servers.json`:
 
@@ -228,12 +245,28 @@ Stored in `/home/predictatrade/.hermes/mcp-library/recommended-mcp-servers.json`
 | `caddy-security` | stdio | Infrastructure security gateway, automated TLS, authentication, and reverse proxy management |
 | `pi-voice` | stdio | Real-time speech-to-text, text-to-speech, and audio streaming interface |
 | `manus-research` | stdio | Multi-agent autonomous research and deep web knowledge extraction workflow bridge |
+| `geo-search-mcp` | stdio | Generative Engine Optimization (GEO) and AI search visibility audit MCP server |
+| `social-media-mcp` | stdio | Social media automation and multi-platform publishing MCP server |
+| `openfactcheck-mcp` | stdio | Automated fact-checking, claim verification, and evidence retrieval MCP server |
+| `roboflow-vision-mcp` | stdio | Roboflow computer vision dataset, inference, and object detection MCP server |
+| `huggingface-mcp` | stdio | Hugging Face Hub model discovery, dataset querying, and spaces MCP server |
+| `legal-clm-mcp` | stdio | Contract Lifecycle Management (CLM) clause analysis and redlining MCP server |
+| `supplychain-mcp` | stdio | Supply chain network resilience, freight tracking, and logistics optimization MCP server |
+| `gtm-sales-mcp` | stdio | Go-To-Market pipeline acceleration, lead scoring, and customer retention MCP server |
+| `ai-guardrails-mcp` | stdio | Runtime prompt-injection defense, output hallucination filter, and safety guardrails MCP server |
+| `document-specialist-mcp` | stdio | Intelligent document processing, PDF form extraction, and layout analysis MCP server |
 
 ---
 
-## 6. Active Plugins & Extensions (26 Plugins)
+## 6. Active Plugins & Extensions (32 Plugins)
 
 Located in `/home/predictatrade/.hermes/plugins/`:
+- **`agentic-flow`**: Multi-agent swarm coordination, cyclic state machine workflows, and hierarchical delegation.
+- **`geo-optimizer`**: Generative Engine Optimization audit, JSON-LD knowledge graph generator, and AI answer engine tracker.
+- **`openfactcheck`**: Automated claim decomposition, multi-source evidence retrieval, and fact verification engine.
+- **`ai-governance`**: EU AI Act and NIST AI RMF compliance checker, runtime prompt-injection guardrails, and risk auditor.
+- **`contract-lifecycle`**: Intelligent contract analysis, clause risk scoring, auto-redlining, and procurement evaluation.
+- **`gtm-engine`**: B2B outbound pipeline acceleration, lead scoring, customer retention telemetry, and churn prediction.
 - **`mcptoon`**: Zero-dependency MCP gateway & 99.2% token context compression CLI.
 - **`codegraph`**: AST knowledge graph and impact analysis engine.
 - **`mempalace`**: Local AI memory system with ChromaDB backend and AAAK dialect.
@@ -569,13 +602,13 @@ runuser -u predictatrade -- env XDG_RUNTIME_DIR=/run/user/1001 systemctl --user 
 | Rootless Docker | **PASSED** | Cgroup v2 active, socket `unix:///run/user/1001/docker.sock`, `hello-world` OK |
 | Desktop Sandbox Image | **PASSED** | `nousresearch/hermes-sandbox:desktop` (4.4 GB) cached and verified |
 | Hermes Agent Engine | **PASSED** | `v0.21.5+5853.g4ed093c`, audio-io extension compiled, config check passed |
-| Curated Skill Library | **PASSED** | 1,688 skills across 33 categories (`hermes-skill-catalog` active) |
-| Community Skill Pool | **PASSED** | 43,000+ packages cataloged with security triage |
-| Agent Library & Profiles | **PASSED** | 415+ agent personas + 42 specialist profiles with Kanban initialized |
-| MCP Universe Catalog | **PASSED** | 4,859 servers indexed + 30 recommended production configurations |
-| 16 Extended AI Engines | **PASSED** | All binaries, libraries, and Python modules verified under user `predictatrade` |
-| Active Plugins | **PASSED** | 24 active plugins including `mcptoon`, `codegraph`, `mempalace`, `rea`, `openshell` |
-| SQLite Knowledge Vault | **PASSED** | `hermes-vault.sqlite` (75 MB) indexed and verified with `hermes-vault` CLI |
+| Curated Skill Library | **PASSED** | 19,691 skills across 52 categories (`hermes-skill-catalog` active) |
+| Community Skill Pool | **PASSED** | 64,687 packages cataloged with security triage |
+| Agent Library & Profiles | **PASSED** | 480 agent personas + 66 specialist profiles with Kanban initialized |
+| MCP Universe Catalog | **PASSED** | 4,837 servers indexed + 45 recommended production configurations |
+| 17 Extended AI Engines | **PASSED** | All binaries, libraries, and Python modules verified under user `predictatrade` |
+| Active Plugins | **PASSED** | 32 active enterprise plugins including `agentic-flow`, `geo-optimizer`, `openfactcheck`, `ai-governance`, `contract-lifecycle`, `gtm-engine`, `mcptoon`, `codegraph`, `mempalace`, `rea`, `openshell` |
+| SQLite Knowledge Vault | **PASSED** | `hermes-vault.sqlite` (233 MB) indexed and verified with `hermes-vault` CLI |
 | Self-Local Installer | **PASSED** | `/root/hermes-self-contained-installer.tar.gz` (1.4 GB) 100% offline verified |
 | Helper CLI Binaries | **PASSED** | All multi-user binaries in `/usr/local/bin` dropping root privileges safely |
 | Production Installer Run | **PASSED** | Exited `0`, **0 errors**, **0 warnings** |

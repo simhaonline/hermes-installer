@@ -77,6 +77,18 @@ ROUTES = {
  'laravel-architect': ['laravel', 'php', 'backend', 'bagisto', 'laraclaude', 'eloquent', 'blade', 'artisan', 'api'],
  'seo-growth-marketer': ['seo', 'search', 'ranking', 'keywords', 'backlinks', 'growth', 'marketing', 'seranking', 'content-strategy'],
  'foundation-agent': ['general', 'core', 'foundational', 'reasoning', 'assistant', 'prompt', 'automation'],
+ 'geo-search-specialist': ['geo', 'seo', 'citation', 'search', 'ecommerce', 'ranking', 'schema'],
+ 'social-media-strategist': ['social', 'marketing', 'viral', 'hook', 'content', 'growth'],
+ 'gtm-sales-engineer': ['gtm', 'sales', 'pipeline', 'customer', 'retention', 'icp'],
+ 'mlops-platform-engineer': ['mlops', 'model-serving', 'vllm', 'triton', 'registry', 'feature-store'],
+ 'computer-vision-engineer': ['vision', 'roboflow', 'yolo', 'ocr', 'multimodal', 'image', 'cv'],
+ 'fact-checking-analyst': ['fact', 'check', 'verification', 'claim', 'problem-solving', 'fpf', 'credibility'],
+ 'ai-governance-officer': ['governance', 'ethics', 'compliance', 'guardrails', 'eu-nist', 'safety', 'bias'],
+ 'executive-c-suite-advisor': ['c-suite', 'executive', 'board', 'leadership', 'okr', 'governance'],
+ 'hr-talent-operations': ['hr', 'talent', 'competency', 'hiring', 'onboarding', 'people'],
+ 'legal-clm-specialist': ['legal', 'clm', 'contract', 'rfp', 'procurement', 'clause', 'redline'],
+ 'supply-chain-architect': ['supply-chain', 'logistics', 'inventory', 'freight', 'procurement'],
+ 'deep-learning-researcher': ['deep-learning', 'nlp', 'neural', 'transformer', 'lora', 'training', 'research'],
 }
 
 def sync_tree(src, dst):

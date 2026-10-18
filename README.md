@@ -2,14 +2,15 @@
 
 [![Version](https://img.shields.io/badge/version-v0.21.5-blue.svg)](https://github.com/simhaonline/hermes-installer/releases)
 [![Offline](https://img.shields.io/badge/deployment-100%25_offline-green.svg)](https://github.com/simhaonline/hermes-installer/releases)
-[![Skills](https://img.shields.io/badge/curated_skills-19%2C453-brightgreen.svg)](https://github.com/simhaonline/hermes-installer)
-[![Community Pool](https://img.shields.io/badge/community_pool-64%2C569-purple.svg)](https://github.com/simhaonline/hermes-installer)
-[![Profiles](https://img.shields.io/badge/specialist_profiles-54-orange.svg)](https://github.com/simhaonline/hermes-installer)
-[![MCP Servers](https://img.shields.io/badge/mcp_servers-4%2C827-yellow.svg)](https://github.com/simhaonline/hermes-installer)
+[![Skills](https://img.shields.io/badge/curated_skills-19%2C691-brightgreen.svg)](https://github.com/simhaonline/hermes-installer)
+[![Community Pool](https://img.shields.io/badge/community_pool-64%2C687-purple.svg)](https://github.com/simhaonline/hermes-installer)
+[![Profiles](https://img.shields.io/badge/specialist_profiles-66-orange.svg)](https://github.com/simhaonline/hermes-installer)
+[![MCP Servers](https://img.shields.io/badge/mcp_servers-4%2C837-yellow.svg)](https://github.com/simhaonline/hermes-installer)
+[![Plugins](https://img.shields.io/badge/plugins-32-blueviolet.svg)](https://github.com/simhaonline/hermes-installer)
 [![Platform](https://img.shields.io/badge/platform-Ubuntu_LTS-blue.svg)](https://ubuntu.com)
 [![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
 
-A complete, self-contained, offline production installer for **Hermes Agent** with **16 advanced AI, engineering, and reverse engineering engines**, **19,453 curated skills across 47 categories**, **64,569 indexed community skills**, **4,827 MCP servers (35 curated production servers)**, **462 agent personas**, **54 specialist profiles**, and **26 active plugins**.
+A complete, self-contained, offline production installer for **Hermes Agent** with **17 advanced AI, engineering, and reverse engineering engines**, **19,691 curated skills across 52 categories**, **64,687 indexed community skills**, **4,837 MCP servers (45 curated production servers)**, **480 agent personas**, **66 specialist profiles**, and **32 active plugins**.
 
 ---
 
@@ -95,12 +96,12 @@ All CLI tools in `/usr/local/bin` (`hermes`, `hermes-vault`, `hermes-skill-catal
 
 ## 📊 Ecosystem Inventory
 
-- **Skills Library**: **19,453 Curated Skills across 47 Categories** + **64,569 Community Skill Packages**.
-- **Agent Library**: **462 Personas** (Specialist, Agency, Quant Trading, Security, System Engineering).
-- **Specialist Profiles**: **54 Pre-configured Profiles** (including `mathematics-ai`, `office-excel-pdf`, `nginx-caddy-infrastructure`, `astro-web-architect`, `minimax-voice-agent`, `kimi-reasoning-specialist`, `manus-autonomous-agent`, `workbuddy-enterprise`, `tencent-cloud-architect`, `laravel-architect`, `seo-growth-marketer`, `foundation-agent`).
-- **MCP Servers**: **4,827 Cataloged Servers** + **35 Curated Production Servers** (`recommended-mcp-servers.json`).
-- **Plugins**: **26 Active Plugins** (including `superpowers`, `token-saver`, `security-guidance`, `disk-cleanup`, `manus-research`, `wookstar-plugins`, `mirofish`, `openshell`).
-- **Knowledge Vault**: **230 MB SQLite Database** (`hermes-vault.sqlite`) storing full definitions and markdown text.
+- **Skills Library**: **19,691 Curated Skills across 52 Categories** + **64,687 Community Skill Packages** (including GEO/SEO optimization, social media automation, deep learning/NLP recipes, computer vision with Roboflow, MLOps, fact-checking, AI governance, CLM contracts, and GTM sales).
+- **Agent Library**: **480 Personas** (Specialist, Agency, Quant Trading, Security, System Engineering, Legal, and Governance).
+- **Specialist Profiles**: **66 Pre-configured Profiles** (including `geo-search-specialist`, `social-media-strategist`, `gtm-sales-engineer`, `mlops-platform-engineer`, `computer-vision-engineer`, `fact-checking-analyst`, `ai-governance-officer`, `executive-c-suite-advisor`, `hr-talent-operations`, `legal-clm-specialist`, `supply-chain-architect`, `deep-learning-researcher`, `mathematics-ai`, `office-excel-pdf`, `nginx-caddy-infrastructure`, `astro-web-architect`, `minimax-voice-agent`, `kimi-reasoning-specialist`, `manus-autonomous-agent`, `workbuddy-enterprise`, `tencent-cloud-architect`, `laravel-architect`, `seo-growth-marketer`, `foundation-agent`).
+- **MCP Servers**: **4,837 Cataloged Servers** + **45 Curated Production Servers** (`recommended-mcp-servers.json` including `geo-search-mcp`, `social-media-mcp`, `openfactcheck-mcp`, `roboflow-vision-mcp`, `huggingface-mcp`, `legal-clm-mcp`, `supplychain-mcp`, `gtm-sales-mcp`, `ai-guardrails-mcp`, `document-specialist-mcp`).
+- **Plugins**: **32 Active Plugins** (including `agentic-flow`, `geo-optimizer`, `openfactcheck`, `ai-governance`, `contract-lifecycle`, `gtm-engine`, `superpowers`, `token-saver`, `security-guidance`, `disk-cleanup`, `manus-research`, `wookstar-plugins`, `mirofish`, `openshell`).
+- **Knowledge Vault**: **233 MB SQLite Database** (`hermes-vault.sqlite`) storing full definitions, metadata, and markdown text.
 - **Built-in Python Libraries**: `openpyxl`, `xlsxwriter`, `pdfminer.six` pre-installed for immediate Excel/PDF processing.
 
 ---
@@ -114,19 +115,19 @@ The installer deploys `/usr/local/bin/hermes-vault` for instant querying:
 hermes-vault stats
 
 # Search curated skills by query or category
-hermes-vault skills math
-hermes-vault skills --category mathematics-ai
+hermes-vault skills geo
+hermes-vault skills --category geo-search-optimization
 
-# Search community skills pool (64,500+ packages)
-hermes-vault community scrapfly
+# Search community skills pool (64,680+ packages)
+hermes-vault community "fact-check"
 
-# List recommended production MCP servers
+# List recommended production MCP servers (45 servers)
 hermes-vault mcp --recommended
 
-# Search agent personas (460+ personas)
-hermes-vault agents excel
+# Search agent personas (480 personas)
+hermes-vault agents "computer vision"
 
-# Inspect the 16 pre-compiled extended engines
+# Inspect the 17 pre-compiled extended engines
 hermes-vault engines
 ```
 

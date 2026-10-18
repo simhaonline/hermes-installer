@@ -20,18 +20,18 @@ All previous build artifacts, scratch files, and intermediate archives that resi
 
 ## 2. Inventory: Created vs. Activated Assets
 
-A central milestone of this deployment was indexing and staging the complete Hermes AI Agent ecosystem into the SQLite Knowledge Vault (`hermes-vault.sqlite`, 229.36 MB).
+A central milestone of this deployment was indexing and staging the complete Hermes AI Agent ecosystem into the SQLite Knowledge Vault (`hermes-vault.sqlite`, 232.75 MB).
 
 ### Ecosystem Inventory Table
 
 | Component Category | Total Cataloged / Created | Activated in Hermes Runtime | Storage / Configuration Location |
 | :--- | :--- | :--- | :--- |
-| **Curated Skills** | **19,453 skills** across 47 categories | **377 active skills** in discovery path | `/home/predictatrade/.hermes/skills/` (live)<br>`/home/predictatrade/.hermes/skill-library/` (catalog) |
-| **Community Skills** | **64,569 packages** in vault pool | Available on-demand via catalog CLI | `/home/predictatrade/.local/share/hermes-community-skill-pool/` |
-| **Agent Personas** | **462 personas** across 5 divisions | 462 prompt definitions available | `/home/predictatrade/.hermes/agent-library/` |
-| **Specialist Profiles** | **54 autonomous profiles** | **54 profiles active** (`hermes -p`) | `/home/predictatrade/.hermes/profiles/` |
-| **MCP Servers** | **4,827 servers** in universe catalog | **35 recommended** / 0 persistent daemon | `/home/predictatrade/.hermes/mcp-library/recommended-mcp-servers.json` |
-| **Plugins** | **26 enterprise plugins** | **59 enabled** (4 custom + 55 bundled) | `/home/predictatrade/.hermes/plugins/`<br>`/home/predictatrade/.hermes/config.yaml` |
+| **Curated Skills** | **19,691 skills** across 52 categories | **412 active skills** in discovery path | `/home/predictatrade/.hermes/skills/` (live)<br>`/home/predictatrade/.hermes/skill-library/` (catalog) |
+| **Community Skills** | **64,687 packages** in vault pool | Available on-demand via catalog CLI | `/home/predictatrade/.local/share/hermes-community-skill-pool/` |
+| **Agent Personas** | **480 personas** across 5 divisions | 480 prompt definitions available | `/home/predictatrade/.hermes/agent-library/` |
+| **Specialist Profiles** | **66 autonomous profiles** | **66 profiles active** (`hermes -p`) | `/home/predictatrade/.hermes/profiles/` |
+| **MCP Servers** | **4,837 servers** in universe catalog | **45 recommended** / 0 persistent daemon | `/home/predictatrade/.hermes/mcp-library/recommended-mcp-servers.json` |
+| **Plugins** | **32 enterprise plugins** | **65 enabled** (10 custom + 55 bundled) | `/home/predictatrade/.hermes/plugins/`<br>`/home/predictatrade/.hermes/config.yaml` |
 | **Integrated Engines** | **17 compiled engines / suites** | Active via `/usr/local/bin` wrappers | `/usr/local/bin/` (`mcptoon`, `codegraph`, `rea`, `mempalace`, `trim-1`, etc.) |
 
 ---

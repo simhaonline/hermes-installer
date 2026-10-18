@@ -586,36 +586,71 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
         if path == "/api/search":
             query = params.get("q", [""])[0].strip()
             cat = params.get("category", [""])[0].strip()
-            limit = int(params.get("limit", [24])[0])
+            mode = params.get("mode", ["hybrid"])[0].strip().lower()
+            try:
+                limit = int(params.get("limit", [24])[0])
+            except ValueError:
+                limit = 24
+            try:
+                offset = int(params.get("offset", [0])[0])
+            except ValueError:
+                offset = 0
+
+            limit = max(1, min(limit, 200))
+            offset = max(0, offset)
             client = get_chroma()
 
             results = []
             seen = set()
+            total = 0
 
-            # 1. Semantic Search if query given
-            if query and client:
-                try:
-                    c_skills = client.get_collection("skills_semantic")
-                    where_filter = {"category": cat} if cat else None
-                    q_res = c_skills.query(query_texts=[query], n_results=limit, where=where_filter)
-                    if q_res and q_res.get('ids') and q_res['ids'][0]:
-                        for name, doc, meta, dist in zip(q_res['ids'][0], q_res['documents'][0], q_res['metadatas'][0], q_res['distances'][0]):
-                            sim = max(0.0, 1.0 - float(dist))
-                            results.append({
-                                "name": meta['name'],
-                                "category": meta['category'],
-                                "description": doc,
-                                "score": sim,
-                                "match_type": "semantic"
-                            })
-                            seen.add(meta['name'])
-                except Exception:
-                    pass
+            # 1. No query: Pure database pagination (instant, accurate total)
+            if not query:
+                if cat:
+                    total = cur.execute("SELECT count(*) FROM curated_skills WHERE category=?", (cat,)).fetchone()[0]
+                else:
+                    total = cur.execute("SELECT count(*) FROM curated_skills").fetchone()[0]
 
-            # 2. FTS5 / SQL Fallback or Enrichment
-            if len(results) < limit:
-                needed = limit - len(results)
-                if query:
+                sql = "SELECT name, category, description FROM curated_skills"
+                sql_args = []
+                if cat:
+                    sql += " WHERE category = ?"
+                    sql_args.append(cat)
+                sql += " ORDER BY id ASC LIMIT ? OFFSET ?"
+                sql_args.extend([limit, offset])
+                rows = cur.execute(sql, sql_args).fetchall()
+                for r in rows:
+                    results.append({
+                        "name": r['name'],
+                        "category": r['category'],
+                        "description": r['description'],
+                        "score": 1.0,
+                        "match_type": "category" if cat else "all"
+                    })
+            else:
+                # 2. Query provided: Hybrid, Semantic, or Keyword
+                all_semantic = []
+                if mode in ["hybrid", "semantic"] and client:
+                    try:
+                        c_skills = client.get_collection("skills_semantic")
+                        where_filter = {"category": cat} if cat else None
+                        fetch_n = min(150, offset + limit * 3)
+                        q_res = c_skills.query(query_texts=[query], n_results=fetch_n, where=where_filter)
+                        if q_res and q_res.get('ids') and q_res['ids'][0]:
+                            for name, doc, meta, dist in zip(q_res['ids'][0], q_res['documents'][0], q_res['metadatas'][0], q_res['distances'][0]):
+                                sim = max(0.0, 1.0 - float(dist))
+                                all_semantic.append({
+                                    "name": meta['name'],
+                                    "category": meta['category'],
+                                    "description": doc,
+                                    "score": round(sim, 3),
+                                    "match_type": "semantic"
+                                })
+                    except Exception:
+                        pass
+
+                all_keyword = []
+                if mode in ["hybrid", "keyword"] or not all_semantic:
                     clean_q = " ".join([w for w in query.replace('"', '').replace("'", '').split() if len(w) > 2])
                     if clean_q:
                         match_clause = " OR ".join(clean_q.split())
@@ -629,45 +664,40 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                         if cat:
                             sql += " AND c.category = ?"
                             sql_args.append(cat)
-                        sql += " ORDER BY score ASC LIMIT ?"
-                        sql_args.append(needed * 2)
+                        sql += " ORDER BY score ASC LIMIT 200"
 
                         try:
                             rows = cur.execute(sql, sql_args).fetchall()
                             for r in rows:
-                                if r['name'] not in seen:
-                                    results.append({
-                                        "name": r['name'],
-                                        "category": r['category'],
-                                        "description": r['description'],
-                                        "score": 0.5,
-                                        "match_type": "keyword"
-                                    })
-                                    seen.add(r['name'])
+                                all_keyword.append({
+                                    "name": r['name'],
+                                    "category": r['category'],
+                                    "description": r['description'],
+                                    "score": 0.5,
+                                    "match_type": "keyword"
+                                })
                         except Exception:
                             pass
-                else:
-                    # No query: return top from category or default
-                    sql = "SELECT name, category, description FROM curated_skills"
-                    sql_args = []
-                    if cat:
-                        sql += " WHERE category = ?"
-                        sql_args.append(cat)
-                    sql += " ORDER BY id ASC LIMIT ?"
-                    sql_args.append(needed)
-                    rows = cur.execute(sql, sql_args).fetchall()
-                    for r in rows:
-                        if r['name'] not in seen:
-                            results.append({
-                                "name": r['name'],
-                                "category": r['category'],
-                                "description": r['description'],
-                                "score": 1.0,
-                                "match_type": "category"
-                            })
-                            seen.add(r['name'])
 
-            self._send_json({"results": results[:limit]})
+                combined = []
+                for item in all_semantic:
+                    if item['name'] not in seen:
+                        combined.append(item)
+                        seen.add(item['name'])
+                for item in all_keyword:
+                    if item['name'] not in seen:
+                        combined.append(item)
+                        seen.add(item['name'])
+
+                total = len(combined)
+                results = combined[offset:offset+limit]
+
+            self._send_json({
+                "results": results,
+                "total": total,
+                "limit": limit,
+                "offset": offset
+            })
             return
 
         if path == "/api/skill":

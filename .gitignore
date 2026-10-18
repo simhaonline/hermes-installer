@@ -8,4 +8,5 @@ __pycache__/
 bundle/
 dist/
 vector-registry/
-.cache/
+*.cache/
+Screenshot_*.png

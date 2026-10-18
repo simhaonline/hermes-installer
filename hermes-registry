@@ -1279,10 +1279,13 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
 
         self._send_json({"error": "Not Found"}, status=404)
 
+class RegistryHTTPServer(ThreadingHTTPServer):
+    allow_reuse_address = True
+
 def cmd_ui(args):
     host = args.host
     port = args.port
-    server = ThreadingHTTPServer((host, port), RegistryHTTPHandler)
+    server = RegistryHTTPServer((host, port), RegistryHTTPHandler)
     print("=" * 70)
     print("  🌌 HERMES HYBRID VECTOR REGISTRY & WEB DASHBOARD LAUNCHED")
     print("=" * 70)

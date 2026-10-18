@@ -43,8 +43,10 @@ echo "[2/4] Staging CLI tools and collection manifests..."
 cp -p "$SCRIPT_DIR/hermes-vault" "$STAGE_DIR/"
 cp -p "$SCRIPT_DIR/hermes-registry" "$STAGE_DIR/" 2>/dev/null || true
 cp -p "$SCRIPT_DIR/install-hermes-local.sh" "$STAGE_DIR/"
+cp -p "$SCRIPT_DIR/quick-install.sh" "$STAGE_DIR/" 2>/dev/null || true
 cp -p "$SCRIPT_DIR/README-LOCAL-INSTALL.md" "$STAGE_DIR/"
 cp -p "$SCRIPT_DIR/README-HERMES.md" "$STAGE_DIR/"
+cp -p "$SCRIPT_DIR/README.md" "$STAGE_DIR/" 2>/dev/null || true
 
 mkdir -p "$STAGE_DIR/assets"
 cp -rp "$SCRIPT_DIR/assets/collection-manifest.json" "$STAGE_DIR/assets/"

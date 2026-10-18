@@ -65,11 +65,11 @@ Download pre-built production bundles directly from [**GitHub Releases v1.0.0**]
 
 | Release Asset | Size | SHA-256 Checksum | Description |
 |---|---|---|---|
-| [**`hermes-content-vault-v1.0.0.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-content-vault-v1.0.0.tar.gz) | **151 MB** | `31c1e1aad8e36055a422bbcb76d3109fa6603dd72ad23276448cc0b055ff2b6a` | **Option A: Pure Content & Vector Vault (Recommended)**. Lightweight archive containing master SQLite FTS5 database (301 MB uncompressed), ChromaDB vector embeddings (69 MB), collection manifests, and `hermes-registry` dynamic JIT CLI. Zero binary bloat. |
+| [**`hermes-content-vault-v1.0.0.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-content-vault-v1.0.0.tar.gz) | **152 MB** | `c8ec51542c3245acbaab979de9815b930a74f09f869a6a256b956d43caf43b40` | **Option A: Pure Content & Vector Vault (Recommended)**. Lightweight archive containing master SQLite FTS5 database (301 MB uncompressed), ChromaDB vector embeddings (69 MB), collection manifests, `install-hermes-local.sh`, and `hermes-registry` dynamic JIT CLI & Web UI. Zero binary bloat. |
 | [**`hermes-vault.sqlite`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-vault.sqlite) | **301 MB** | `d3316c93a4f9164afff005bd83b78715bbe02ebe716015830764b0bb915489a0` | **Master SQLite Knowledge Vault**. Standalone database containing relational tables, FTS5 BM25 search tables, auto-sync triggers, and complete skill text. |
 | [**`hermes-agent-production.sh`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-agent-production.sh) | **181 MB** | `38c190fb7711f9f7f7940a3201c829ccc332faf5772e6490db8e919d1fc96860` | Complete host deployment script with embedded runtime binaries, engine launchers, and base configuration. |
 | [**`hermes-assets.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-assets.tar.gz) | **134 MB** | `ce989e1e3b81d2e8b5aa640d5c9c874983d6236607162d0504048088e96157da` | Core runtime assets, configuration templates, and manifests. |
-| [**`SHA256SUMS.txt`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/SHA256SUMS.txt) | Text | `457 bytes` | Cryptographic integrity checksums for all distribution files. |
+| [**`SHA256SUMS.txt`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/SHA256SUMS.txt) | Text | `525 bytes` | Cryptographic integrity checksums for all distribution files. |
 
 ---
 

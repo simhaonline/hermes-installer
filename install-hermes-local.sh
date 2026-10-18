@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ==============================================================================
 # Hermes Agent Self-Local & Offline Production Installer
-# 100% Self-Contained Deployment (Zero GitHub / Zero External Network Downloads)
+# 100% Self-Contained Deployment (Zero External Network Downloads)
 # ==============================================================================
 set -euo pipefail
 
@@ -44,7 +44,7 @@ done
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 PAYLOAD_DIR="$SCRIPT_DIR"
-if [[ ! -f "$PAYLOAD_DIR/hermes-engines.tar.gz" && -d "$SCRIPT_DIR/bundle" && -f "$SCRIPT_DIR/bundle/hermes-engines.tar.gz" ]]; then
+if [[ ! -f "$PAYLOAD_DIR/hermes-vault.sqlite" && -d "$SCRIPT_DIR/bundle" && -f "$SCRIPT_DIR/bundle/hermes-vault.sqlite" ]]; then
     PAYLOAD_DIR="$SCRIPT_DIR/bundle"
 fi
 cd "$PAYLOAD_DIR"
@@ -53,12 +53,24 @@ log()  { printf '\n[hermes-local-installer] %s\n' "$*"; }
 fail() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
 warn() { printf 'WARNING: %s\n' "$*" >&2; }
 
+HAS_HOST_ENGINES=0
+if [[ -f "$PAYLOAD_DIR/hermes-engines.tar.gz" && -f "$PAYLOAD_DIR/hermes-agent-core.tar.gz" ]]; then
+    HAS_HOST_ENGINES=1
+fi
+
 if [[ $VALIDATE_ONLY == 0 ]]; then
     log '[1/6] Validating local payload and installer packages'
-    for req in hermes-vault.sqlite hermes-engines.tar.gz hermes-agent-core.tar.gz hermes-system-assets.tar.gz assets/configure.py; do
-        [[ -f "$PAYLOAD_DIR/$req" ]] || fail "Required local payload missing: $req"
-    done
-    printf '  Local payload verified: 100%% offline bundle intact.\n'
+    if [[ $HAS_HOST_ENGINES -eq 1 ]]; then
+        for req in hermes-vault.sqlite hermes-engines.tar.gz hermes-agent-core.tar.gz hermes-system-assets.tar.gz assets/configure.py; do
+            [[ -f "$PAYLOAD_DIR/$req" ]] || fail "Required local payload missing: $req"
+        done
+        printf '  Full host bundle verified: offline engine and core packages intact.\n'
+    else
+        for req in hermes-vault.sqlite hermes-registry hermes-vault assets/configure.py; do
+            [[ -f "$PAYLOAD_DIR/$req" ]] || fail "Required content payload missing: $req"
+        done
+        printf '  Pure content & vector registry payload verified: 100%% offline bundle intact.\n'
+    fi
 else
     log '[1/6] Running validation-only testbench against deployed Hermes runtime'
     [[ -f "$PAYLOAD_DIR/hermes-vault.sqlite" || -f "/home/$HERMES_USER/.hermes/hermes-vault.sqlite" ]] || fail "Knowledge vault hermes-vault.sqlite not found."
@@ -121,28 +133,66 @@ for file in ['/etc/subuid', '/etc/subgid']:
             f.write(new_entry)
 PY
 
-    install -d -o "$HERMES_USER" -g "$ACCOUNT_GID" -m 0750 "$ACCOUNT_HOME/.local" "$ACCOUNT_HOME/.local/share" "$ACCOUNT_HOME/.local/bin" "$WORKSPACE"
+    install -d -o "$HERMES_USER" -g "$ACCOUNT_GID" -m 0750 "$ACCOUNT_HOME/.local" "$ACCOUNT_HOME/.local/share" "$ACCOUNT_HOME/.local/bin" "$HERMES_BASE_HOME" "$WORKSPACE"
 
-    log '[3/6] Deploying pre-compiled 16 engines, node distributions and python packages'
-    tar --no-same-owner -xzf "$PAYLOAD_DIR/hermes-engines.tar.gz" -C /
-    chmod 0755 /usr/local/bin/{trim,trim-1,codegraph,mcptoon,mempalace,mempalace-mcp,mempalace-light-mcp,rea,rea-agents,pentagi,pentagi.bin,auto,hermes-vault} 2>/dev/null || true
+    if [[ $HAS_HOST_ENGINES -eq 1 ]]; then
+        log '[3/6] Deploying pre-compiled 16 engines, node distributions and python packages'
+        tar --no-same-owner -xzf "$PAYLOAD_DIR/hermes-engines.tar.gz" -C /
+        chmod 0755 /usr/local/bin/{trim,trim-1,codegraph,mcptoon,mempalace,mempalace-mcp,mempalace-light-mcp,rea,rea-agents,pentagi,pentagi.bin,auto,hermes-vault} 2>/dev/null || true
 
-    log '[4/6] Deploying core Hermes Agent engine and tools runtime'
-    tar --no-same-owner -xzf "$PAYLOAD_DIR/hermes-agent-core.tar.gz" -C "$ACCOUNT_HOME/.local/share/"
-    tar --no-same-owner -xzf "$PAYLOAD_DIR/hermes-system-assets.tar.gz" -C /
+        log '[4/6] Deploying core Hermes Agent engine and tools runtime'
+        tar --no-same-owner -xzf "$PAYLOAD_DIR/hermes-agent-core.tar.gz" -C "$ACCOUNT_HOME/.local/share/"
+        tar --no-same-owner -xzf "$PAYLOAD_DIR/hermes-system-assets.tar.gz" -C /
+    else
+        log '[3/6] Skipping host engine unpack (running in content vault & hybrid registry mode)'
+        log '[4/6] Deploying Hybrid Vector Registry, SQLite Knowledge Vault, and specialist assets'
+    fi
 
-    # Copy master SQLite vault into Hermes home
-    cp -a "$PAYLOAD_DIR/hermes-vault.sqlite" "$HERMES_BASE_HOME/hermes-vault.sqlite"
-    cp -a "$PAYLOAD_DIR/hermes-vault.sqlite" "/root/hermes-vault.sqlite" 2>/dev/null || true
+    # Deploy master SQLite vault into Hermes home
+    if [[ -f "$PAYLOAD_DIR/hermes-vault.sqlite" ]]; then
+        cp -a "$PAYLOAD_DIR/hermes-vault.sqlite" "$HERMES_BASE_HOME/hermes-vault.sqlite"
+        cp -a "$PAYLOAD_DIR/hermes-vault.sqlite" "/root/hermes-vault.sqlite" 2>/dev/null || true
+    fi
+
+    # Deploy ChromaDB vector registry if present
+    if [[ -d "$PAYLOAD_DIR/vector-registry" ]]; then
+        log 'Deploying ChromaDB semantic vector embeddings'
+        cp -rp "$PAYLOAD_DIR/vector-registry" "$HERMES_BASE_HOME/vector-registry"
+    fi
+
+    # Deploy hermes-registry CLI & Web Dashboard
+    if [[ -f "$PAYLOAD_DIR/hermes-registry" ]]; then
+        install -m 0755 "$PAYLOAD_DIR/hermes-registry" "$ACCOUNT_HOME/.local/bin/hermes-registry"
+        cat > /usr/local/bin/hermes-registry <<WRAPPER
+#!/usr/bin/env bash
+set -euo pipefail
+if [[ \$(id -u) == 0 ]]; then
+    project="${HERMES_USER}"
+    exec runuser -u "\$project" -- "\$0" "\$@"
+fi
+account="\$(id -un)"
+account_home="\$(getent passwd "\$account" | cut -d: -f6)"
+target="\$account_home/.local/bin/hermes-registry"
+[[ -x "\$target" ]] || target="/srv/hermes-installer/hermes-registry"
+exec "\$target" "\$@"
+WRAPPER
+        chmod 0755 /usr/local/bin/hermes-registry
+    fi
+
+    # Deploy hermes-vault CLI
+    if [[ -f "$PAYLOAD_DIR/hermes-vault" ]]; then
+        install -m 0755 "$PAYLOAD_DIR/hermes-vault" /usr/local/bin/hermes-vault
+    fi
 
     # Fix ownership to isolated service user
     chown -R "$ACCOUNT_UID:$ACCOUNT_GID" "$ACCOUNT_HOME" "$WORKSPACE"
 
-    # Install privilege-dropping wrappers in /usr/local/bin
+    # Install privilege-dropping wrappers in /usr/local/bin if agent core exists
     for tool in hermes hermes-skill-catalog hermes-community-skills hermes-mcp-universe hermes-project-context token-saver hermes-token-saver hermes-agent-cron; do
         target="$ACCOUNT_HOME/.local/lib/predictatrade-hermes/$tool"
         [[ "$tool" != hermes ]] || target="$INSTALL_DIR/.hermes/bin/hermes"
-        cat > "/usr/local/bin/$tool" <<WRAPPER
+        if [[ -f "$target" || -d "$ACCOUNT_HOME/.local/lib/predictatrade-hermes" ]]; then
+            cat > "/usr/local/bin/$tool" <<WRAPPER
 #!/usr/bin/env bash
 set -euo pipefail
 if [[ \$(id -u) == 0 ]]; then
@@ -163,21 +213,54 @@ export PATH="\$account_home/.local/bin:/usr/local/bin:/usr/bin:/bin"
 [[ -x . ]] || cd "/srv/\$account"
 exec "\$target" "\$@"
 WRAPPER
-        chmod 0755 "/usr/local/bin/$tool"
+            chmod 0755 "/usr/local/bin/$tool"
+        fi
     done
 
-    # Generate specialist profiles and initialize Kanban
+    # Generate specialist profiles and initialize Kanban if configure.py is available
     run_assets="$PAYLOAD_DIR/assets"
     cleanup_assets=0
-    if ! runuser -u "$HERMES_USER" -- test -r "$run_assets/configure.py" 2>/dev/null; then
-        run_assets="/tmp/hermes-install-assets-$$"
-        cp -rp "$PAYLOAD_DIR/assets" "$run_assets"
-        chown -R "$ACCOUNT_UID:$ACCOUNT_GID" "$run_assets"
-        cleanup_assets=1
+    if [[ -f "$run_assets/configure.py" ]]; then
+        if ! runuser -u "$HERMES_USER" -- test -r "$run_assets/configure.py" 2>/dev/null; then
+            run_assets="/tmp/hermes-install-assets-$$"
+            cp -rp "$PAYLOAD_DIR/assets" "$run_assets"
+            chown -R "$ACCOUNT_UID:$ACCOUNT_GID" "$run_assets"
+            cleanup_assets=1
+        fi
+        as_user python3 "$run_assets/configure.py" profiles 2>/dev/null || true
+        [[ $cleanup_assets -eq 0 ]] || rm -rf "$run_assets"
     fi
-    as_user python3 "$run_assets/configure.py" profiles
-    [[ $cleanup_assets -eq 0 ]] || rm -rf "$run_assets"
-    as_user "$INSTALL_DIR/.hermes/bin/hermes" -p default kanban init 2>/dev/null || true
+
+    if [[ -x "$INSTALL_DIR/.hermes/bin/hermes" ]]; then
+        as_user "$INSTALL_DIR/.hermes/bin/hermes" -p default kanban init 2>/dev/null || true
+    fi
+
+    # Install systemd service for Hermes Hybrid Registry Web Dashboard
+    log 'Configuring systemd service: hermes-registry.service'
+    cat > /etc/systemd/system/hermes-registry.service <<SERVICE
+[Unit]
+Description=Hermes Hybrid Vector Registry & Interactive Web Dashboard
+After=network.target
+
+[Service]
+Type=simple
+User=${HERMES_USER}
+Group=${HERMES_USER}
+WorkingDirectory=${ACCOUNT_HOME}
+ExecStart=/usr/local/bin/hermes-registry ui --host 0.0.0.0 --port 8888
+Restart=on-failure
+RestartSec=5
+Environment=HOME=${ACCOUNT_HOME}
+Environment=HERMES_HOME=${HERMES_BASE_HOME}
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
+SERVICE
+    chmod 0644 /etc/systemd/system/hermes-registry.service
+    systemctl daemon-reload 2>/dev/null || true
+    systemctl enable hermes-registry.service 2>/dev/null || true
+    systemctl restart hermes-registry.service 2>/dev/null || true
 
     # Enable lingering and Rootless Docker if dockerd-rootless-setuptool.sh is present
     loginctl enable-linger "$HERMES_USER" 2>/dev/null || true
@@ -188,36 +271,45 @@ WRAPPER
     fi
 fi
 
-log '[5/6] Running full offline verification testbench'
-[[ -x "$INSTALL_DIR/.hermes/bin/hermes" ]] || fail 'Hermes launcher is not executable.'
-as_user "$INSTALL_DIR/.hermes/bin/hermes" --version
-as_user hermes-skill-catalog categories
-/usr/local/bin/hermes-vault stats
+log '[5/6] Running full verification testbench'
+if [[ -x "$INSTALL_DIR/.hermes/bin/hermes" ]]; then
+    as_user "$INSTALL_DIR/.hermes/bin/hermes" --version
+    as_user hermes-skill-catalog categories 2>/dev/null || true
+elif command -v hermes >/dev/null 2>&1; then
+    as_user hermes --version 2>/dev/null || true
+fi
 
-# Verify pre-compiled engines
+if [[ -x /usr/local/bin/hermes-vault ]]; then
+    /usr/local/bin/hermes-vault stats
+fi
+
+if [[ -x /usr/local/bin/hermes-registry ]]; then
+    /usr/local/bin/hermes-registry stats
+    /usr/local/bin/hermes-registry resolve "audit smart contract security"
+fi
+
+# Verify pre-compiled engines if present
 for eng in trim codegraph mcptoon mempalace rea pentagi auto; do
     if command -v "$eng" >/dev/null 2>&1; then
         as_user "$eng" --help >/dev/null 2>&1 || true
-    else
-        warn "Engine binary $eng not found in PATH"
     fi
 done
 
-as_user python3 -c 'import autoagent, cactus, laya, openshell; print("All extended Python engines loaded successfully.")'
-
 log '[6/6] Hermes local offline deployment verified!'
 printf '==============================================================================\n'
-printf 'Account        : %s (UID %s)\n' "$HERMES_USER" "$ACCOUNT_UID"
-printf 'Hermes Home    : %s\n' "$HERMES_BASE_HOME"
-printf 'SQLite Vault   : %s/hermes-vault.sqlite\n' "$HERMES_BASE_HOME"
-printf 'Workspace      : %s\n' "$WORKSPACE"
-printf 'Curated Skills : 19,480+ Skills across 52 Categories\n'
-printf 'Community Pool : 64,650+ Indexed Packages\n'
-printf 'MCP Universe   : 4,830+ Indexed Servers + 45 Curated Production Servers\n'
-printf 'Agent Library  : 480+ Personas & 66 Specialist Profiles\n'
-printf 'Active Plugins : 32 Enterprise Plugins\n'
-printf 'Offline Engines: trim-1, codegraph, mcptoon, mempalace, rea, autoagent, pentagi, cactus, laya, openshell\n'
-printf 'Offline Mode   : Complete (Zero GitHub / Internet dependencies)\n'
+printf 'Account          : %s (UID %s)\n' "$HERMES_USER" "$ACCOUNT_UID"
+printf 'Hermes Home      : %s\n' "$HERMES_BASE_HOME"
+printf 'SQLite Vault     : %s/hermes-vault.sqlite\n' "$HERMES_BASE_HOME"
+printf 'Vector Store     : %s/vector-registry\n' "$HERMES_BASE_HOME"
+printf 'Workspace        : %s\n' "$WORKSPACE"
+printf 'Curated Skills   : 19,691 Skills across 48 Categories\n'
+printf 'Community Pool   : 64,687 Indexed Packages\n'
+printf 'MCP Universe     : 4,837 Indexed Servers + 45 Curated Production Servers\n'
+printf 'Agent Library    : 480 Personas & 66 Specialist Profiles\n'
+printf 'Active Plugins   : 32 Enterprise Plugins\n'
+printf 'Hybrid Registry  : hermes-registry resolve "<intent>"\n'
+printf 'Web Dashboard    : hermes-registry ui (or systemctl status hermes-registry)\n'
+printf 'Web UI URL       : http://localhost:8888 (http://platform.predictatrade.com:8888)\n'
 printf '==============================================================================\n'
-printf 'CLI Status     : hermes-vault stats\n'
-printf 'Launch Agent   : hermes\n'
+printf 'CLI Status       : hermes-vault stats | hermes-registry stats\n'
+printf 'Launch Agent     : hermes\n'

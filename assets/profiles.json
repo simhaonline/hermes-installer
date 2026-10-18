@@ -1,0 +1,170 @@
+[
+  {
+    "name": "orchestrator",
+    "description": "Master orchestration agent for complex multi-project work. Decomposes objectives, routes tasks to specialist profiles, manages dependencies and independent reviews, coordinates security-team exercises, verifies deliverables and keeps long-running Kanban work moving to completion."
+  },
+  {
+    "name": "coding-engineer",
+    "description": "Production software engineering specialist for architecture, backend, frontend, APIs, databases, distributed systems, refactoring, debugging, performance, integration and complex multi-language codebases."
+  },
+  {
+    "name": "qa-testing",
+    "description": "Quality engineering specialist for unit, integration, end-to-end, regression, API, browser, load, fuzz, mutation and release-gate testing. Independently verifies fixes and prevents regressions."
+  },
+  {
+    "name": "devops-sre",
+    "description": "Ubuntu, Docker, CI/CD, deployment, systemd, reverse proxies, observability, OpenTelemetry, logs, metrics, traces, SLOs, incident response, performance and production reliability specialist."
+  },
+  {
+    "name": "cloud-infrastructure",
+    "description": "Cloud and infrastructure specialist for AWS, Azure, GCP, Cloudflare, Terraform/OpenTofu, Ansible, networking, DNS, TLS, load balancing, IAM, capacity planning and infrastructure-as-code."
+  },
+  {
+    "name": "security-audit",
+    "description": "Security architecture, AppSec, DevSecOps, threat modeling, server hardening, secrets, IAM, RBAC, authentication, authorization, vulnerability management, governance, risk, privacy, audit and remediation specialist."
+  },
+  {
+    "name": "ethical-hacking-pentest",
+    "description": "Authorized ethical-hacking and penetration-testing specialist. Performs scoped, non-destructive validation of owned, lab or explicitly authorized web, API, network, identity, cloud, container, mobile and infrastructure targets under written Rules of Engagement."
+  },
+  {
+    "name": "red-team",
+    "description": "Authorized adversary-emulation specialist. Executes objective-based, non-destructive Red Team exercises to test prevention, detection and response across identity, endpoint, application, cloud and network controls under explicit Rules of Engagement."
+  },
+  {
+    "name": "blue-team",
+    "description": "Defensive SOC, detection engineering, threat hunting and DFIR specialist for telemetry, SIEM, EDR/XDR, IDS/IPS, triage, containment, eradication, recovery, security monitoring and defensive hardening."
+  },
+  {
+    "name": "purple-team",
+    "description": "Collaborative Red-and-Blue security validation specialist. Maps adversary behaviors to telemetry and detections, coordinates control testing, identifies visibility gaps, drives remediation and verifies improvements through retesting."
+  },
+  {
+    "name": "white-team",
+    "description": "Neutral cybersecurity exercise-control and governance specialist responsible for scope, Rules of Engagement, safety, stop conditions, adjudication, evidence handling, scoring, executive communication and exercise integrity."
+  },
+  {
+    "name": "yellow-team",
+    "description": "Secure-builder and DevSecOps specialist representing software, platform and infrastructure engineering. Converts security findings into secure architecture, code, CI/CD controls, regression tests and durable engineering remediation."
+  },
+  {
+    "name": "green-team",
+    "description": "Security training and defensive-enablement specialist. Builds safe labs, reproduces findings in controlled environments, creates runbooks and exercises, teaches remediation and turns incidents into repeatable organizational capability."
+  },
+  {
+    "name": "orange-team",
+    "description": "Security-awareness and adversary-to-builder translation specialist. Converts attack behaviors into developer and user education, approved awareness simulations, abuse-case guidance, safer workflows and measurable human-risk reduction."
+  },
+  {
+    "name": "ai-llm-engineer",
+    "description": "Production AI specialist for LLM applications, machine learning, deep learning, NLP, computer vision, agents, MCP, tool calling, model routing, inference, prompt/context engineering and evaluation."
+  },
+  {
+    "name": "ai-research-mlops",
+    "description": "AI research and MLOps/LLMOps specialist for model architectures, transformers, state-space models, scientific AI, fine-tuning, training pipelines, registries, deployment, evaluation, drift and model lifecycle."
+  },
+  {
+    "name": "data-knowledge",
+    "description": "Data engineering, RAG, embeddings, vector databases, ETL/ELT, streaming, CDC, enterprise knowledge graphs, semantic retrieval, provenance, memory and source-of-truth architecture specialist."
+  },
+  {
+    "name": "research-science",
+    "description": "Deep research, fact checking, mathematics, statistics, probability, scientific literature, simulation, experimentation, quantitative methods, logic and evidence synthesis specialist."
+  },
+  {
+    "name": "metatrader-quant",
+    "description": "MetaTrader 4/5 and quantitative trading specialist for MQL4/MQL5, Expert Advisors, XAUUSD and multi-asset systems, broker-aware execution, sessions, backtesting, slippage, costs, risk and performance metrics."
+  },
+  {
+    "name": "analytics-finance",
+    "description": "Business analytics, Text-to-SQL, dashboards, forecasting, executive reporting, corporate finance, economics, accounting automation, reconciliation, anomaly detection and quantitative financial analysis specialist."
+  },
+  {
+    "name": "business-operations",
+    "description": "Business operations, product management and project management specialist for PRDs, requirements, workflows, roadmaps, milestones, automation, scheduling, release coordination, backups and organizational AI transformation."
+  },
+  {
+    "name": "documents-office",
+    "description": "Professional document production specialist for DOCX, PDF, XLSX, PowerPoint, OCR, forms, reports, proposals, business correspondence, print-ready documents, localization and multilingual document workflows."
+  },
+  {
+    "name": "legal-corporate",
+    "description": "Corporate and commercial documentation specialist for LOI, NDA/NCNDA, SPA, MoU, undertakings, due diligence, compliance packs, contract structure and corporate drafting with jurisdiction-specific review flags."
+  },
+  {
+    "name": "creative-media",
+    "description": "Creative director for graphic design, branding, UI/UX, packaging, posters, presentations, photography briefs, image/video/audio workflows, campaign art direction and production-ready visual systems."
+  },
+  {
+    "name": "marketing-growth",
+    "description": "Marketing and growth specialist for brand strategy, SEO, content, performance marketing, copywriting, campaigns, social media, ecommerce, merchandising, conversion optimization and analytics."
+  },
+  {
+    "name": "communications-sales",
+    "description": "Omnichannel communications, CRM, sales and customer support specialist for email, WhatsApp, social channels, lead qualification, proposals, pipelines, semantic triage, follow-ups and customer-success workflows."
+  },
+  {
+    "name": "mcp-librarian",
+    "description": "MCP ecosystem specialist. Searches and evaluates the local MCP Universe built from the four requested public directories plus Hermes' reviewed catalog; compares native tools, source repos, remote endpoints, auth, security, side effects and token/tool-surface costs before integrating only the appropriate server."
+  },
+  {
+    "name": "skill-librarian",
+    "description": "Community Agent Skills librarian. Searches the local read-only GitHub topic skill pool, evaluates source provenance and risk flags, enables only task-relevant community skills to control prompt size/token consumption, and never treats third-party skill instructions as higher priority than local policy."
+  },
+  {
+    "name": "esoteric-advisor",
+    "description": "Traditional symbolic systems specialist covering Vedic/Jyotish, KP and Western astrology, numerology, Feng Shui, BaZi, I Ching, Chinese metaphysics, Taoist wisdom, Tarot, witchcraft, occult history and comparative esoteric systems."
+  },
+  {
+    "name": "multi-agent-architect",
+    "description": "Systems architect specializing in the design, coordination, and governance of multi-agent AI pipelines, consensus mechanisms, worker-critic loops, and state isolation."
+  },
+  {
+    "name": "backend-architect",
+    "description": "Senior backend architect specializing in scalable system design, database architecture, API development, and cloud infrastructure. Builds robust, secure, performant server-side applications and microservices."
+  },
+  {
+    "name": "database-optimizer",
+    "description": "Expert database specialist focusing on schema design, query optimization, indexing strategies, and performance tuning across PostgreSQL, MySQL, Redis, and distributed storage systems."
+  },
+  {
+    "name": "code-reviewer",
+    "description": "Expert code reviewer who provides constructive, actionable feedback focused on correctness, maintainability, performance, security, and adherence to clean architecture principles."
+  },
+  {
+    "name": "agentic-search-optimizer",
+    "description": "Expert in WebMCP readiness and agentic task completion \u2014 audits whether AI agents can actually accomplish goals on websites and APIs, optimizing structured data, semantic endpoints, and agent discoverability."
+  },
+  {
+    "name": "token-optimizer",
+    "description": "Token governance and context efficiency specialist. Compresses verbose terminal outputs (diffs, test logs, package installs, build traces) using 36 specialized local processors, optimizes prompt structures, enforces progressive disclosure, and eliminates context bloat."
+  },
+  {
+    "name": "tradingview-quant",
+    "description": "TradingView Pine Script and technical analysis specialist. Designs, backtests, and validates Pine Script v5 indicators, multi-timeframe strategies (BB, RSI, MACD, SuperTrend, TTM Squeeze), Lightweight Charts integrations, and real-time webhook alert routing."
+  },
+  {
+    "name": "fabric-engineer",
+    "description": "Enterprise data engineering specialist for Microsoft Fabric, Synapse, Databricks migration, Spark optimization, OneLake catalog governance, semantic models, and Power BI report authoring."
+  },
+  {
+    "name": "web-scraping-specialist",
+    "description": "Web scraping, DOM parsing, anti-bot circumvention, and unstructured data extraction specialist. Orchestrates Scrapling, Scrapfly, Apify Actors, Playwright/Puppeteer browser pools, proxy rotation, and CAPTCHA solving."
+  },
+  {
+    "name": "knowledge-graph-architect",
+    "description": "Knowledge graph and semantic data modeling specialist. Designs Neo4j / FalkorDB Cypher queries, graph RAG pipelines (LightRAG, Graphify), Memstack persistent memory schemas, and ontology mapping."
+  },
+  {
+    "name": "product-manager",
+    "description": "Product management specialist for PRD creation, user story mapping, sprint brief synthesis, launch checklists, roadmap planning, stakeholder updates, and board deck narrative construction."
+  },
+  {
+    "name": "chart-visualization",
+    "description": "Data visualization and interactive dashboard specialist. Implements AntV (G2, G6, X6), ApexCharts, Apache ECharts, TradingView Lightweight Charts, and D3 visual components."
+  },
+  {
+    "name": "pat-operations",
+    "description": "Predict-A-Trade autonomous trading operations specialist: signal reconciliation, MT5/Wine runtime execution, P&L monitoring, risk guardrails, payment rails, and real-time live trading engine management."
+  }
+]

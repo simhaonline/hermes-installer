@@ -1,0 +1,8 @@
+*.tar.gz
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.log
+__pycache__/
+*.pyc
+bundle/

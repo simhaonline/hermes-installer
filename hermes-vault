@@ -1,0 +1,131 @@
+#!/usr/bin/env python3
+"""Unified CLI for Hermes SQLite Knowledge Vault."""
+import argparse
+import json
+import os
+import sqlite3
+import sys
+from pathlib import Path
+
+DB_CANDIDATES = [
+    Path("/root/hermes-vault.sqlite"),
+    Path("/home/predictatrade/.hermes/hermes-vault.sqlite"),
+    Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "hermes-vault.sqlite"
+]
+
+db_path = next((p for p in DB_CANDIDATES if p.is_file()), None)
+if not db_path:
+    sys.exit("Error: hermes-vault.sqlite not found.")
+
+conn = sqlite3.connect(db_path)
+conn.row_factory = sqlite3.Row
+cur = conn.cursor()
+
+def cmd_stats(args):
+    print("=" * 65)
+    print("           HERMES KNOWLEDGE & ECOSYSTEM VAULT (SQLITE)         ")
+    print("=" * 65)
+    print(f"Database File: {db_path} ({os.path.getsize(db_path)/(1024*1024):.2f} MB)")
+    print("-" * 65)
+    for row in cur.execute("SELECT key, value FROM metadata ORDER BY key"):
+        print(f"  {row['key']:<26}: {row['value']}")
+    print("=" * 65)
+
+def cmd_skills(args):
+    q = f"%{args.query}%" if args.query else "%"
+    if args.category:
+        rows = cur.execute(
+            "SELECT name, category, description FROM curated_skills WHERE category=? AND (name LIKE ? OR description LIKE ?) ORDER BY name LIMIT ?",
+            (args.category, q, q, args.limit)
+        ).fetchall()
+    else:
+        rows = cur.execute(
+            "SELECT name, category, description FROM curated_skills WHERE name LIKE ? OR description LIKE ? ORDER BY name LIMIT ?",
+            (q, q, args.limit)
+        ).fetchall()
+    for r in rows:
+        print(f"[{r['category']}] {r['name']}: {r['description'][:80]}...")
+    print(f"\nShowing {len(rows)} skills (limit {args.limit})")
+
+def cmd_community(args):
+    q = f"%{args.query}%" if args.query else "%"
+    rows = cur.execute(
+        "SELECT name, repo, triage_status, stars, description FROM community_skills WHERE name LIKE ? OR description LIKE ? ORDER BY stars DESC LIMIT ?",
+        (q, q, args.limit)
+    ).fetchall()
+    for r in rows:
+        print(f"[{r['triage_status'].upper()}] {r['name']} (★{r['stars']}) - {r['repo']}")
+        if r['description']:
+            print(f"    {r['description'][:90]}...")
+    print(f"\nShowing {len(rows)} community skills (limit {args.limit})")
+
+def cmd_mcp(args):
+    q = f"%{args.query}%" if args.query else "%"
+    cond = "is_recommended = 1" if args.recommended else "1=1"
+    rows = cur.execute(
+        f"SELECT server_name, transport, command, is_recommended, description FROM mcp_servers WHERE {cond} AND (server_name LIKE ? OR description LIKE ?) ORDER BY is_recommended DESC, server_name LIMIT ?",
+        (q, q, args.limit)
+    ).fetchall()
+    for r in rows:
+        tag = "[RECOMMENDED]" if r["is_recommended"] else "[CATALOG]    "
+        print(f"{tag} {r['server_name']:<24} {r['command']:<10} {r['description'][:60]}...")
+    print(f"\nShowing {len(rows)} MCP servers")
+
+def cmd_agents(args):
+    q = f"%{args.query}%" if args.query else "%"
+    rows = cur.execute(
+        "SELECT persona_id, name, division, type FROM agent_personas WHERE name LIKE ? OR persona_id LIKE ? ORDER BY division, name LIMIT ?",
+        (q, q, args.limit)
+    ).fetchall()
+    for r in rows:
+        print(f"[{r['type']:<14}] {r['division']:<20} {r['name']}")
+    print(f"\nShowing {len(rows)} agent personas")
+
+def cmd_engines(args):
+    print(f"{'ENGINE':<24} {'TECH':<18} {'BINARY PATH':<30} {'DESCRIPTION'}")
+    print("-" * 100)
+    for r in cur.execute("SELECT name, technology, binary_path, description FROM engines ORDER BY name"):
+        print(f"{r['name']:<24} {r['technology']:<18} {r['binary_path']:<30} {r['description'][:45]}...")
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    sub = p.add_subparsers(dest="subcommand", required=True)
+
+    sub.add_parser("stats", help="Show system metadata and ecosystem inventory")
+
+    p_skills = sub.add_parser("skills", help="Search curated skills")
+    p_skills.add_argument("query", nargs="?", default="", help="Search query")
+    p_skills.add_argument("--category", default=None, help="Filter by category")
+    p_skills.add_argument("--limit", type=int, default=30)
+
+    p_comm = sub.add_parser("community", help="Search community skill pool")
+    p_comm.add_argument("query", nargs="?", default="", help="Search query")
+    p_comm.add_argument("--limit", type=int, default=25)
+
+    p_mcp = sub.add_parser("mcp", help="Search MCP servers")
+    p_mcp.add_argument("query", nargs="?", default="", help="Search query")
+    p_mcp.add_argument("--recommended", action="store_true", help="Filter recommended servers only")
+    p_mcp.add_argument("--limit", type=int, default=30)
+
+    p_agents = sub.add_parser("agents", help="Search agent personas")
+    p_agents.add_argument("query", nargs="?", default="", help="Search query")
+    p_agents.add_argument("--limit", type=int, default=30)
+
+    sub.add_parser("engines", help="List the 16 extended engines and execution binaries")
+
+    args = p.parse_args()
+    if args.subcommand == "stats":
+        cmd_stats(args)
+    elif args.subcommand == "skills":
+        cmd_skills(args)
+    elif args.subcommand == "community":
+        cmd_community(args)
+    elif args.subcommand == "mcp":
+        cmd_mcp(args)
+    elif args.subcommand == "agents":
+        cmd_agents(args)
+    elif args.subcommand == "engines":
+        cmd_engines(args)
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,1443 @@
+{
+  "skills": [
+    {
+      "name": "academic-plotting",
+      "sha256": "6613653d8109dcae36596b37d7414d5ae394a18f81543365222286d04485fd83"
+    },
+    {
+      "name": "academy-guide",
+      "sha256": "f27992510c051355dfe68c92394d509af730da5298094ec86834ee40bbd31376"
+    },
+    {
+      "name": "advisor-orchestrator-worker",
+      "sha256": "47474e1a332f2cf9818b62ac61ec228fece17941fbbf52f43e0f6b9330bbba50"
+    },
+    {
+      "name": "ai-governance-grc",
+      "sha256": "86cf4f53102efe2142bf1f3594c184fd645b68993a9150605776a3a777006ff7"
+    },
+    {
+      "name": "ai-infrastructure-hardware",
+      "sha256": "26c27b5fe8b3991acb78a2f73131ffde1a0a967ab6b583fa4efe6f137dc49eba"
+    },
+    {
+      "name": "ai-llm-engineering",
+      "sha256": "f709dd3faf71dc278a8c2be8d2a1b87595bd8f6ef62828dc3e4432e80f431242"
+    },
+    {
+      "name": "ai-ml-engine",
+      "sha256": "516898ca9d5a6b52110e1219d3e2f3dcc8247f5e26b63d08fec8c6b7f7392379"
+    },
+    {
+      "name": "ai-research-architecture",
+      "sha256": "4a11915692855359290a6ad5fff92e7f8e16c4e6e60ec84948ae8bf98f6246fe"
+    },
+    {
+      "name": "algorithmic-art",
+      "sha256": "3bc4092c09804853186524c826bc0621b940bb6122c05b84496dff95388e6eef"
+    },
+    {
+      "name": "api-integration",
+      "sha256": "ba3c2638d798db7682ded5eebb605ba2b76cc522b17e3bd58b263545658f0d04"
+    },
+    {
+      "name": "ara-compiler",
+      "sha256": "747c2f17125ce136e8f75baf8803eb3b21ccc01246498a7f0bc4c01ec6d01d9a"
+    },
+    {
+      "name": "ara-research-manager",
+      "sha256": "f78da7627ac09a4be398ea4363fc7b8753b2dcb22bc961c5059395e33ef3ef2c"
+    },
+    {
+      "name": "ara-rigor-reviewer",
+      "sha256": "5a8169a5d069caf36a30e0106e523503ffba685215c3cd0067a72aa64a7e2dbb"
+    },
+    {
+      "name": "astrology",
+      "sha256": "d658e21a1a17991cfcd582806890a0b06598e8e8da5a947cfd9ec551ebd2cd04"
+    },
+    {
+      "name": "audiocraft-audio-generation",
+      "sha256": "3f9efaebd7331bea86022a101329074c6eab8af2d33591e691c565fcba641a5f"
+    },
+    {
+      "name": "audit-remediation-protocol",
+      "sha256": "c2770dd0677a076cd2bceefa40745932ebdff9e29580a86fe4a87bdac1536eaa"
+    },
+    {
+      "name": "authorized-security-testing",
+      "sha256": "174b429ebe594162727e59696aed292dca4728749f948ed37c3bae91d97afa22"
+    },
+    {
+      "name": "autogpt-agents",
+      "sha256": "4b16c070da9966e3e71a8f5324d7b1b2d4ddd68a3df8b27305b1a19b841f62b3"
+    },
+    {
+      "name": "automation-scheduling",
+      "sha256": "49b28832593c44cebcf6c9b80707cdfbaf39f4b6f6b017967c654716baa50820"
+    },
+    {
+      "name": "autoresearch",
+      "sha256": "b7ca0d7a6e905da85a8b494d3fe398ac78eaa278854f67b50a34f2b37a9a2b78"
+    },
+    {
+      "name": "awq-quantization",
+      "sha256": "9a875e53113c11b00ab417fc393eb504f8be97d50c2e6901c762b991388bf717"
+    },
+    {
+      "name": "axolotl",
+      "sha256": "9273d534cd6a06612b18418f2cd98f63d1ac9bb780eda511a91800dee48f1dda"
+    },
+    {
+      "name": "backup-disaster-recovery",
+      "sha256": "32a197403123f973a1595c18ffe72da7cb0512c0484b0dc9e4def77868154358"
+    },
+    {
+      "name": "better-accessibility",
+      "sha256": "df0cafe0e75a08548cf46a2a430f46c198e7e0ee9d46bdf7884c2afefb44b70e"
+    },
+    {
+      "name": "better-colors",
+      "sha256": "e74f1c413a4094dc2a73fb0baa0da2241465e01d593b0257ba995500df9b0068"
+    },
+    {
+      "name": "better-interface",
+      "sha256": "23416fef4d08e0417927b6eb6763b7b08ed832451abfb9e26ea699262a28abcb"
+    },
+    {
+      "name": "better-layout",
+      "sha256": "8c5883ccb23c27c39b7c58d101154ff35e032410e0dc4794be9ab7fe070c2297"
+    },
+    {
+      "name": "better-typography",
+      "sha256": "e60ca6467ba60e68f95ed2d2cfa35f2a850d96ef2a0c0d3fcfcfd9510e51f184"
+    },
+    {
+      "name": "better-ui",
+      "sha256": "fb9807bb5c59a3ca9d4a27b25f56b36e5596251d280fb30c4b7f2ff8b6f4fe2d"
+    },
+    {
+      "name": "better-writing",
+      "sha256": "ef6843cbfcbafa62614b1a6e012c0b1ab6fd33eee0bdd84123cf49fe275c3a31"
+    },
+    {
+      "name": "blip-2-vision-language",
+      "sha256": "38227abdcb742add1284ba117881e899c020b7ebb5c39b5202a97d60c3ad8d3e"
+    },
+    {
+      "name": "blue-team",
+      "sha256": "77dccc7cc17dce9b339391fe12e6b738645dd0c30b254f4fd8107371e38b27d5"
+    },
+    {
+      "name": "brainstorming-research-ideas",
+      "sha256": "8422a1a6dc0a88d05f02b9fbe0f8c2ae06a77024856d18125efa13d19d855d46"
+    },
+    {
+      "name": "brand-guidelines",
+      "sha256": "1120b3769e2985cefb3d25be981b1f914abeba57ae079b83c20c666c164fa9fe"
+    },
+    {
+      "name": "break",
+      "sha256": "6b231897f10477fe2a9d335b457e53c670b07a8291a08b5d8dad3981b658b9d0"
+    },
+    {
+      "name": "bug-bounty-disclosure",
+      "sha256": "a9aa024e62443c3ee06725454a0da48f0c0b2ef52a588b0d3ca0531d458c8644"
+    },
+    {
+      "name": "build-design",
+      "sha256": "c5b3f67eba6f88c703a89f2698cdd6f0baf5e149a86cc68da08bb919db577202"
+    },
+    {
+      "name": "business-documents",
+      "sha256": "bf8bac5da1d94b4cce0f256b5d69f8c89406156d8958250e94c3d91f2a646729"
+    },
+    {
+      "name": "canvas-design",
+      "sha256": "a1f288079624402f30682753c1d43920b6664785698d21d3e7aa197450a6448b"
+    },
+    {
+      "name": "chinese-wisdom",
+      "sha256": "84c9b99037a367bee5557afb3aeb63b9893f9733305a8f26c3e458f4120b645e"
+    },
+    {
+      "name": "chroma",
+      "sha256": "834733e201d4f7d6c20089c93d13c945d7a62b6581d55631546a5ad74b9ec164"
+    },
+    {
+      "name": "claude-api",
+      "sha256": "40537cca17c4aa86e4ce83ced39efcbfb1204905e3cf4c4ff98f2eab011e4b7f"
+    },
+    {
+      "name": "clip",
+      "sha256": "9fcacf1c041d71ef1e61c7cac2bb7a2c42c3d19d6c2a0fc2e5f5a3c9641b7a3e"
+    },
+    {
+      "name": "cloud-container-security",
+      "sha256": "0a257d1159b873d91b77cc85f38e2e7b5b4389411f7a4d516dd6947dfc916ff9"
+    },
+    {
+      "name": "cloud-iac",
+      "sha256": "458c2a2fd943152763d12baf213bd114ee988ff1253374710b65353fd726f0de"
+    },
+    {
+      "name": "commit-archaeologist",
+      "sha256": "8f21eb5ff270b4f4d403494fe606aa23b7faa73232dfe8ab0aed4fba1f94dfe5"
+    },
+    {
+      "name": "community-skill-librarian",
+      "sha256": "c3328737bd0114a91138c67a7f53b2ba04d1d7e663b26e0f3aecdc5386ad85f0"
+    },
+    {
+      "name": "computer-vision",
+      "sha256": "98c57e3c8a158fabd7d2a2681d488e48c3a813924b0be402eac149720c0a349b"
+    },
+    {
+      "name": "constitutional-ai",
+      "sha256": "186267074ebdae7d3f9a5c8fb1505536c31bbe7ffba5fd18a052f8258d2005c0"
+    },
+    {
+      "name": "control-plane-device-auth",
+      "sha256": "0961b6ca1076541e96d6f246e3814e5ad042540cd153d7129df44c328eeddb3b"
+    },
+    {
+      "name": "copywriting",
+      "sha256": "23c044969ab430c7a29a77576e3edb0e160f21b1f152e1bacdf734a2b6dcc2cd"
+    },
+    {
+      "name": "cost-token-governance",
+      "sha256": "75e6573648e6710b74e33e2b10505b56d0797346eb1fd535e2c59120ff7939d0"
+    },
+    {
+      "name": "creative-thinking-for-research",
+      "sha256": "ec111f9236d7f9d72c895cebbf0f534ac93f4249172607559ad4bf92aefc5310"
+    },
+    {
+      "name": "crewai-multi-agent",
+      "sha256": "8760f968af1118e3dde5bc8443613be5ef7046a5639d26079d596fcf6d2483ff"
+    },
+    {
+      "name": "cryptography-pki",
+      "sha256": "53dd04745439423432143a84d860679e3daf79712fa4fd74c2127470fcc899ad"
+    },
+    {
+      "name": "data-analysis",
+      "sha256": "83a1abfb7479c10ff4b9c64b55911f1d4f0a087fcacfefd1afecac7b65a02adc"
+    },
+    {
+      "name": "data-engineering",
+      "sha256": "6fc7bd9ee463201f0336f1835ebbf2abc30e52c169beb5df43f924af06896d27"
+    },
+    {
+      "name": "data-supply-engineering",
+      "sha256": "fa38932440401541bf62f215758415e229e8c5384120140b42464c830e410a54"
+    },
+    {
+      "name": "database-engineering",
+      "sha256": "fd16cd1ae1a9cd7b657e2c8fbf6e3eac6379fb625e403688735d03e4f4a3189b"
+    },
+    {
+      "name": "database-migrations-v2",
+      "sha256": "b12c2d8870f555100841f4510656c405514759a0b97ce629e71972f27dac439a"
+    },
+    {
+      "name": "deep-research",
+      "sha256": "bbf551e98ecbe4cc1577355fb531db58a7ba35a1ed5377a4145bde95e340c5bf"
+    },
+    {
+      "name": "deepspeed",
+      "sha256": "8c2221b797e650a933800cfa45282a70caca20aaa85cbcece6e16acf1020dc39"
+    },
+    {
+      "name": "dependency-doctor",
+      "sha256": "3b9a4728a8ec7daae2a82723d01c7a4c18cd2cf5851ea24faa5fdc3a779c6d09"
+    },
+    {
+      "name": "devops-production",
+      "sha256": "d82b9a68d7087602c096ecfcc5b1018215b8909276d6e841d1e8198fb2034eae"
+    },
+    {
+      "name": "dfir",
+      "sha256": "a73f72054c35d88605ac08361d41ae5328e6db9c58a7a4417e8d8d5be70f65aa"
+    },
+    {
+      "name": "discernment-nudge",
+      "sha256": "9191177c4a8ef11a20dace786d708506b22d43e748c71287bb823de0dc812dad"
+    },
+    {
+      "name": "discord-community-surface",
+      "sha256": "71ed1a4e95744a53d4342552a0929246f2f92c2fbd15c6de0dc092b58e8e83d4"
+    },
+    {
+      "name": "distributed-llm-pretraining-torchtitan",
+      "sha256": "530b85ddadfc69e2cfd3bbdd7cdb03c89f7ddd00ba0e84fed8ac43e98a25a4d8"
+    },
+    {
+      "name": "doc-coauthoring",
+      "sha256": "2e47d78846faeea4a56e9809c52700087a15a2155a3f293a3efbaded81398ef4"
+    },
+    {
+      "name": "docker-compose-patterns",
+      "sha256": "cc2552f3e0b8c4a0a4884cb02328740871870bb48e2392208bac77798695b226"
+    },
+    {
+      "name": "docker-project-foundations",
+      "sha256": "7868b8c28106f9dab4e6b29c964c684e5797647d71da455cf8e966186cbbc279"
+    },
+    {
+      "name": "docker-sandboxes-env",
+      "sha256": "82fd5f04eabe66cd7215c646801727b3e00d42191870741d20789b53d44fcc58"
+    },
+    {
+      "name": "docker-sandboxes-lifecycle",
+      "sha256": "60a40b304b18dacba901e0013cca9ae5ad3c00b226373e813abedb5efbd5c492"
+    },
+    {
+      "name": "docker-sandboxes-network-credentials",
+      "sha256": "84018e1d691a9c634b06fc485527d3542d09efe4e8455d859094db73e6a1be76"
+    },
+    {
+      "name": "docs-runbooks",
+      "sha256": "f1aa103e2efeb1b785dd598c61d0d7ac1ebc165657b0dbcdbd30fee6d3c7bc14"
+    },
+    {
+      "name": "docx",
+      "sha256": "8017469ea95fb7d28225c62daf8e2f3492a7b516fc64c18c28977cbf8980b7fe"
+    },
+    {
+      "name": "dspy",
+      "sha256": "cd01cee93a2228c199c23e77047e4444b0a6eeddd12dcf14104ca2a5de3fa8e2"
+    },
+    {
+      "name": "ecommerce",
+      "sha256": "206c96a87c335c5f97999d875d810e8ef4873b5bce555330649f5b4f5e067d8e"
+    },
+    {
+      "name": "edge-request-tracing",
+      "sha256": "c1596879b4c4f9979ae6805eb430b3c4775b223866c834301765656bb2f91ae1"
+    },
+    {
+      "name": "enterprise-ai-integration",
+      "sha256": "d74bd60d6337d159242654f5aa9714674aeb505fcc52131c3fe9e4b990136041"
+    },
+    {
+      "name": "enterprise-knowledge-graph",
+      "sha256": "5c60be92a630ee8e43ca5e899acc43af17704ae4edfcce8e121ec57f627f2c75"
+    },
+    {
+      "name": "esoteric-comparative",
+      "sha256": "7cee8a188146492305bf5bb2af5103d94fc884d67ef635a008c7f8389c878291"
+    },
+    {
+      "name": "ethical-hacking-pentesting",
+      "sha256": "da109aa787209578c33b77be67faf8b11799085701fef12a5518c44c8e23a37f"
+    },
+    {
+      "name": "evaluating-code-models",
+      "sha256": "7c46e8eb3ca8d4f51769162d16d87a7dff5ec0c4609131fd3c62fcb463522874"
+    },
+    {
+      "name": "evaluating-cosmos-policy",
+      "sha256": "31d6b4701fae46b0b9e9b281378eefbe0f4c37b5973dae56ee25a3b67f63d0b6"
+    },
+    {
+      "name": "evaluating-llms-harness",
+      "sha256": "891b77bc09118393f9bd1235404ee3f0cf412f56e57dc4b454e2fbd8fd507bc3"
+    },
+    {
+      "name": "evolving-ai-agents",
+      "sha256": "6477f6efbbf3541ce3dfccf6665f5cdf6f241e47dcc3b32787e3e49b90223dbc"
+    },
+    {
+      "name": "experiment-tracking-swanlab",
+      "sha256": "14b0f74e6383e4e43cc78785706b43f0343801ba96c14b56284142203be48eff"
+    },
+    {
+      "name": "explain-interface",
+      "sha256": "6795aff9a133b94c6398a95b5c8958a2eaccade5db18f58e752bc02460a356e0"
+    },
+    {
+      "name": "external-repo-evaluation",
+      "sha256": "668f5e0d08876cf2380bc2614955fa29341b77eaaafb2c4ee55eaebb2c43c110"
+    },
+    {
+      "name": "faiss",
+      "sha256": "79a494b9212c73810d53527800c69f80acd6aa1907fca8c614c69583cac76e89"
+    },
+    {
+      "name": "finance-accounting-automation",
+      "sha256": "8d17b60d5ec4a336c81bac25faecd6832548980192fbcc43198d91f0a19046f4"
+    },
+    {
+      "name": "finance-economics",
+      "sha256": "fde30779e3ec3e2fbf238b26aca61b846f4380118a3f5123e98aab3fc13589a8"
+    },
+    {
+      "name": "fine-tuning-openvla-oft",
+      "sha256": "07492556c7479f18d353c80a4f92450fbe301811e664fc45d0070fcdd9587c9e"
+    },
+    {
+      "name": "fine-tuning-serving-openpi",
+      "sha256": "60af709a253bd745330e43067b22667b932a393e65a3cde6660a25d0ffbe4742"
+    },
+    {
+      "name": "fine-tuning-with-trl",
+      "sha256": "d68f78ad741627ce7dcdf2ce78c73c8cf31d23db7d89555e0bdd0cd35c413811"
+    },
+    {
+      "name": "first-reader",
+      "sha256": "51ead158e27a65eff7c1bacc5db8a89d1ed1101b44b3b57fa05440f60582d55d"
+    },
+    {
+      "name": "frontend-auth-session",
+      "sha256": "d501bc6f94acca0c019765952e7629fd711f38ec5a70a6c54f4905e7655df96e"
+    },
+    {
+      "name": "frontend-design",
+      "sha256": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3"
+    },
+    {
+      "name": "gguf-quantization",
+      "sha256": "11016e03b2b53c9a981f1ef7df96b078daf9bc929126ccf36377b86bb7025224"
+    },
+    {
+      "name": "github-push",
+      "sha256": "6b2d3d4b15a7e5a258d1c70281bad9ecf77b49ad6a38787907b5dafb1f9629c9"
+    },
+    {
+      "name": "go-live-micro-audit",
+      "sha256": "fe39e47e711c63c9833c249b013774aa41298a78b0530e588bc6b301c9a2c713"
+    },
+    {
+      "name": "go-realtime-module-build",
+      "sha256": "d5a1eaae1b3a9731a994ce83836642cf1d999f8e53ed3afd26edc62fc6a8aaab"
+    },
+    {
+      "name": "gptq",
+      "sha256": "ce19de416afa03a0e6a764c9cb8b8ba9a0b94812b9de1ad5a0c2cb2932009f28"
+    },
+    {
+      "name": "graphic-brand-design",
+      "sha256": "5e220f272345321aaafe30f2ff41c9930f36ce7864ac72af6ba272a54e68ded1"
+    },
+    {
+      "name": "green-team",
+      "sha256": "9551d65213e4cce2b23ae7b12c4b97f89835389601f0f72dece830711d5c0e69"
+    },
+    {
+      "name": "grpo-rl-training",
+      "sha256": "c9b771c280840f12d0e98749250c35df4a83a21f95465c41e8ae13f0229ecb40"
+    },
+    {
+      "name": "guidance",
+      "sha256": "2c7028001bf36a8a6bc1020d646a1fbad29c93f92f7706c437bde858e9616c71"
+    },
+    {
+      "name": "hqq-quantization",
+      "sha256": "4feba64227f6db505044663cd5432bf9c0599c5c8984d94d3b2d1598711a1f80"
+    },
+    {
+      "name": "huggingface-accelerate",
+      "sha256": "e94cea7a174f395df02d935065fe05db8ecb637c52e443b6380c703963758d7a"
+    },
+    {
+      "name": "huggingface-tokenizers",
+      "sha256": "d2ff3f9eed2cb8e15cb98e8e2398ca359325a32fd5d16ebfe0d115d7624583af"
+    },
+    {
+      "name": "human-ai-transformation",
+      "sha256": "78b0de4757d4519fa8fac41872d2079b94716d3041087531d7568f38cf2ef986"
+    },
+    {
+      "name": "hybrid-datastore-migration",
+      "sha256": "fca60d1cb24fcee860d2a8ac8305d3345a37b3387fa360bbf927e2b113fd2139"
+    },
+    {
+      "name": "identity-directory-security",
+      "sha256": "bad6ee42d3739af373e0607b7d6831e70d2448a272d76d9801ec8c94186e0226"
+    },
+    {
+      "name": "implementing-llms-litgpt",
+      "sha256": "523f0b786c915af20a7980857e174b838e4440afe851bd16917ef69f8042adb2"
+    },
+    {
+      "name": "instructor",
+      "sha256": "7be950beb848b05aa4f41e61cfe27b162cad4a4d029d0abe13401aa743bab794"
+    },
+    {
+      "name": "intelligent-alerting",
+      "sha256": "9ec0e879db95cb845e94f2b901f35a6addd71e865f3670d78ff6fdfd5097a9f8"
+    },
+    {
+      "name": "intelligent-business-analytics",
+      "sha256": "cb3f1c61f26829372f493b1bce998318b259024cb88050369b15987b4e23aff9"
+    },
+    {
+      "name": "interface-review",
+      "sha256": "8977988d63d7c17b8b0cd334ebd722d4e2dff00af0f152de2bc6f100d13d59ce"
+    },
+    {
+      "name": "internal-comms",
+      "sha256": "067b7587a344a928fc6534ef66b1bcd591fc7c26d207ea7ca3334aeb678d6475"
+    },
+    {
+      "name": "knowledge-distillation",
+      "sha256": "bc27086dc02840cebef4db34db4b8406b37ff349d6e2a52848646c8daf24ff3e"
+    },
+    {
+      "name": "lambda-labs-gpu-cloud",
+      "sha256": "9d1dc3fcb83bf0de14717e58c13f49989b2bc307b12febcf040ef9d28fedc0a7"
+    },
+    {
+      "name": "langchain",
+      "sha256": "d47635059ac1a1a369ee6169f68f1d02e95ca201f2394a902fe66a30b1e35e65"
+    },
+    {
+      "name": "langsmith-observability",
+      "sha256": "3611688a297b95bd8695cdaa9e9f12db4c7cda6c94a4ae82e55f99fa6cbf7f53"
+    },
+    {
+      "name": "legal-corporate-documents",
+      "sha256": "bb83809fe797cd3e76595f3226fdacf6bb169626b4ce0b4f8a106c6d91afce09"
+    },
+    {
+      "name": "llama-cpp",
+      "sha256": "d74caa45483f5b3c6bd6267e39b444627989ff90fdb84b6c2e7c3da4ddf143ef"
+    },
+    {
+      "name": "llama-factory",
+      "sha256": "6adfd1babfbfe2f85e0fcbde518f24a804ebe06afeb8682ce1df395284d6f5cb"
+    },
+    {
+      "name": "llamaguard",
+      "sha256": "80c5afb39cb153d82e08dca44fbd3ea75a5e950b8bef65c2c1af8bbbe9ef3992"
+    },
+    {
+      "name": "llamaindex",
+      "sha256": "a603d319831beb1e46efd9299532b2462ee0d0cf01d7aa8928bd21763a3d9760"
+    },
+    {
+      "name": "llava",
+      "sha256": "e2c915ece2f3e50ea110320b7a364dd36361d3010e102e800416dfa3b4299745"
+    },
+    {
+      "name": "localization-translation",
+      "sha256": "b1dc00fcc1bbe0e1ff592b1a038a0e55d9f8047c5b2001891849c9eada01846f"
+    },
+    {
+      "name": "logic-critical-thinking",
+      "sha256": "13ea5c552e7587c080a85a0f11e7f952afa35eb82ca3aba9940e845bb631d9b4"
+    },
+    {
+      "name": "long-context",
+      "sha256": "6426eb21a38b8a314078292b8172d889b7f2b1a226901fcda78ac4d28a98a5e7"
+    },
+    {
+      "name": "malware-reverse-engineering",
+      "sha256": "12cb7af528cbbbc694f1f63d2b47999ab647dd6ae5d2d550a7e9ae5445d96d63"
+    },
+    {
+      "name": "mamba-architecture",
+      "sha256": "51ddf99c12a472a78c258bddf7e66e72cf45d9e04969f3300cc8d68aaaef9b0e"
+    },
+    {
+      "name": "marketing",
+      "sha256": "641fa29416c5fd7702c5855bd9e97f33fbbbf3a6084dc5a955fabca61fa39348"
+    },
+    {
+      "name": "mathematics",
+      "sha256": "710c91597eb7de14d79c3cd5fc5e6051205a752cd66d453d07605e2e6fad177f"
+    },
+    {
+      "name": "mcp-builder",
+      "sha256": "0f4592dcb53cf2b5d6b7febee6b4152018b565551a1c29e3c612f57b218ab295"
+    },
+    {
+      "name": "mcp-remote-auth",
+      "sha256": "0c4cd9350984f61e4a90999788ecb616d4f19ea780b5afee7fb9bcdfcdb26f27"
+    },
+    {
+      "name": "mcp-security-governance",
+      "sha256": "fd289b09ef2f9a9c07f3440b35380bdcc9be127846b09d7d2062f64415eb6973"
+    },
+    {
+      "name": "mcp-server-integration",
+      "sha256": "44133b137eb9546e99326040366e09b45afc05091b4bc305ff3764da0e277ec3"
+    },
+    {
+      "name": "mcp-universe-librarian",
+      "sha256": "bd6c73243746d9afce676c13da5f78fee7fc0af6bda7a278ff4c55588df42a8a"
+    },
+    {
+      "name": "metatrader-mql",
+      "sha256": "c5f3da5380f6a283939e6bc42210fc04c739cbc1a9f8eba4d77e21eaee2299cd"
+    },
+    {
+      "name": "miles-rl-training",
+      "sha256": "cbf610faa37bfb97fc06a7d6a4c748867c29e4b4c79f1ae109662af5245a106e"
+    },
+    {
+      "name": "ml-deep-learning",
+      "sha256": "608ee83bf11954c9446d17452c7c3e3b8169b132a67be0612337edaef9cb81d9"
+    },
+    {
+      "name": "ml-paper-writing",
+      "sha256": "96733e6d758642d792ed15b7c08eb90548d4775099368cd72a8312127f2fe911"
+    },
+    {
+      "name": "ml-training-recipes",
+      "sha256": "d7be143e8dbbb526c9ef344ef28bf8eab4f317096285cf02560ff3008627692b"
+    },
+    {
+      "name": "mlflow",
+      "sha256": "36d2581f7d8beb8b27f66bbef5c94df7e9604b917c3aa15e4183a48a2b1f3f96"
+    },
+    {
+      "name": "mlops-llmops",
+      "sha256": "b2d69de543b0b89135f6c6b535f9ca1fb8f521398afa2d3663fb1577a78ba4c0"
+    },
+    {
+      "name": "mobile-wireless-iot-security",
+      "sha256": "5a00c84b81eeaf898709fcb7ad294a49d8624e31aeaa3a2a041faa2ea7ca88e8"
+    },
+    {
+      "name": "modal-serverless-gpu",
+      "sha256": "219757503f84684534b3efe5616822ad17e6dc5c6cad127e6b46033a429d38ba"
+    },
+    {
+      "name": "model-merging",
+      "sha256": "dfbcc6d6dfef57489ac69cb6f3a858783f16dff2ecfc72eb2fac168fd2ecc87d"
+    },
+    {
+      "name": "model-pruning",
+      "sha256": "aca913d834bc1e3d39bbfb75d0658d5a1b9acabf6511744719c5bab91bf306a8"
+    },
+    {
+      "name": "model-serving-drift-guards",
+      "sha256": "7b970df9b900824964652a0186115f18df12e572df743166647508af05eb414b"
+    },
+    {
+      "name": "moe-training",
+      "sha256": "f13f184fe031c84700d72c15dd90161a96f3b48ab6b50b250e6b86cfc4c87354"
+    },
+    {
+      "name": "mql-define-to-input-checklist",
+      "sha256": "addee341988982d97eee7a7b1942dab13c443dd969caa4accef7eb561263d7e6"
+    },
+    {
+      "name": "mql-development-tools",
+      "sha256": "7067fd87080e7c6dce6f5d638dc8050120114312456ad2017f2494459f8fc94d"
+    },
+    {
+      "name": "mt4-mt5-windows",
+      "sha256": "72b06699dec47903163b0915286b694b36894f3d5ec163fecbbf5e16291c33b4"
+    },
+    {
+      "name": "nanogpt",
+      "sha256": "8893d8dd5b7ba4ae3219497e26d33fc9565e6bbf0d6aa4d6c1c3ee05003468c3"
+    },
+    {
+      "name": "nemo-curator",
+      "sha256": "d8586e21ecd4df1a32371f8d86746f8fbd88358f5dc8957e5dd91a473d2ab484"
+    },
+    {
+      "name": "nemo-evaluator-sdk",
+      "sha256": "97bc3483974c2b930acf3f46e21c865e1b27e92359e19bdb465515d9e86ff10f"
+    },
+    {
+      "name": "nemo-guardrails",
+      "sha256": "d0d91892eaba80cf829ef6bb1b37f3b5fa8cc31ba1fa89d162ab380b90ca2762"
+    },
+    {
+      "name": "network-infrastructure-security",
+      "sha256": "e81779eda834fca7faa398b8f4673c3372f903a8dfbd629cfbcfd536fd06b58c"
+    },
+    {
+      "name": "nlp-engineering",
+      "sha256": "e8ce0b7111be31a609fe9e2990f6ee7fdce0a4eba66d25627cc710d5cfde7eea"
+    },
+    {
+      "name": "nnsight-remote-interpretability",
+      "sha256": "f79dc9daf99c4ffbcb82072b4f162c296e4365dbb2fe6985e77be215ba0c814c"
+    },
+    {
+      "name": "numerology",
+      "sha256": "d155e169568c8722781354eab81153fee73b14bdff7ddd0cc467f8b9dd1dbaa0"
+    },
+    {
+      "name": "omnichannel-ai",
+      "sha256": "e79f3d15c2d853351ca682e3447ac1d170d4413f95b6613d41011db23ea1d487"
+    },
+    {
+      "name": "openrlhf-training",
+      "sha256": "eb9da6a1a81c492fb143cde0714f355ab042fcfe967b31bdb1fc78a5cb0e761f"
+    },
+    {
+      "name": "optimizing-attention-flash",
+      "sha256": "e0c1da83766332e0f3db4bcca954c3a70be399632758dcec2680aa82e236438d"
+    },
+    {
+      "name": "orange-team",
+      "sha256": "1d2b92d7b4c2327430b370fe18077e3b23d1b8fafc9ba00c2b02611412a39773"
+    },
+    {
+      "name": "osint-mcp-operations",
+      "sha256": "591d06e47a1b26edb663b273087e78b30774b5381cfdcc95a9882ceb5b2bc01d"
+    },
+    {
+      "name": "outlines",
+      "sha256": "1a797a1bb4d7fae753e4fbf1895beb36f63b8e75c7fba50e940cd1ef1a372574"
+    },
+    {
+      "name": "pat-admin-page-debugging",
+      "sha256": "5b5010f3d348da0f000d82bf7fa00896af4fa349935d69495e77793a0e5ce0fa"
+    },
+    {
+      "name": "pat-admin-surface-recipe",
+      "sha256": "9053f69012532319e6f0e5d0e86079ec2da20a70f79a11709f2b4e012365a7e4"
+    },
+    {
+      "name": "pat-admin-ux-guards",
+      "sha256": "0424b27114ed10a6f0b1beadaccd078b5d60b11b97dd1540a8575001f496d282"
+    },
+    {
+      "name": "pat-astro-platform",
+      "sha256": "3835433ca6b0ba2ebc946732481bf85644049e1d27112f7a1d58de4c00d5f127"
+    },
+    {
+      "name": "pat-billing-plans",
+      "sha256": "e8ee6ade3f41454378e360f116a95299f0923132e51a011f0f5552b2112da598"
+    },
+    {
+      "name": "pat-calibration-rebuild",
+      "sha256": "16057d19b1f91965ecb1f6c6cffba29dd69e7316a3afeacac64b6d3844327dba"
+    },
+    {
+      "name": "pat-capacity-guards",
+      "sha256": "97703ab4e9cc4a6b1f19e13643a05dfa59fc359cca86c6f527d1851a2ec14fe9"
+    },
+    {
+      "name": "pat-data-cleanup",
+      "sha256": "bd395211c729342302d45f25e8f221d23f8c4a008d8bdca7f85ece047b7d3983"
+    },
+    {
+      "name": "pat-db-macro-audit",
+      "sha256": "d844b712f658e962dbff4a0bac1b82f54d3b0404c5d8a19d6645b04b3bb12af3"
+    },
+    {
+      "name": "pat-delivery-guard-design",
+      "sha256": "8e59ab829194e08cbf4c456b5e1a7973a8048f2d78821bc1d0e4d6e78d2ce364"
+    },
+    {
+      "name": "pat-delivery-guards",
+      "sha256": "bfa8953c308602ccce920f8856024d8a76c4e856af6e2625fe2136f20aa9c4a1"
+    },
+    {
+      "name": "pat-delivery-latency",
+      "sha256": "3e73d343c0d448345b27af3cfb28df00891bd6805f622de3ecc150aaab4df8b1"
+    },
+    {
+      "name": "pat-discord-surface",
+      "sha256": "e0d3209797f7c78d4e1e7a82e97c4b5938143d9847ecc235fee6fdea12023161"
+    },
+    {
+      "name": "pat-epoch-account-monitoring",
+      "sha256": "de33122d77513c0d8a08787821f70013cdda9ec9a62a79ab1939ec4a5d1711df"
+    },
+    {
+      "name": "pat-ev-math-accuracy",
+      "sha256": "fd1ad6f76a782035495838688de9cd0654155b41803be9236b23d9ea214c7c97"
+    },
+    {
+      "name": "pat-front-end-site-edits",
+      "sha256": "e8ca4de2da2342794f5df4b56831a29b1ca6e1b3bf00a8e1097d7d894dd6b651"
+    },
+    {
+      "name": "pat-frontend-session-auth",
+      "sha256": "49f249b3fb0bcd62d8faa83aa1a3849f0455cffbf2e306adc0a7844585c61b04"
+    },
+    {
+      "name": "pat-gate-troubleshooting",
+      "sha256": "9023aaaf000471fe79c3050e283748bbf84f93aa985412d941db13a090f0dc1d"
+    },
+    {
+      "name": "pat-go-live-prepare",
+      "sha256": "c743dd7ce134812c7db3420f0d1ad253f91acbbedaa6574395faf72bcc57f9f7"
+    },
+    {
+      "name": "pat-indicators-ops",
+      "sha256": "a97ca8849bb1277aca82820eb90a759ce6edc3e184774fe5bf22143bf2f0ea10"
+    },
+    {
+      "name": "pat-insist-wall",
+      "sha256": "a24615166500a4ad26803a6ca8c3e376e0075b77c3c43b8494eaeb70a1229698"
+    },
+    {
+      "name": "pat-loss-logic-retune",
+      "sha256": "74bcc8b7918b2f8ce7993de43c06ed9a06a5a7b1dace73c95ab321b8c9cb4dfc"
+    },
+    {
+      "name": "pat-monitor-deck",
+      "sha256": "867079179ed883dd56035984d98e4285c91d66d88eebb73af0c7d780dfbec86a"
+    },
+    {
+      "name": "pat-monitoring-deck",
+      "sha256": "54900c3bbb499fa5973337f55d01e74896607f6eb964ee1e006f0352c0611fc2"
+    },
+    {
+      "name": "pat-mt-hosting-ops",
+      "sha256": "409fae6afaa154e3184ab3c6cc65b9f4b6c0ba5f6fe2a223e218e761a1cefe36"
+    },
+    {
+      "name": "pat-payment-rails",
+      "sha256": "43d966fba4758b3cfb345a3f44bccbc991351bc2fdb329ead9c9cce02872f94c"
+    },
+    {
+      "name": "pat-readiness-verdict",
+      "sha256": "42fb93fe0d0c2e4883b0f80bc196ae8c113d55c76f9c2c95898bec974988f572"
+    },
+    {
+      "name": "pat-signal-delivery-audit",
+      "sha256": "1cbdc4eb86cab1a02dbb0b85ea9a9590176443b08b733b1c409fb99fc88efd77"
+    },
+    {
+      "name": "pat-strategy-geometry-retune",
+      "sha256": "0f6ba9c17d5e89bf77a9be061c881b026120287dfc5eb07848405c2963d5d691"
+    },
+    {
+      "name": "pat-strategy-removal",
+      "sha256": "ea00c29fa430dbcb12cf2df8700300c03a2ceb16d4ed3dd220a4a7973af9516a"
+    },
+    {
+      "name": "pat-strategy-retune",
+      "sha256": "9098245f37d07cf77ff7359a5754c250adcc518d9da58ff77c954dc0501d096e"
+    },
+    {
+      "name": "pat-subscriber-edge-choice",
+      "sha256": "5c241e257471b4e89b8d827bdc21ef81536ba94ae87a10b7b33d98a3b848e859"
+    },
+    {
+      "name": "pat-telegram-surface",
+      "sha256": "1fb46a80ff235b6736c3e96c9f87dd6dd1c4d324731deac8df668547375abda0"
+    },
+    {
+      "name": "pat-time-sync",
+      "sha256": "695dd4ec854de03cf3161b916801c791e42bb63588c9025176b6db7dafac1a8c"
+    },
+    {
+      "name": "pdf",
+      "sha256": "9f78b8359fbd4943ad260a7a1e436e5a96503406d6c34e99f69223d647d85b9c"
+    },
+    {
+      "name": "peft-fine-tuning",
+      "sha256": "acdb318f94624517c8cdb3c925c7a2e8b34c65e8ca02b301777c51eea9f0f73c"
+    },
+    {
+      "name": "phoenix-observability",
+      "sha256": "111bd54f145ca57360f7e6f08f95202e937ac134e3dbf486a51cbaa008546e2b"
+    },
+    {
+      "name": "pine-signals-visual-spec",
+      "sha256": "ff62f6b88e6b161602add2be7cc45f931afda03af8a2140bf1649d7bd93b21e5"
+    },
+    {
+      "name": "pinecone",
+      "sha256": "69b0566e8d749acdad2a805ed6980947e5458c96b41bd405e520f2006ff0e7fb"
+    },
+    {
+      "name": "pptx",
+      "sha256": "a7ff03e2c85b636f55232a6b1555f5dd90216b7a1a359ab289d8364e6acbc6a0"
+    },
+    {
+      "name": "predictatrade-repo",
+      "sha256": "4e1c39ecc74d4090120c0c4a613d1cf2c878bff4fb7397360a6b8205bceab477"
+    },
+    {
+      "name": "presenting-conference-talks",
+      "sha256": "5fb6b8f9e5b7690dcb0d783ff1e07c6d3f6b950b8f1238e0672e1f3c53bad57f"
+    },
+    {
+      "name": "product-project-management",
+      "sha256": "5be0fa5d2756c31a4f1b958bdc1656c456c02fd6fc4e9033ceb8a0b270a0364c"
+    },
+    {
+      "name": "production-backtest-run",
+      "sha256": "c6b3a1988f9e122591326e6d693feb03d8cd463202fd1d0acca05c542fc3750d"
+    },
+    {
+      "name": "production-software-engineering",
+      "sha256": "f1ece29beffc3b28f965781d8e89ea5e05202f4ffa8e1647248e8c45a418fe78"
+    },
+    {
+      "name": "project-context-handoff",
+      "sha256": "b69122748fdce03bda19a215b595f85d9a149ece3bcca36272dac68713c11cfd"
+    },
+    {
+      "name": "project-documentation",
+      "sha256": "feb9f86c2e3dea6198ef278d4211c964e9a122c5685b24aae290a17dff3e967f"
+    },
+    {
+      "name": "project-graveyard",
+      "sha256": "378d4fd4190386dea09be70250bd0332a3f89506a2998b3c3384e3ca3fe7a965"
+    },
+    {
+      "name": "prompt-context-engineering",
+      "sha256": "ed399d1215b1daac649636f93a210d770bc05fe7570b5dcce97406e900e2e675"
+    },
+    {
+      "name": "prompt-guard",
+      "sha256": "0291e30b5549f0398f4bbe72f8918f16eced4c75d45dfd7c87648f72dc97ecce"
+    },
+    {
+      "name": "purple-team",
+      "sha256": "369f89eb4b0ee5183c7463ab8afb255f7122d7e0592a22fd27917f61fd075f66"
+    },
+    {
+      "name": "python-data-quality",
+      "sha256": "357d87a36f464b195ce25c871182ee208eec15bb76ff3b0f3980385bcbe3193c"
+    },
+    {
+      "name": "pytorch-fsdp2",
+      "sha256": "b540043bd17d741840843df2f76d556d41be29c82a2acd85565ce2b1ce088a50"
+    },
+    {
+      "name": "pytorch-lightning",
+      "sha256": "7788f93b6324f8d62d0d579a572164d303704b59fc7fefe12497afb75856c453"
+    },
+    {
+      "name": "pyvene-interventions",
+      "sha256": "cc26be84bdf23355f63cf103847a13618122157d17448be6ea16f94f3338f4d1"
+    },
+    {
+      "name": "qa-testing",
+      "sha256": "72a5f62a815770249ffa2109fcfc402400d680d082f66348407262709dd9ec98"
+    },
+    {
+      "name": "qdrant-vector-search",
+      "sha256": "3a45489baf49c375883694ec78d6a9b283533a352e8d47cf630332faff83a231"
+    },
+    {
+      "name": "quantai-soft-layer",
+      "sha256": "2d039c4d6c4fb95c71b5d4f1dae3dcac794af77bc7a56c44328587bafb54de06"
+    },
+    {
+      "name": "quantizing-models-bitsandbytes",
+      "sha256": "0a68e96c760b0ba561437328211a8405b4db422e9bad92415219abf91f87f849"
+    },
+    {
+      "name": "rag-vector-ai",
+      "sha256": "3732b194ee08820ba69fe42e74e2b3890733b321291a2dd0bbdd12bfb4d90aea"
+    },
+    {
+      "name": "ray-data",
+      "sha256": "bcc73b3341dca18c59cad092cb6dedb7ac0bf0bde80467a039921ac0c02256c3"
+    },
+    {
+      "name": "ray-train",
+      "sha256": "7f88c141557e3f0cc5b456571d1ae99bef4161a9c1765bc725847cfbd0fb1170"
+    },
+    {
+      "name": "read-only-audit-discipline",
+      "sha256": "824beda6ed2bab8fb67ac79b3e4310560196996c1a5e291a8f822c5c21337c57"
+    },
+    {
+      "name": "red-team",
+      "sha256": "d432ac32edc9f05194b8abd06815dc48ffdaf099a241ca0d2da4240718e93135"
+    },
+    {
+      "name": "release-engineering",
+      "sha256": "731ed8d359af15db375e180048da460a2d8fe9ff345c0e76bac56b3b8f74666e"
+    },
+    {
+      "name": "rwkv-architecture",
+      "sha256": "17fc974b3f3b67b1648c5cb93b3bdc557fbd64df8463d8fbc8f71bdf88575a7c"
+    },
+    {
+      "name": "sales-crm-support",
+      "sha256": "b224c3ce816cde46af0305518fa2c41c01d415f9e37c53695a7a99a16baf6a95"
+    },
+    {
+      "name": "scientific-research",
+      "sha256": "ee02f9779c4c7c70dc1f216f2f2dc839a7a976687ed81e39331102b05a3b13e7"
+    },
+    {
+      "name": "scientific-simulation",
+      "sha256": "820d63d0e19da0dde3c9d111ce73cc922319f835ba97da17066908a525502642"
+    },
+    {
+      "name": "scope-creep-detector",
+      "sha256": "a21a28ce59694554c16ddc19cb3b27620b1e3e5040803df0e40b22f6a34da159"
+    },
+    {
+      "name": "secrets-iam",
+      "sha256": "989755da81aca24df43819568b70904c274fa48d4837e4cdaf52df0866c18ef5"
+    },
+    {
+      "name": "secure-engineering",
+      "sha256": "a52772b9e906f5c7329150e287168be8e5361ba4c753e6acc4140101d2dea458"
+    },
+    {
+      "name": "security-architecture-threat-modeling",
+      "sha256": "61bf11dd22a571682e36b5d50973afc3900a6577f6a18c8220263f363b85e2fe"
+    },
+    {
+      "name": "security-reporting",
+      "sha256": "204dd6d3c772000e495a32d5968143ab737e74e711046f2083c4b822c1a560c0"
+    },
+    {
+      "name": "segment-anything-model",
+      "sha256": "6ac5c2f96cf7d0ae5f787164678701266930129aa06cc21818f20f77dacb6a71"
+    },
+    {
+      "name": "sentence-transformers",
+      "sha256": "fca19457be4e78f0e3689284d4fbde649ddf9af0d3bba52d2ac1fb470a4c1bd8"
+    },
+    {
+      "name": "sentencepiece",
+      "sha256": "47b1d10f419a51a400010bcd80d99a8bdb5c4510fc3e57fe9bc9be7efa6a48f8"
+    },
+    {
+      "name": "seo",
+      "sha256": "d9e87859ea49c8443abdb551c724d589c4e6243d78ba5f8ac303df4d83f3bf2e"
+    },
+    {
+      "name": "server-backup-github-release",
+      "sha256": "a52bc1ede1dbdc2d69b94261120b59480c3feffed6feee1e78a6d19afd1ef565"
+    },
+    {
+      "name": "serving-llms-vllm",
+      "sha256": "57eaf97e982fe758b6fd0ef2281b6961940e4a1c8258f303b0ce02d55d0636c6"
+    },
+    {
+      "name": "sglang",
+      "sha256": "05e664a43bb82df2363ef22ceba81a41394a2b819c3367b2413f661485085c8f"
+    },
+    {
+      "name": "signal-reconciliation",
+      "sha256": "16c5e1f9245356660784bdced2eca108b4fa3004c3318d3e8d7491b0a3bd0c97"
+    },
+    {
+      "name": "simhaonline-ops",
+      "sha256": "b00d13e0778f52946d7862e1fa5e8b13f38dde97c55b439769a0827a87f1137c"
+    },
+    {
+      "name": "simhaonline-platform",
+      "sha256": "68250a833f7c2ea019bdf61a6e833c5b75805f494322fdfe1272025d97193cc4"
+    },
+    {
+      "name": "simpo-training",
+      "sha256": "2a74bd2378857c520066fbe84fc0c6c556d0fa0b8c4afde1eab1c0abfb51ed8a"
+    },
+    {
+      "name": "skill-authoring",
+      "sha256": "dc76ed222904b0e6a73ee87f6bde136560ca98c23ed5c3fe21f30d1cab7d837c"
+    },
+    {
+      "name": "skill-creator",
+      "sha256": "dcd4803e61e913e6fc27294184cd3a71f09f5e924ff20c8a9a20173e7b3c2bcf"
+    },
+    {
+      "name": "skypilot-multi-cloud-orchestration",
+      "sha256": "de1be4556d8a8f7929003ca4b672e5fbb755588b1e95068973896b63d3034965"
+    },
+    {
+      "name": "slack-gif-creator",
+      "sha256": "2efca615ce55a3edd8fc05c779068a8085816617991987e446606403cd3abb22"
+    },
+    {
+      "name": "slime-rl-training",
+      "sha256": "117c8fd2d57d878e45c698f9f0485326ed4630aeaec761aa1222d7a36458cc07"
+    },
+    {
+      "name": "social-media-marketing",
+      "sha256": "3bc10ff8385b460517bc28eacf51a80c8950f531b4de62dcd9bbe1dc8e0e3772"
+    },
+    {
+      "name": "software-supply-chain-security",
+      "sha256": "3d6203163bc1a4b57f46ff1e6889c938e25203905d00a231364304adc213fdfa"
+    },
+    {
+      "name": "sow-multi-draft-extraction",
+      "sha256": "e502fe9f1fe254d456d5fc9de4cb05d964dfdb582c5b5e478ef4ef92a41393cf"
+    },
+    {
+      "name": "sparse-autoencoder-training",
+      "sha256": "3af1fa0e513a96c953f4fbd28b1a6cd764fa9c27e512c6f0cfd2b80c2a1706ae"
+    },
+    {
+      "name": "speculative-decoding",
+      "sha256": "d818b841ffe3e338569ab7caa0d54516f51c649e52fd1af2d5de5d0435b39f99"
+    },
+    {
+      "name": "sre-observability",
+      "sha256": "3849a4bb03af984f08af1cb6ee79070142a2b92c5ca91bd935c8a5ce83d0c393"
+    },
+    {
+      "name": "stable-diffusion-image-generation",
+      "sha256": "816dce0d04b2e2ddc1510a5aaf3e545778f4c59f7329af689dc9941bbbebca37"
+    },
+    {
+      "name": "state-machine",
+      "sha256": "30b72100000bc8039a81fd4150919430d6ba5bcff5b4e86de11e7490afa54010"
+    },
+    {
+      "name": "statistics",
+      "sha256": "3681c8c1b08290957158223a2a19b4ea74b53394d5b2d72b22cbb5813ae4c1d5"
+    },
+    {
+      "name": "superpowers-brainstorming",
+      "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43"
+    },
+    {
+      "name": "superpowers-diagnosing-superpowers",
+      "sha256": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19"
+    },
+    {
+      "name": "superpowers-dispatching-parallel-agents",
+      "sha256": "1968923066f3b707eb01d1992cdf4c42284c3855f70253b9cd5000ff45fca13c"
+    },
+    {
+      "name": "superpowers-executing-plans",
+      "sha256": "f38e8f2ddcf079f65493adc713c1fed78421dfaf5f4dbf6b3a6b2b1d95466e71"
+    },
+    {
+      "name": "superpowers-finishing-a-development-branch",
+      "sha256": "8db5a922b242dd4e1bf824cb91c13b3e8d8e8a86d6ceaf7f0774eb9cce909d65"
+    },
+    {
+      "name": "superpowers-receiving-code-review",
+      "sha256": "091df1629510af1b92fc4abd6f96732ebedb4cb2c0f3457e8f2740b0504a2438"
+    },
+    {
+      "name": "superpowers-requesting-code-review",
+      "sha256": "2180e14a448e9410bec88e6646a2d1f0ce7fdd58de27388c1e052e929679d2bc"
+    },
+    {
+      "name": "superpowers-subagent-driven-development",
+      "sha256": "8dde5589ee083fb4999106d116f01c8fdaf3116a8a9813fdedeb80329de49046"
+    },
+    {
+      "name": "superpowers-systematic-debugging",
+      "sha256": "51c6435d98c83c42c96ba7c35725a0b2c376cd487fb1a4e6bd0ddbe7e33ef202"
+    },
+    {
+      "name": "superpowers-test-driven-development",
+      "sha256": "64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d"
+    },
+    {
+      "name": "superpowers-using-git-worktrees",
+      "sha256": "8cfb86f121269e8f7f12361e6795c4f6738828340e28964c9229d365666c9edd"
+    },
+    {
+      "name": "superpowers-using-superpowers",
+      "sha256": "82c5c8866ad7f5dd4440ce66bd7806ba48a2f13771beae5cf112e53f08fe36ba"
+    },
+    {
+      "name": "superpowers-verification-before-completion",
+      "sha256": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3"
+    },
+    {
+      "name": "superpowers-writing-plans",
+      "sha256": "a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a"
+    },
+    {
+      "name": "superpowers-writing-skills",
+      "sha256": "bbdfe742f853562e643a3d40d64476359d47881e39cef80a189283fa26d11ab9"
+    },
+    {
+      "name": "systems-paper-writing",
+      "sha256": "ee31b50b25192efcfcbe3252d7e15d88ec27bbd94817640b0357090f94c0e297"
+    },
+    {
+      "name": "technical-drawing",
+      "sha256": "4755b367410cbb4db5ec2c3324c9c14f6333f595b3a54d9a0f4d3218b14cb07b"
+    },
+    {
+      "name": "telemetry-rate-guards",
+      "sha256": "5c452d2a2600fbfdf28309d3fd3a033713de88ff6d12361a147157a5ce386d8c"
+    },
+    {
+      "name": "tensorboard",
+      "sha256": "717c4b05f88bbc888d54cc51fa390ae225d687b3b86fb616e36cc7fc26108020"
+    },
+    {
+      "name": "tensorrt-llm",
+      "sha256": "13f8e09b3e05b2167919011dfa8a44e067c7e0563a1e7dc01c26752cf85da11f"
+    },
+    {
+      "name": "test-skill-manage",
+      "sha256": "8ec6d02a5c22b20728602f9267681eaa71cea9d19930512edf034ea829c6c19e"
+    },
+    {
+      "name": "theme-factory",
+      "sha256": "c35893e221e28895c52143cc11bf30e41a44817796b39d4b15727dadc9796552"
+    },
+    {
+      "name": "thinking-out-loud",
+      "sha256": "50eebfbf1e8f9af961eaedb0ccadb20a5b9c91232fba1e0748d191fb3bb44d80"
+    },
+    {
+      "name": "threat-intelligence-hunting",
+      "sha256": "5cdb7d39763290724cf55f1ff402cad600de48fa2447024980116df06501950a"
+    },
+    {
+      "name": "torchforge-rl-training",
+      "sha256": "809da22c47d5caadbcca9d3db7e82e227c174dbaa98f4a01cf2a678ffaffcbf0"
+    },
+    {
+      "name": "trading-risk-safety",
+      "sha256": "0e628218c31d557d9db8bdebdbe01a4aaeba9c7b4b1dc4595c67b985ea7ca1b8"
+    },
+    {
+      "name": "tradingview-pine-indicators",
+      "sha256": "1ace8e95f996cc54b24dc39b2574b2995270deeccb3c9dfa7726df64286c116d"
+    },
+    {
+      "name": "training-llms-megatron",
+      "sha256": "6e69257341b9ee01b22a46905e93f6fe2339b9f8147c7f77da46be7b366b6556"
+    },
+    {
+      "name": "transformer-lens-interpretability",
+      "sha256": "9ac5a790a59f46e430a9015a1e8c52338666f3426e36085c4ef38665b10b4e24"
+    },
+    {
+      "name": "ui-ux-design",
+      "sha256": "c72c948ea92fd6c27f666d26b660d72d24e7e551de6edb34266cc557fd1dbd02"
+    },
+    {
+      "name": "unsloth",
+      "sha256": "ac7f1d1f87d08d7f8713f07c1f6522268b814acea850f97bc986e00f8b461bc3"
+    },
+    {
+      "name": "variant",
+      "sha256": "2d8eef43768e01d7fcec5ec2fd56dcfc453904b31a23fe8ea53170eb828d24ea"
+    },
+    {
+      "name": "verl-rl-training",
+      "sha256": "1167e2b2994c9b0780edc44d5bc3a3eef69dc816af08af8f28ef9c19163d1285"
+    },
+    {
+      "name": "vulnerability-management",
+      "sha256": "5aedf531bb23db29e1ab05c1ba9b9f93b7d80583f315ea310af0d24a66e7c576"
+    },
+    {
+      "name": "web-api-security",
+      "sha256": "03aefcbad28cde36f7372ab4d85638f9a107a3e94f6cffc253597c7c635d1ce2"
+    },
+    {
+      "name": "web-artifacts-builder",
+      "sha256": "81c5002c6643b0de7b8710b00e7a9038daa6fb9b68d59870ee6adb12da8d10f8"
+    },
+    {
+      "name": "webapp-testing",
+      "sha256": "51b7349e77ec63b7744a6f63647e7566a0b4d2e301121cc10e8c2113af6556a2"
+    },
+    {
+      "name": "weights-and-biases",
+      "sha256": "3cd5daa7cad70d97c96b2d6fdf8d0fc1ed8a97b1750c4e013e2405389baed3b6"
+    },
+    {
+      "name": "whisper",
+      "sha256": "acce14621ec8060db480fade27896a1fba0c99ba037c07684b876cc31027276c"
+    },
+    {
+      "name": "white-team",
+      "sha256": "e166a8281232a8a8809402bb0143463a511167336886ce5a065394dc82c6ef51"
+    },
+    {
+      "name": "windows-mt5-linux-wine",
+      "sha256": "4698518ecacfb148eaa4e269fa5b2b6021dd3baf9f1f9febb92c84006957f6d3"
+    },
+    {
+      "name": "witchcraft-occult",
+      "sha256": "40473b318cdc40c44cd39c9f569b7ff3eaba712bf2a9a4ed65dccaf2c61287e1"
+    },
+    {
+      "name": "xauusd-market-data",
+      "sha256": "4de045e6f6682ec8249dddb9a1d858cd075d35b533e0742fd6b51167ce739ccf"
+    },
+    {
+      "name": "xauusd-strategy-spec",
+      "sha256": "333f41114e40da089dd86dadeeb2491cc0f4077730e2d8832fc9e179483e1d72"
+    },
+    {
+      "name": "xlsx",
+      "sha256": "6712b39718fe815054abca9c3ee72f989613e6f771c8a5c58f30a65a6c905622"
+    },
+    {
+      "name": "yellow-team",
+      "sha256": "07c3358a4be2beca6c0659ac3a095d440bf7f646c5e57ad2430f9d5f54650293"
+    }
+  ],
+  "profiles": [
+    {
+      "name": "orchestrator",
+      "description": "Master orchestration agent for complex multi-project work. Decomposes objectives, routes tasks to specialist profiles, manages dependencies and independent reviews, coordinates security-team exercises, verifies deliverables and keeps long-running Kanban work moving to completion."
+    },
+    {
+      "name": "coding-engineer",
+      "description": "Production software engineering specialist for architecture, backend, frontend, APIs, databases, distributed systems, refactoring, debugging, performance, integration and complex multi-language codebases."
+    },
+    {
+      "name": "qa-testing",
+      "description": "Quality engineering specialist for unit, integration, end-to-end, regression, API, browser, load, fuzz, mutation and release-gate testing. Independently verifies fixes and prevents regressions."
+    },
+    {
+      "name": "devops-sre",
+      "description": "Ubuntu, Docker, CI/CD, deployment, systemd, reverse proxies, observability, OpenTelemetry, logs, metrics, traces, SLOs, incident response, performance and production reliability specialist."
+    },
+    {
+      "name": "cloud-infrastructure",
+      "description": "Cloud and infrastructure specialist for AWS, Azure, GCP, Cloudflare, Terraform/OpenTofu, Ansible, networking, DNS, TLS, load balancing, IAM, capacity planning and infrastructure-as-code."
+    },
+    {
+      "name": "security-audit",
+      "description": "Security architecture, AppSec, DevSecOps, threat modeling, server hardening, secrets, IAM, RBAC, authentication, authorization, vulnerability management, governance, risk, privacy, audit and remediation specialist."
+    },
+    {
+      "name": "ethical-hacking-pentest",
+      "description": "Authorized ethical-hacking and penetration-testing specialist. Performs scoped, non-destructive validation of owned, lab or explicitly authorized web, API, network, identity, cloud, container, mobile and infrastructure targets under written Rules of Engagement."
+    },
+    {
+      "name": "red-team",
+      "description": "Authorized adversary-emulation specialist. Executes objective-based, non-destructive Red Team exercises to test prevention, detection and response across identity, endpoint, application, cloud and network controls under explicit Rules of Engagement."
+    },
+    {
+      "name": "blue-team",
+      "description": "Defensive SOC, detection engineering, threat hunting and DFIR specialist for telemetry, SIEM, EDR/XDR, IDS/IPS, triage, containment, eradication, recovery, security monitoring and defensive hardening."
+    },
+    {
+      "name": "purple-team",
+      "description": "Collaborative Red-and-Blue security validation specialist. Maps adversary behaviors to telemetry and detections, coordinates control testing, identifies visibility gaps, drives remediation and verifies improvements through retesting."
+    },
+    {
+      "name": "white-team",
+      "description": "Neutral cybersecurity exercise-control and governance specialist responsible for scope, Rules of Engagement, safety, stop conditions, adjudication, evidence handling, scoring, executive communication and exercise integrity."
+    },
+    {
+      "name": "yellow-team",
+      "description": "Secure-builder and DevSecOps specialist representing software, platform and infrastructure engineering. Converts security findings into secure architecture, code, CI/CD controls, regression tests and durable engineering remediation."
+    },
+    {
+      "name": "green-team",
+      "description": "Security training and defensive-enablement specialist. Builds safe labs, reproduces findings in controlled environments, creates runbooks and exercises, teaches remediation and turns incidents into repeatable organizational capability."
+    },
+    {
+      "name": "orange-team",
+      "description": "Security-awareness and adversary-to-builder translation specialist. Converts attack behaviors into developer and user education, approved awareness simulations, abuse-case guidance, safer workflows and measurable human-risk reduction."
+    },
+    {
+      "name": "ai-llm-engineer",
+      "description": "Production AI specialist for LLM applications, machine learning, deep learning, NLP, computer vision, agents, MCP, tool calling, model routing, inference, prompt/context engineering and evaluation."
+    },
+    {
+      "name": "ai-research-mlops",
+      "description": "AI research and MLOps/LLMOps specialist for model architectures, transformers, state-space models, scientific AI, fine-tuning, training pipelines, registries, deployment, evaluation, drift and model lifecycle."
+    },
+    {
+      "name": "data-knowledge",
+      "description": "Data engineering, RAG, embeddings, vector databases, ETL/ELT, streaming, CDC, enterprise knowledge graphs, semantic retrieval, provenance, memory and source-of-truth architecture specialist."
+    },
+    {
+      "name": "research-science",
+      "description": "Deep research, fact checking, mathematics, statistics, probability, scientific literature, simulation, experimentation, quantitative methods, logic and evidence synthesis specialist."
+    },
+    {
+      "name": "metatrader-quant",
+      "description": "MetaTrader 4/5 and quantitative trading specialist for MQL4/MQL5, Expert Advisors, XAUUSD and multi-asset systems, broker-aware execution, sessions, backtesting, slippage, costs, risk and performance metrics."
+    },
+    {
+      "name": "analytics-finance",
+      "description": "Business analytics, Text-to-SQL, dashboards, forecasting, executive reporting, corporate finance, economics, accounting automation, reconciliation, anomaly detection and quantitative financial analysis specialist."
+    },
+    {
+      "name": "business-operations",
+      "description": "Business operations, product management and project management specialist for PRDs, requirements, workflows, roadmaps, milestones, automation, scheduling, release coordination, backups and organizational AI transformation."
+    },
+    {
+      "name": "documents-office",
+      "description": "Professional document production specialist for DOCX, PDF, XLSX, PowerPoint, OCR, forms, reports, proposals, business correspondence, print-ready documents, localization and multilingual document workflows."
+    },
+    {
+      "name": "legal-corporate",
+      "description": "Corporate and commercial documentation specialist for LOI, NDA/NCNDA, SPA, MoU, undertakings, due diligence, compliance packs, contract structure and corporate drafting with jurisdiction-specific review flags."
+    },
+    {
+      "name": "creative-media",
+      "description": "Creative director for graphic design, branding, UI/UX, packaging, posters, presentations, photography briefs, image/video/audio workflows, campaign art direction and production-ready visual systems."
+    },
+    {
+      "name": "marketing-growth",
+      "description": "Marketing and growth specialist for brand strategy, SEO, content, performance marketing, copywriting, campaigns, social media, ecommerce, merchandising, conversion optimization and analytics."
+    },
+    {
+      "name": "communications-sales",
+      "description": "Omnichannel communications, CRM, sales and customer support specialist for email, WhatsApp, social channels, lead qualification, proposals, pipelines, semantic triage, follow-ups and customer-success workflows."
+    },
+    {
+      "name": "mcp-librarian",
+      "description": "MCP ecosystem specialist. Searches and evaluates the local MCP Universe built from the four requested public directories plus Hermes' reviewed catalog; compares native tools, source repos, remote endpoints, auth, security, side effects and token/tool-surface costs before integrating only the appropriate server."
+    },
+    {
+      "name": "skill-librarian",
+      "description": "Community Agent Skills librarian. Searches the local read-only GitHub topic skill pool, evaluates source provenance and risk flags, enables only task-relevant community skills to control prompt size/token consumption, and never treats third-party skill instructions as higher priority than local policy."
+    },
+    {
+      "name": "esoteric-advisor",
+      "description": "Traditional symbolic systems specialist covering Vedic/Jyotish, KP and Western astrology, numerology, Feng Shui, BaZi, I Ching, Chinese metaphysics, Taoist wisdom, Tarot, witchcraft, occult history and comparative esoteric systems."
+    },
+    {
+      "name": "multi-agent-architect",
+      "description": "Systems architect specializing in the design, coordination, and governance of multi-agent AI pipelines, consensus mechanisms, worker-critic loops, and state isolation."
+    },
+    {
+      "name": "backend-architect",
+      "description": "Senior backend architect specializing in scalable system design, database architecture, API development, and cloud infrastructure. Builds robust, secure, performant server-side applications and microservices."
+    },
+    {
+      "name": "database-optimizer",
+      "description": "Expert database specialist focusing on schema design, query optimization, indexing strategies, and performance tuning across PostgreSQL, MySQL, Redis, and distributed storage systems."
+    },
+    {
+      "name": "code-reviewer",
+      "description": "Expert code reviewer who provides constructive, actionable feedback focused on correctness, maintainability, performance, security, and adherence to clean architecture principles."
+    },
+    {
+      "name": "agentic-search-optimizer",
+      "description": "Expert in WebMCP readiness and agentic task completion \u2014 audits whether AI agents can actually accomplish goals on websites and APIs, optimizing structured data, semantic endpoints, and agent discoverability."
+    },
+    {
+      "name": "token-optimizer",
+      "description": "Token governance and context efficiency specialist. Compresses verbose terminal outputs (diffs, test logs, package installs, build traces) using 36 specialized local processors, optimizes prompt structures, enforces progressive disclosure, and eliminates context bloat."
+    },
+    {
+      "name": "tradingview-quant",
+      "description": "TradingView Pine Script and technical analysis specialist. Designs, backtests, and validates Pine Script v5 indicators, multi-timeframe strategies (BB, RSI, MACD, SuperTrend, TTM Squeeze), Lightweight Charts integrations, and real-time webhook alert routing."
+    },
+    {
+      "name": "fabric-engineer",
+      "description": "Enterprise data engineering specialist for Microsoft Fabric, Synapse, Databricks migration, Spark optimization, OneLake catalog governance, semantic models, and Power BI report authoring."
+    },
+    {
+      "name": "web-scraping-specialist",
+      "description": "Web scraping, DOM parsing, anti-bot circumvention, and unstructured data extraction specialist. Orchestrates Scrapling, Scrapfly, Apify Actors, Playwright/Puppeteer browser pools, proxy rotation, and CAPTCHA solving."
+    },
+    {
+      "name": "knowledge-graph-architect",
+      "description": "Knowledge graph and semantic data modeling specialist. Designs Neo4j / FalkorDB Cypher queries, graph RAG pipelines (LightRAG, Graphify), Memstack persistent memory schemas, and ontology mapping."
+    },
+    {
+      "name": "product-manager",
+      "description": "Product management specialist for PRD creation, user story mapping, sprint brief synthesis, launch checklists, roadmap planning, stakeholder updates, and board deck narrative construction."
+    },
+    {
+      "name": "chart-visualization",
+      "description": "Data visualization and interactive dashboard specialist. Implements AntV (G2, G6, X6), ApexCharts, Apache ECharts, TradingView Lightweight Charts, and D3 visual components."
+    },
+    {
+      "name": "pat-operations",
+      "description": "Predict-A-Trade autonomous trading operations specialist: signal reconciliation, MT5/Wine runtime execution, P&L monitoring, risk guardrails, payment rails, and real-time live trading engine management."
+    }
+  ],
+  "source_sha256": "b2b219ace4e4db62324a776566f7c0b85cafedd7c382bd40e757119113bd2174"
+}

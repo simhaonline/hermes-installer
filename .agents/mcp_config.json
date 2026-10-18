@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "codegraph": {
+      "command": "/usr/local/bin/codegraph",
+      "args": ["serve"]
+    },
+    "mcptoon": {
+      "command": "/usr/local/bin/mcptoon",
+      "args": ["serve"]
+    },
+    "mempalace": {
+      "command": "/usr/local/bin/mempalace-mcp",
+      "args": ["--palace", "/home/predictatrade/.hermes/memories", "--read-only"]
+    }
+  }
+}

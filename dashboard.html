@@ -1794,10 +1794,157 @@
       transition: all 200ms ease;
       pointer-events: none;
     }
-    .toast-notice.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
+    /* =========================================================================
+       RULEBOOK COMPONENT STYLES
+       ========================================================================= */
+    .rulebook-card {
+      background: var(--corp-canvas-elevated);
+      border: 1px solid var(--corp-border);
+      border-radius: var(--radius-sm);
+      padding: 1.85rem 2rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+      transition: border-color 150ms ease;
+    }
+    .rulebook-card:hover {
+      border-color: rgba(212, 175, 55, 0.4);
+    }
+    .rulebook-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--corp-border);
+    }
+    .rulebook-card-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .protocol-num-badge {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-sm);
+      background: rgba(212, 175, 55, 0.12);
+      color: var(--accent-gold);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+    }
+    .rulebook-card-title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--corp-text-primary);
+      margin: 0;
+      letter-spacing: -0.015em;
+    }
+    .rule-alert {
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1.25rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+    .rule-alert-security {
+      background: rgba(220, 38, 38, 0.08);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      color: #EF4444;
+    }
+    .rule-alert-important {
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--accent-gold);
+    }
+    .rule-alert-note {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60A5FA;
+    }
+    .rule-alert-tip {
+      background: rgba(21, 128, 61, 0.08);
+      border: 1px solid rgba(21, 128, 61, 0.3);
+      color: var(--accent-green);
+    }
+    .rule-body-text {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--corp-text-secondary);
+    }
+    .rule-body-text h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--corp-text-primary);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .rule-body-text ul {
+      padding-left: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .rule-body-text li {
+      margin-bottom: 0.45rem;
+    }
+    .rule-cli-box {
+      background: var(--corp-navy-deep);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 3px solid var(--accent-gold);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      position: relative;
+    }
+    .rule-cli-box pre {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #E2E8F0;
+      overflow-x: auto;
+    }
+    .rule-copy-btn {
+      position: absolute;
+      top: 0.65rem;
+      right: 0.65rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      color: #CBD5E1;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.55rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+    }
+    .rule-copy-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #FFFFFF;
+      border-color: var(--accent-gold);
+    }
+    .rule-table-wrap {
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+    .rule-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .rule-table th, .rule-table td {
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--corp-border);
+      text-align: left;
+    }
+    .rule-table th {
+      background: var(--corp-canvas-subtle);
+      color: var(--corp-text-primary);
+      font-weight: 600;
+    }
+    .rule-table td {
+      color: var(--corp-text-secondary);
     }
   </style>
 </head>
@@ -1888,7 +2035,23 @@
         </ul>
       </div>
 
-      <!-- Group 2: Platform & Diagnostic Studio -->
+      <!-- Group 2: Governance & Rulebook -->
+      <div class="nav-group">
+        <div class="nav-group-title">Governance &amp; Standard</div>
+        <ul class="nav-list">
+          <li>
+            <button class="nav-item-btn" onclick="switchView('rulebook')" id="nav-btn-rulebook">
+              <span class="nav-item-left">
+                <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4zm0 16v-2h12v2H6zm12-4H6v-2h12v2zm0-4h-5V4h5v8z"/></svg>
+                Enterprise Rulebook
+              </span>
+              <span class="nav-badge-pill" style="color: var(--accent-gold); border-color: rgba(212,175,55,0.4);">8 Protocols</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Group 3: Platform & Diagnostic Studio -->
       <div class="nav-group">
         <div class="nav-group-title">Platform &amp; Tools</div>
         <ul class="nav-list">
@@ -2439,6 +2602,65 @@
         <!-- Rendered via JS -->
       </div>
     </section>
+
+    <!-- =======================================================================
+         VIEW 8: ENTERPRISE GOVERNANCE RULEBOOK
+         ======================================================================= -->
+    <section class="view-container" id="view-rulebook">
+      <!-- Rulebook Hero Card -->
+      <div class="overview-hero-card" style="margin-bottom: 1.5rem;">
+        <div>
+          <div class="hero-stat-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" fill="var(--accent-gold)"/></svg>
+            PLATFORM CONSTITUTION &amp; GOVERNANCE PROTOCOLS
+          </div>
+          <h2 class="overview-hero-title">Enterprise Governance Rulebook</h2>
+          <p class="overview-hero-desc">
+            8 Mandatory Platform Protocols governing privilege isolation, AI CLI execution standards, specialist agent swarms, 66 runtime profiles, MCP sandboxing, native engines, and the Swiss Institutional Bullion Standard.
+          </p>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;">
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" onclick="copyFullRulebook()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              Copy Rulebook
+            </button>
+            <a class="btn btn-primary btn-sm" href="/api/rulebook" target="_blank" download="RULEBOOK.md">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+              Download MD
+            </a>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--corp-text-muted);">
+            CLI Command: <code style="color: var(--accent-gold);">hermes-rulebook</code>
+          </span>
+        </div>
+      </div>
+
+      <!-- Quick Filter Pills -->
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;" id="rulebookFilterPills">
+        <button class="btn btn-secondary btn-sm active" onclick="filterRulebook('all', this)">All Protocols (8)</button>
+        <button class="btn btn-secondary btn-sm" onclick="filterRulebook(1, this)">1: Security &amp; Isolation</button>
+        <button class="btn btn-secondary btn-sm" onclick="filterRulebook(2, this)">2: AI CLI Standards</button>
+        <button class="btn btn-secondary btn-sm" onclick="filterRulebook(3, this)">3: Agent Swarm</button>
+        <button class="btn btn-secondary btn-sm" onclick="filterRulebook(4, this)">4: Runtime Profiles</button>
+        <button class="btn btn-secondary btn-sm" onclick="filterRulebook(5, this)">5: MCP Sandboxing</button>
+        <button class="btn btn-secondary btn-sm" onclick="filterRulebook(6, this)">6: Native Engines</button>
+        <button class="btn btn-secondary btn-sm" onclick="filterRulebook(7, this)">7: Swiss Design</button>
+        <button class="btn btn-secondary btn-sm" onclick="filterRulebook(8, this)">8: Git Discipline</button>
+      </div>
+
+      <!-- Search Box -->
+      <div class="search-bar-wrap" style="margin-bottom: 1.5rem;">
+        <input type="text" class="search-input" id="rulebookSearchInput" placeholder="Search directives, CLI rules, security boundaries, user UIDs..." oninput="searchRulebook(this.value)">
+      </div>
+
+      <!-- Rulebook Content Container -->
+      <div id="rulebookContentContainer" style="display: flex; flex-direction: column; gap: 1.75rem;">
+        <div style="padding: 3rem; text-align: center; color: var(--corp-text-muted);">
+          Loading Governance Rulebook...
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- =========================================================================
@@ -2539,7 +2761,13 @@
 
       // Drawer state
       activeDrawerSkill: null,
-      activeDrawerType: 'skill'
+      activeDrawerType: 'skill',
+
+      // Rulebook state
+      rulebook: [],
+      rulebookRawMarkdown: '',
+      rulebookQuery: '',
+      rulebookActiveProtocol: 'all'
     };
 
     // Apply saved theme immediately
@@ -2616,7 +2844,7 @@
     // TAB SWITCHING & ROUTING
     // =========================================================================
     function switchView(tabName, updateHash = true) {
-      const validTabs = ['overview', 'skills', 'agents', 'profiles', 'mcp', 'diagnostics', 'api'];
+      const validTabs = ['overview', 'skills', 'agents', 'profiles', 'mcp', 'diagnostics', 'api', 'rulebook'];
       if (!validTabs.includes(tabName)) tabName = 'overview';
 
       state.activeTab = tabName;
@@ -2640,7 +2868,8 @@
         profiles: 'Specialist Profiles',
         mcp: 'Model Context Protocol Universe',
         diagnostics: 'Diagnostics & CLI Studio',
-        api: 'REST API Specifications'
+        api: 'REST API Specifications',
+        rulebook: 'Enterprise Governance Rulebook'
       };
       document.getElementById('topBreadcrumb').innerText = breadcrumbMap[tabName] || 'Registry';
 
@@ -2658,6 +2887,12 @@
         updateCliSnippet();
       } else if (tabName === 'api') {
         renderApiExplorer();
+      } else if (tabName === 'rulebook') {
+        if (!state.rulebook || state.rulebook.length === 0) {
+          loadRulebook();
+        } else {
+          renderRulebook();
+        }
       }
     }
 
@@ -3581,6 +3816,7 @@
         { method: 'GET', path: '/api/mcp-and-plugins', desc: 'Curated production MCP configurations and enterprise plugins.' },
         { method: 'GET', path: '/api/mcp-search?q={query}&limit={30}&offset={0}', desc: 'Paginated search across the entire 4,842 MCP universe catalog.' },
         { method: 'GET', path: '/api/diagnostics', desc: 'SQLite PRAGMA integrity audit, vector collection counts, and system telemetry.' },
+        { method: 'GET', path: '/api/rulebook', desc: 'Enterprise Governance Rulebook in structured JSON and raw Markdown format with all 8 Platform Protocols.' },
         { method: 'POST', path: '/api/activate', desc: 'Symlinks a curated skill into the active target profile skills directory.' },
         { method: 'POST', path: '/api/deactivate', desc: 'Removes a skill symlink from the active target profile skills directory.' }
       ];
@@ -3811,6 +4047,221 @@
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
+    }
+
+    // =========================================================================
+    // VIEW 8: ENTERPRISE GOVERNANCE RULEBOOK
+    // =========================================================================
+    async function loadRulebook() {
+      const container = document.getElementById('rulebookContentContainer');
+      if (!container) return;
+      container.innerHTML = `
+        <div style="padding: 3rem; text-align: center; color: var(--corp-text-muted);">
+          <div class="loader-spinner" style="margin: 0 auto 1rem;"></div>
+          Loading Platform Governance Protocols...
+        </div>
+      `;
+      try {
+        const res = await fetch('/api/rulebook');
+        const data = await res.json();
+        state.rulebook = data.protocols || [];
+        state.rulebookRawMarkdown = data.raw_markdown || '';
+        renderRulebook();
+      } catch (err) {
+        container.innerHTML = `
+          <div class="rule-alert rule-alert-security">
+            <span>⚠️</span>
+            <div>Failed to load rulebook protocols: ${escapeHtml(err.message || err)}</div>
+          </div>
+        `;
+      }
+    }
+
+    function renderRulebook() {
+      const container = document.getElementById('rulebookContentContainer');
+      if (!container) return;
+      if (!state.rulebook || state.rulebook.length === 0) {
+        container.innerHTML = `<div style="padding: 2rem; text-align: center; color: var(--corp-text-muted);">No protocols loaded.</div>`;
+        return;
+      }
+
+      let protocols = state.rulebook;
+
+      // Filter by active protocol pill
+      if (state.rulebookActiveProtocol !== 'all') {
+        protocols = protocols.filter(p => p.protocol === Number(state.rulebookActiveProtocol));
+      }
+
+      // Filter by query
+      if (state.rulebookQuery) {
+        const q = state.rulebookQuery.toLowerCase();
+        protocols = protocols.filter(p => 
+          p.title.toLowerCase().includes(q) ||
+          p.body.toLowerCase().includes(q) ||
+          `protocol ${p.protocol}`.includes(q)
+        );
+      }
+
+      if (protocols.length === 0) {
+        container.innerHTML = `
+          <div class="rulebook-card" style="text-align: center; padding: 3rem;">
+            <p style="color: var(--corp-text-muted); margin-bottom: 1rem;">No protocols matching "${escapeHtml(state.rulebookQuery)}"</p>
+            <button class="btn btn-secondary btn-sm" onclick="clearRulebookFilter()">Reset Filters</button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = protocols.map(p => {
+        const cliSnippet = `hermes-rulebook ${p.protocol}`;
+        return `
+          <article class="rulebook-card" id="protocol-${p.protocol}">
+            <div class="rulebook-card-header">
+              <div class="rulebook-card-title-wrap">
+                <span class="protocol-num-badge">PROTOCOL 0${p.protocol}</span>
+                <h3 class="rulebook-card-title">${escapeHtml(p.title)}</h3>
+              </div>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <button class="btn btn-secondary btn-sm" onclick="copySnippetText('${cliSnippet}')" title="Copy CLI Command">
+                  <code style="font-family: var(--font-mono); font-size: 0.75rem;">${cliSnippet}</code>
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="copyProtocolCode(${p.protocol})" title="Copy Protocol Directive">
+                  Copy Directive
+                </button>
+              </div>
+            </div>
+            <div class="rule-body-text">
+              ${formatRulebookBody(p.body)}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function formatRulebookBody(body) {
+      if (!body) return '';
+
+      // First clean horizontal rules
+      let text = body.replace(/\n---\s*$/g, '').trim();
+
+      // Parse custom github alerts
+      text = text.replace(/> \[!(SECURITY|CRITICAL|CAUTION)\]\n> (.*?)(?=\n\n|$)/gs, (m, type, content) => {
+        return `<div class="rule-alert rule-alert-security"><span>🛡️</span><div><strong>SECURITY DIRECTIVE:</strong> ${content.replace(/\n> /g, ' ')}</div></div>`;
+      });
+      text = text.replace(/> \[!(IMPORTANT|WARNING)\]\n> (.*?)(?=\n\n|$)/gs, (m, type, content) => {
+        return `<div class="rule-alert rule-alert-important"><span>⚠️</span><div><strong>MANDATORY REQUIREMENT:</strong> ${content.replace(/\n> /g, ' ')}</div></div>`;
+      });
+      text = text.replace(/> \[!(NOTE|TIP)\]\n> (.*?)(?=\n\n|$)/gs, (m, type, content) => {
+        return `<div class="rule-alert rule-alert-tip"><span>💡</span><div>${content.replace(/\n> /g, ' ')}</div></div>`;
+      });
+
+      // Code blocks ```...```
+      text = text.replace(/```([a-z0-9_-]*)\n([\s\S]*?)```/g, (m, lang, code) => {
+        const cleanCode = code.trim();
+        const escaped = escapeHtml(cleanCode);
+        return `
+          <div class="rule-cli-box">
+            <button class="rule-copy-btn" onclick="copySnippetText(this.nextElementSibling.innerText)">Copy</button>
+            <pre><code>${escaped}</code></pre>
+          </div>
+        `;
+      });
+
+      // Inline code
+      text = text.replace(/`([^`]+)`/g, (m, p1) => `<code>${escapeHtml(p1)}</code>`);
+
+      // Subheadings ###
+      text = text.replace(/^### (.*$)/gim, (m, p1) => `<h3 style="margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--corp-text-primary); font-size: 1.05rem; font-weight: 600;">${p1}</h3>`);
+
+      // Bold & Italic
+      text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+      // Unordered lists
+      const lines = text.split('\n');
+      let inList = false;
+      let out = [];
+
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        const listMatch = line.match(/^(\s*)[*-]\s+(.*)$/);
+        if (listMatch) {
+          if (!inList) {
+            out.push('<ul style="padding-left: 1.4rem; margin: 0.5rem 0 1rem 0;">');
+            inList = true;
+          }
+          out.push(`<li style="margin-bottom: 0.4rem;">${listMatch[2]}</li>`);
+        } else {
+          if (inList) {
+            out.push('</ul>');
+            inList = false;
+          }
+          if (line.trim().length > 0) {
+            if (line.startsWith('<div') || line.startsWith('</div') || line.startsWith('<h3') || line.startsWith('<pre') || line.startsWith('<article')) {
+              out.push(line);
+            } else {
+              out.push(`<p style="margin-bottom: 0.75rem; color: var(--corp-text-secondary); line-height: 1.7;">${line}</p>`);
+            }
+          }
+        }
+      }
+      if (inList) {
+        out.push('</ul>');
+      }
+
+      return out.join('\n');
+    }
+
+    function filterRulebook(protocolNum, btn) {
+      state.rulebookActiveProtocol = protocolNum;
+      if (btn) {
+        document.querySelectorAll('#rulebookFilterPills button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+      renderRulebook();
+    }
+
+    function searchRulebook(query) {
+      state.rulebookQuery = query.toLowerCase().trim();
+      renderRulebook();
+    }
+
+    function clearRulebookFilter() {
+      state.rulebookQuery = '';
+      state.rulebookActiveProtocol = 'all';
+      const searchInput = document.getElementById('rulebookSearchInput');
+      if (searchInput) searchInput.value = '';
+      const allBtn = document.querySelector('#rulebookFilterPills button');
+      if (allBtn) {
+        document.querySelectorAll('#rulebookFilterPills button').forEach(b => b.classList.remove('active'));
+        allBtn.classList.add('active');
+      }
+      renderRulebook();
+    }
+
+    function copyFullRulebook() {
+      if (!state.rulebookRawMarkdown) {
+        showToast('Rulebook loading, please wait...');
+        return;
+      }
+      navigator.clipboard.writeText(state.rulebookRawMarkdown)
+        .then(() => showToast('Full Enterprise Governance Rulebook copied to clipboard!'))
+        .catch(() => showToast('Failed to copy to clipboard'));
+    }
+
+    function copyProtocolCode(protocolNum) {
+      const p = (state.rulebook || []).find(item => item.protocol === protocolNum);
+      if (!p) return;
+      const text = `## Protocol ${p.protocol}: ${p.title}\n\n${p.body}`;
+      navigator.clipboard.writeText(text)
+        .then(() => showToast(`Protocol 0${protocolNum} directive copied to clipboard!`))
+        .catch(() => showToast('Failed to copy to clipboard'));
+    }
+
+    function copySnippetText(snippet) {
+      navigator.clipboard.writeText(snippet)
+        .then(() => showToast(`Copied: ${snippet}`))
+        .catch(() => showToast('Failed to copy to clipboard'));
     }
   </script>
 </body>

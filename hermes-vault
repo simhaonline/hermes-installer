@@ -113,6 +113,12 @@ def main():
 
     sub.add_parser("engines", help="List the 16 extended engines and execution binaries")
 
+    p_rb = sub.add_parser("rulebook", help="View or search Enterprise Rulebook & Governance Protocols")
+    p_rb.add_argument("protocol", nargs="?", default=None, help="Protocol number (1-8) or keyword")
+    p_rb.add_argument("--search", "-s", default="", help="Search query")
+    p_rb.add_argument("--json", "-j", action="store_true", help="Output JSON format")
+    p_rb.add_argument("--list", "-l", action="store_true", help="List all 8 protocols")
+
     args = p.parse_args()
     if args.subcommand == "stats":
         cmd_stats(args)
@@ -126,6 +132,18 @@ def main():
         cmd_agents(args)
     elif args.subcommand == "engines":
         cmd_engines(args)
+    elif args.subcommand == "rulebook":
+        cmd = ["hermes-rulebook"]
+        if args.json:
+            cmd.append("--json")
+        elif args.search:
+            cmd.extend(["--search", args.search])
+        elif args.list:
+            cmd.append("--list")
+        elif args.protocol:
+            cmd.append(args.protocol)
+        import subprocess
+        subprocess.run(cmd)
 
 if __name__ == "__main__":
     main()

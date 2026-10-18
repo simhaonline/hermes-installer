@@ -11,7 +11,9 @@ import html
 import json
 import os
 import platform
+import re
 import sqlite3
+import subprocess
 import sys
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -584,6 +586,32 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
             })
             return
 
+        if path == "/api/rulebook":
+            rulebook_candidates = [
+                Path("/usr/local/share/hermes/RULEBOOK.md"),
+                Path("/srv/hermes-installer/RULEBOOK.md"),
+                Path("/home/predictatrade/.hermes/RULEBOOK.md")
+            ]
+            rf = next((p for p in rulebook_candidates if p.is_file()), None)
+            if not rf:
+                self._send_json({"error": "RULEBOOK.md not found"}, status=404)
+                return
+            content = rf.read_text(encoding="utf-8")
+            pattern = r"## Protocol (\d+):\s*([^\n]+)\n(.*?)(?=\n## Protocol \d+:|\n---\n\*Hermes Agent|\Z)"
+            matches = re.findall(pattern, content, re.DOTALL)
+            protocols = [{
+                "protocol": int(num),
+                "title": title.strip(),
+                "body": body.strip()
+            } for num, title, body in matches]
+            self._send_json({
+                "version": "2.5.0",
+                "total_protocols": len(protocols),
+                "protocols": protocols,
+                "raw_markdown": content
+            })
+            return
+
         if path == "/api/search":
             query = params.get("q", [""])[0].strip()
             cat = params.get("category", [""])[0].strip()
@@ -877,6 +905,12 @@ def main():
     p_dash.add_argument("--host", default="0.0.0.0", help="Binding host (default 0.0.0.0)")
     p_dash.add_argument("--port", type=int, default=8998, help="Port to serve on (default 8998)")
 
+    p_rb = sub.add_parser("rulebook", help="View or search Enterprise Rulebook & Governance Protocols")
+    p_rb.add_argument("protocol", nargs="?", default=None, help="Protocol number (1-8) or keyword")
+    p_rb.add_argument("--search", "-s", default="", help="Search query")
+    p_rb.add_argument("--json", "-j", action="store_true", help="Output JSON format")
+    p_rb.add_argument("--list", "-l", action="store_true", help="List all 8 protocols")
+
     args = p.parse_args()
     if args.subcommand == "stats":
         cmd_stats(args)
@@ -888,6 +922,17 @@ def main():
         cmd_deactivate(args)
     elif args.subcommand in ("ui", "dashboard"):
         cmd_ui(args)
+    elif args.subcommand == "rulebook":
+        cmd = ["hermes-rulebook"]
+        if args.json:
+            cmd.append("--json")
+        elif args.search:
+            cmd.extend(["--search", args.search])
+        elif args.list:
+            cmd.append("--list")
+        elif args.protocol:
+            cmd.append(args.protocol)
+        subprocess.run(cmd)
 
 if __name__ == "__main__":
     main()

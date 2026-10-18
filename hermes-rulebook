@@ -1,0 +1,159 @@
+#!/usr/bin/env python3
+"""Hermes Agent Enterprise Rulebook CLI.
+Inspect, search, and navigate the 8 Core Governance Protocols.
+"""
+import argparse
+import json
+import os
+import re
+import sys
+from pathlib import Path
+
+RULEBOOK_CANDIDATES = [
+    Path("/usr/local/share/hermes/RULEBOOK.md"),
+    Path("/srv/hermes-installer/RULEBOOK.md"),
+    Path("/home/predictatrade/.hermes/RULEBOOK.md"),
+    Path(__file__).resolve().parent / "RULEBOOK.md",
+]
+
+def find_rulebook() -> Path:
+    for p in RULEBOOK_CANDIDATES:
+        if p.is_file():
+            return p
+    sys.exit("Error: RULEBOOK.md could not be found.")
+
+def parse_rulebook(content: str):
+    protocols = []
+    # Match headers like ## Protocol 1: Platform Security Boundaries & User Isolation
+    pattern = r"## Protocol (\d+):\s*([^\n]+)\n(.*?)(?=\n## Protocol \d+:|\n---\n\*Hermes Agent|\Z)"
+    matches = re.findall(pattern, content, re.DOTALL)
+    for num, title, body in matches:
+        protocols.append({
+            "protocol": int(num),
+            "title": title.strip(),
+            "body": body.strip(),
+            "raw": f"## Protocol {num}: {title.strip()}\n{body.strip()}"
+        })
+    return protocols
+
+# Colors for terminal output
+GOLD = "\033[38;2;212;175;55m"
+NAVY = "\033[38;2;12;30;54m"
+EMERALD = "\033[38;2;21;128;61m"
+CYAN = "\033[36m"
+BOLD = "\033[1m"
+DIM = "\033[2m"
+RESET = "\033[0m"
+
+def print_header():
+    print(f"{GOLD}{BOLD}{'=' * 78}{RESET}")
+    print(f"{GOLD}{BOLD}       HERMES AGENT ENTERPRISE EDITION — GLOBAL GOVERNANCE RULEBOOK   {RESET}")
+    print(f"{DIM}       Swiss Institutional Bullion Standard • platform.predictatrade.com{RESET}")
+    print(f"{GOLD}{BOLD}{'=' * 78}{RESET}\n")
+
+def cmd_list(protocols):
+    print_header()
+    print(f"{BOLD}Core Governance Protocols (8 Divisions & Boundaries):{RESET}\n")
+    for p in protocols:
+        print(f"  {GOLD}{BOLD}[Protocol {p['protocol']}]{RESET} {BOLD}{p['title']}{RESET}")
+    print(f"\n{DIM}Run 'hermes-rulebook <protocol_number>' to view a specific protocol in detail.{RESET}")
+
+def cmd_view(protocols, protocol_num):
+    target = next((p for p in protocols if p["protocol"] == protocol_num), None)
+    if not target:
+        sys.exit(f"Error: Protocol {protocol_num} not found. Available: 1 to {len(protocols)}.")
+    
+    print_header()
+    print(f"{GOLD}{BOLD}>>> PROTOCOL {target['protocol']}: {target['title'].upper()} <<<{RESET}\n")
+    
+    # Format markdown body for terminal
+    body = target["body"]
+    # Highlight headings
+    body = re.sub(r"### ([^\n]+)", f"{EMERALD}{BOLD}--- \\1 ---{RESET}", body)
+    # Highlight alerts
+    body = re.sub(r"> \[!SECURITY\]", f"{BOLD}\033[41m\033[37m [SECURITY DIRECTIVE] {RESET}", body)
+    body = re.sub(r"> \[!IMPORTANT\]", f"{BOLD}\033[43m\033[30m [IMPORTANT DIRECTIVE] {RESET}", body)
+    body = re.sub(r"> \[!NOTE\]", f"{BOLD}\033[44m\033[37m [OPERATIONAL NOTE] {RESET}", body)
+    body = re.sub(r"> \[!TIP\]", f"{BOLD}\033[42m\033[37m [OPTIMIZATION TIP] {RESET}", body)
+    # Highlight inline code
+    body = re.sub(r"`([^`]+)`", f"{CYAN}\\1{RESET}", body)
+    print(body)
+    print(f"\n{GOLD}{'=' * 78}{RESET}")
+
+def cmd_search(protocols, query):
+    print_header()
+    print(f"Searching rulebook for: {BOLD}'{query}'{RESET}...\n")
+    found_any = False
+    for p in protocols:
+        if query.lower() in p["title"].lower() or query.lower() in p["body"].lower():
+            found_any = True
+            print(f"{GOLD}{BOLD}=== MATCH in Protocol {p['protocol']}: {p['title']} ==={RESET}")
+            # Extract matching paragraphs
+            paras = p["body"].split("\n\n")
+            for para in paras:
+                if query.lower() in para.lower():
+                    clean_para = para.strip()
+                    clean_para = re.sub(r"`([^`]+)`", f"{CYAN}\\1{RESET}", clean_para)
+                    # highlight match
+                    clean_para = re.sub(re.escape(query), f"{BOLD}\033[43m\033[30m{query}{RESET}", clean_para, flags=re.IGNORECASE)
+                    print(f"  • {clean_para}\n")
+    if not found_any:
+        print(f"No directives found matching query '{query}'.")
+
+def cmd_all(protocols):
+    print_header()
+    for p in protocols:
+        print(f"{GOLD}{BOLD}## Protocol {p['protocol']}: {p['title']}{RESET}\n")
+        body = p["body"]
+        body = re.sub(r"### ([^\n]+)", f"{EMERALD}{BOLD}--- \\1 ---{RESET}", body)
+        body = re.sub(r"`([^`]+)`", f"{CYAN}\\1{RESET}", body)
+        print(body)
+        print(f"\n{DIM}{'-' * 78}{RESET}\n")
+
+def main():
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("protocol", nargs="?", type=str, default=None, help="Protocol number (1-8) or keyword to inspect")
+    p.add_argument("-s", "--search", type=str, default="", help="Search all rulebook directives")
+    p.add_argument("-l", "--list", action="store_true", help="List all 8 protocols")
+    p.add_argument("-a", "--all", action="store_true", help="Print entire rulebook")
+    p.add_argument("-j", "--json", action="store_true", help="Output protocols in JSON format")
+
+    args = p.parse_args()
+    rf = find_rulebook()
+    content = rf.read_text(encoding="utf-8")
+    protocols = parse_rulebook(content)
+
+    if args.json:
+        print(json.dumps({"version": "2.5.0", "protocols": protocols}, indent=2))
+        return
+
+    if args.search:
+        cmd_search(protocols, args.search)
+        return
+
+    if args.list:
+        cmd_list(protocols)
+        return
+
+    if args.all:
+        cmd_all(protocols)
+        return
+
+    if args.protocol:
+        # Check if numeric
+        if args.protocol.isdigit():
+            cmd_view(protocols, int(args.protocol))
+        else:
+            # Match by name
+            matched = [p for p in protocols if args.protocol.lower() in p["title"].lower()]
+            if matched:
+                cmd_view(protocols, matched[0]["protocol"])
+            else:
+                cmd_search(protocols, args.protocol)
+        return
+
+    # Default: list protocols and overview
+    cmd_list(protocols)
+
+if __name__ == "__main__":
+    main()

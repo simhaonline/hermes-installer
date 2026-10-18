@@ -90,12 +90,15 @@ Hermes includes a built-in, zero-dependency **Interactive Web Dashboard** served
 └────────────────────────────────────────┴─────────────────────────────────────────────────┘
 ```
 
-### Dashboard Capabilities
-- **🔎 Real-Time Hybrid Search**: Combines semantic vector cosine similarity (ChromaDB) with keyword full-text indexing (SQLite FTS5 BM25) across all 19,840 skills.
-- **⚡ 1-Click Dynamic Install & Activate**: Activate any tool into any of the 66 specialist profiles (`orchestrator`, `security-audit`, `metatrader-quant`, etc.) without copying files or bloating workspace directories.
-- **🗑️ 1-Click Eviction & Uninstall**: Evict tools from profile context cleanly when tasks complete to prevent token ceiling degradation.
-- **📖 Full `SKILL.md` Inspector**: View complete markdown instructions, YAML frontmatter, input/output schemas, and script bindings in a clean modal.
-- **👥 Profile & Plugin Explorer**: Audit active tools across all 66 specialist profiles, 45 production MCP servers, and 35 plugins.
+### Dashboard Capabilities & Architecture
+- **🏛️ Institutional Swiss Banking Design System**: Handcrafted editorial ledger aesthetic adhering to `DESIGN_SYSTEM_GUIDELINES.md` and `design-tokens.json`. Utilizes `Cormorant Garamond` serif display headers, `Plus Jakarta Sans` geometric body text, and `IBM Plex Mono` tabular numerals with Sovereign Navy (`#0C1E36`), Gold (`#FBBA03`), and Emerald (`#88BD31`) jewel accents.
+- **🌗 Dual-Theme Architecture**: Seamless toggle between **Editorial Daylight** (Ivory canvas, crisp hairlines, slate typography) and **Authoritative Midnight** (deep sovereign navy, subdued glow, gold highlights).
+- **🔎 Real-Time Hybrid Vector & FTS5 Search**: Instant dual-engine retrieval combining ChromaDB cosine vector similarity with SQLite FTS5 BM25 keyword rankings across 19,840 curated skills.
+- **👥 Agent Persona Directory (554)**: Enterprise specialist personas across 8 divisions (Quantitative Trading, Security Audit, Software Engineering, Research Science, GIS 3D, and C-Suite Advisory) with full system prompt inspector and 1-click subagent spec generator.
+- **⚡ 1-Click Dynamic JIT Tool Activation & Eviction**: Live symlink activation/deactivation into any of the 66 specialist profiles (`orchestrator`, `coding-engineer`, `security-audit`, `metatrader-quant`) without file duplication or token context bloat.
+- **🔌 Model Context Protocol (MCP) Universe (4,842)**: Curated production configurations for 45 verified enterprise servers and real-time search across 4,842 ecosystem servers with 1-click JSON configuration exporter.
+- **📖 Slide-Over Documentation Drawer**: Zero-dependency fast Markdown parser rendering complete `SKILL.md` instructions, YAML parameters, and CLI commands.
+- **🩺 Live System & Database Diagnostics**: Real-time SQLite `PRAGMA integrity_check`, vector store collection verification, database footprint tracking, and CLI command generator.
 
 ### Accessing the Dashboard
 - **Web UI URL**: `http://localhost:8998` (or `http://platform.predictatrade.com:8998`)

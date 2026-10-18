@@ -748,7 +748,7 @@
     /* Master KPI Metrics Grid (Only on Overview Tab!) */
     .kpi-ledger-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(6, 1fr);
       gap: 1px;
       background: var(--corp-border);
       border: 1px solid var(--corp-border);
@@ -756,6 +756,22 @@
       overflow: hidden;
       margin-bottom: 1.75rem;
       box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+
+    @media (max-width: 1300px) {
+      .kpi-ledger-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .kpi-ledger-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .kpi-ledger-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .kpi-cell {
@@ -1363,18 +1379,35 @@
       background: var(--corp-canvas-elevated);
       border: 1px solid var(--corp-border);
       border-radius: var(--radius-sm);
-      padding: 1.25rem;
+      padding: 1.35rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: all 120ms ease;
+      transition: all 140ms ease;
+      position: relative;
     }
     .profile-card:hover {
       border-color: var(--accent-green);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
     }
     .profile-card.active-target {
-      border: 1px solid var(--accent-green);
-      background: var(--corp-navy-surface);
+      border: 2px solid var(--accent-green);
+      background: var(--corp-canvas-elevated);
+      box-shadow: 0 4px 20px rgba(21, 128, 61, 0.12), 0 1px 3px rgba(21, 128, 61, 0.08);
+    }
+    .profile-card.active-target::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-green);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+    [data-theme="dark"] .profile-card.active-target {
+      background: rgba(21, 128, 61, 0.08);
+      border-color: var(--accent-green);
     }
 
     .profile-name {
@@ -1382,14 +1415,31 @@
       font-size: 0.95rem;
       font-weight: 700;
       color: var(--corp-text-primary);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.01em;
     }
 
     .profile-tools-badge {
       font-family: var(--font-mono);
       font-size: 0.7rem;
       color: var(--accent-green);
+      font-weight: 600;
       margin-bottom: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-active-target {
+      background: rgba(21, 128, 61, 0.12);
+      color: var(--accent-green);
+      border: 1px solid rgba(21, 128, 61, 0.3);
+      cursor: default;
+      font-weight: 600;
+    }
+    .btn-active-target:hover {
+      background: rgba(21, 128, 61, 0.16);
+      color: var(--accent-green);
     }
 
     /* =========================================================================
@@ -1518,7 +1568,7 @@
       padding: 2px 8px;
       border-radius: var(--radius-xs);
     }
-    .badge-get { background: rgba(136, 189, 49, 0.15); color: var(--accent-green); border: 1px solid rgba(136, 189, 49, 0.3); }
+    .badge-get { background: rgba(21, 128, 61, 0.12); color: var(--accent-green); border: 1px solid rgba(21, 128, 61, 0.25); }
     .badge-post { background: rgba(56, 189, 248, 0.15); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.3); }
 
     .api-path {
@@ -1947,7 +1997,7 @@
         <div class="kpi-cell">
           <div class="kpi-top-row">
             <span class="kpi-label">Curated Skills</span>
-            <span class="kpi-pill" style="background: rgba(212, 175, 55, 0.15); color: var(--accent-gold);">PRODUCTION</span>
+            <span class="kpi-pill" style="background: rgba(212, 175, 55, 0.12); color: var(--accent-gold); border: 1px solid rgba(212, 175, 55, 0.25);">PRODUCTION</span>
           </div>
           <div class="kpi-number" id="kpiCurated">19,840</div>
           <div class="kpi-sub">+ 64,687 Community Pool</div>
@@ -1956,7 +2006,7 @@
         <div class="kpi-cell">
           <div class="kpi-top-row">
             <span class="kpi-label">Agent Personas</span>
-            <span class="kpi-pill" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-blue);">SPECIALIST</span>
+            <span class="kpi-pill" style="background: rgba(56, 189, 248, 0.12); color: var(--accent-blue); border: 1px solid rgba(56, 189, 248, 0.25);">SPECIALIST</span>
           </div>
           <div class="kpi-number" id="kpiAgents">554</div>
           <div class="kpi-sub">Across 8 Divisions</div>
@@ -1965,7 +2015,7 @@
         <div class="kpi-cell">
           <div class="kpi-top-row">
             <span class="kpi-label">Runtime Profiles</span>
-            <span class="kpi-pill" style="background: rgba(136, 189, 49, 0.15); color: var(--accent-green);">ACTIVE</span>
+            <span class="kpi-pill" style="background: rgba(21, 128, 61, 0.12); color: var(--accent-green); border: 1px solid rgba(21, 128, 61, 0.25);">ACTIVE</span>
           </div>
           <div class="kpi-number" id="kpiProfiles">66</div>
           <div class="kpi-sub">JIT Context Injection</div>
@@ -1974,16 +2024,25 @@
         <div class="kpi-cell">
           <div class="kpi-top-row">
             <span class="kpi-label">Production MCPs</span>
-            <span class="kpi-pill" style="background: rgba(22, 167, 181, 0.15); color: var(--accent-cyan);">CURATED</span>
+            <span class="kpi-pill" style="background: rgba(22, 167, 181, 0.12); color: var(--accent-cyan); border: 1px solid rgba(22, 167, 181, 0.25);">CURATED</span>
           </div>
           <div class="kpi-number" id="kpiMcp">45 / 4,842</div>
-          <div class="kpi-sub">+ 35 Native Plugins</div>
+          <div class="kpi-sub">Curated Tool Ecosystem</div>
+        </div>
+
+        <div class="kpi-cell">
+          <div class="kpi-top-row">
+            <span class="kpi-label">Enterprise Plugins</span>
+            <span class="kpi-pill" style="background: rgba(139, 92, 246, 0.12); color: #8B5CF6; border: 1px solid rgba(139, 92, 246, 0.25);">NATIVE</span>
+          </div>
+          <div class="kpi-number" id="kpiPlugins">35</div>
+          <div class="kpi-sub">Verified Tool Connectors</div>
         </div>
 
         <div class="kpi-cell">
           <div class="kpi-top-row">
             <span class="kpi-label">ChromaDB Vectors</span>
-            <span class="kpi-pill" style="background: rgba(241, 141, 88, 0.15); color: var(--accent-orange);">EMBEDDINGS</span>
+            <span class="kpi-pill" style="background: rgba(234, 88, 12, 0.12); color: var(--accent-orange); border: 1px solid rgba(234, 88, 12, 0.25);">EMBEDDINGS</span>
           </div>
           <div class="kpi-number" id="kpiChroma">20,545</div>
           <div class="kpi-sub">Cosine Semantic Distance</div>
@@ -2280,7 +2339,7 @@
         <div class="view-title-group">
           <h2 class="view-title">
             Diagnostics &amp; CLI Command Studio
-            <span class="view-title-badge" style="color: var(--accent-green); background: rgba(136, 189, 49, 0.15); border-color: rgba(136, 189, 49, 0.3);">All Systems Healthy</span>
+            <span class="view-title-badge" style="color: var(--accent-green); background: rgba(21, 128, 61, 0.12); border-color: rgba(21, 128, 61, 0.25);">All Systems Healthy</span>
           </h2>
           <p class="view-subtitle">
             Live database integrity audits, ChromaDB vector collection health, storage telemetry, and interactive command generator.
@@ -2597,6 +2656,7 @@
         const profiles = c.profiles || 66;
         const mcpRec = c.recommended_mcp || 45;
         const mcpTotal = c.mcp_servers || 4842;
+        const plugins = c.plugins || 35;
         const chromaCnt = Object.values(data.chromadb || {}).reduce((a, b) => a + b, 0) || 20545;
         const dbMb = data.database_size_mb || 304.03;
 
@@ -2605,6 +2665,7 @@
         document.getElementById('kpiAgents').innerText = agents.toLocaleString();
         document.getElementById('kpiProfiles').innerText = profiles.toLocaleString();
         document.getElementById('kpiMcp').innerText = `${mcpRec} / ${mcpTotal.toLocaleString()}`;
+        if (document.getElementById('kpiPlugins')) document.getElementById('kpiPlugins').innerText = plugins.toLocaleString();
         document.getElementById('kpiChroma').innerText = chromaCnt.toLocaleString();
 
         // Sidebar Badges
@@ -3023,16 +3084,16 @@
           <div>
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
               <span class="profile-name">${p.name}</span>
-              ${isCurrent ? '<span class="view-title-badge" style="background: rgba(136, 189, 49, 0.15); color: var(--accent-green); border-color: rgba(136, 189, 49, 0.3);">TARGET</span>' : ''}
+              ${isCurrent ? '<span class="kpi-pill" style="background: rgba(21, 128, 61, 0.12); color: var(--accent-green); border: 1px solid rgba(21, 128, 61, 0.3); font-weight: 700; letter-spacing: 0.05em;">TARGET</span>' : ''}
             </div>
             <div class="profile-tools-badge">● ${activeCount} Active Tools Symlinked</div>
-            <p style="font-size: 0.78rem; color: var(--corp-text-secondary); line-height: 1.45; margin-bottom: 1rem;">
+            <p style="font-size: 0.80rem; color: var(--corp-text-secondary); line-height: 1.5; margin-bottom: 1rem;">
               ${p.description || 'Custom Hermes runtime execution profile.'}
             </p>
           </div>
-          <div style="display: flex; gap: 0.4rem; border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
-            <button class="btn ${isCurrent ? 'btn-secondary' : 'btn-primary'} btn-sm" style="flex: 1;" onclick="syncTargetProfile('${p.name}')">
-              ${isCurrent ? 'Active Target' : 'Set as Target'}
+          <div style="display: flex; gap: 0.5rem; border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
+            <button class="btn ${isCurrent ? 'btn-active-target' : 'btn-primary'} btn-sm" style="flex: 1;" onclick="syncTargetProfile('${p.name}')">
+              ${isCurrent ? '✓ Active Target' : 'Set as Target'}
             </button>
             <button class="btn btn-secondary btn-sm" onclick="copyProfileRunCmd('${p.name}')" title="Copy CLI Run Command">
               Copy CLI
@@ -3087,7 +3148,7 @@
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <span class="mcp-title">${mcp.server_name}</span>
-              <span class="domain-tag" style="background: rgba(136, 189, 49, 0.15); color: var(--accent-green); border-color: rgba(136, 189, 49, 0.3);">Curated</span>
+              <span class="domain-tag" style="background: rgba(21, 128, 61, 0.12); color: var(--accent-green); border-color: rgba(21, 128, 61, 0.25);">Curated</span>
             </div>
             <div class="mcp-cmd-box">${mcp.command}</div>
             <p style="font-size: 0.78rem; color: var(--corp-text-secondary); line-height: 1.45; margin-bottom: 0.85rem;">

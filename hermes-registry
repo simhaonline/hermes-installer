@@ -614,8 +614,8 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
 
         if path == "/api/rulebook":
             rulebook_candidates = [
-                Path("/usr/local/share/hermes/RULEBOOK.md"),
                 Path("/srv/hermes-installer/RULEBOOK.md"),
+                Path("/usr/local/share/hermes/RULEBOOK.md"),
                 Path("/home/predictatrade/.hermes/RULEBOOK.md")
             ]
             rf = next((p for p in rulebook_candidates if p.is_file()), None)
@@ -623,7 +623,7 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 self._send_json({"error": "RULEBOOK.md not found"}, status=404)
                 return
             content = rf.read_text(encoding="utf-8")
-            pattern = r"## Protocol (\d+):\s*([^\n]+)\n(.*?)(?=\n## Protocol \d+:|\n---\n\*Hermes Agent|\Z)"
+            pattern = r"#{2,3} Protocol (\d+):\s*([^\n]+)\n(.*?)(?=\n#{2,3} Protocol \d+:|\n---\n\*Simha|\n---\n\*Hermes|\Z)"
             matches = re.findall(pattern, content, re.DOTALL)
             protocols = [{
                 "protocol": int(num),

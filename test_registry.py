@@ -56,9 +56,10 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertEqual(handler.response_status, 200)
         self.assertIn("text/html", handler.response_headers.get("content-type", ""))
         body = handler.wfile.getvalue().decode("utf-8")
-        self.assertIn("Hermes Agent Enterprise", body)
+        self.assertIn("Simha Nexus", body)
         self.assertIn("design-tokens", body.lower())
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_stats(self):
         handler = MockHTTPHandler("/api/stats")
         handler.do_GET()
@@ -72,6 +73,7 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertGreaterEqual(counts.get("mcp_servers", 0), 4000)
         self.assertIn("chromadb", data)
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_categories(self):
         handler = MockHTTPHandler("/api/categories")
         handler.do_GET()
@@ -82,6 +84,7 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertIn("category", data[0])
         self.assertIn("count", data[0])
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_profiles(self):
         handler = MockHTTPHandler("/api/profiles")
         handler.do_GET()
@@ -91,6 +94,7 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertIn("active_map", data)
         self.assertGreaterEqual(len(data["profiles"]), 60)
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_mcp_and_plugins(self):
         handler = MockHTTPHandler("/api/mcp-and-plugins")
         handler.do_GET()
@@ -101,6 +105,7 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertGreaterEqual(len(data["mcps"]), 40)
         self.assertGreaterEqual(len(data["plugins"]), 30)
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_agents_list(self):
         handler = MockHTTPHandler("/api/agents?limit=5")
         handler.do_GET()
@@ -115,6 +120,7 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertIn("division", agent)
         self.assertIn("role", agent)
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_agents_filter(self):
         handler = MockHTTPHandler("/api/agents?division=agency-agents&limit=10")
         handler.do_GET()
@@ -123,6 +129,7 @@ class TestRegistryAPI(unittest.TestCase):
         for agent in data["results"]:
             self.assertEqual(agent["division"], "agency-agents")
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_agent_detail(self):
         # Fetch one valid agent first
         h_list = MockHTTPHandler("/api/agents?limit=1")
@@ -138,11 +145,13 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertIn("system_prompt", data)
         self.assertTrue(len(data["system_prompt"]) > 0)
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_agent_not_found(self):
         handler = MockHTTPHandler("/api/agent?name=NonExistentPersona12345")
         handler.do_GET()
         self.assertEqual(handler.response_status, 404)
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_mcp_search(self):
         handler = MockHTTPHandler("/api/mcp-search?q=postgres&limit=5")
         handler.do_GET()
@@ -153,6 +162,7 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertGreater(data["total"], 0)
         self.assertLessEqual(len(data["results"]), 5)
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_diagnostics(self):
         handler = MockHTTPHandler("/api/diagnostics")
         handler.do_GET()
@@ -164,6 +174,7 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertIn("server_time_utc", data)
         self.assertIn("python_version", data)
 
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_search_skills(self):
         handler = MockHTTPHandler("/api/search?q=react&limit=5")
         handler.do_GET()

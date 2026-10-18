@@ -30,6 +30,7 @@
 
       --corp-canvas: #071324;
       --corp-canvas-warm: #0A1B30;
+      --corp-canvas-subtle: #0A1B30;
       --corp-canvas-elevated: #0C1E36;
       --corp-canvas-card: #0F233D;
       --corp-canvas-hover: #142844;
@@ -92,6 +93,7 @@
 
       --corp-canvas: #FBFBFC; /* Warm luxury paper canvas from simharefinery.com */
       --corp-canvas-warm: #F8FAFC;
+      --corp-canvas-subtle: #F1F5F9;
       --corp-canvas-elevated: #FFFFFF; /* Crisp pure white resting cards */
       --corp-canvas-card: #FFFFFF;
       --corp-canvas-hover: #F8FAFC;
@@ -517,6 +519,19 @@
       border-color: var(--accent-gold);
       box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
       background: rgba(255, 255, 255, 0.12);
+    }
+    .view-container .topbar-search-input {
+      background: var(--corp-canvas-elevated);
+      border: 1px solid var(--corp-border-strong);
+      color: var(--corp-text-primary);
+      padding: 0 1rem;
+    }
+    .view-container .topbar-search-input::placeholder {
+      color: var(--corp-text-muted);
+    }
+    .view-container .topbar-search-input:focus {
+      border-color: var(--accent-gold);
+      background: var(--corp-canvas-elevated);
     }
     .topbar-search-icon {
       position: absolute;
@@ -1256,7 +1271,7 @@
     }
 
     /* Pagination Controls */
-    .pagination-bar {
+    .pagination-bar, .pagination-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1818,6 +1833,27 @@
       transition: all 200ms ease;
       pointer-events: none;
     }
+    .toast-notice.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Universal Institutional Spinners */
+    .spinner, .loader-spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--corp-border-strong);
+      border-top-color: var(--accent-gold);
+      border-radius: 50%;
+      animation: corp-spin 700ms linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      box-sizing: border-box;
+    }
+    @keyframes corp-spin {
+      to { transform: rotate(360deg); }
+    }
     /* =========================================================================
        RULEBOOK COMPONENT STYLES
        ========================================================================= */
@@ -2038,6 +2074,29 @@
       color: var(--corp-text-primary);
       font-weight: 600;
     }
+    .search-bar-wrap {
+      width: 100%;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      height: 38px;
+      background: var(--corp-canvas-elevated);
+      border: 1px solid var(--corp-border-strong);
+      border-radius: var(--radius-sm);
+      padding: 0 1rem;
+      font-size: 0.84rem;
+      color: var(--corp-text-primary);
+      outline: none;
+      transition: border 120ms ease;
+    }
+    .search-input:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.15);
+    }
+    .search-input::placeholder {
+      color: var(--corp-text-muted);
+    }
     /* =========================================================================
        HARVESTER STUDIO STYLES
        ========================================================================= */
@@ -2125,10 +2184,10 @@
       line-height: 1.6;
     }
     .harvester-terminal .t-ts { color: #64748B; margin-right: 0.5rem; }
-    .harvester-terminal .t-info { color: #38BDF8; }
-    .harvester-terminal .t-success { color: #4ADE80; font-weight: 600; }
+    .harvester-terminal .t-info, .harvester-terminal .t-cyan { color: #38BDF8; }
+    .harvester-terminal .t-success, .harvester-terminal .t-green { color: #4ADE80; font-weight: 600; }
     .harvester-terminal .t-warn { color: #FBBF24; }
-    .harvester-terminal .t-err { color: #F87171; font-weight: 600; }
+    .harvester-terminal .t-err, .harvester-terminal .t-red, .harvester-terminal .t-error { color: #F87171; font-weight: 600; }
     .harvester-terminal .t-gold { color: var(--accent-gold); font-weight: 600; }
 
     /* =========================================================================
@@ -2214,7 +2273,8 @@
       justify-content: center;
       padding: 1.5rem;
     }
-    .policy-modal-overlay.open {
+    .policy-modal-overlay.open,
+    .policy-modal-overlay.active {
       display: flex;
     }
     .policy-modal {
@@ -3001,10 +3061,10 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
               Copy Rulebook
             </button>
-            <a class="btn btn-primary btn-sm" href="/api/rulebook" target="_blank" download="RULEBOOK.md">
+            <button class="btn btn-primary btn-sm" onclick="downloadRulebookMd()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
               Download MD
-            </a>
+            </button>
           </div>
           <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--corp-text-muted);">
             CLI Command: <code style="color: var(--accent-gold);">hermes-rulebook</code>
@@ -3427,6 +3487,7 @@
       mcpUniverse: [],
 
       // Drawer state
+      drawerOpen: false,
       activeDrawerSkill: null,
       activeDrawerType: 'skill',
 
@@ -3440,8 +3501,6 @@
     // Apply saved theme immediately
     document.documentElement.setAttribute('data-theme', state.theme);
 
-    // =========================================================================
-    // INITIALIZATION & LIFECYCLE
     // =========================================================================
     // INITIALIZATION & LIFECYCLE
     // =========================================================================
@@ -3465,13 +3524,52 @@
 
       // Keyboard shortcuts
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeDrawer();
-        if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+        if (e.key === 'Escape') {
+          const policyModal = document.getElementById('policyModalOverlay');
+          if (policyModal && (policyModal.classList.contains('active') || policyModal.classList.contains('open'))) {
+            closePolicyModal();
+            return;
+          }
+          if (state.drawerOpen || document.getElementById('slideDrawer').classList.contains('open')) {
+            closeDrawer();
+          }
+        }
+        if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
           e.preventDefault();
-          document.getElementById('globalTopSearch').focus();
+          const s = document.getElementById('globalTopSearch');
+          if (s) s.focus();
         }
       });
     });
+
+    // =========================================================================
+    // UNIVERSAL UTILITIES & NOTIFICATIONS
+    // =========================================================================
+    function copyToClipboard(text) {
+      if (!text) return Promise.resolve();
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(text);
+      }
+      return new Promise((resolve, reject) => {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          ta.style.top = '-9999px';
+          ta.setAttribute('readonly', '');
+          document.body.appendChild(ta);
+          ta.focus();
+          ta.select();
+          const success = document.execCommand('copy');
+          document.body.removeChild(ta);
+          if (success) resolve();
+          else reject(new Error('execCommand copy failed'));
+        } catch (err) {
+          reject(err);
+        }
+      });
+    }
 
     // =========================================================================
     // THEME & NOTIFICATIONS
@@ -4277,8 +4375,9 @@
     }
 
     function copyProfileRunCmd(name) {
-      navigator.clipboard.writeText(`hermes -p ${name}`);
-      showToast(`Copied: hermes -p ${name}`);
+      copyToClipboard(`hermes -p ${name}`)
+        .then(() => showToast(`Copied: hermes -p ${name}`))
+        .catch(() => showToast('Failed to copy command'));
     }
 
     // =========================================================================
@@ -4307,19 +4406,21 @@
       state.mcpCurated.forEach(mcp => {
         const card = document.createElement('div');
         card.className = 'mcp-card';
+        const cmdStr = mcp.command || '';
+        const safeCmd = cmdStr.replace(/'/g, "\\'");
         card.innerHTML = `
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="mcp-title">${mcp.server_name}</span>
+              <span class="mcp-title">${escapeHtml(mcp.server_name)}</span>
               <span class="domain-tag" style="background: rgba(21, 128, 61, 0.12); color: var(--accent-green); border-color: rgba(21, 128, 61, 0.25);">Curated</span>
             </div>
-            <div class="mcp-cmd-box">${mcp.command}</div>
+            <div class="mcp-cmd-box">${escapeHtml(cmdStr || 'n/a')}</div>
             <p style="font-size: 0.78rem; color: var(--corp-text-secondary); line-height: 1.45; margin-bottom: 0.85rem;">
-              ${mcp.description || 'Verified production MCP server ready for Simha Nexus tool execution.'}
+              ${escapeHtml(mcp.description || 'Verified production MCP server ready for Simha Nexus tool execution.')}
             </p>
           </div>
           <div style="display: flex; gap: 0.4rem; border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
-            <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="openMcpConfigModal('${mcp.server_name}', '${mcp.command.replace(/'/g, "\\'")}')">
+            <button class="btn btn-secondary btn-sm" style="flex: 1;" onclick="openMcpConfigModal('${escapeAttr(mcp.server_name)}', '${safeCmd}')">
               Generate Config JSON
             </button>
           </div>
@@ -4330,27 +4431,34 @@
 
     async function fetchMcpUniverse(q = '') {
       const box = document.getElementById('mcpUniverseContainer');
-      box.innerHTML = '<div style="grid-column: 1 / -1; padding: 2rem; text-align: center; color: var(--corp-text-muted);">Searching 4,842 MCP servers...</div>';
+      box.innerHTML = '<div style="grid-column: 1 / -1; padding: 2rem; text-align: center; color: var(--corp-text-muted);"><div class="spinner" style="margin: 0 auto 1rem auto;"></div>Searching 4,842 MCP servers...</div>';
 
       try {
         const res = await fetch(`/api/mcp-search?q=${encodeURIComponent(q)}&limit=36`);
         const data = await res.json();
-        state.mcpUniverse = data.servers || [];
+        state.mcpUniverse = data.results || data.servers || [];
 
         box.innerHTML = '';
+        if (state.mcpUniverse.length === 0) {
+          box.innerHTML = '<div style="grid-column: 1 / -1; padding: 2.5rem; text-align: center; color: var(--corp-text-muted);">No MCP servers found matching your query.</div>';
+          return;
+        }
+
         state.mcpUniverse.forEach(mcp => {
           const card = document.createElement('div');
           card.className = 'mcp-card';
+          const cmdStr = mcp.command || '';
+          const safeCmd = cmdStr.replace(/'/g, "\\'");
           card.innerHTML = `
             <div>
-              <span class="mcp-title">${mcp.server_name}</span>
-              <div class="mcp-cmd-box">${mcp.command}</div>
+              <span class="mcp-title">${escapeHtml(mcp.server_name)}</span>
+              <div class="mcp-cmd-box">${escapeHtml(cmdStr || 'n/a')}</div>
               <p style="font-size: 0.78rem; color: var(--corp-text-secondary); line-height: 1.45; margin-bottom: 0.85rem;">
-                ${mcp.description || 'Model Context Protocol server registered in Simha Nexus Universe catalog.'}
+                ${escapeHtml(mcp.description || 'Model Context Protocol server registered in Simha Nexus Universe catalog.')}
               </p>
             </div>
             <div style="border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
-              <button class="btn btn-secondary btn-sm" style="width: 100%;" onclick="openMcpConfigModal('${mcp.server_name}', '${mcp.command.replace(/'/g, "\\'")}')">
+              <button class="btn btn-secondary btn-sm" style="width: 100%;" onclick="openMcpConfigModal('${escapeAttr(mcp.server_name)}', '${safeCmd}')">
                 Generate Config JSON
               </button>
             </div>
@@ -4359,6 +4467,7 @@
         });
       } catch (e) {
         console.error('Failed to search MCP:', e);
+        box.innerHTML = `<div style="grid-column: 1 / -1; padding: 2rem; text-align: center; color: var(--accent-red);">Failed to load MCP servers: ${escapeHtml(e.message || String(e))}</div>`;
       }
     }
 
@@ -4380,15 +4489,15 @@
         card.innerHTML = `
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="mcp-title">${plg.name}</span>
+              <span class="mcp-title">${escapeHtml(plg.name)}</span>
               <span class="domain-tag" style="background: rgba(212, 175, 55, 0.15); color: var(--accent-gold); border-color: rgba(212, 175, 55, 0.3);">Plugin</span>
             </div>
             <p style="font-size: 0.78rem; color: var(--corp-text-secondary); line-height: 1.45; margin: 0.75rem 0;">
-              ${plg.description || 'Native enterprise Simha Nexus plugin.'}
+              ${escapeHtml(plg.description || 'Native enterprise Simha Nexus plugin.')}
             </p>
           </div>
           <div style="border-top: 1px solid var(--corp-border-subtle); padding-top: 0.75rem;">
-            <button class="btn btn-secondary btn-sm" style="width: 100%;" onclick="navigator.clipboard.writeText('hermes-vault plugins'); showToast('Copied CLI: hermes-vault plugins');">
+            <button class="btn btn-secondary btn-sm" style="width: 100%;" onclick="copyToClipboard('hermes-vault plugins').then(() => showToast('Copied CLI: hermes-vault plugins'))">
               Copy Plugin CLI
             </button>
           </div>
@@ -4397,8 +4506,8 @@
       });
     }
 
-    function openMcpConfigModal(name, cmd) {
-      const parts = cmd.split(' ');
+    function openMcpConfigModal(name, cmd = '') {
+      const parts = (cmd || '').trim().split(/\s+/).filter(Boolean);
       const executable = parts[0] || 'npx';
       const args = parts.slice(1);
       const jsonSnippet = JSON.stringify({
@@ -4468,15 +4577,17 @@
 
     function copyCliSnippet() {
       const cmd = document.getElementById('cliGeneratedSnippet').innerText;
-      navigator.clipboard.writeText(cmd);
-      showToast(`Copied: ${cmd}`);
+      copyToClipboard(cmd)
+        .then(() => showToast(`Copied: ${cmd}`))
+        .catch(() => showToast('Failed to copy CLI snippet'));
     }
 
     function copyCliSearchCmd() {
       const q = state.skillsQuery || 'react compiler';
       const cmd = `hermes-vault skills "${q}"`;
-      navigator.clipboard.writeText(cmd);
-      showToast(`Copied: ${cmd}`);
+      copyToClipboard(cmd)
+        .then(() => showToast(`Copied: ${cmd}`))
+        .catch(() => showToast('Failed to copy CLI command'));
     }
 
     // =========================================================================
@@ -4484,7 +4595,7 @@
     // =========================================================================
     function renderApiExplorer() {
       const box = document.getElementById('apiEndpointsContainer');
-      if (box.children.length > 0) return; // already rendered
+      if (!box || (box.children && box.children.length > 0)) return; // already rendered
 
       const endpoints = [
         { method: 'GET', path: '/api/stats', desc: 'Registry statistics, record counts, and vector collections status.' },
@@ -4505,12 +4616,12 @@
         const card = document.createElement('div');
         card.className = 'api-endpoint-card';
         card.innerHTML = `
-          <div class="api-endpoint-header" onclick="testApiEndpoint('${ep.path}')">
+          <div class="api-endpoint-header" onclick="testApiEndpoint('${ep.path}', '${ep.method}')">
             <div style="display: flex; align-items: center; gap: 0.75rem;">
               <span class="api-method-badge ${ep.method === 'GET' ? 'badge-get' : 'badge-post'}">${ep.method}</span>
               <span class="api-path">${ep.path}</span>
             </div>
-            <button class="btn btn-secondary btn-sm">Try Endpoint</button>
+            <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); testApiEndpoint('${ep.path}', '${ep.method}')">Try Endpoint</button>
           </div>
           <div style="padding: 0.85rem 1.25rem; font-size: 0.8rem; color: var(--corp-text-secondary); background: var(--corp-canvas-elevated);">
             ${ep.desc}
@@ -4520,14 +4631,20 @@
       });
     }
 
-    async function testApiEndpoint(pathTemplate) {
+    async function testApiEndpoint(pathTemplate, method = 'GET') {
       let testPath = pathTemplate.replace('{query}', 'react').replace('{domain}', '').replace('{hybrid|semantic|keyword}', 'hybrid').replace('{24}', '5').replace('{0}', '0').replace('{name}', 'react-compiler').replace('{division}', '');
       try {
-        const res = await fetch(testPath);
+        const opts = { method: method };
+        if (method === 'POST') {
+          opts.headers = { 'Content-Type': 'application/json' };
+          opts.body = JSON.stringify({ skill: 'react-skills', profile: state.targetProfile });
+        }
+        const res = await fetch(testPath, opts);
         const data = await res.json();
-        alert(`HTTP ${res.status}\n\n` + JSON.stringify(data, null, 2).substring(0, 800) + '...');
+        showToast(`API ${method} ${testPath.split('?')[0]} -> HTTP ${res.status}`);
+        console.log(`[API Explorer Response] HTTP ${res.status}:`, data);
       } catch (e) {
-        alert('API Call Failed: ' + e);
+        showToast(`API Call Failed: ${e.message || e}`);
       }
     }
 
@@ -4605,12 +4722,14 @@
     }
 
     function openDrawer() {
+      state.drawerOpen = true;
       document.getElementById('drawerOverlay').classList.add('open');
       document.getElementById('slideDrawer').classList.add('open');
       switchDrawerTab('doc');
     }
 
     function closeDrawer() {
+      state.drawerOpen = false;
       document.getElementById('drawerOverlay').classList.remove('open');
       document.getElementById('slideDrawer').classList.remove('open');
     }
@@ -4627,8 +4746,9 @@
 
     function copyDrawerCli() {
       const code = document.getElementById('drawerCliCmd').innerText;
-      navigator.clipboard.writeText(code);
-      showToast('Copied execution command to clipboard');
+      copyToClipboard(code)
+        .then(() => showToast('Copied execution command to clipboard'))
+        .catch(() => showToast('Failed to copy execution command'));
     }
 
     async function toggleActiveSkill() {
@@ -4687,8 +4807,8 @@
       if (!md) return '';
       let html = escapeHtml(md);
 
-      // Code blocks ```code```
-      html = html.replace(/```([\s\S]*?)```/g, (match, p1) => {
+      // Code blocks ```lang\ncode```
+      html = html.replace(/```([a-zA-Z0-9_-]*)\n?([\s\S]*?)```/g, (match, lang, p1) => {
         return `<pre><code>${p1.trim()}</code></pre>`;
       });
 
@@ -4704,10 +4824,29 @@
       html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
       html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
-      // Lists
-      html = html.replace(/^\* (.*$)/gim, '<li>$1</li>');
-      html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
-      html = html.replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>');
+      // Group contiguous list items in a single <ul>
+      const lines = html.split('\n');
+      let inList = false;
+      let processedLines = [];
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const match = line.match(/^\s*[*+-]\s+(.*)$/);
+        if (match) {
+          if (!inList) {
+            processedLines.push('<ul>');
+            inList = true;
+          }
+          processedLines.push(`<li>${match[1]}</li>`);
+        } else {
+          if (inList) {
+            processedLines.push('</ul>');
+            inList = false;
+          }
+          processedLines.push(line);
+        }
+      }
+      if (inList) processedLines.push('</ul>');
+      html = processedLines.join('\n');
 
       // Paragraphs
       html = html.split('\n\n').map(p => {
@@ -4898,6 +5037,12 @@
         document.querySelectorAll('#rulebookFilterPills button').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
       }
+      for (let i = 1; i <= 8; i++) {
+        const card = document.getElementById(`matrixCard${i}`);
+        if (card) {
+          card.classList.toggle('active', i === Number(protocolNum));
+        }
+      }
       renderRulebook();
     }
 
@@ -4916,6 +5061,10 @@
         document.querySelectorAll('#rulebookFilterPills button').forEach(b => b.classList.remove('active'));
         allBtn.classList.add('active');
       }
+      for (let i = 1; i <= 8; i++) {
+        const card = document.getElementById(`matrixCard${i}`);
+        if (card) card.classList.remove('active');
+      }
       renderRulebook();
     }
 
@@ -4924,22 +5073,43 @@
         showToast('Rulebook loading, please wait...');
         return;
       }
-      navigator.clipboard.writeText(state.rulebookRawMarkdown)
+      copyToClipboard(state.rulebookRawMarkdown)
         .then(() => showToast('Full Enterprise Governance Rulebook copied to clipboard!'))
         .catch(() => showToast('Failed to copy to clipboard'));
+    }
+
+    function downloadRulebookMd() {
+      if (!state.rulebookRawMarkdown) {
+        showToast('Rulebook loading, please wait...');
+        return;
+      }
+      try {
+        const blob = new Blob([state.rulebookRawMarkdown], { type: 'text/markdown;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'RULEBOOK.md';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Downloaded RULEBOOK.md');
+      } catch (err) {
+        showToast('Download failed: ' + (err.message || err));
+      }
     }
 
     function copyProtocolCode(protocolNum) {
       const p = (state.rulebook || []).find(item => item.protocol === protocolNum);
       if (!p) return;
       const text = `## Protocol ${p.protocol}: ${p.title}\n\n${p.body}`;
-      navigator.clipboard.writeText(text)
+      copyToClipboard(text)
         .then(() => showToast(`Protocol 0${protocolNum} directive copied to clipboard!`))
         .catch(() => showToast('Failed to copy to clipboard'));
     }
 
     function copySnippetText(snippet) {
-      navigator.clipboard.writeText(snippet)
+      copyToClipboard(snippet)
         .then(() => showToast(`Copied: ${snippet}`))
         .catch(() => showToast('Failed to copy to clipboard'));
     }
@@ -4997,7 +5167,7 @@
     function copyHarvesterLogs() {
       const term = document.getElementById('harvesterTerminal');
       if (!term) return;
-      navigator.clipboard.writeText(term.innerText)
+      copyToClipboard(term.innerText)
         .then(() => showToast('Pipeline logs copied to clipboard!'))
         .catch(() => showToast('Failed to copy logs'));
     }
@@ -5007,11 +5177,11 @@
       if (!term) return;
       const time = new Date().toTimeString().split(' ')[0];
       let formattedLevel = '';
-      if (level === 'info') formattedLevel = `<span class="t-cyan">[INFO]</span>`;
-      else if (level === 'success') formattedLevel = `<span class="t-green">[SUCCESS]</span>`;
-      else if (level === 'warn') formattedLevel = `<span class="t-gold">[WARN]</span>`;
-      else if (level === 'error') formattedLevel = `<span class="t-red">[ERROR]</span>`;
-      else if (level === 'ts') formattedLevel = `<span class="t-ts">[${time}]</span>`;
+      if (level === 'info') formattedLevel = `<span class="t-info">[INFO]</span>`;
+      else if (level === 'success') formattedLevel = `<span class="t-success">[SUCCESS]</span>`;
+      else if (level === 'warn') formattedLevel = `<span class="t-warn">[WARN]</span>`;
+      else if (level === 'error') formattedLevel = `<span class="t-err">[ERROR]</span>`;
+      else if (level === 'gold') formattedLevel = `<span class="t-gold">[NEXUS]</span>`;
 
       const line = document.createElement('div');
       line.innerHTML = `<span class="t-ts">[${time}]</span> ${formattedLevel} ${escapeHtml(text)}`;
@@ -5052,13 +5222,22 @@
         });
         const data = await res.json();
 
-        if (data.status === 'ok') {
-          appendTerminalLog('info', `Engine: ${data.engine} (${data.version})`);
-          appendTerminalLog('success', `Test Results: ${data.tests_run} tests executed successfully in ${data.duration_sec}s.`);
-          appendTerminalLog('success', `Status: PASSED (Health: ${data.health})`);
-          showToast(`Diagnostic Passed: ${data.tests_run} unit tests passed`);
+        if (data.status === 'ok' || data.passed) {
+          appendTerminalLog('info', `Engine: ${data.engine || 'scraper.py'} (${data.version || 'v1.0.0'})`);
+          appendTerminalLog('success', `Status: PASSED (Health: ${data.health || 'healthy'})`);
+          if (data.output) {
+            data.output.trim().split('\n').forEach(l => {
+              if (l.trim()) appendTerminalLog('info', l.trim());
+            });
+          }
+          showToast(`Diagnostic Passed: Scraper health verified`);
         } else {
-          appendTerminalLog('error', `Diagnostic failed: ${data.message || 'Unknown error'}`);
+          appendTerminalLog('error', `Diagnostic failed: ${data.error || data.message || 'Unknown test failure'}`);
+          if (data.output) {
+            data.output.trim().split('\n').forEach(l => {
+              if (l.trim()) appendTerminalLog('warn', l.trim());
+            });
+          }
           showToast('Diagnostic test encountered issues');
         }
       } catch (err) {
@@ -5113,25 +5292,22 @@
         const data = await res.json();
 
         if (data.status === 'ok') {
-          appendTerminalLog('success', `Inspection completed successfully: ${data.message}`);
-          if (data.data) {
-            const d = data.data;
-            if (d.repo) appendTerminalLog('info', `Target Repository: ${d.repo}`);
-            if (d.artifacts_found !== undefined) appendTerminalLog('info', `Discovered Artifacts: ${d.artifacts_found}`);
-            if (d.artifacts && d.artifacts.length > 0) {
-              d.artifacts.slice(0, 5).forEach((art, idx) => {
-                appendTerminalLog('info', `[Artifact ${idx+1}] ${art.name} (${art.type || 'skill'}) - ${art.description || 'No description'}`);
-              });
-              if (d.artifacts.length > 5) {
-                appendTerminalLog('info', `... and ${d.artifacts.length - 5} additional artifacts.`);
-              }
-            }
-            if (d.ingested !== undefined) appendTerminalLog('success', `Ingested into SQLite Vault: ${d.ingested} items.`);
+          appendTerminalLog('success', `Inspection completed successfully (exit code ${data.returncode !== undefined ? data.returncode : 0}).`);
+          if (data.stdout && data.stdout.trim()) {
+            data.stdout.trim().split('\n').forEach(line => {
+              if (line.trim()) appendTerminalLog('info', line);
+            });
+          }
+          if (data.stderr && data.stderr.trim()) {
+            data.stderr.trim().split('\n').forEach(line => {
+              if (line.trim()) appendTerminalLog('warn', line);
+            });
           }
           showToast(`Harvester Job Complete (${mode.toUpperCase()})`);
         } else {
-          appendTerminalLog('error', `Harvester error: ${data.message || 'Operation failed'}`);
-          showToast(data.message || 'Harvester operation failed');
+          const errText = data.stderr || data.error || data.message || 'Operation failed';
+          appendTerminalLog('error', `Harvester error: ${errText}`);
+          showToast('Harvester operation encountered issues');
         }
       } catch (err) {
         appendTerminalLog('error', `Connection error: ${err.message}`);
@@ -5151,6 +5327,7 @@
       const modal = document.getElementById('policyModalOverlay');
       if (modal) {
         modal.classList.add('active');
+        modal.classList.add('open');
         switchPolicyTab(tab);
       }
     }
@@ -5159,6 +5336,7 @@
       const modal = document.getElementById('policyModalOverlay');
       if (modal) {
         modal.classList.remove('active');
+        modal.classList.remove('open');
       }
     }
 
@@ -5236,20 +5414,6 @@
 
       body.innerHTML = content[tab] || content['terms'];
     }
-
-    // Close Modals & Drawer on Escape Key
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const policyModal = document.getElementById('policyModalOverlay');
-        if (policyModal && policyModal.classList.contains('active')) {
-          closePolicyModal();
-          return;
-        }
-        if (state.drawerOpen) {
-          closeDrawer();
-        }
-      }
-    });
   </script>
 </body>
 </html>

@@ -545,15 +545,17 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 rows = cur.execute(sql, (limit, offset)).fetchall()
                 total = cur.execute(count_sql).fetchone()[0]
 
+            mcp_items = [{
+                "server_name": r['server_name'],
+                "transport": r['transport'],
+                "command": r['command'],
+                "args": r['args'],
+                "is_recommended": r['is_recommended'],
+                "description": r['description']
+            } for r in rows]
             self._send_json({
-                "results": [{
-                    "server_name": r['server_name'],
-                    "transport": r['transport'],
-                    "command": r['command'],
-                    "args": r['args'],
-                    "is_recommended": r['is_recommended'],
-                    "description": r['description']
-                } for r in rows],
+                "results": mcp_items,
+                "servers": mcp_items,
                 "total": total,
                 "limit": limit,
                 "offset": offset

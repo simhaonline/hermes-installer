@@ -65,6 +65,18 @@ ROUTES = {
  'product-manager': ['prd', 'product', 'sprint', 'roadmap', 'stakeholder', 'user-story', 'launch', 'pm-'],
  'chart-visualization': ['chart', 'visualization', 'antv', 'apexcharts', 'echarts', 'lightweight-charts', 'd3', 'infographic'],
  'pat-operations': ['pat-', 'xauusd', 'predictatrade', 'simhaonline', 'mql', 'wine', 'signal-', 'trading-', 'quant', 'indicators', 'mt4-mt5', 'docker-', 'migration', 'backtest', 'go-live', 'telemetry', 'realtime', 'drift', 'pine-', 'auth-session', 'audit-remediation', 'control-plane', 'edge-request', 'server-backup', 'repo-evaluation', 'docs-runbooks', 'ai-ml-engine'],
+ 'mathematics-ai': ['math', 'paper', 'research', 'scientific', 'statistics', 'logic', 'algebra', 'calculus', 'geometry', 'theorem', 'lean', 'coq'],
+ 'office-excel-pdf': ['excel', 'spreadsheet', 'pdf', 'weasyprint', 'compdf', 'formula', 'macro', 'vba', 'pivot', 'worksheet', 'document'],
+ 'nginx-caddy-infrastructure': ['nginx', 'caddy', 'proxy', 'reverse-proxy', 'web-server', 'tls', 'ssl', 'load-balancer', 'waf', 'security'],
+ 'astro-web-architect': ['astro', 'framework', 'content-collections', 'static-site', 'ssg', 'ssr', 'web', 'ui-ux', 'frontend', 'tailwind'],
+ 'minimax-voice-agent': ['minimax', 'voice', 'audio', 'tts', 'stt', 'music', 'sound', 'multimodal', 'speech'],
+ 'kimi-reasoning-specialist': ['kimi', 'moonshot', 'reasoning', 'long-context', 'superpowers', 'research', 'analysis'],
+ 'manus-autonomous-agent': ['manus', 'autonomous', 'workflow', 'automation', 'agent', 'research', 'browser', 'multi-step'],
+ 'workbuddy-enterprise': ['workbuddy', 'enterprise', 'powershell', 'automation', 'productivity', 'workflow', 'office'],
+ 'tencent-cloud-architect': ['tencent', 'cloudbase', 'rtc', 'lbs', 'map', 'wechat', 'cloud', 'architecture'],
+ 'laravel-architect': ['laravel', 'php', 'backend', 'bagisto', 'laraclaude', 'eloquent', 'blade', 'artisan', 'api'],
+ 'seo-growth-marketer': ['seo', 'search', 'ranking', 'keywords', 'backlinks', 'growth', 'marketing', 'seranking', 'content-strategy'],
+ 'foundation-agent': ['general', 'core', 'foundational', 'reasoning', 'assistant', 'prompt', 'automation'],
 }
 
 def sync_tree(src, dst):
@@ -231,7 +243,7 @@ def apply_policy(home, new_profile=None):
         for key,value in {'orchestrator_profile':'orchestrator','default_assignee':'orchestrator','auto_decompose':True}.items():
             if not kanban.get(key): kanban[key] = value
     if new_profile:
-        patterns = ROUTES[new_profile]
+        patterns = ROUTES.get(new_profile, [new_profile])
         all_names = skill_names(home)
         selected = CORE | {n for n in all_names if any(x in n for x in patterns)}
         original_disabled = set(cfg.setdefault('skills',{}).get('disabled',[]))

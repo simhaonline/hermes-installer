@@ -12,20 +12,21 @@
 ### The New Offline Self-Local Solution
 To eliminate all GitHub and internet dependencies when installing on other devices, two standardized backup tiers are provided:
 
-1. **Tier 1: Minimal Data & Knowledge Backup (75 MB)**:
+1. **Tier 1: Minimal Data & Knowledge Backup (230 MB)**:
    - **File**: `hermes-vault.sqlite`
-   - **What it contains**: All 1,688 curated skills (full markdown text and YAML headers), 43,370 community skill packages, 4,859 MCP universe servers (including 30 recommended production servers), 415 agent persona definitions, 42 specialist profiles, 24 plugins, and 17 extended engines.
+   - **What it contains**: All 19,453 curated skills (full markdown text and YAML headers across 47 categories), 64,569 community skill packages, 4,827 MCP universe servers (including 35 recommended production servers), 462 agent persona definitions, 54 specialist profiles, 26 plugins, and 17 extended engines.
    - **Use case**: Quick backup to Google Drive, S3, or USB drive to preserve the full collected database.
 
-2. **Tier 2: Complete Self-Contained Offline Installer (1.5 GB)**:
+2. **Tier 2: Complete Self-Contained Offline Installer (~1.7 GB)**:
    - **Directory**: `/root/hermes-self-contained-installer/`
    - **Archive**: `/root/hermes-self-contained-installer.tar.gz`
    - **What it contains**:
      - `install-hermes-local.sh` — The 100% offline installation script.
-     - `hermes-vault.sqlite` — The unified SQLite knowledge vault (75 MB).
+     - `hermes-vault.sqlite` — The unified SQLite knowledge vault (230 MB).
+     - `hermes-vault` — Standalone CLI utility to query the vault.
      - `hermes-engines.tar.gz` — All 16 pre-compiled binary engines, Node libraries, and Python site-packages (107 MB).
      - `hermes-agent-core.tar.gz` — Pre-built Hermes Agent core engine with `node_modules` and Python launchers (333 MB).
-     - `hermes-system-assets.tar.gz` — All 1,688 skills, 43,000+ community packages, MCP universe catalog, and tool runtimes (976 MB).
+     - `hermes-system-assets.tar.gz` — All 19,453 skills, 64,500+ community packages, MCP universe catalog, and pre-compiled runtimes (1.1 GB).
    - **Use case**: Transfer this single archive to any other Ubuntu machine (offline or air-gapped) and install in under 30 seconds with **zero GitHub downloads**.
 
 ---
@@ -69,17 +70,17 @@ The installer deploys `/usr/local/bin/hermes-vault` allowing instant querying an
 hermes-vault stats
 
 # Search curated skills by query or category
-hermes-vault skills quant
-hermes-vault skills --category quant-trading
+hermes-vault skills math
+hermes-vault skills --category mathematics-ai
 
-# Search community skills pool (43,000+ packages)
+# Search community skills pool (64,500+ packages)
 hermes-vault community scrapfly
 
 # List recommended production MCP servers
 hermes-vault mcp --recommended
 
-# Search all agent personas (415+ personas)
-hermes-vault agents financial
+# Search all agent personas (460+ personas)
+hermes-vault agents excel
 
 # Inspect the 16 pre-compiled extended engines
 hermes-vault engines
@@ -98,6 +99,6 @@ sqlite3 hermes-vault.sqlite "SELECT category, count(*) FROM curated_skills GROUP
 # Inspect recommended MCP servers
 sqlite3 hermes-vault.sqlite "SELECT server_name, command FROM mcp_servers WHERE is_recommended=1;"
 
-# Query full system prompt of a specialist agent
-sqlite3 hermes-vault.sqlite "SELECT system_prompt FROM agent_personas WHERE name='codegraph-intelligence';"
+# Search agent personas by role
+sqlite3 hermes-vault.sqlite "SELECT persona_id, name, division FROM agent_personas WHERE name LIKE '%architect%';"
 ```

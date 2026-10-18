@@ -166,5 +166,53 @@
   {
     "name": "pat-operations",
     "description": "Predict-A-Trade autonomous trading operations specialist: signal reconciliation, MT5/Wine runtime execution, P&L monitoring, risk guardrails, payment rails, and real-time live trading engine management."
+  },
+  {
+    "name": "mathematics-ai",
+    "description": "Mathematical research, formal theorem proving, symbolic computation, LaTeX derivation, and AI4Math autonomous research."
+  },
+  {
+    "name": "office-excel-pdf",
+    "description": "Enterprise spreadsheet financial modeling, Excel-DNA automation, WeasyPrint PDF publishing, and ComPDFKit document workflows."
+  },
+  {
+    "name": "nginx-caddy-infrastructure",
+    "description": "High-performance reverse proxy architecture, Nginx optimization, Caddy Zero-Trust security, and automated TLS routing."
+  },
+  {
+    "name": "astro-web-architect",
+    "description": "Astro v4/v5 web framework architecture, Content Collections, island architecture, and agentic static website publishing."
+  },
+  {
+    "name": "minimax-voice-agent",
+    "description": "Multimodal audio synthesis, MiniMax TTS/Music3 generative audio, and Pi/Gondolin real-time conversational voice pipelines."
+  },
+  {
+    "name": "kimi-reasoning-specialist",
+    "description": "Ultra-long context reasoning, multi-document synthesis, recursive problem solving, and kimi-with-superpowers execution loops."
+  },
+  {
+    "name": "manus-autonomous-agent",
+    "description": "Autonomous general-purpose agent execution, multi-tool chaining, stealth browser navigation, and open-ended research."
+  },
+  {
+    "name": "workbuddy-enterprise",
+    "description": "Enterprise desktop productivity, corporate workflow integration, calendar/email triage, and business process automation."
+  },
+  {
+    "name": "tencent-cloud-architect",
+    "description": "Tencent CloudBase serverless cloud architecture, Tencent RTC real-time media communications, and Tencent Map GL SDK."
+  },
+  {
+    "name": "laravel-architect",
+    "description": "Principal Laravel 11/12 fullstack development, Eloquent ORM performance tuning, LaraClaude AI skills, and Bagisto e-commerce."
+  },
+  {
+    "name": "seo-growth-marketer",
+    "description": "Autonomous technical SEO auditing, search intent clustering, SERP competitive analysis, and programmatic SEO architecture."
+  },
+  {
+    "name": "foundation-agent",
+    "description": "Elite general reasoning, cross-model function calling, and deep workflow automation using foundation agent skill libraries."
   }
 ]

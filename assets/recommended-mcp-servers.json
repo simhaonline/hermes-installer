@@ -1,0 +1,303 @@
+{
+  "mcp_servers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/srv"
+      ]
+    },
+    "memory": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git"
+      ]
+    },
+    "metatrader5": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "metatrader_mcp.cli"
+      ],
+      "env": {
+        "MT5_LOGIN": "${MT5_LOGIN:-}",
+        "MT5_PASSWORD": "${MT5_PASSWORD:-}",
+        "MT5_SERVER": "${MT5_SERVER:-}"
+      },
+      "description": "MetaTrader 5 algorithmic trading and automated execution MCP server"
+    },
+    "timescaledb": {
+      "command": "node",
+      "args": [
+        "/srv/predictatrade/.hermes/mcp-library/timescale-tiger-skills/dist/index.js"
+      ],
+      "env": {
+        "TIMESCALE_CONNECTION_STRING": "${TIMESCALE_CONNECTION_STRING:-postgresql://localhost:5432/predictatrade}"
+      },
+      "description": "TimescaleDB hypertables, hyperfunctions, and time-series query MCP server"
+    },
+    "questdb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://admin:quest@localhost:8812/qdb"
+      ],
+      "description": "QuestDB ultra-low-latency financial time-series database MCP interface"
+    },
+    "redis": {
+      "command": "uvx",
+      "args": [
+        "redis-mcp-server",
+        "--url",
+        "${REDIS_URL:-redis://127.0.0.1:6379/0}"
+      ],
+      "description": "Redis in-memory caching, message pub/sub, semantic cache, and vector index MCP server"
+    },
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://localhost/predictatrade"
+      ]
+    },
+    "sqlite": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-sqlite",
+        "--db-path",
+        "/srv/predictatrade.db"
+      ]
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ]
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY:-}"
+      }
+    },
+    "docker": {
+      "command": "uvx",
+      "args": [
+        "docker-mcp-server"
+      ]
+    },
+    "whatsapp-wassenger": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "wassenger-mcp"
+      ],
+      "env": {
+        "WASSENGER_API_KEY": "${WASSENGER_API_KEY:-}"
+      },
+      "description": "Wassenger WhatsApp omnichannel messaging, automated replies, and CRM webhook MCP server"
+    },
+    "telegram-bot": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "telegram-bot-mcp"
+      ],
+      "env": {
+        "TELEGRAM_BOT_TOKEN": "${TELEGRAM_BOT_TOKEN:-}"
+      },
+      "description": "Telegram bot management, broadcast messaging, and Mini-App orchestration MCP server"
+    },
+    "discord": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "discord-mcp"
+      ],
+      "env": {
+        "DISCORD_BOT_TOKEN": "${DISCORD_BOT_TOKEN:-}"
+      },
+      "description": "Discord guild administration, channel events, and community bot MCP server"
+    },
+    "tradingview-signals": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "http.server",
+        "8088"
+      ],
+      "description": "TradingView Webhook Alert ingestion endpoint and Pine Script execution bridge"
+    },
+    "conda-cli": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "conda.plugins.mcp"
+      ],
+      "description": "Conda environment management, package resolution, and lockfile MCP server"
+    },
+    "microsoft-fabric": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@microsoft/fabric-mcp"
+      ],
+      "env": {
+        "FABRIC_TENANT_ID": "${FABRIC_TENANT_ID:-}",
+        "FABRIC_CLIENT_ID": "${FABRIC_CLIENT_ID:-}"
+      },
+      "description": "Microsoft Fabric OneLake, Synapse, Lakehouse, and Power BI MCP server"
+    },
+    "scrapling-crawler": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "scrapling.cli"
+      ],
+      "description": "Undetectable fast web scraping, DOM parsing, and anti-bot bypass MCP server"
+    },
+    "knowledge-graph-neo4j": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-neo4j"
+      ],
+      "env": {
+        "NEO4J_URI": "${NEO4J_URI:-bolt://localhost:7687}",
+        "NEO4J_USER": "${NEO4J_USER:-neo4j}",
+        "NEO4J_PASSWORD": "${NEO4J_PASSWORD:-}"
+      },
+      "description": "Knowledge Graph and Neo4j / FalkorDB Cypher query MCP interface"
+    },
+    "agent-cron": {
+      "command": "node",
+      "args": [
+        "/srv/predictatrade/.hermes/plugins/agent-cron/src/index.js"
+      ],
+      "description": "Autonomous recurring AI agent task scheduling and background job dispatch MCP server"
+    },
+    "deer-flow": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "deer_flow.server"
+      ],
+      "description": "ByteDance Deer-Flow multi-agent workflow and graph execution MCP server"
+    },
+    "2captcha": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "2captcha-mcp"
+      ],
+      "env": {
+        "TWO_CAPTCHA_KEY": "${TWO_CAPTCHA_KEY:-}"
+      },
+      "description": "Automated CAPTCHA and Turnstile challenge resolution MCP server"
+    },
+    "codegraph": {
+      "command": "codegraph",
+      "args": [
+        "serve",
+        "--mcp"
+      ],
+      "description": "Pre-indexed code knowledge graph with callers/callees impact analysis and surgical context"
+    },
+    "mcptoon": {
+      "command": "mcptoon",
+      "args": [
+        "serve"
+      ],
+      "description": "Zero-dependency MCP gateway, tool discovery, and 99.2% token context compression"
+    },
+    "mempalace": {
+      "command": "mempalace-mcp",
+      "args": [],
+      "description": "High-benchmark AI memory palace and searchable knowledge retrieval system"
+    },
+    "rea": {
+      "command": "rea",
+      "args": [
+        "mcp"
+      ],
+      "description": "Universal binary reverse engineering, static analysis, and decompilation MCP server"
+    },
+    "laya": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "laya.api.mcp_api"
+      ],
+      "description": "Local-first AI notification command center aggregating Slack, Gmail, GitHub, Jira, Notion"
+    },
+    "mcp-server-excel": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-excel"
+      ],
+      "description": "Enterprise spreadsheet processing, data extraction, and formula recalculation MCP server"
+    },
+    "compdf-mcp": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "compdf_mcp"
+      ],
+      "description": "ComPDFKit PDF document text extraction, structured table parsing, and OCR processing"
+    },
+    "caddy-security": {
+      "command": "caddy",
+      "args": [
+        "run",
+        "--config",
+        "/etc/caddy/Caddyfile"
+      ],
+      "description": "Caddy reverse proxy, automated TLS certificates, and Zero-Trust identity authentication"
+    },
+    "pi-voice": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "pi_voice.server"
+      ],
+      "description": "Real-time voice stream synthesis, audio duplex conversation, and acoustic processing"
+    },
+    "manus-research": {
+      "command": "python3",
+      "args": [
+        "-m",
+        "manus_research.server"
+      ],
+      "description": "Manus autonomous deep-crawl web research, citation synthesis, and multi-query crawling"
+    }
+  },
+  "description": "Curated production-ready MCP servers for Hermes Agent. Use 'hermes mcp add' or hermes-mcp-universe to register."
+}

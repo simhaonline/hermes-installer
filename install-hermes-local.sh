@@ -161,7 +161,16 @@ WRAPPER
     done
 
     # Generate specialist profiles and initialize Kanban
-    as_user python3 "$PAYLOAD_DIR/assets/configure.py" profiles
+    run_assets="$PAYLOAD_DIR/assets"
+    cleanup_assets=0
+    if ! runuser -u "$HERMES_USER" -- test -r "$run_assets/configure.py" 2>/dev/null; then
+        run_assets="/tmp/hermes-install-assets-$$"
+        cp -rp "$PAYLOAD_DIR/assets" "$run_assets"
+        chown -R "$ACCOUNT_UID:$ACCOUNT_GID" "$run_assets"
+        cleanup_assets=1
+    fi
+    as_user python3 "$run_assets/configure.py" profiles
+    [[ $cleanup_assets -eq 0 ]] || rm -rf "$run_assets"
     as_user "$INSTALL_DIR/.hermes/bin/hermes" -p default kanban init 2>/dev/null || true
 
     # Enable lingering and Rootless Docker if dockerd-rootless-setuptool.sh is present
@@ -196,11 +205,11 @@ printf 'Account        : %s (UID %s)\n' "$HERMES_USER" "$ACCOUNT_UID"
 printf 'Hermes Home    : %s\n' "$HERMES_BASE_HOME"
 printf 'SQLite Vault   : %s/hermes-vault.sqlite\n' "$HERMES_BASE_HOME"
 printf 'Workspace      : %s\n' "$WORKSPACE"
-printf 'Curated Skills : 1,688 Skills across 33 Categories\n'
-printf 'Community Pool : 43,000+ Indexed Packages\n'
-printf 'MCP Universe   : 4,800+ Indexed Servers + 30 Curated Production Servers\n'
-printf 'Agent Library  : 415+ Personas & 42 Specialist Profiles\n'
-printf 'Active Plugins : 24 Plugins\n'
+printf 'Curated Skills : 19,400+ Skills across 47 Categories\n'
+printf 'Community Pool : 64,500+ Indexed Packages\n'
+printf 'MCP Universe   : 4,800+ Indexed Servers + 35 Curated Production Servers\n'
+printf 'Agent Library  : 460+ Personas & 54 Specialist Profiles\n'
+printf 'Active Plugins : 26 Plugins\n'
 printf 'Offline Engines: trim-1, codegraph, mcptoon, mempalace, rea, autoagent, pentagi, cactus, laya, openshell\n'
 printf 'Offline Mode   : Complete (Zero GitHub / Internet dependencies)\n'
 printf '==============================================================================\n'

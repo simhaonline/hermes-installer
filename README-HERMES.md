@@ -72,23 +72,35 @@ All projects and code repositories should reside in `/srv/predictatrade/` (or su
 
 ## 2. Included Components & Features
 
-### A. Skill Libraries (1,688 Curated Skills + 25,345 Community Pool)
+### A. Skill Libraries (19,222+ Curated Skills across 47 Categories + 64,569 Community Pool)
 
 The installation provides a comprehensive two-tiered skill architecture:
 
-#### 1. Retained Curated Library: 1,688 Skills across 33 Categories
+#### 1. Retained Curated Library: 19,222+ Skills across 47 Categories
 Located in `/home/predictatrade/.hermes/skill-library` and `/home/predictatrade/.hermes/skills`:
 
 | Category | Skill Count | Primary Capabilities |
 |---|---|---|
+| `foundation-skills` | 13,748 skills | Anthropic, OpenAI, Microsoft, Google, VoltAgent, and Hugging Face agentic skills and reasoning benchmarks |
+| `minimax-audio-voice` | 1,292 skills | MiniMax voice cloning, audio synthesis, speech-to-text, MiniMax-Music3, and multimodal audio agent tooling |
+| `laravel-php-ecosystem` | 810 skills | Modern Laravel fullstack engineering, Eloquent ORM, Blade, Bagisto e-commerce, LaraClaude, API skills |
 | `quant-trading` | 553 skills | MQL5 Expert Advisors, MT5 bridge operations, PineScript v5 strategies, Fibonacci retracements, risk engines, order flow analyzers, volatility forecasting |
+| `office-excel-pdf` | 383 skills | Excel spreadsheets, VBA macros, pivot tables, OpenPyXL/XlsxWriter automation, WeasyPrint PDF generator, ComPDFKit SDK, PDFMiner |
 | `custom` | 317 skills | Predict-A-Trade proprietary signal reconciliation, payment symmetry, trade risk safety, telemetry, docker migration, runbook automation |
+| `kimi-suite` | 309 skills | Moonshot Kimi K3 long-context reasoning, multi-turn reasoning chains, deep research synthesis, large-scale document analysis |
+| `seo-growth-marketing` | 262 skills | Agentic SEO, SE Ranking integration, keyword research, SERP analysis, programmatic content strategy, backlink audits |
+| `manus-agent` | 238 skills | Manus AI agent workflows, multi-step browser execution, automated desk research, autonomous agentic tool composition |
+| `workbuddy-suite` | 193 skills | Enterprise workflow automation, PowerShell scripting, system administration, productivity copilots, office integrations |
 | `backend-languages` | 135 skills | Go concurrency, Rust agentic patterns, Python asyncio, FastAPI, NestJS, Next.js fullstack engineering |
 | `official-optional` | 128 skills | Bundled optional capabilities from official upstream Hermes Agent repository |
 | `ui-ux-design` | 117 skills | Tailwind CSS v4, UI/UX Pro Max, Garden UI, SVG dark-mode diagrams, design tokens, responsive layouts |
+| `mathematics-ai` | 116 skills | Lean 4 / Coq theorem proving, AI4Math paper reading, AI4Math auto-research, mathematics learning curricula, algebraic geometry |
+| `tencent-cloud-ecosystem` | 103 skills | Tencent CloudBase serverless, Tencent RTC real-time audio/video, Tencent Maps GL JS SDK, WeChat mini-program backends |
 | `community-elite` | 65 skills | Top-rated, curated multi-agent workflow tools and orchestration pipelines |
 | `knowledge-graph` | 47 skills | CodeGraph callers/callees impact traversal, Neo4j graph extractors, LightRAG, Memstack holographic sync, ontology mapping |
+| `astro-web-framework` | 43 skills | Astro 4+ web framework, content collections, SSG/SSR pipelines, island architecture, agentic website publishing |
 | `omnichannel-messaging` | 43 skills | Telegram bot/mini-apps, Discord developer tools, WhatsApp Flows, Wassenger CRM integrations, Slack bot events |
+| `nginx-caddy-infrastructure` | 35 skills | Nginx reverse proxies, high-throughput web server config, Caddy v2 security & automatic TLS, WAF rules, load balancing |
 | `translation-localization` | 32 skills | Suite of 23 composable product localization skills (BrunoMiguens), multi-agent translation pipeline with terminology verification (senshinji), i18n/l10n automated file sync (irsali), book translation engine (deusyu) |
 | `safe-agent-runtime` | 28 skills | NVIDIA OpenShell policy enforcement, rootless container security, memory isolation, permission boundary guards |
 | `security-audit` | 26 skills | PentAGI automated security assessment, Pashov smart contract auditing, Auditmos verification, codebase security auditing, Cloudflare Zero Trust |
@@ -115,13 +127,13 @@ Located in `/home/predictatrade/.hermes/skill-library` and `/home/predictatrade/
 | `social-media` | 1 skills | Social engagement analytics, automated posting schedulers |
 | `web` | 1 skills | HTTP status inspection, curl automation |
 
-**Total: 1,688 skills across 33 categories**
+**Total: 19,222 skills across 47 categories**
 
-#### 2. Captured Community Skill Pool: 25,345 Unique Packages
+#### 2. Captured Community Skill Pool: 64,569 Unique Packages
 - Located at: `/home/predictatrade/.local/share/hermes-community-skill-pool/skills`
 - Manifest: `/home/predictatrade/.local/share/hermes-community-skill-pool/index.jsonl`
-- Full triage breakdown: **24,667 normal** packages, **678 flagged for review** (safe triage with `--force` activation requirement).
-- Instant search and enablement across all 25,345 packages via `hermes-community-skills search <query>`.
+- Full triage breakdown: Comprehensive pool of curated and indexed skills across open-source ecosystems.
+- Instant search and enablement across all 64,569 packages via `hermes-community-skills search <query>` or `hermes-vault community <query>`.
 
 ---
 
@@ -166,16 +178,16 @@ Located in `/home/predictatrade/.hermes/agent-library`:
 - **13 Quantitative Trading Specialists**: Quant researchers, MQL5 EA developers, PineScript strategy engineers, prop-firm compliance auditors.
 - **Fabric, Personal AI Employee & PM Personas**: Project managers, sprint planners, enterprise data architects.
 
-### 2. 42 Dedicated Specialist Profiles
+### 2. 54 Dedicated Specialist Profiles
 Configured with independent memory stores and selective skill routing in `/home/predictatrade/.hermes/profiles/`:
-`orchestrator`, `coding-engineer`, `qa-testing`, `devops-sre`, `cloud-infrastructure`, `security-audit`, `ethical-hacking-pentest`, `red-team`, `blue-team`, `purple-team`, `white-team`, `yellow-team`, `green-team`, `orange-team`, `ai-llm-engineer`, `ai-research-mlops`, `data-knowledge`, `research-science`, `metatrader-quant`, `analytics-finance`, `business-operations`, `documents-office`, `legal-corporate`, `creative-media`, `marketing-growth`, `communications-sales`, `mcp-librarian`, `skill-librarian`, `esoteric-advisor`, `multi-agent-architect`, `backend-architect`, `database-optimizer`, `code-reviewer`, `agentic-search-optimizer`, `token-optimizer`, `tradingview-quant`, `fabric-engineer`, `web-scraping-specialist`, `knowledge-graph-architect`, `product-manager`, `chart-visualization`, and `pat-operations`.
+`orchestrator`, `coding-engineer`, `qa-testing`, `devops-sre`, `cloud-infrastructure`, `security-audit`, `ethical-hacking-pentest`, `red-team`, `blue-team`, `purple-team`, `white-team`, `yellow-team`, `green-team`, `orange-team`, `ai-llm-engineer`, `ai-research-mlops`, `data-knowledge`, `research-science`, `metatrader-quant`, `analytics-finance`, `business-operations`, `documents-office`, `legal-corporate`, `creative-media`, `marketing-growth`, `communications-sales`, `mcp-librarian`, `skill-librarian`, `esoteric-advisor`, `multi-agent-architect`, `backend-architect`, `database-optimizer`, `code-reviewer`, `agentic-search-optimizer`, `token-optimizer`, `tradingview-quant`, `fabric-engineer`, `web-scraping-specialist`, `knowledge-graph-architect`, `product-manager`, `chart-visualization`, `pat-operations`, `mathematics-ai`, `office-excel-pdf`, `nginx-caddy-infrastructure`, `astro-web-architect`, `minimax-voice-agent`, `kimi-reasoning-specialist`, `manus-autonomous-agent`, `workbuddy-enterprise`, `tencent-cloud-architect`, `laravel-architect`, `seo-growth-marketer`, and `foundation-agent`.
 
 - **Multi-Agent Kanban Decomposition**: Pre-initialized on default profile via SQLite database at `/home/predictatrade/.hermes/kanban.db`.
 - **Subagent Parallelism**: Concurrency cap of 3 child agents, spawn depth limit of 2, 250 max turns.
 
 ---
 
-## 5. MCP (Model Context Protocol) Suite (30 Curated Servers)
+## 5. MCP (Model Context Protocol) Suite (35 Curated Servers)
 
 Stored in `/home/predictatrade/.hermes/mcp-library/recommended-mcp-servers.json`:
 
@@ -211,10 +223,15 @@ Stored in `/home/predictatrade/.hermes/mcp-library/recommended-mcp-servers.json`
 | `mempalace` | stdio / HTTP | ChromaDB holographic memory retrieval with AAAK dialect compression |
 | `rea` | stdio | Binary reverse engineering, disassembly, and static security analysis |
 | `laya` | stdio | Unified notification command center for Slack, Gmail, GitHub, Jira |
+| `mcp-server-excel` | stdio | Enterprise spreadsheet processing, data extraction, formula auditing, and workbook synthesis |
+| `compdf-mcp` | stdio | High-performance PDF parsing, annotation extraction, document conversion, and table reconstruction |
+| `caddy-security` | stdio | Infrastructure security gateway, automated TLS, authentication, and reverse proxy management |
+| `pi-voice` | stdio | Real-time speech-to-text, text-to-speech, and audio streaming interface |
+| `manus-research` | stdio | Multi-agent autonomous research and deep web knowledge extraction workflow bridge |
 
 ---
 
-## 6. Active Plugins & Extensions (24 Plugins)
+## 6. Active Plugins & Extensions (26 Plugins)
 
 Located in `/home/predictatrade/.hermes/plugins/`:
 - **`mcptoon`**: Zero-dependency MCP gateway & 99.2% token context compression CLI.
@@ -241,6 +258,8 @@ Located in `/home/predictatrade/.hermes/plugins/`:
 - **`tradingview-pinescript`**: TradingView strategy and indicator integration.
 - **`mql5-libraries`**: MQL5 trading bridges and EA components.
 - **`fabric-plugins`**: Microsoft Fabric lakehouse and Synapse Spark extensions.
+- **`manus-research`**: Autonomous web research, evidence verification, and multi-source synthesis plugin.
+- **`wookstar-plugins`**: Advanced Claude plugin suite for enterprise workflows and multi-agent coordination.
 
 ---
 

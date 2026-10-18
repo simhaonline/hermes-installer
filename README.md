@@ -2,10 +2,14 @@
 
 [![Version](https://img.shields.io/badge/version-v0.21.5-blue.svg)](https://github.com/simhaonline/hermes-installer/releases)
 [![Offline](https://img.shields.io/badge/deployment-100%25_offline-green.svg)](https://github.com/simhaonline/hermes-installer/releases)
-[![Platform](https://img.shields.io/badge/platform-Ubuntu_LTS-orange.svg)](https://ubuntu.com)
+[![Skills](https://img.shields.io/badge/curated_skills-19%2C453-brightgreen.svg)](https://github.com/simhaonline/hermes-installer)
+[![Community Pool](https://img.shields.io/badge/community_pool-64%2C569-purple.svg)](https://github.com/simhaonline/hermes-installer)
+[![Profiles](https://img.shields.io/badge/specialist_profiles-54-orange.svg)](https://github.com/simhaonline/hermes-installer)
+[![MCP Servers](https://img.shields.io/badge/mcp_servers-4%2C827-yellow.svg)](https://github.com/simhaonline/hermes-installer)
+[![Platform](https://img.shields.io/badge/platform-Ubuntu_LTS-blue.svg)](https://ubuntu.com)
 [![License](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
 
-A complete, self-contained, offline production installer for **Hermes Agent** with **16 advanced AI, engineering, and reverse engineering engines**, **1,688 curated skills across 33 categories**, **43,000+ indexed community skills**, **4,800+ MCP servers**, **415 agent personas**, **42 specialist profiles**, and **24 active plugins**.
+A complete, self-contained, offline production installer for **Hermes Agent** with **16 advanced AI, engineering, and reverse engineering engines**, **19,453 curated skills across 47 categories**, **64,569 indexed community skills**, **4,827 MCP servers (35 curated production servers)**, **462 agent personas**, **54 specialist profiles**, and **26 active plugins**.
 
 ---
 
@@ -25,17 +29,17 @@ Download the complete pre-built offline bundle directly from [**GitHub Releases 
 
 | Release Asset | Size | SHA-256 Checksum | Description |
 |---|---|---|---|
-| [**`hermes-self-contained-installer.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-self-contained-installer.tar.gz) | **1.4 GB** | `467a20d77364c3987de731a0b5e6c314ee14588da3ca4a2c75d6bbc8e211a85d` | **Complete Standalone Offline Installer**: Pre-built core, 16 compiled engines, all 1,688 skills, 43k community pool, 4.8k MCPs, 415 personas, and SQLite vault. |
-| [**`hermes-vault.sqlite`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-vault.sqlite) | **76 MB** | `a646b80aca91608fd1d5755fba91fe426e55536a3c4424398188e2f060820efa` | **SQLite Knowledge Vault**: Master database containing full markdown text for all skills, agents, MCPs, and plugins. |
+| [**`hermes-self-contained-installer.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-self-contained-installer.tar.gz) | **1.5 GB** | `2413ac78ba6566f7c81125fb173d32df190a07d691eade67a1e98698f355cb19` | **Complete Standalone Offline Installer**: Pre-built core, 16 compiled engines, all 19,453 skills, 64.5k community pool, 4.8k MCPs, 462 personas, 54 profiles, and SQLite vault. |
+| [**`hermes-vault.sqlite`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-vault.sqlite) | **230 MB** | `d43e0ed3544c739a565ef418df1dfe272a2cd5a024e3f6d05cc455709f4028af` | **SQLite Knowledge Vault**: Master database containing full markdown text for all skills, agents, MCPs, and plugins. |
 | [**`hermes-agent-production.sh`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-agent-production.sh) | **181 MB** | `38c190fb7711f9f7f7940a3201c829ccc332faf5772e6490db8e919d1fc96860` | Production deployment script with embedded base64 payload. |
 | [**`hermes-assets.tar.gz`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/hermes-assets.tar.gz) | **134 MB** | `ce989e1e3b81d2e8b5aa640d5c9c874983d6236607162d0504048088e96157da` | Core asset tarball. |
-| [**`SHA256SUMS.txt`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/SHA256SUMS.txt) | 634 B | — | Cryptographic integrity verification file. |
+| [**`SHA256SUMS.txt`**](https://github.com/simhaonline/hermes-installer/releases/download/v1.0.0/SHA256SUMS.txt) | Text | `1b32aa42858253b3d7bd1bf0698b2026baacbb0f9cad471b3b867d92b8365936` (installer) | Cryptographic integrity verification file. |
 
 ---
 
 ## ⚙️ Manual Offline Installation on Air-Gapped / New Devices
 
-If you downloaded the 1.4 GB archive or transferred it via USB/SCP:
+If you downloaded the installer archive or transferred it via USB/SCP:
 
 ```bash
 # 1. Extract the package
@@ -58,7 +62,7 @@ sudo bash install-hermes-local.sh --validate-only
 ### Dedicated Service Account Isolation
 - Hermes executes strictly as the dedicated non-root user `predictatrade` (`UID=1001`).
 - Strictly prohibited from privileged groups (`docker`, `sudo`, `adm`), preventing host privilege escalation.
-- Primary project workspace resides in `/srv/predictatrade` (`0755` permissions owned by `predictatrade:predictatrade`).
+- Primary project workspace resides in `/srv/predictatrade` (`0750` permissions owned by `predictatrade:predictatrade`).
 
 ### Dual Docker Daemon Architecture
 - **Host Standard Docker**: Remains unaltered on `/var/run/docker.sock` for system services.
@@ -91,11 +95,13 @@ All CLI tools in `/usr/local/bin` (`hermes`, `hermes-vault`, `hermes-skill-catal
 
 ## 📊 Ecosystem Inventory
 
-- **Skills Library**: 1,688 Curated Skills across 33 Categories + 43,000+ Community Skill Packages.
-- **Agent Library**: 415+ Personas (Engineering, Design, Quant Trading, Security, Reverse Engineering).
-- **Specialist Profiles**: 42 Pre-configured Profiles (`metatrader-quant`, `security-audit`, `coding-engineer`, `fabric-engineer`, `token-optimizer`, etc.).
-- **MCP Servers**: 4,800+ Cataloged Servers + 30 Curated Production Servers (`recommended-mcp-servers.json`).
-- **Plugins**: 24 Active Plugins (`superpowers`, `token-saver`, `security-guidance`, `disk-cleanup`, `mirofish`, `openshell`, etc.).
+- **Skills Library**: **19,453 Curated Skills across 47 Categories** + **64,569 Community Skill Packages**.
+- **Agent Library**: **462 Personas** (Specialist, Agency, Quant Trading, Security, System Engineering).
+- **Specialist Profiles**: **54 Pre-configured Profiles** (including `mathematics-ai`, `office-excel-pdf`, `nginx-caddy-infrastructure`, `astro-web-architect`, `minimax-voice-agent`, `kimi-reasoning-specialist`, `manus-autonomous-agent`, `workbuddy-enterprise`, `tencent-cloud-architect`, `laravel-architect`, `seo-growth-marketer`, `foundation-agent`).
+- **MCP Servers**: **4,827 Cataloged Servers** + **35 Curated Production Servers** (`recommended-mcp-servers.json`).
+- **Plugins**: **26 Active Plugins** (including `superpowers`, `token-saver`, `security-guidance`, `disk-cleanup`, `manus-research`, `wookstar-plugins`, `mirofish`, `openshell`).
+- **Knowledge Vault**: **230 MB SQLite Database** (`hermes-vault.sqlite`) storing full definitions and markdown text.
+- **Built-in Python Libraries**: `openpyxl`, `xlsxwriter`, `pdfminer.six` pre-installed for immediate Excel/PDF processing.
 
 ---
 
@@ -108,17 +114,17 @@ The installer deploys `/usr/local/bin/hermes-vault` for instant querying:
 hermes-vault stats
 
 # Search curated skills by query or category
-hermes-vault skills quant
-hermes-vault skills --category quant-trading
+hermes-vault skills math
+hermes-vault skills --category mathematics-ai
 
-# Search community skills pool (43,000+ packages)
+# Search community skills pool (64,500+ packages)
 hermes-vault community scrapfly
 
 # List recommended production MCP servers
 hermes-vault mcp --recommended
 
-# Search agent personas (415+ personas)
-hermes-vault agents financial
+# Search agent personas (460+ personas)
+hermes-vault agents excel
 
 # Inspect the 16 pre-compiled extended engines
 hermes-vault engines

@@ -227,9 +227,32 @@ Pre-installed in `/usr/local/bin` with automatic privilege dropping to `predicta
 
 ---
 
-## 🔍 Hybrid Vector Registry CLI (`hermes-registry`)
+## 🔍 Hybrid Vector Registry & Interactive Dashboard (`hermes-registry`)
 
-Hermes includes `/usr/local/bin/hermes-registry` to enable **dense vector semantic discovery** and **dynamic JIT tool execution**:
+Hermes provides `/usr/local/bin/hermes-registry` offering both an **Interactive Web Dashboard / UI** and an **autonomous CLI engine** for hybrid search (dense ChromaDB vector embeddings + sparse SQLite FTS5 BM25), package management, and dynamic JIT tool execution:
+
+### 1. Interactive Web Dashboard & UI
+
+Launch the embedded zero-dependency Web Dashboard:
+
+```bash
+# Launch on default port 8888 (accessible locally or over network)
+hermes-registry ui
+
+# Or specify custom host and port
+hermes-registry dashboard --host 0.0.0.0 --port 8888
+```
+
+The Web Dashboard (`http://localhost:8888` or `http://platform.predictatrade.com:8888`) provides:
+- **🔎 Hybrid Search Engine**: Instant search combining semantic vector cosine similarity with full-text keyword indexing across all 19,691 skills.
+- **📂 Category Explorer**: Filter across 48 domain classifications (Financial Quant, Security Audit, GEO, MLOps, Office/PDF, etc.).
+- **📖 Skill Inspector**: Full modal viewer for `SKILL.md` instructions, frontmatter, parameters, and code examples.
+- **⚡ 1-Click Install & Activate**: Dynamically activate any skill into any of the 66 specialist profiles (`orchestrator`, `security-audit`, `metatrader-quant`, etc.) without copying files.
+- **🗑️ 1-Click Uninstall & Deactivate**: Remove tools from profile context instantly to preserve prompt token ceilings.
+- **👥 Profile Manager**: Visual inspection of active tools across all 66 profiles.
+- **🔌 MCP & Plugins Hub**: Directory of 45 curated production MCP servers and 32 plugins.
+
+### 2. Autonomous CLI Usage
 
 ```bash
 # 1. View combined relational (SQLite) and vector (ChromaDB) statistics
@@ -238,11 +261,11 @@ hermes-registry stats
 # 2. Natural language intent resolution (Hybrid Dense ChromaDB + Sparse SQLite FTS5)
 hermes-registry resolve "audit solana smart contract reentrancy and token bonding curves"
 
-# 3. Dynamically link a resolved tool into the active profile
-hermes-registry activate audit-reentrancy --profile default
+# 3. Dynamically install/activate a skill into profile context (aliases: activate / install)
+hermes-registry install web3-audit --profile security-audit
 
-# 4. Evict the tool cleanly when the task finishes to keep prompt context clean
-hermes-registry deactivate audit-reentrancy --profile default
+# 4. Evict the tool cleanly when the task finishes to keep prompt context clean (aliases: deactivate / uninstall)
+hermes-registry uninstall web3-audit --profile security-audit
 ```
 
 ---

@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Hermes Hybrid Vector & Dynamic Execution Registry CLI.
+"""Hermes Hybrid Vector & Dynamic Execution Registry CLI & Web Dashboard.
 
 Combines SQLite FTS5 Full-Text Search with ChromaDB Semantic Embeddings
-for on-demand skill resolution, dynamic activation, and package management.
+for on-demand skill resolution, dynamic activation, package management,
+and an interactive Web Dashboard.
 """
 import argparse
+import html
 import json
 import os
 import sqlite3
 import sys
+import urllib.parse
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 DB_CANDIDATES = [
@@ -37,8 +41,30 @@ def get_chroma():
         import chromadb
         path = str(chroma_path) if chroma_path else "/home/predictatrade/.hermes/vector-registry"
         return chromadb.PersistentClient(path=path)
-    except Exception as e:
+    except Exception:
         return None
+
+def get_active_skills_map():
+    """Returns a dict mapping profile_name -> set of active skill names."""
+    active_map = {}
+    profiles_root = Path("/home/predictatrade/.hermes/profiles")
+    if not profiles_root.exists():
+        return active_map
+    
+    for prof_dir in profiles_root.iterdir():
+        if prof_dir.is_dir():
+            skills_dir = prof_dir / "skills"
+            active_skills = set()
+            if skills_dir.exists():
+                for item in skills_dir.rglob("*"):
+                    if (item.is_symlink() or item.is_dir()) and (item / "SKILL.md").exists():
+                        active_skills.add(item.name)
+            active_map[prof_dir.name] = sorted(list(active_skills))
+    return active_map
+
+# ==============================================================================
+# CLI COMMANDS
+# ==============================================================================
 
 def cmd_stats(args):
     conn = get_db()
@@ -81,7 +107,6 @@ def cmd_resolve(args):
     cur = conn.cursor()
     client = get_chroma()
 
-    # 1. Semantic Match via Chroma
     semantic_skills = []
     semantic_profiles = []
     semantic_mcps = []
@@ -124,10 +149,8 @@ def cmd_resolve(args):
         except Exception:
             pass
 
-    # 2. BM25 Match via FTS5
     fts_skills = []
     try:
-        # Sanitize query for FTS5
         clean_q = " ".join([w for w in query.replace('"', '').replace("'", '').split() if len(w) > 2])
         if clean_q:
             match_clause = " OR ".join(clean_q.split())
@@ -143,14 +166,12 @@ def cmd_resolve(args):
     except Exception:
         pass
 
-    # Output Profiles & Personas
     if semantic_profiles:
         print("\n🎯 RECOMMENDED SPECIALIST PROFILES:")
         for name, dist, doc in semantic_profiles:
             sim = max(0.0, 1.0 - dist)
             print(f"  • {name:<28} (Confidence: {sim*100:.1f}%)")
 
-    # Output Plugins & MCP Servers
     if semantic_plugins or semantic_mcps:
         print("\n⚡ RECOMMENDED PLUGINS & MCP ENGINES:")
         for name, dist, doc in semantic_plugins:
@@ -158,17 +179,14 @@ def cmd_resolve(args):
         for name, dist, doc in semantic_mcps:
             print(f"  • [MCP]    {name:<22} (Score: {(1.0-dist)*100:.1f}%)")
 
-    # Output Hybrid Skills
     print(f"\n📦 TOP MATCHED SKILLS (Hybrid Dense + FTS5 BM25):")
     seen = set()
     count = 0
-    # First show top semantic
     for name, cat, dist, doc in semantic_skills[:limit]:
         seen.add(name)
         sim = max(0.0, 1.0 - dist)
         print(f"  [{sim*100:4.1f}% | Semantic] {name:<36} [{cat}]")
         count += 1
-    # Add top BM25 if not already shown
     for name, cat, score, desc in fts_skills:
         if name not in seen and count < limit + 3:
             print(f"  [BM25 | Keyword ] {name:<36} [{cat}]")
@@ -176,7 +194,7 @@ def cmd_resolve(args):
             count += 1
 
     print("\n💡 To dynamically inject a skill into the active session:")
-    print("   hermes-registry activate <skill-name>")
+    print("   hermes-registry activate <skill-name> [--profile default]")
     print("=" * 70)
 
 def cmd_activate(args):
@@ -191,7 +209,6 @@ def cmd_activate(args):
 
     source_path = Path(row['path'])
     if not source_path.exists():
-        # Fallback to standard library location
         candidate = Path(f"/home/predictatrade/.hermes/skill-library/{row['category']}/{row['name']}")
         if candidate.exists():
             source_path = candidate
@@ -224,15 +241,1067 @@ def cmd_deactivate(args):
         skill_path.unlink()
         print(f"✅ Evicted '{skill_name}' from profile '{profile}' (context cleared).")
     else:
-        # Search for symlink across categories
         found = False
-        for p in Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills").rglob(skill_name):
-            if p.is_symlink() or p.exists():
-                p.unlink()
-                found = True
-                print(f"✅ Evicted '{skill_name}' from profile '{profile}'.")
+        skills_root = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills")
+        if skills_root.exists():
+            for p in skills_root.rglob(skill_name):
+                if p.is_symlink() or p.exists():
+                    p.unlink()
+                    found = True
+                    print(f"✅ Evicted '{skill_name}' from profile '{profile}'.")
         if not found:
             print(f"Skill '{skill_name}' was not active in profile '{profile}'.")
+
+# ==============================================================================
+# EMBEDDED WEB DASHBOARD & REST API
+# ==============================================================================
+
+HTML_DASHBOARD = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermes Hybrid Vector Registry</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --surface: #111827;
+      --surface-hover: #1e293b;
+      --surface-border: #1f2937;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.15);
+      --purple: #a855f7;
+      --orange: #f97316;
+      --danger: #ef4444;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 0.85rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #fff;
+      text-decoration: none;
+    }
+    .brand span {
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .badge-chip {
+      background: var(--surface-border);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      font-weight: 500;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .nav-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .nav-btn:hover {
+      background: var(--surface);
+      color: #fff;
+    }
+    .nav-btn.active {
+      background: var(--surface-border);
+      color: var(--accent);
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    .hero {
+      padding: 2rem 1.75rem 1.25rem;
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.08), transparent 60%);
+      border-bottom: 1px solid var(--surface-border);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .stat-val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .stat-lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+    .search-box-wrap {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .search-input-group {
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: #fff;
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    select.filter-select {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: #fff;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+    }
+    select.filter-select:focus {
+      border-color: var(--accent);
+    }
+    main {
+      flex: 1;
+      padding: 1.5rem 1.75rem;
+      max-width: 1600px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.25rem;
+    }
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+    .skill-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .skill-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .match-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .match-badge.keyword {
+      background: rgba(168, 85, 247, 0.15);
+      color: var(--purple);
+    }
+    .card-category {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+    }
+    .card-desc {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+      margin-bottom: 1.25rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      gap: 0.5rem;
+    }
+    .btn-action {
+      background: var(--surface-border);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      padding: 0.45rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .btn-action:hover {
+      background: #374151;
+    }
+    .btn-activate {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: rgba(16, 185, 129, 0.5);
+      color: var(--success);
+    }
+    .btn-activate:hover {
+      background: rgba(16, 185, 129, 0.35);
+      color: #fff;
+    }
+    .btn-deactivate {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.5);
+      color: var(--danger);
+    }
+    .btn-deactivate:hover {
+      background: rgba(239, 68, 68, 0.35);
+      color: #fff;
+    }
+    /* Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 800px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .modal-head {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+    .modal-body pre {
+      background: #090d16;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.8rem;
+      border: 1px solid var(--surface-border);
+      margin: 1rem 0;
+      white-space: pre-wrap;
+    }
+    .btn-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .btn-close:hover { color: #fff; }
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      color: #fff;
+      padding: 0.85rem 1.25rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 200;
+      font-size: 0.85rem;
+      animation: fadeIn 0.2s;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="brand">
+      🌌 <span>Hermes Registry</span>
+      <span class="badge-chip">Hybrid Vector Engine</span>
+    </a>
+    <nav class="nav-tabs">
+      <button class="nav-btn active" onclick="switchTab('search')">🔍 Search & Discover</button>
+      <button class="nav-btn" onclick="switchTab('profiles')">👥 Specialist Profiles (66)</button>
+      <button class="nav-btn" onclick="switchTab('mcp')">🔌 MCP & Plugins</button>
+      <button class="nav-btn" onclick="switchTab('stats')">📊 Ecosystem Stats</button>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card"><div class="stat-val" id="cntCurated">19,691</div><div class="stat-lbl">Curated Skills</div></div>
+      <div class="stat-card"><div class="stat-val" id="cntCommunity">64,687</div><div class="stat-lbl">Community Pool</div></div>
+      <div class="stat-card"><div class="stat-val" id="cntProfiles">66</div><div class="stat-lbl">Specialist Profiles</div></div>
+      <div class="stat-card"><div class="stat-val" id="cntMCP">45 / 4.8k</div><div class="stat-lbl">Production MCPs</div></div>
+      <div class="stat-card"><div class="stat-val" id="cntPlugins">32</div><div class="stat-lbl">Active Plugins</div></div>
+      <div class="stat-card"><div class="stat-val" id="cntChroma">Active</div><div class="stat-lbl">ChromaDB Vectors</div></div>
+    </div>
+
+    <div class="search-box-wrap">
+      <div class="search-input-group">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchQuery" placeholder="Search by natural language intent (e.g. 'smart contract audit', 'GEO SEO audit', 'MQL5 trading')..." onkeydown="if(event.key==='Enter') executeSearch()">
+      </div>
+      <select class="filter-select" id="filterCategory" onchange="executeSearch()">
+        <option value="">All 48 Domains</option>
+      </select>
+      <select class="filter-select" id="targetProfile">
+        <option value="default">Target Profile: default</option>
+      </select>
+      <button class="btn-action" style="background: var(--accent); color: #000; font-weight: 600; padding: 0.75rem 1.25rem;" onclick="executeSearch()">Search</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- TAB 1: Search & Discover -->
+    <div id="tab-search" class="tab-content active">
+      <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+        <span id="resultsCount" style="color: var(--text-muted); font-size: 0.85rem;">Showing top skills</span>
+      </div>
+      <div class="card-grid" id="skillsGrid"></div>
+    </div>
+
+    <!-- TAB 2: Specialist Profiles -->
+    <div id="tab-profiles" class="tab-content">
+      <div style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">Select any profile to view active skills or activate tools:</div>
+      <div class="card-grid" id="profilesGrid"></div>
+    </div>
+
+    <!-- TAB 3: MCP & Plugins -->
+    <div id="tab-mcp" class="tab-content">
+      <h3 style="margin-bottom: 1rem; color: var(--accent);">Production MCP Servers (45 Curated)</h3>
+      <div class="card-grid" id="mcpGrid" style="margin-bottom: 2rem;"></div>
+      <h3 style="margin-bottom: 1rem; color: var(--purple);">Enterprise Plugins (32 Active)</h3>
+      <div class="card-grid" id="pluginsGrid"></div>
+    </div>
+
+    <!-- TAB 4: Stats -->
+    <div id="tab-stats" class="tab-content">
+      <div style="background: var(--surface); padding: 1.5rem; border-radius: 10px; border: 1px solid var(--surface-border);">
+        <h3 style="margin-bottom: 1rem; color: var(--accent);">Database & Vector Metrics</h3>
+        <pre id="statsDetails" style="font-family: monospace; font-size: 0.85rem; color: #cbd5e1;"></pre>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal for Skill Detail -->
+  <div class="modal-backdrop" id="skillModal" onclick="if(event.target===this) closeModal()">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="modalTitle" style="color: #fff;">Skill Details</h3>
+        <button class="btn-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <script>
+    let activeSkills = {};
+    let allProfiles = [];
+
+    async function init() {
+      await loadStats();
+      await loadCategories();
+      await loadProfiles();
+      executeSearch();
+    }
+
+    function switchTab(name) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      const t = document.getElementById('tab-' + name);
+      if (t) t.classList.add('active');
+      event.target.classList.add('active');
+
+      if (name === 'profiles') renderProfilesView();
+      if (name === 'mcp') loadMcpAndPlugins();
+      if (name === 'stats') loadStatsTab();
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+        if (data.counts) {
+          document.getElementById('cntCurated').innerText = (data.counts.curated_skills || 19691).toLocaleString();
+          document.getElementById('cntCommunity').innerText = (data.counts.community_skills || 64687).toLocaleString();
+          document.getElementById('cntProfiles').innerText = data.counts.profiles || 66;
+          document.getElementById('cntMCP').innerText = (data.counts.recommended_mcp || 45) + ' / ' + (data.counts.mcp_servers || 4837);
+          document.getElementById('cntPlugins').innerText = data.counts.plugins || 32;
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    async function loadCategories() {
+      try {
+        const res = await fetch('/api/categories');
+        const cats = await res.json();
+        const sel = document.getElementById('filterCategory');
+        cats.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c.category;
+          opt.innerText = `${c.category} (${c.count})`;
+          sel.appendChild(opt);
+        });
+      } catch (e) { console.error(e); }
+    }
+
+    async function loadProfiles() {
+      try {
+        const res = await fetch('/api/profiles');
+        const data = await res.json();
+        allProfiles = data.profiles || [];
+        activeSkills = data.active_map || {};
+
+        const sel = document.getElementById('targetProfile');
+        sel.innerHTML = '';
+        allProfiles.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.name;
+          opt.innerText = `Target: ${p.name}`;
+          if (p.name === 'default') opt.selected = true;
+          sel.appendChild(opt);
+        });
+      } catch (e) { console.error(e); }
+    }
+
+    async function executeSearch() {
+      const q = document.getElementById('searchQuery').value.trim();
+      const cat = document.getElementById('filterCategory').value;
+      const targetProf = document.getElementById('targetProfile').value;
+
+      document.getElementById('resultsCount').innerText = 'Searching hybrid vector registry...';
+      const grid = document.getElementById('skillsGrid');
+      grid.innerHTML = '<div style="color: var(--text-muted); padding: 1rem;">Resolving semantic vectors & full-text indexes...</div>';
+
+      try {
+        const url = `/api/search?q=${encodeURIComponent(q)}&category=${encodeURIComponent(cat)}&limit=24`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const items = data.results || [];
+
+        document.getElementById('resultsCount').innerText = `Resolved ${items.length} relevant tools`;
+        grid.innerHTML = '';
+
+        if (items.length === 0) {
+          grid.innerHTML = '<div style="color: var(--text-muted); padding: 2rem;">No matching tools found. Try another search query.</div>';
+          return;
+        }
+
+        const activeSet = new Set(activeSkills[targetProf] || []);
+
+        items.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'skill-card';
+          const isActive = activeSet.has(item.name);
+
+          let badgeHtml = '';
+          if (item.match_type === 'semantic') {
+            badgeHtml = `<span class="match-badge">${(item.score * 100).toFixed(0)}% Semantic</span>`;
+          } else {
+            badgeHtml = `<span class="match-badge keyword">BM25 Match</span>`;
+          }
+
+          card.innerHTML = `
+            <div>
+              <div class="card-top">
+                <span class="skill-title">${escapeHtml(item.name)}</span>
+                ${badgeHtml}
+              </div>
+              <div class="card-category">📁 ${escapeHtml(item.category)}</div>
+              <div class="card-desc">${escapeHtml(item.description || 'No description provided.')}</div>
+            </div>
+            <div class="card-actions">
+              <button class="btn-action" onclick="viewSkill('${escapeHtml(item.name)}')">Inspect Docs</button>
+              ${isActive ? 
+                `<button class="btn-action btn-deactivate" onclick="toggleSkill('${escapeHtml(item.name)}', 'deactivate')">Deactivate</button>` : 
+                `<button class="btn-action btn-activate" onclick="toggleSkill('${escapeHtml(item.name)}', 'activate')">+ Activate</button>`
+              }
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (e) {
+        grid.innerHTML = `<div style="color: var(--danger); padding: 1rem;">Search error: ${e.message}</div>`;
+      }
+    }
+
+    async function toggleSkill(skill, action) {
+      const targetProf = document.getElementById('targetProfile').value;
+      try {
+        const res = await fetch(`/api/${action}`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({skill: skill, profile: targetProf})
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(`✅ ${data.message}`);
+          await loadProfiles();
+          executeSearch();
+        } else {
+          showToast(`❌ Error: ${data.error}`);
+        }
+      } catch (e) {
+        showToast(`❌ Failed: ${e.message}`);
+      }
+    }
+
+    async function viewSkill(name) {
+      const modal = document.getElementById('skillModal');
+      const title = document.getElementById('modalTitle');
+      const body = document.getElementById('modalBody');
+      title.innerText = `Skill: ${name}`;
+      body.innerHTML = 'Loading document...';
+      modal.classList.add('open');
+
+      try {
+        const res = await fetch(`/api/skill?name=${encodeURIComponent(name)}`);
+        const data = await res.json();
+        if (data.error) {
+          body.innerText = data.error;
+          return;
+        }
+        body.innerHTML = `
+          <div style="margin-bottom: 1rem;">
+            <strong>Category:</strong> ${escapeHtml(data.category)}<br>
+            <strong>Path:</strong> <code>${escapeHtml(data.path)}</code>
+          </div>
+          <pre>${escapeHtml(data.content || data.description || 'No content found.')}</pre>
+        `;
+      } catch (e) {
+        body.innerText = 'Failed to load skill: ' + e.message;
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('skillModal').classList.remove('open');
+    }
+
+    function renderProfilesView() {
+      const grid = document.getElementById('profilesGrid');
+      grid.innerHTML = '';
+      allProfiles.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'skill-card';
+        const active = activeSkills[p.name] || [];
+        card.innerHTML = `
+          <div>
+            <div class="card-top">
+              <span class="skill-title">👤 ${escapeHtml(p.name)}</span>
+              <span class="badge-chip">${active.length} active tools</span>
+            </div>
+            <div class="card-desc">${escapeHtml(p.description || 'Specialist Hermes Agent Profile')}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+              <strong>Active skills:</strong> ${active.length > 0 ? active.map(s => `<code>${escapeHtml(s)}</code>`).join(', ') : 'None'}
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-action" onclick="document.getElementById('targetProfile').value='${escapeHtml(p.name)}'; switchTab('search'); executeSearch();">Select & Manage</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    async function loadMcpAndPlugins() {
+      const mcpGrid = document.getElementById('mcpGrid');
+      const plgGrid = document.getElementById('pluginsGrid');
+      mcpGrid.innerHTML = 'Loading MCPs...';
+      plgGrid.innerHTML = 'Loading Plugins...';
+
+      try {
+        const res = await fetch('/api/mcp-and-plugins');
+        const data = await res.json();
+        mcpGrid.innerHTML = '';
+        plgGrid.innerHTML = '';
+
+        (data.mcps || []).forEach(m => {
+          const card = document.createElement('div');
+          card.className = 'skill-card';
+          card.innerHTML = `
+            <div>
+              <div class="card-top">
+                <span class="skill-title">🔌 ${escapeHtml(m.server_name)}</span>
+                <span class="match-badge">Production MCP</span>
+              </div>
+              <div class="card-desc">${escapeHtml(m.description || 'Enterprise MCP Server')}</div>
+            </div>
+            <div class="card-actions">
+              <code>${escapeHtml(m.command || 'stdio')}</code>
+            </div>
+          `;
+          mcpGrid.appendChild(card);
+        });
+
+        (data.plugins || []).forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'skill-card';
+          card.innerHTML = `
+            <div>
+              <div class="card-top">
+                <span class="skill-title">🧩 ${escapeHtml(p.name)}</span>
+                <span class="badge-chip">Plugin</span>
+              </div>
+              <div class="card-desc">${escapeHtml(p.description || 'Enterprise Hermes Agent Plugin')}</div>
+            </div>
+          `;
+          plgGrid.appendChild(card);
+        });
+      } catch (e) {
+        mcpGrid.innerHTML = 'Error loading MCPs: ' + e.message;
+      }
+    }
+
+    async function loadStatsTab() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+        document.getElementById('statsDetails').innerText = JSON.stringify(data, null, 2);
+      } catch (e) {
+        document.getElementById('statsDetails').innerText = 'Error: ' + e.message;
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3500);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
+"""
+
+class RegistryHTTPHandler(BaseHTTPRequestHandler):
+    def log_message(self, format, *args):
+        # Clean logging
+        sys.stderr.write(f"[{self.log_date_time_string()}] {args[0]} {args[1]} {args[2]}\n")
+
+    def _send_json(self, data, status=200):
+        body = json.dumps(data).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
+
+    def do_GET(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+        params = urllib.parse.parse_qs(parsed.query)
+
+        if path == "/" or path == "/index.html":
+            body = HTML_DASHBOARD.encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+
+        if path == "/api/stats":
+            conn = get_db()
+            cur = conn.cursor()
+            meta = {r['key']: r['value'] for r in cur.execute("SELECT key, value FROM metadata")}
+            counts = {
+                "curated_skills": cur.execute("SELECT count(*) FROM curated_skills").fetchone()[0],
+                "community_skills": cur.execute("SELECT count(*) FROM community_skills").fetchone()[0],
+                "profiles": cur.execute("SELECT count(*) FROM profiles").fetchone()[0],
+                "recommended_mcp": cur.execute("SELECT count(*) FROM mcp_servers WHERE is_recommended=1").fetchone()[0],
+                "mcp_servers": cur.execute("SELECT count(*) FROM mcp_servers").fetchone()[0],
+                "plugins": cur.execute("SELECT count(*) FROM plugins").fetchone()[0],
+            }
+            client = get_chroma()
+            chroma_info = {}
+            if client:
+                for cname in ['skills_semantic', 'profiles_semantic', 'mcp_semantic', 'plugins_semantic']:
+                    try:
+                        c = client.get_collection(cname)
+                        chroma_info[cname] = c.count()
+                    except Exception:
+                        chroma_info[cname] = 0
+
+            self._send_json({
+                "status": "online",
+                "counts": counts,
+                "metadata": meta,
+                "chromadb": chroma_info,
+                "database_size_mb": round(os.path.getsize(db_path)/(1024*1024), 2) if db_path else 0
+            })
+            return
+
+        if path == "/api/categories":
+            conn = get_db()
+            cur = conn.cursor()
+            rows = cur.execute("SELECT category, count(*) as count FROM curated_skills GROUP BY category ORDER BY count DESC").fetchall()
+            self._send_json([{"category": r['category'], "count": r['count']} for r in rows])
+            return
+
+        if path == "/api/profiles":
+            conn = get_db()
+            cur = conn.cursor()
+            rows = cur.execute("SELECT name, description FROM profiles ORDER BY name").fetchall()
+            active_map = get_active_skills_map()
+            self._send_json({
+                "profiles": [{"name": r['name'], "description": r['description']} for r in rows],
+                "active_map": active_map
+            })
+            return
+
+        if path == "/api/mcp-and-plugins":
+            conn = get_db()
+            cur = conn.cursor()
+            mcps = cur.execute("SELECT server_name, command, description FROM mcp_servers WHERE is_recommended=1 ORDER BY server_name").fetchall()
+            plugins = cur.execute("SELECT name, description FROM plugins ORDER BY name").fetchall()
+            self._send_json({
+                "mcps": [{"server_name": r['server_name'], "command": r['command'], "description": r['description']} for r in mcps],
+                "plugins": [{"name": r['name'], "description": r['description']} for r in plugins]
+            })
+            return
+
+        if path == "/api/search":
+            query = params.get("q", [""])[0].strip()
+            cat = params.get("category", [""])[0].strip()
+            limit = int(params.get("limit", [24])[0])
+
+            conn = get_db()
+            cur = conn.cursor()
+            client = get_chroma()
+
+            results = []
+            seen = set()
+
+            # 1. Semantic Search if query given
+            if query and client:
+                try:
+                    c_skills = client.get_collection("skills_semantic")
+                    where_filter = {"category": cat} if cat else None
+                    q_res = c_skills.query(query_texts=[query], n_results=limit, where=where_filter)
+                    if q_res and q_res.get('ids') and q_res['ids'][0]:
+                        for name, doc, meta, dist in zip(q_res['ids'][0], q_res['documents'][0], q_res['metadatas'][0], q_res['distances'][0]):
+                            sim = max(0.0, 1.0 - float(dist))
+                            results.append({
+                                "name": meta['name'],
+                                "category": meta['category'],
+                                "description": doc,
+                                "score": sim,
+                                "match_type": "semantic"
+                            })
+                            seen.add(meta['name'])
+                except Exception:
+                    pass
+
+            # 2. FTS5 / SQL Fallback or Enrichment
+            if len(results) < limit:
+                needed = limit - len(results)
+                if query:
+                    clean_q = " ".join([w for w in query.replace('"', '').replace("'", '').split() if len(w) > 2])
+                    if clean_q:
+                        match_clause = " OR ".join(clean_q.split())
+                        sql = """
+                            SELECT c.name, c.category, c.description, bm25(curated_skills_fts) as score
+                            FROM curated_skills_fts f
+                            JOIN curated_skills c ON c.id = f.rowid
+                            WHERE curated_skills_fts MATCH ?
+                        """
+                        sql_args = [match_clause]
+                        if cat:
+                            sql += " AND c.category = ?"
+                            sql_args.append(cat)
+                        sql += " ORDER BY score ASC LIMIT ?"
+                        sql_args.append(needed * 2)
+
+                        try:
+                            rows = cur.execute(sql, sql_args).fetchall()
+                            for r in rows:
+                                if r['name'] not in seen:
+                                    results.append({
+                                        "name": r['name'],
+                                        "category": r['category'],
+                                        "description": r['description'],
+                                        "score": 0.5,
+                                        "match_type": "keyword"
+                                    })
+                                    seen.add(r['name'])
+                        except Exception:
+                            pass
+                else:
+                    # No query: return top from category or default
+                    sql = "SELECT name, category, description FROM curated_skills"
+                    sql_args = []
+                    if cat:
+                        sql += " WHERE category = ?"
+                        sql_args.append(cat)
+                    sql += " ORDER BY id ASC LIMIT ?"
+                    sql_args.append(needed)
+                    rows = cur.execute(sql, sql_args).fetchall()
+                    for r in rows:
+                        if r['name'] not in seen:
+                            results.append({
+                                "name": r['name'],
+                                "category": r['category'],
+                                "description": r['description'],
+                                "score": 1.0,
+                                "match_type": "category"
+                            })
+                            seen.add(r['name'])
+
+            self._send_json({"results": results[:limit]})
+            return
+
+        if path == "/api/skill":
+            name = params.get("name", [""])[0].strip()
+            conn = get_db()
+            cur = conn.cursor()
+            row = cur.execute("SELECT name, category, description, path FROM curated_skills WHERE name=?", (name,)).fetchone()
+            if not row:
+                self._send_json({"error": "Skill not found"}, status=404)
+                return
+
+            skill_path = Path(row['path'])
+            content = ""
+            skill_md = skill_path / "SKILL.md" if skill_path.is_dir() else skill_path
+            if not skill_md.exists():
+                candidate = Path(f"/home/predictatrade/.hermes/skill-library/{row['category']}/{row['name']}/SKILL.md")
+                if candidate.exists():
+                    skill_md = candidate
+
+            if skill_md.exists() and skill_md.is_file():
+                try:
+                    content = skill_md.read_text(encoding="utf-8", errors="replace")
+                except Exception as e:
+                    content = f"Error reading file: {e}"
+
+            self._send_json({
+                "name": row['name'],
+                "category": row['category'],
+                "description": row['description'],
+                "path": str(skill_path),
+                "content": content
+            })
+            return
+
+        self._send_json({"error": "Not Found"}, status=404)
+
+    def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+
+        content_len = int(self.headers.get("Content-Length", 0))
+        body = self.rfile.read(content_len).decode("utf-8") if content_len > 0 else "{}"
+        try:
+            payload = json.loads(body)
+        except Exception:
+            self._send_json({"error": "Invalid JSON"}, status=400)
+            return
+
+        skill_name = payload.get("skill", "").strip()
+        profile = payload.get("profile", "default").strip() or "default"
+
+        if not skill_name:
+            self._send_json({"error": "Missing skill name"}, status=400)
+            return
+
+        if path == "/api/activate":
+            conn = get_db()
+            cur = conn.cursor()
+            row = cur.execute("SELECT name, category, path FROM curated_skills WHERE name=?", (skill_name,)).fetchone()
+            if not row:
+                self._send_json({"error": f"Skill '{skill_name}' not found in registry"}, status=404)
+                return
+
+            source_path = Path(row['path'])
+            if not source_path.exists():
+                candidate = Path(f"/home/predictatrade/.hermes/skill-library/{row['category']}/{row['name']}")
+                if candidate.exists():
+                    source_path = candidate
+
+            target_dir = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills/{row['category']}")
+            target_dir.mkdir(parents=True, exist_ok=True)
+            target_link = target_dir / skill_name
+
+            if target_link.exists() or target_link.is_symlink():
+                self._send_json({"success": True, "message": f"'{skill_name}' is already active in '{profile}'."})
+                return
+
+            try:
+                target_link.symlink_to(source_path)
+                self._send_json({
+                    "success": True,
+                    "message": f"Activated '{skill_name}' into profile '{profile}'.",
+                    "target": str(target_link)
+                })
+            except Exception as e:
+                self._send_json({"error": f"Symlink creation failed: {e}"}, status=500)
+            return
+
+        if path == "/api/deactivate":
+            conn = get_db()
+            cur = conn.cursor()
+            row = cur.execute("SELECT category FROM curated_skills WHERE name=?", (skill_name,)).fetchone()
+            category = row['category'] if row else "*"
+
+            skill_path = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills/{category}/{skill_name}")
+            found = False
+            if skill_path.is_symlink() or skill_path.exists():
+                skill_path.unlink()
+                found = True
+            else:
+                skills_root = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills")
+                if skills_root.exists():
+                    for p in skills_root.rglob(skill_name):
+                        if p.is_symlink() or p.exists():
+                            p.unlink()
+                            found = True
+
+            if found:
+                self._send_json({"success": True, "message": f"Evicted '{skill_name}' from profile '{profile}'."})
+            else:
+                self._send_json({"success": True, "message": f"'{skill_name}' was not active in profile '{profile}'."})
+            return
+
+        self._send_json({"error": "Not Found"}, status=404)
+
+def cmd_ui(args):
+    host = args.host
+    port = args.port
+    server = ThreadingHTTPServer((host, port), RegistryHTTPHandler)
+    print("=" * 70)
+    print("  🌌 HERMES HYBRID VECTOR REGISTRY & WEB DASHBOARD LAUNCHED")
+    print("=" * 70)
+    print(f"  • Local Dashboard URL : http://{host if host != '0.0.0.0' else 'localhost'}:{port}")
+    print(f"  • External Access URL  : http://platform.predictatrade.com:{port}")
+    print(f"  • Hybrid Database     : {db_path}")
+    print(f"  • ChromaDB Store      : {chroma_path}")
+    print("-" * 70)
+    print("  Press Ctrl+C to stop the web server.")
+    print("=" * 70)
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nStopping Hermes Registry Web Dashboard...")
+        server.server_close()
+
+# ==============================================================================
+# MAIN ARGUMENT PARSING
+# ==============================================================================
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
@@ -244,23 +1313,41 @@ def main():
     p_res.add_argument("query", help="Natural language description of task or intent")
     p_res.add_argument("--limit", type=int, default=5, help="Number of tools to return")
 
-    p_act = sub.add_parser("activate", help="Dynamically activate a skill into profile context")
+    p_act = sub.add_parser("activate", help="Dynamically activate/install a skill into profile context")
     p_act.add_argument("skill", help="Name of skill to activate")
     p_act.add_argument("--profile", default="default", help="Target profile name")
+
+    p_inst = sub.add_parser("install", help="Alias for activate")
+    p_inst.add_argument("skill", help="Name of skill to install")
+    p_inst.add_argument("--profile", default="default", help="Target profile name")
 
     p_deact = sub.add_parser("deactivate", help="Evict a skill from profile context")
     p_deact.add_argument("skill", help="Name of skill to deactivate")
     p_deact.add_argument("--profile", default="default", help="Target profile name")
+
+    p_uninst = sub.add_parser("uninstall", help="Alias for deactivate")
+    p_uninst.add_argument("skill", help="Name of skill to uninstall")
+    p_uninst.add_argument("--profile", default="default", help="Target profile name")
+
+    p_ui = sub.add_parser("ui", help="Launch interactive Web Dashboard")
+    p_ui.add_argument("--host", default="0.0.0.0", help="Binding host (default 0.0.0.0)")
+    p_ui.add_argument("--port", type=int, default=8888, help="Port to serve on (default 8888)")
+
+    p_dash = sub.add_parser("dashboard", help="Alias for ui")
+    p_dash.add_argument("--host", default="0.0.0.0", help="Binding host (default 0.0.0.0)")
+    p_dash.add_argument("--port", type=int, default=8888, help="Port to serve on (default 8888)")
 
     args = p.parse_args()
     if args.subcommand == "stats":
         cmd_stats(args)
     elif args.subcommand == "resolve":
         cmd_resolve(args)
-    elif args.subcommand == "activate":
+    elif args.subcommand in ("activate", "install"):
         cmd_activate(args)
-    elif args.subcommand == "deactivate":
+    elif args.subcommand in ("deactivate", "uninstall"):
         cmd_deactivate(args)
+    elif args.subcommand in ("ui", "dashboard"):
+        cmd_ui(args)
 
 if __name__ == "__main__":
     main()

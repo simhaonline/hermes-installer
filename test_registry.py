@@ -56,8 +56,10 @@ class TestRegistryAPI(unittest.TestCase):
         self.assertEqual(handler.response_status, 200)
         self.assertIn("text/html", handler.response_headers.get("content-type", ""))
         body = handler.wfile.getvalue().decode("utf-8")
-        self.assertIn("Simha Nexus", body)
-        self.assertIn("design-tokens", body.lower())
+        self.assertIn("Simha", body)
+        self.assertIn("AI Vault", body)
+        self.assertIn("OpenAI", body)
+        self.assertIn("Anthropic", body)
 
     @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
     def test_api_stats(self):
@@ -182,6 +184,40 @@ class TestRegistryAPI(unittest.TestCase):
         data = json.loads(handler.wfile.getvalue().decode("utf-8"))
         self.assertIn("results", data)
         self.assertGreater(len(data["results"]), 0)
+
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
+    def test_api_prompts_list(self):
+        handler = MockHTTPHandler("/api/prompts?limit=5")
+        handler.do_GET()
+        self.assertEqual(handler.response_status, 200)
+        data = json.loads(handler.wfile.getvalue().decode("utf-8"))
+        self.assertIn("prompts", data)
+        self.assertIn("total", data)
+        self.assertGreaterEqual(data["total"], 450)
+        self.assertEqual(len(data["prompts"]), 5)
+
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
+    def test_api_plugins_list(self):
+        handler = MockHTTPHandler("/api/plugins")
+        handler.do_GET()
+        self.assertEqual(handler.response_status, 200)
+        data = json.loads(handler.wfile.getvalue().decode("utf-8"))
+        self.assertIn("plugins", data)
+        self.assertGreaterEqual(len(data["plugins"]), 30)
+        p = data["plugins"][0]
+        self.assertIn("openai_manifest", p)
+        self.assertIn("openai_tools", p)
+        self.assertIn("anthropic_tools", p)
+
+    @unittest.skipIf(hermes_registry.db_path is None, "Live hermes-vault.sqlite not accessible to current user")
+    def test_api_mcp_detail(self):
+        handler = MockHTTPHandler("/api/mcp?name=postgres")
+        handler.do_GET()
+        self.assertEqual(handler.response_status, 200)
+        data = json.loads(handler.wfile.getvalue().decode("utf-8"))
+        self.assertEqual(data.get("server_name"), "postgres")
+        self.assertIn("openai_tools", data)
+        self.assertIn("anthropic_tools", data)
 
 
 if __name__ == "__main__":

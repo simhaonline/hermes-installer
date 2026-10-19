@@ -1,9 +1,9 @@
 # Simha Nexus Enterprise Edition: Exhaustive Governance Rulebook & Protocol Specification
 **Platform**: Simha Nexus AI Ecosystem (Ubuntu Linux LTS)  
-**Standard**: Swiss Institutional Bullion Standard (Simha Enterprise)  
+**Standard**: NIST AI Risk Management Framework & OWASP LLM Enterprise Standard  
 **Governance Frameworks**: OWASP Top 10 for LLM Applications (2025), NIST AI Risk Management Framework (AI RMF 1.0), MITRE ATLAS  
 **Version**: 2.0.0 Enterprise Production  
-**Last Updated**: 2026-10-18  
+**Last Updated**: 2026-10-19  
 
 ---
 
@@ -22,7 +22,7 @@ The **Simha Nexus Enterprise Edition** governance architecture enforces mathemat
    - [Protocol 4: Specialist Runtime Profiles (PRF-001 - PRF-010)](#protocol-4-specialist-runtime-profiles)
    - [Protocol 5: Model Context Protocol (MCP) Universe & Sandboxing (MCP-001 - MCP-010)](#protocol-5-model-context-protocol-mcp-universe--sandboxing)
    - [Protocol 6: Native Ecosystem Engines & AST Safety (ENG-001 - ENG-010)](#protocol-6-native-ecosystem-engines--ast-safety)
-   - [Protocol 7: Swiss Bullion Standard & Cryptographic Ledgers (SBS-001 - SBS-010)](#protocol-7-swiss-bullion-standard--cryptographic-ledgers)
+   - [Protocol 7: Cryptographic State Audit & Append-Only Ledgers (SBS-001 - SBS-010)](#protocol-7-cryptographic-state-audit--append-only-ledgers)
    - [Protocol 8: Repository Discipline & Supply Chain Assurance (REP-001 - REP-010)](#protocol-8-repository-discipline--supply-chain-assurance)
 3. [SECTION C: Syntactically Valid YAML Rule Pack (Top 20 Critical Rules)](#section-c-syntactically-valid-yaml-rule-pack-top-20-critical-rules)
 4. [SECTION D: CI/CD Governance Gating Pipeline Example](#section-d-cicd-governance-gating-pipeline-example)
@@ -215,7 +215,7 @@ Every rule in this section is binary, testable, and enforceable via `hermes-rule
 
 ---
 
-### Protocol 7: Swiss Bullion Standard & Cryptographic Ledgers
+### Protocol 7: Cryptographic State Audit & Append-Only Ledgers
 
 | Rule ID | Protocol | Rule Statement (Strict & Testable) | Threat Mitigated | Severity | CLI Check Command | Autofixable |
 | :--- | :--- | :--- | :--- | :--- | :--- | :---: |
@@ -571,10 +571,10 @@ All 66 profiles in `~/.hermes/profiles/` inject context dynamically via `config.
 * `rea`: Reverse engineering and binary decompilation suite.
 * `pentagi`: Autonomous penetration testing orchestrator.
 
-### Protocol 7 Reference: Swiss Institutional Bullion Standard
-* **Palette Tokens**: Deepest Navy (`#071324`), Sovereign Primary Navy (`#0C1E36`), Surface Navy (`#142844`), Bullion Gold (`#D4AF37`), Institutional Emerald (`#15803D`).
-* **Daylight Mode**: Warm luxury paper (`#FBFBFC`), Pure White (`#FFFFFF`), Structural Borders (`#E5E9F0`).
-* **Typography**: Display serif (`Cormorant Garamond`), Interface sans (`Plus Jakarta Sans`), Monospace figures (`IBM Plex Mono`).
+### Protocol 7 Reference: Enterprise Cryptographic Audit & Design System
+* **Palette Tokens**: Deep Navy (`#071324`), Primary Navy (`#0C1E36`), Surface Navy (`#142844`), Accent Blue (`#0284C7`), Status Emerald (`#15803D`).
+* **Daylight Mode**: Clean Corporate Canvas (`#F8FAFC`), Pure White (`#FFFFFF`), Border Hairlines (`#E2E8F0`).
+* **Typography**: Clean Geometric Display (`Plus Jakarta Sans`), Tabular Figures & Code (`IBM Plex Mono`).
 
 ### Protocol 8 Reference: Repository Discipline
 * **Ownership**: `hermes-installer:hermes-installer` on all files in `/srv/hermes-installer`.
@@ -582,4 +582,4 @@ All 66 profiles in `~/.hermes/profiles/` inject context dynamically via `config.
 * **Manifest Synchronization**: `SHA256SUMS.txt`, `README-HERMES.md`, `assets/collection-manifest.json`.
 
 ---
-*Simha Nexus Enterprise Edition • Predict-A-Trade Platform • End of Governance Rulebook*
+*Simha Nexus Enterprise Edition • Universal AI Knowledge Vault • End of Governance Rulebook*

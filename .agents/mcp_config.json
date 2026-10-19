@@ -17,7 +17,7 @@
       "command": "/usr/local/bin/mempalace-mcp",
       "args": [
         "--palace",
-        "/home/predictatrade/.hermes/memories",
+        "/home/hermes/.hermes/memories",
         "--read-only"
       ]
     },
@@ -57,10 +57,10 @@
     "timescaledb": {
       "command": "node",
       "args": [
-        "/srv/predictatrade/.hermes/mcp-library/timescale-tiger-skills/dist/index.js"
+        "/srv/hermes/.hermes/mcp-library/timescale-tiger-skills/dist/index.js"
       ],
       "env": {
-        "TIMESCALE_CONNECTION_STRING": "${TIMESCALE_CONNECTION_STRING:-postgresql://localhost:5432/predictatrade}"
+        "TIMESCALE_CONNECTION_STRING": "${TIMESCALE_CONNECTION_STRING:-postgresql://localhost:5432/hermes}"
       }
     },
     "questdb": {
@@ -84,7 +84,7 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-postgres",
-        "postgresql://localhost/predictatrade"
+        "postgresql://localhost/hermes"
       ]
     },
     "sqlite": {
@@ -92,7 +92,7 @@
       "args": [
         "mcp-server-sqlite",
         "--db-path",
-        "/srv/predictatrade.db"
+        "/srv/hermes.db"
       ]
     },
     "puppeteer": {
@@ -209,7 +209,7 @@
     "agent-cron": {
       "command": "node",
       "args": [
-        "/srv/predictatrade/.hermes/plugins/agent-cron/src/index.js"
+        "/srv/hermes/.hermes/plugins/agent-cron/src/index.js"
       ]
     },
     "deer-flow": {

@@ -6,17 +6,16 @@ description: >-
 
 # Hermes Vault Manager Skill
 
-The Hermes Knowledge Vault (`hermes-vault.sqlite`, 229.36 MB) is the centralized repository cataloging the entire Hermes agent ecosystem.
+The Hermes Knowledge Vault (`hermes-vault.sqlite`) is the centralized repository cataloging the entire Hermes agent ecosystem.
 
 ## Database Location & Schema
-* Path: `/home/predictatrade/.hermes/hermes-vault.sqlite`
+* Path: `/srv/hermes-installer/hermes-vault.sqlite` or `/home/hermes/.hermes/hermes-vault.sqlite`
 * Tables:
-  * `curated_skills` (19,453 entries): `name`, `category`, `description`, `tags`, `path`, `skill_md`
-  * `community_skills` (64,569 entries): `name`, `repo`, `stars`, `description`, `path`, `raw_json`
-  * `agent_personas` (462 entries): `persona_id`, `name`, `division`, `role`, `type`, `system_prompt`
-  * `mcp_servers` (4,827 entries): `server_name`, `transport`, `command`, `args`, `env`, `is_recommended`
-  * `profiles` (54 entries): `name`, `description`, `raw_config`
-  * `plugins` (26 entries): `name`, `version`, `is_active`, `description`
+  * `curated_skills` (84,378 entries): `name`, `category`, `description`, `tags`, `path`, `skill_md`
+  * `agent_personas` (480 entries): `persona_id`, `name`, `division`, `role`, `type`, `system_prompt`
+  * `mcp_servers` (4,837 entries): `server_name`, `transport`, `command`, `args`, `env`, `is_recommended`
+  * `profiles` (66 entries): `name`, `description`, `raw_config`
+  * `plugins` (32 entries): `name`, `version`, `is_active`, `description`
   * `engines` (17 entries): `name`, `binary_path`, `technology`, `description`
 
 ## Common Operations
@@ -44,6 +43,6 @@ hermes-vault agents "algorithmic trading"
 
 ### 4. Querying via sqlite3 directly
 ```bash
-sqlite3 /home/predictatrade/.hermes/hermes-vault.sqlite "SELECT count(*), division FROM agent_personas GROUP BY division;"
-sqlite3 /home/predictatrade/.hermes/hermes-vault.sqlite "SELECT name, command FROM mcp_servers WHERE is_recommended=1 LIMIT 10;"
+sqlite3 /srv/hermes-installer/hermes-vault.sqlite "SELECT count(*), division FROM agent_personas GROUP BY division;"
+sqlite3 /srv/hermes-installer/hermes-vault.sqlite "SELECT server_name, command FROM mcp_servers WHERE is_recommended=1 LIMIT 10;"
 ```

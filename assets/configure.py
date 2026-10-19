@@ -63,8 +63,7 @@ ROUTES = {
  'web-scraping-specialist': ['scraping', 'crawler', 'anti-bot', 'scrapling', 'scrapfly', 'apify', 'browser'],
  'knowledge-graph-architect': ['graph', 'knowledge-graph', 'neo4j', 'memstack', 'ontology', 'lightrag', 'obsidian'],
  'product-manager': ['prd', 'product', 'sprint', 'roadmap', 'stakeholder', 'user-story', 'launch', 'pm-'],
- 'chart-visualization': ['chart', 'visualization', 'antv', 'apexcharts', 'echarts', 'lightweight-charts', 'd3', 'infographic'],
- 'pat-operations': ['pat-', 'xauusd', 'predictatrade', 'simhaonline', 'mql', 'wine', 'signal-', 'trading-', 'quant', 'indicators', 'mt4-mt5', 'docker-', 'migration', 'backtest', 'go-live', 'telemetry', 'realtime', 'drift', 'pine-', 'auth-session', 'audit-remediation', 'control-plane', 'edge-request', 'server-backup', 'repo-evaluation', 'docs-runbooks', 'ai-ml-engine'],
+ 'ecosystem-operations': ['pat-', 'xauusd', 'simhaonline', 'mql', 'wine', 'signal-', 'trading-', 'quant', 'indicators', 'mt4-mt5', 'docker-', 'migration', 'backtest', 'go-live', 'telemetry', 'realtime', 'drift', 'pine-', 'auth-session', 'audit-remediation', 'control-plane', 'edge-request', 'server-backup', 'repo-evaluation', 'docs-runbooks', 'ai-ml-engine'],
  'mathematics-ai': ['math', 'paper', 'research', 'scientific', 'statistics', 'logic', 'algebra', 'calculus', 'geometry', 'theorem', 'lean', 'coq'],
  'office-excel-pdf': ['excel', 'spreadsheet', 'pdf', 'weasyprint', 'compdf', 'formula', 'macro', 'vba', 'pivot', 'worksheet', 'document'],
  'nginx-caddy-infrastructure': ['nginx', 'caddy', 'proxy', 'reverse-proxy', 'web-server', 'tls', 'ssl', 'load-balancer', 'waf', 'security'],
@@ -197,10 +196,10 @@ def skills():
         sync_tree(ASSETS/'memories', BASE/'memories')
     if (ASSETS/'pending_memory').is_dir():
         sync_tree(ASSETS/'pending_memory', BASE/'pending_memory')
-    # Copy references (predictatrade setup, configs, backups)
+    # Copy references (setup, configs, backups)
     if (ASSETS/'references').is_dir():
         sync_tree(ASSETS/'references', BASE/'references')
-    docs = BASE/'references'/'predictatrade-setup'
+    docs = BASE/'references'/'hermes-setup'
     docs.mkdir(parents=True,exist_ok=True)
     for name in ['submitted-installer.txt','collection-manifest.json','profiles.json','TOKEN_POLICY.md','PROJECT_HANDOFF.md']:
         p = ASSETS/name

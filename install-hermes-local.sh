@@ -189,9 +189,9 @@ WRAPPER
 
     # Install privilege-dropping wrappers in /usr/local/bin if agent core exists
     for tool in hermes hermes-skill-catalog hermes-community-skills hermes-mcp-universe hermes-project-context token-saver hermes-token-saver hermes-agent-cron; do
-        target="$ACCOUNT_HOME/.local/lib/predictatrade-hermes/$tool"
+        target="$ACCOUNT_HOME/.local/lib/hermes-agent/$tool"
         [[ "$tool" != hermes ]] || target="$INSTALL_DIR/.hermes/bin/hermes"
-        if [[ -f "$target" || -d "$ACCOUNT_HOME/.local/lib/predictatrade-hermes" ]]; then
+        if [[ -f "$target" || -d "$ACCOUNT_HOME/.local/lib/hermes-agent" ]]; then
             cat > "/usr/local/bin/$tool" <<WRAPPER
 #!/usr/bin/env bash
 set -euo pipefail

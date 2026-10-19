@@ -38,7 +38,6 @@ DB_CANDIDATES = [
     Path("/srv/hermes-installer/hermes-vault.sqlite"),
     Path("/home/hermes/.hermes/hermes-vault.sqlite"),
     Path("/root/hermes-vault.sqlite"),
-    Path("/home/predictatrade/.hermes/hermes-vault.sqlite"),
     Path.cwd() / "hermes-vault.sqlite"
 ]
 
@@ -46,7 +45,6 @@ CHROMA_CANDIDATES = [
     Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "vector-registry",
     Path("/srv/hermes-installer/vector-registry"),
     Path("/home/hermes/.hermes/vector-registry"),
-    Path("/home/predictatrade/.hermes/vector-registry"),
     Path.cwd() / "vector-registry"
 ]
 
@@ -293,8 +291,8 @@ HTML_FALLBACK_DASHBOARD = """<!DOCTYPE html>
   </style>
 </head>
 <body>
-  <h1>Hermes Agent Enterprise Registry</h1>
-  <p>Institutional Swiss Banking Web Dashboard template is initializing. Access API endpoints directly or verify dashboard.html location.</p>
+  <h1>Simha AI Ecosystem Vault</h1>
+  <p>Simha AI Ecosystem Vault web dashboard is initializing. Access API endpoints directly or verify dashboard.html location.</p>
   <p><a href="/api/stats">/api/stats</a> | <a href="/api/diagnostics">/api/diagnostics</a> | <a href="/api/agents">/api/agents</a></p>
 </body>
 </html>
@@ -408,6 +406,7 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 "curated_skills": curated_cnt,
                 "profiles": cur.execute("SELECT count(*) FROM profiles").fetchone()[0],
                 "agent_personas": cur.execute("SELECT count(*) FROM agent_personas").fetchone()[0],
+                "prompts": cur.execute("SELECT count(*) FROM agent_personas").fetchone()[0],
                 "recommended_mcp": cur.execute("SELECT count(*) FROM mcp_servers WHERE is_recommended=1").fetchone()[0],
                 "mcp_servers": cur.execute("SELECT count(*) FROM mcp_servers").fetchone()[0],
                 "plugins": cur.execute("SELECT count(*) FROM plugins").fetchone()[0],
@@ -519,6 +518,7 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 self._send_json({"error": "Agent persona not found"}, status=404)
                 return
 
+            sp = row['system_prompt'] or ""
             self._send_json({
                 "id": row['id'],
                 "persona_id": row['persona_id'],
@@ -527,7 +527,102 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 "role": row['role'],
                 "type": row['type'],
                 "file_path": row['file_path'],
-                "system_prompt": row['system_prompt']
+                "system_prompt": sp,
+                "openai_format": {
+                    "model": "gpt-4o",
+                    "messages": [
+                        {"role": "system", "content": sp}
+                    ]
+                },
+                "anthropic_format": {
+                    "model": "claude-3-7-sonnet-20250219",
+                    "system": sp,
+                    "messages": []
+                }
+            })
+            return
+
+        if path == "/api/prompts":
+            q = params.get("q", [""])[0].strip()
+            division = params.get("division", [""])[0].strip()
+            try:
+                limit = int(params.get("limit", [50])[0])
+            except ValueError:
+                limit = 50
+            try:
+                offset = int(params.get("offset", [0])[0])
+            except ValueError:
+                offset = 0
+
+            sql = "SELECT id, persona_id, name, division, role, type, substr(system_prompt, 1, 220) as preview FROM agent_personas WHERE 1=1"
+            count_sql = "SELECT count(*) FROM agent_personas WHERE 1=1"
+            sql_args = []
+            if division:
+                sql += " AND division = ?"
+                count_sql += " AND division = ?"
+                sql_args.append(division)
+            if q:
+                sql += " AND (name LIKE ? OR role LIKE ? OR division LIKE ? OR system_prompt LIKE ?)"
+                count_sql += " AND (name LIKE ? OR role LIKE ? OR division LIKE ? OR system_prompt LIKE ?)"
+                lq = f"%{q}%"
+                sql_args.extend([lq, lq, lq, lq])
+
+            total_count = cur.execute(count_sql, sql_args).fetchone()[0]
+            sql += " ORDER BY name ASC LIMIT ? OFFSET ?"
+            sql_args.extend([limit, offset])
+
+            rows = cur.execute(sql, sql_args).fetchall()
+            results = [{
+                "id": r['id'],
+                "persona_id": r['persona_id'],
+                "name": r['name'],
+                "division": r['division'],
+                "role": r['role'],
+                "type": r['type'],
+                "preview": (r['preview'] or "").strip() + "..."
+            } for r in rows]
+
+            self._send_json({
+                "prompts": results,
+                "total": total_count,
+                "limit": limit,
+                "offset": offset
+            })
+            return
+
+        if path == "/api/prompt":
+            pid = params.get("id", [""])[0].strip()
+            pname = params.get("name", [""])[0].strip()
+            row = None
+            if pid:
+                row = cur.execute("SELECT id, persona_id, name, division, role, type, file_path, system_prompt FROM agent_personas WHERE id=? OR persona_id=?", (pid, pid)).fetchone()
+            elif pname:
+                row = cur.execute("SELECT id, persona_id, name, division, role, type, file_path, system_prompt FROM agent_personas WHERE name=? OR persona_id=?", (pname, pname)).fetchone()
+            if not row:
+                self._send_json({"error": "Prompt not found"}, status=404)
+                return
+
+            sp = row['system_prompt'] or ""
+            self._send_json({
+                "id": row['id'],
+                "persona_id": row['persona_id'],
+                "name": row['name'],
+                "division": row['division'],
+                "role": row['role'],
+                "type": row['type'],
+                "file_path": row['file_path'],
+                "system_prompt": sp,
+                "openai_format": {
+                    "model": "gpt-4o",
+                    "messages": [
+                        {"role": "system", "content": sp}
+                    ]
+                },
+                "anthropic_format": {
+                    "model": "claude-3-7-sonnet-20250219",
+                    "system": sp,
+                    "messages": []
+                }
             })
             return
 
@@ -579,6 +674,186 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 "total": total,
                 "limit": limit,
                 "offset": offset
+            })
+            return
+
+        if path == "/api/mcp":
+            name = params.get("name", [""])[0].strip()
+            row = cur.execute("SELECT server_name, transport, command, args, env, source_repo, is_recommended, description, raw_config FROM mcp_servers WHERE server_name=?", (name,)).fetchone()
+            if not row:
+                self._send_json({"error": "MCP server not found"}, status=404)
+                return
+            clean_fn = re.sub(r'[^a-zA-Z0-9_]', '_', row['server_name'])
+            self._send_json({
+                "server_name": row['server_name'],
+                "transport": row['transport'],
+                "command": row['command'],
+                "args": row['args'],
+                "env": row['env'],
+                "source_repo": row['source_repo'],
+                "is_recommended": bool(row['is_recommended']),
+                "description": row['description'],
+                "raw_config": row['raw_config'],
+                "openai_tools": [
+                    {
+                        "type": "function",
+                        "function": {
+                            "name": f"mcp_{clean_fn}",
+                            "description": row['description'] or f"Invoke {row['server_name']} MCP server tool",
+                            "parameters": {
+                                "type": "object",
+                                "properties": {
+                                    "tool_name": {"type": "string", "description": f"Tool action on {row['server_name']}"},
+                                    "arguments": {"type": "object", "description": "Key-value tool parameters"}
+                                },
+                                "required": ["tool_name"]
+                            }
+                        }
+                    }
+                ],
+                "anthropic_tools": [
+                    {
+                        "name": f"mcp_{clean_fn}",
+                        "description": row['description'] or f"Invoke {row['server_name']} MCP server tool",
+                        "input_schema": {
+                            "type": "object",
+                            "properties": {
+                                "tool_name": {"type": "string", "description": f"Tool action on {row['server_name']}"},
+                                "arguments": {"type": "object", "description": "Key-value tool parameters"}
+                            },
+                            "required": ["tool_name"]
+                        }
+                    }
+                ]
+            })
+            return
+
+        if path == "/api/plugins":
+            q = params.get("q", [""])[0].strip()
+            sql = "SELECT id, name, version, path, is_active, description FROM plugins"
+            args = []
+            if q:
+                sql += " WHERE name LIKE ? OR description LIKE ?"
+                lq = f"%{q}%"
+                args = [lq, lq]
+            sql += " ORDER BY name ASC"
+            rows = cur.execute(sql, args).fetchall()
+            plugin_items = []
+            for r in rows:
+                clean_fn = re.sub(r'[^a-zA-Z0-9_]', '_', r['name'])
+                plugin_items.append({
+                    "id": r['id'],
+                    "name": r['name'],
+                    "version": r['version'],
+                    "path": r['path'],
+                    "is_active": bool(r['is_active']),
+                    "description": r['description'],
+                    "openai_manifest": {
+                        "schema_version": "v1",
+                        "name_for_model": clean_fn,
+                        "name_for_human": r['name'].replace("-", " ").title(),
+                        "description_for_model": r['description'],
+                        "description_for_human": r['description'],
+                        "auth": {"type": "none"},
+                        "api": {"type": "openapi", "url": f"/api/plugins/{r['name']}/openapi.json"}
+                    },
+                    "openai_tools": [
+                        {
+                            "type": "function",
+                            "function": {
+                                "name": f"{clean_fn}_execute",
+                                "description": r['description'],
+                                "parameters": {
+                                    "type": "object",
+                                    "properties": {
+                                        "command": {"type": "string", "description": "Command or operation to execute"},
+                                        "parameters": {"type": "object", "description": "Command execution parameters"}
+                                    },
+                                    "required": ["command"]
+                                }
+                            }
+                        }
+                    ],
+                    "anthropic_tools": [
+                        {
+                            "name": f"{clean_fn}_execute",
+                            "description": r['description'],
+                            "input_schema": {
+                                "type": "object",
+                                "properties": {
+                                    "command": {"type": "string", "description": "Command or operation to execute"},
+                                    "parameters": {"type": "object", "description": "Command execution parameters"}
+                                },
+                                "required": ["command"]
+                            }
+                        }
+                    ]
+                })
+            self._send_json({
+                "plugins": plugin_items,
+                "total": len(plugin_items)
+            })
+            return
+
+        if path == "/api/plugin":
+            name = params.get("name", [""])[0].strip()
+            pid = params.get("id", [""])[0].strip()
+            row = None
+            if name:
+                row = cur.execute("SELECT id, name, version, path, is_active, description FROM plugins WHERE name=?", (name,)).fetchone()
+            elif pid:
+                row = cur.execute("SELECT id, name, version, path, is_active, description FROM plugins WHERE id=?", (pid,)).fetchone()
+            if not row:
+                self._send_json({"error": "Plugin not found"}, status=404)
+                return
+            clean_fn = re.sub(r'[^a-zA-Z0-9_]', '_', row['name'])
+            self._send_json({
+                "id": row['id'],
+                "name": row['name'],
+                "version": row['version'],
+                "path": row['path'],
+                "is_active": bool(row['is_active']),
+                "description": row['description'],
+                "openai_manifest": {
+                    "schema_version": "v1",
+                    "name_for_model": clean_fn,
+                    "name_for_human": row['name'].replace("-", " ").title(),
+                    "description_for_model": row['description'],
+                    "description_for_human": row['description'],
+                    "auth": {"type": "none"},
+                    "api": {"type": "openapi", "url": f"/api/plugins/{row['name']}/openapi.json"}
+                },
+                "openai_tools": [
+                    {
+                        "type": "function",
+                        "function": {
+                            "name": f"{clean_fn}_execute",
+                            "description": row['description'],
+                            "parameters": {
+                                "type": "object",
+                                "properties": {
+                                    "command": {"type": "string", "description": "Command or operation to execute"},
+                                    "parameters": {"type": "object", "description": "Command execution parameters"}
+                                },
+                                "required": ["command"]
+                            }
+                        }
+                    }
+                ],
+                "anthropic_tools": [
+                    {
+                        "name": f"{clean_fn}_execute",
+                        "description": row['description'],
+                        "input_schema": {
+                            "type": "object",
+                            "properties": {
+                                "command": {"type": "string", "description": "Command or operation to execute"},
+                                "parameters": {"type": "object", "description": "Command execution parameters"}
+                            },
+                            "required": ["command"]
+                        }
+                    }
+                ]
             })
             return
 
@@ -839,7 +1114,7 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
 
         if path == "/api/skill":
             name = params.get("name", [""])[0].strip()
-            row = cur.execute("SELECT name, category, description, path FROM curated_skills WHERE name=?", (name,)).fetchone()
+            row = cur.execute("SELECT name, category, description, path, skill_md FROM curated_skills WHERE name=?", (name,)).fetchone()
             if not row:
                 self._send_json({"error": "Skill not found"}, status=404)
                 return
@@ -858,12 +1133,55 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 except Exception as e:
                     content = f"Error reading file: {e}"
 
+            if not content and row['skill_md']:
+                content = row['skill_md']
+
+            clean_fn = re.sub(r'[^a-zA-Z0-9_]', '_', row['name'])
             self._send_json({
                 "name": row['name'],
                 "category": row['category'],
                 "description": row['description'],
                 "path": str(skill_path),
-                "content": content
+                "content": content,
+                "openai_tool": {
+                    "type": "function",
+                    "function": {
+                        "name": clean_fn,
+                        "description": row['description'] or f"Execute skill {row['name']}",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "action": {
+                                    "type": "string",
+                                    "description": f"Workflow step or action to execute for {row['name']}"
+                                },
+                                "arguments": {
+                                    "type": "object",
+                                    "description": "Optional parameters and configurations for execution"
+                                }
+                            },
+                            "required": ["action"]
+                        }
+                    }
+                },
+                "anthropic_tool": {
+                    "name": clean_fn,
+                    "description": row['description'] or f"Execute skill {row['name']}",
+                    "input_schema": {
+                        "type": "object",
+                        "properties": {
+                            "action": {
+                                "type": "string",
+                                "description": f"Workflow step or action to execute for {row['name']}"
+                            },
+                            "arguments": {
+                                "type": "object",
+                                "description": "Optional parameters and configurations for execution"
+                            }
+                        },
+                        "required": ["action"]
+                    }
+                }
             })
             return
 

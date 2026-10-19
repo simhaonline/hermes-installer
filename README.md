@@ -13,9 +13,9 @@
 [![Architecture](https://img.shields.io/badge/security-Rootless_Docker_%2B_UID_1001-brightgreen.svg?style=for-the-badge&logo=docker)](https://github.com/simhaonline/hermes-installer)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=for-the-badge)](LICENSE)
 
-An enterprise-grade AI agent platform and hybrid vector ecosystem engineered for high-assurance autonomous workflows. Features **19,840 curated skills** meticulously indexed across **56 operational domains**, **64,687 community packages**, **554 agent personas**, **66 specialist profiles**, **45 production MCP servers** (from an indexed universe of 4,842), **35 active plugins**, and **17 pre-compiled native engines** (AST parsing, 99.2% token context compression, binary reverse engineering, autonomous penetration testing, and holographic AI memory).
+An enterprise-grade AI agent platform and hybrid vector ecosystem engineered for high-assurance autonomous workflows. Features **84,378 curated skills** meticulously indexed across **56 operational domains**, **480 agent personas**, **66 specialist profiles**, **45 production MCP servers** (from an indexed universe of 4,837), **32 active plugins**, and **17 pre-compiled native engines** (AST parsing, 99.2% token context compression, binary reverse engineering, autonomous penetration testing, and holographic AI memory). Fully compatible with **OpenAI** and **Anthropic** schema definitions.
 
-Operates with **strict non-root process isolation** (`predictatrade`, `UID=1001`), **Rootless Docker**, an **Interactive Web Dashboard / UI (`0.0.0.0:8998`)**, and a **hybrid dense-sparse vector registry** (SQLite FTS5 + ChromaDB ONNX embeddings) for zero-copy, just-in-time (JIT) skill discovery and execution.
+Operates with **strict non-root process isolation** (`hermes`), **Rootless Docker**, an **Interactive Web Dashboard / UI (`0.0.0.0:8998`)**, and a **hybrid dense-sparse vector registry** (SQLite FTS5 + ChromaDB ONNX embeddings) for zero-copy, just-in-time (JIT) skill discovery and execution.
 
 ---
 
@@ -32,10 +32,10 @@ Operates with **strict non-root process isolation** (`predictatrade`, `UID=1001`
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        HYBRID DENSE-SPARSE KNOWLEDGE VAULT                             │
 │  ┌────────────────────────────────────────────────┐  ┌───────────────────────────────┐ │
-│  │   Master SQLite FTS5 Database (305 MB)         │  │  ChromaDB Dense Vectors (71MB)│ │
-│  │   • 19,840 Curated Skills (Full Text Markdown) │  │  • all-MiniLM-L6-v2 Embeddings│ │
-│  │   • 64,687 Community Skill Package Pool        │  │  • Cosine Similarity Search   │ │
-│  │   • 554 Personas & 66 Specialist Profiles      │  │  • Instant Intent Resolution  │ │
+│  │   Master SQLite FTS5 Database (507 MB)         │  │  ChromaDB Dense Vectors (71MB)│ │
+│  │   • 84,378 Curated Skills (Full Text Markdown) │  │  • all-MiniLM-L6-v2 Embeddings│ │
+│  │   • 480 Personas & 66 Specialist Profiles      │  │  • Cosine Similarity Search   │ │
+│  │   • 4,837 Model Context Protocol (MCP) Servers │  │  • Instant Intent Resolution  │ │
 │  │   • BM25 Porter Stemmer Full-Text Indexes      │  │  • Zero External API Calls    │ │
 │  └────────────────────────────────────────────────┘  └───────────────────────────────┘ │
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
@@ -52,10 +52,10 @@ Operates with **strict non-root process isolation** (`predictatrade`, `UID=1001`
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        SECURITY & ISOLATION RUNTIME                                    │
-│   • Dedicated User: predictatrade (UID=1001, GID=1001)                                 │
-│   • Rootless Docker Daemon: unix:///run/user/1001/docker.sock                          │
+│   • Dedicated User: hermes (Isolated Environment)                                      │
+│   • Rootless Docker Daemon: unix:///run/user/hermes/docker.sock                        │
 │   • Strict AppArmor Profiles, cgroup v2, & Non-Privileged Host Execution               │
-│   • Automatic Privilege Dropping from Root to predictatrade on all CLI tools           │
+│   • Automatic Privilege Dropping from Root to hermes on all CLI tools                  │
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -101,7 +101,7 @@ Hermes includes a built-in, zero-dependency **Interactive Web Dashboard** served
 - **🩺 Live System & Database Diagnostics**: Real-time SQLite `PRAGMA integrity_check`, vector store collection verification, database footprint tracking, and CLI command generator.
 
 ### Accessing the Dashboard
-- **Web UI URL**: `http://localhost:8998` (or `http://platform.predictatrade.com:8998`)
+- **Web UI URL**: `http://localhost:8998` (or `http://<server-ip>:8998`)
 - **CLI Launcher**: `hermes-registry ui` or `hermes-registry dashboard --port 8998`
 - **Systemd Service**: Managed as a resilient background daemon:
   ```bash
@@ -173,7 +173,7 @@ The ecosystem contains **19,840 curated, production-ready skills** with full YAM
 | 14 | **`mathematics-ai`** | **116** | Mathematical theorem proving, Lean/Coq formalization, LaTeX paper reading, symbolic derivation, AI4Math research workflows. | `ai4math-paper-reading`, `latex-paper-conversion`, `graph-theory-researcher`, `sympy`, `scipy-optimization` |
 | 15 | **`tencent-cloud-ecosystem`** | **103** | Serverless Tencent CloudBase (TCB), TRTC real-time communications, Tencent Maps WebGL, WeChat Mini-Programs. | `cloudbase-agent`, `trtc-sdk`, `tencentmap-jsapi-gl`, `wechat-miniprogram`, `wechatpay-basic` |
 | 16 | **`knowledge-graph`** | **92** | Graph RAG, Neo4j / FalkorDB Cypher queries, ontology modeling, semantic link prediction, Memstack graph stores. | `knowledge-graph-neo4j`, `lightrag`, `cypher-query-builder`, `ontology-mapper`, `mempalace` |
-| 17 | **`predictatrade`** | **76** | Quant algorithmic models, live broker execution, order routing, and market risk calculators. | `pat-calibration-rebuild`, `pat-delivery-guards`, `pat-monitoring-deck` |
+| 17 | **`quant-trading`** | **76** | Quant algorithmic models, live broker execution, order routing, and market risk calculators. | `pat-calibration-rebuild`, `pat-delivery-guards`, `pat-monitoring-deck` |
 | 18 | **`openai-plugins`** | **55** | Converted OpenAI ChatGPT plugin manifests, GPT Actions, OpenAPI tool definitions, and procedural workflows. | `zapier-ai-actions`, `wolfram-alpha`, `speak`, `klarna-shopping`, `expedia` |
 | 19 | **`omnichannel-messaging`** | **47** | Discord bots, Telegram mini-apps, WhatsApp Wassenger automation, Slack event listeners, Gmail pipelines. | `discord-bot-architect`, `telegram-mini-app-skill`, `whatsapp-cloud-api`, `slack-workflows`, `laya` |
 | 20 | **`agent-teams`** | **46** | Autonomous multi-agent coordination, swarm architectures, Kanban delegation, AionUi, Takt, and OneManCompany workflows. | `aionui-agent`, `team-collaboration`, `autoagent-orchestration`, `kanban-task-coordination` |
@@ -417,7 +417,7 @@ The platform includes **35 production plugins** registered in `~/.hermes/plugins
 
 ## ⚡ 17 Pre-compiled Native Engines
 
-All **17 engines** are pre-compiled and installed in `/usr/local/bin` with automatic privilege dropping to `predictatrade` (`UID=1001`):
+All **17 engines** are pre-compiled and installed in `/usr/local/bin` with automatic privilege dropping to isolated user `hermes`:
 
 | # | Engine | Technology | CLI / Command | Capabilities |
 |---|---|---|---|---|

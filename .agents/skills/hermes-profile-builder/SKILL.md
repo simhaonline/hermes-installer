@@ -9,7 +9,7 @@ description: >-
 Hermes supports running discrete autonomous agent profiles with independent memory stores, targeted skill sets, and specialized system prompts.
 
 ## Profile Architecture
-Profiles reside in `/home/predictatrade/.hermes/profiles/<profile_name>/`:
+Profiles reside in `/home/hermes/.hermes/profiles/<profile_name>/`:
 * `profile.yaml`: Metadata description and role definition.
 * `config.yaml`: Profile-scoped configuration (LLM model, memory limits, toolsets, enabled/disabled skills).
 * `SOUL.md`: Primary system personality instructions.

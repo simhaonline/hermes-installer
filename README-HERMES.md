@@ -1,27 +1,27 @@
 # Hermes Agent Production Deployment & Built-in Architecture
 
-## Enterprise Edition: Platform Predict-A-Trade (`platform.predictatrade.com`)
+## Enterprise Edition: Simha AI Vault Enterprise Edition
 
-This document provides complete operational, architectural, and developer documentation for the production deployment of the **Hermes Agent** platform on Ubuntu LTS (`platform.predictatrade.com`), incorporating all 16 advanced AI, engineering, reverse engineering, and multi-agent simulation engines.
+This document provides complete operational, architectural, and developer documentation for the production deployment of the **Hermes Agent** platform on Ubuntu LTS (`hermes.simhainfobiz.com`), incorporating all 16 advanced AI, engineering, reverse engineering, and multi-agent simulation engines.
 
 ---
 
 ## 1. Architectural Highlights & Security Boundaries
 
 ### A. Dedicated Service User Isolation
-- **Non-Privileged Service Account**: Hermes executes strictly as the dedicated user `predictatrade` (`UID=1001`, `GID=1001`), with home directory at `/home/predictatrade`.
-- **Group Isolation Boundary**: The `predictatrade` user is strictly prohibited from belonging to privileged system groups (`docker`, `sudo`, `adm`), preventing any privilege escalation from within the agent context.
-- **Dedicated Project Workspace**: Primary workspace resides at `/srv/predictatrade` with `0750` permissions owned by `predictatrade:predictatrade`.
-- **Subordinate IDs**: 65,536 contiguous subordinate UIDs/GIDs allocated in `/etc/subuid` and `/etc/subgid` (`predictatrade:100000:65536`) enabling rootless container namespaces.
+- **Non-Privileged Service Account**: Hermes executes strictly as the dedicated user `hermes` (`UID=1001`, `GID=1001`), with home directory at `/home/hermes`.
+- **Group Isolation Boundary**: The `hermes` user is strictly prohibited from belonging to privileged system groups (`docker`, `sudo`, `adm`), preventing any privilege escalation from within the agent context.
+- **Dedicated Project Workspace**: Primary workspace resides at `/srv/hermes` with `0750` permissions owned by `hermes:hermes`.
+- **Subordinate IDs**: 65,536 contiguous subordinate UIDs/GIDs allocated in `/etc/subuid` and `/etc/subgid` (`hermes:100000:65536`) enabling rootless container namespaces.
 
 ### B. Dual Docker Daemon Architecture
 - **Host Production Docker**: The host's standard Docker daemon runs unaltered on `/var/run/docker.sock` for system services and platform-level infrastructure.
-- **Hermes Isolated Rootless Docker**: Hermes operates within its own dedicated **Rootless Docker** daemon (`unix:///run/user/1001/docker.sock`), managed by the systemd user service `user@1001.service` with persistent lingering enabled (`loginctl enable-linger predictatrade`).
+- **Hermes Isolated Rootless Docker**: Hermes operates within its own dedicated **Rootless Docker** daemon (`unix:///run/user/1001/docker.sock`), managed by the systemd user service `user@1001.service` with persistent lingering enabled (`loginctl enable-linger hermes`).
 - **Namespace & Cgroup v2 Isolation**: Enforced via systemd cgroup2fs and scoped AppArmor profile (`/etc/apparmor.d/usr.bin.rootlesskit`).
 - **Pre-Loaded Official Sandbox**: The official desktop sandbox image (`nousresearch/hermes-sandbox:desktop`, 4.4 GB) is preloaded and cached directly in Rootless Docker for immediate containerized desktop tool execution without runtime pull delays.
 
 ### C. Zero-Host Contamination Multi-User Binary Wrappers
-All primary Hermes binaries installed into `/usr/local/bin` seamlessly drop privileges from `root` to `predictatrade` using `runuser -u predictatrade`:
+All primary Hermes binaries installed into `/usr/local/bin` seamlessly drop privileges from `root` to `hermes` using `runuser -u hermes`:
 - `/usr/local/bin/hermes`
 - `/usr/local/bin/hermes-skill-catalog`
 - `/usr/local/bin/hermes-community-skills`
@@ -39,33 +39,33 @@ All primary Hermes binaries installed into `/usr/local/bin` seamlessly drop priv
 - `/usr/local/bin/hermes-vault`
 - `/usr/local/bin/hermes-registry`
 
-### D. User Execution Model: Running as Root vs. predictatrade
+### D. User Execution Model: Running as Root vs. hermes
 
 #### Can I start and run projects as `root`?
 **YES.** All primary command-line tools in `/usr/local/bin` (`hermes`, `hermes-vault`, `hermes-skill-catalog`, `hermes-community-skills`, `hermes-mcp-universe`, `codegraph`, `mcptoon`, `trim`, `mempalace`, `rea`, `pentagi`, `auto`, etc.) are wrapped with automatic privilege-dropping logic. When executed as `root`:
-1. The wrapper automatically switches execution context to `predictatrade` via `runuser -u predictatrade`.
-2. It sets `HOME="/home/predictatrade"`, `HERMES_HOME="/home/predictatrade/.hermes"`, and connects to the Rootless Docker socket (`unix:///run/user/1001/docker.sock`).
-3. It preserves your working directory if accessible, or defaults to `/srv/predictatrade`.
+1. The wrapper automatically switches execution context to `hermes` via `runuser -u hermes`.
+2. It sets `HOME="/home/hermes"`, `HERMES_HOME="/home/hermes/.hermes"`, and connects to the Rootless Docker socket (`unix:///run/user/1001/docker.sock`).
+3. It preserves your working directory if accessible, or defaults to `/srv/hermes`.
 4. **Advantage**: You get the ergonomics of typing commands directly from your root shell, while the agent and all untrusted AI code are strictly quarantined in non-root user space.
 
-#### Can I run directly as the `predictatrade` user?
+#### Can I run directly as the `hermes` user?
 **YES.** For pure non-root interactive sessions:
 ```bash
-su - predictatrade
-cd /srv/predictatrade
+su - hermes
+cd /srv/hermes
 hermes
 ```
 Or run one-off commands from root:
 ```bash
-runuser -u predictatrade -- hermes
+runuser -u hermes -- hermes
 ```
 
 #### Where should project files live?
-All projects and code repositories should reside in `/srv/predictatrade/` (or subdirectories such as `/srv/predictatrade/my-project`).
-- If you create project directories while logged in as `root`, ensure `predictatrade` owns them:
+All projects and code repositories should reside in `/srv/hermes/` (or subdirectories such as `/srv/hermes/my-project`).
+- If you create project directories while logged in as `root`, ensure `hermes` owns them:
   ```bash
-  mkdir -p /srv/predictatrade/my-algo-trader
-  chown -R predictatrade:predictatrade /srv/predictatrade/my-algo-trader
+  mkdir -p /srv/hermes/my-algo-trader
+  chown -R hermes:hermes /srv/hermes/my-algo-trader
   ```
 - This guarantees Hermes has full read, write, execution, and git permissions without permission-denied errors.
 
@@ -131,8 +131,8 @@ Located in `~/.hermes/skill-library` and indexed in `hermes-vault.sqlite`:
 **Total: 19,222 skills across 47 categories**
 
 #### 2. Captured Community Skill Pool: 64,569 Unique Packages
-- Located at: `/home/predictatrade/.local/share/hermes-community-skill-pool/skills`
-- Manifest: `/home/predictatrade/.local/share/hermes-community-skill-pool/index.jsonl`
+- Located at: `/home/hermes/.local/share/hermes-community-skill-pool/skills`
+- Manifest: `/home/hermes/.local/share/hermes-community-skill-pool/index.jsonl`
 - Full triage breakdown: Comprehensive pool of curated and indexed skills across open-source ecosystems.
 - Instant search and enablement across all 64,569 packages via `hermes-community-skills search <query>` or `hermes-vault community <query>`.
 
@@ -153,20 +153,20 @@ Located in `~/.hermes/skill-library` and indexed in `hermes-vault.sqlite`:
 | 9 | `cactus-compute/cactus` | **Cactus Compute** | Python / C++ | Quantization kernels, neural graph transpiler & low-latency edge inference runtime (`cactus` Python package). Optimized for low-precision weights. |
 | 10 | `vxcontrol/pentagi` | **PentAGI** | Go Binary | Autonomous penetration testing and defensive security auditing agent system (`/usr/local/bin/pentagi`). Pre-compiled Go backend with graphiti/neo4j connectors. |
 | 11 | `aayushch/laya` | **Laya** | Python / MCP | Local-first AI notification command center aggregating Slack, Gmail, GitHub, and Jira (`laya` Python package & MCP definition). |
-| 12 | `BrunoMiguens/translating-products-skill` | **Product Localization** | Skills Suite | Suite of 23 composable product localization skills in `/home/predictatrade/.hermes/skill-library/translation-localization/`. |
+| 12 | `BrunoMiguens/translating-products-skill` | **Product Localization** | Skills Suite | Suite of 23 composable product localization skills in `/home/hermes/.hermes/skill-library/translation-localization/`. |
 | 13 | `senshinji/claude-translation-skill` | **Multi-Agent Translation** | Skills Suite | Multi-agent translation pipeline with terminology verification and glossary enforcement. |
 | 14 | `irsali/translation-skill` | **Translation File Sync** | Skills Suite | AI-powered translation file synchronizer for i18n/l10n JSON and YAML files. |
 | 15 | `deusyu/translate-book` | **Book Translation** | Skills Suite | Book translation skill for PDF, DOCX, and EPUB documents using parallel subagents. |
-| 16 | `foreveryh/claude-skills-tutorial` | **Skills Curriculum** | Skills Suite | Comprehensive skills curriculum and documentation authoring tutorial in `/home/predictatrade/.hermes/skill-library/skill-tutorials/`. |
+| 16 | `foreveryh/claude-skills-tutorial` | **Skills Curriculum** | Skills Suite | Comprehensive skills curriculum and documentation authoring tutorial in `/home/hermes/.hermes/skill-library/skill-tutorials/`. |
 
 ---
 
 ## 4. Agent Library (480 Personas) & 66 Specialist Profiles
 
 ### 1. Agent Library (480 Personas)
-Located in `/home/predictatrade/.hermes/agent-library`:
+Located in `/home/hermes/.hermes/agent-library`:
 - **329 Agency Agents**: Pre-configured specialized personas across Engineering, Design, Academic Research, Copywriting, and Marketing.
-- **90 Technical Specialists**: Located in `/home/predictatrade/.hermes/agent-library/specialist-agents/`, including:
+- **90 Technical Specialists**: Located in `/home/hermes/.hermes/agent-library/specialist-agents/`, including:
   - `GEOSearchSpecialist.agent.md` — Generative Engine Optimization, Schema.org entity graphs, and AI citation visibility.
   - `SocialMediaStrategist.agent.md` — Autonomous social media marketing, viral hooks, and multi-channel scheduling.
   - `GTMSalesEngineer.agent.md` — Go-To-Market acceleration, outbound sequences, and lead scoring.
@@ -197,17 +197,17 @@ Located in `/home/predictatrade/.hermes/agent-library`:
 - **Fabric, Personal AI Employee & PM Personas**: Project managers, sprint planners, enterprise data architects.
 
 ### 2. 66 Dedicated Specialist Profiles
-Configured with independent memory stores and selective skill routing in `/home/predictatrade/.hermes/profiles/`:
+Configured with independent memory stores and selective skill routing in `/home/hermes/.hermes/profiles/`:
 `orchestrator`, `coding-engineer`, `qa-testing`, `devops-sre`, `cloud-infrastructure`, `security-audit`, `ethical-hacking-pentest`, `red-team`, `blue-team`, `purple-team`, `white-team`, `yellow-team`, `green-team`, `orange-team`, `ai-llm-engineer`, `ai-research-mlops`, `data-knowledge`, `research-science`, `metatrader-quant`, `analytics-finance`, `business-operations`, `documents-office`, `legal-corporate`, `creative-media`, `marketing-growth`, `communications-sales`, `mcp-librarian`, `skill-librarian`, `esoteric-advisor`, `multi-agent-architect`, `backend-architect`, `database-optimizer`, `code-reviewer`, `agentic-search-optimizer`, `token-optimizer`, `tradingview-quant`, `fabric-engineer`, `web-scraping-specialist`, `knowledge-graph-architect`, `product-manager`, `chart-visualization`, `pat-operations`, `mathematics-ai`, `office-excel-pdf`, `nginx-caddy-infrastructure`, `astro-web-architect`, `minimax-voice-agent`, `kimi-reasoning-specialist`, `manus-autonomous-agent`, `workbuddy-enterprise`, `tencent-cloud-architect`, `laravel-architect`, `seo-growth-marketer`, `foundation-agent`, `geo-search-specialist`, `social-media-strategist`, `gtm-sales-engineer`, `mlops-platform-engineer`, `computer-vision-engineer`, `fact-checking-analyst`, `ai-governance-officer`, `executive-c-suite-advisor`, `hr-talent-operations`, `legal-clm-specialist`, `supply-chain-architect`, and `deep-learning-researcher`.
 
-- **Multi-Agent Kanban Decomposition**: Pre-initialized on default profile via SQLite database at `/home/predictatrade/.hermes/kanban.db`.
+- **Multi-Agent Kanban Decomposition**: Pre-initialized on default profile via SQLite database at `/home/hermes/.hermes/kanban.db`.
 - **Subagent Parallelism**: Concurrency cap of 3 child agents, spawn depth limit of 2, 250 max turns.
 
 ---
 
 ## 5. MCP (Model Context Protocol) Suite (45 Curated Servers)
 
-Stored in `/home/predictatrade/.hermes/mcp-library/recommended-mcp-servers.json`:
+Stored in `/home/hermes/.hermes/mcp-library/recommended-mcp-servers.json`:
 
 | Server Name | Transport | Purpose & Capabilities |
 |---|---|---|
@@ -261,7 +261,7 @@ Stored in `/home/predictatrade/.hermes/mcp-library/recommended-mcp-servers.json`
 
 ## 6. Active Plugins & Extensions (32 Plugins)
 
-Located in `/home/predictatrade/.hermes/plugins/`:
+Located in `/home/hermes/.hermes/plugins/`:
 - **`agentic-flow`**: Multi-agent swarm coordination, cyclic state machine workflows, and hierarchical delegation.
 - **`geo-optimizer`**: Generative Engine Optimization audit, JSON-LD knowledge graph generator, and AI answer engine tracker.
 - **`openfactcheck`**: Automated claim decomposition, multi-source evidence retrieval, and fact verification engine.
@@ -301,7 +301,7 @@ Located in `/home/predictatrade/.hermes/plugins/`:
 
 | Command | Functionality | Example |
 |---|---|---|
-| `hermes` | Interactive agent CLI session (auto-drops privileges to `predictatrade`) | `hermes` or `hermes -p default chat` |
+| `hermes` | Interactive agent CLI session (auto-drops privileges to `hermes`) | `hermes` or `hermes -p default chat` |
 | `hermes-skill-catalog` | Search, inspect, list categories, enable or disable skills | `hermes-skill-catalog search quant` |
 | `hermes-community-skills` | Search and activate community skills from the 25,000+ pool | `hermes-community-skills search scrapfly` |
 | `hermes-mcp-universe` | Search, inspect, and register MCP servers | `hermes-mcp-universe search redis` |
@@ -391,14 +391,14 @@ hermes -p product-manager
 ```
 
 #### 2. Invoking Specialist Personas (from Agent Library)
-Over 415 structured persona markdown documents reside in `/home/predictatrade/.hermes/agent-library/`:
+Over 415 structured persona markdown documents reside in `/home/hermes/.hermes/agent-library/`:
 - **Specialist Personas**: Located in `specialist-agents/` (e.g., `codegraph-intelligence.md`, `pentagi-pentest.md`, `rea-reverse-engineering.md`, `mirofish-swarm.md`, `autoagent-autonomous.md`, `mempalace-memory.md`, `translation-localization.md`, `cactus-quant.md`, `laya-command-center.md`).
 - **Agency Personas**: 329 personas in `agency-agents/` across Engineering, Design, Academic Research, and Marketing.
 
 **Usage Methods**:
 ```bash
 # Method A: Launch Hermes with a specialist persona prompt
-hermes --prompt "$(cat /home/predictatrade/.hermes/agent-library/specialist-agents/codegraph-intelligence.md)"
+hermes --prompt "$(cat /home/hermes/.hermes/agent-library/specialist-agents/codegraph-intelligence.md)"
 
 # Method B: Search personas via hermes-vault CLI
 hermes-vault agents pentagi
@@ -409,7 +409,7 @@ sqlite3 /root/hermes-vault.sqlite "SELECT system_prompt FROM agent_personas WHER
 ```
 
 #### 3. Multi-Agent Kanban Task Decomposition
-Hermes includes a built-in SQLite Kanban board (`/home/predictatrade/.hermes/kanban.db`):
+Hermes includes a built-in SQLite Kanban board (`/home/hermes/.hermes/kanban.db`):
 ```bash
 # Add tasks assigned to specific specialist agents
 hermes -p default kanban task add "Audit Vault.sol for reentrancy" --agent security-audit
@@ -424,14 +424,14 @@ hermes -p default kanban list
 ### C. How to Use MCP (Model Context Protocol) Servers
 
 #### 1. Recommended Production Servers (30 Pre-Configured Servers)
-The 30 curated production MCP servers are stored in `/home/predictatrade/.hermes/mcp-library/recommended-mcp-servers.json`:
+The 30 curated production MCP servers are stored in `/home/hermes/.hermes/mcp-library/recommended-mcp-servers.json`:
 - `filesystem`, `memory`, `git`, `docker`, `sqlite`, `postgres`, `redis`, `timescaledb`, `questdb`
 - `codegraph`, `mcptoon`, `mempalace`, `rea`, `laya`
 - `puppeteer`, `playwright`, `fetch`, `brave-search`, `scrapling-crawler`, `deer-flow`, `2captcha`
 - `metatrader5`, `tradingview-signals`, `microsoft-fabric`, `telegram-bot`, `discord`, `whatsapp-wassenger`
 
 #### 2. Configuring MCP Servers in Hermes
-MCP servers are defined in `/home/predictatrade/.hermes/config.yaml` (or profile `config.yaml`).
+MCP servers are defined in `/home/hermes/.hermes/config.yaml` (or profile `config.yaml`).
 Example configuration:
 ```yaml
 mcp_servers:
@@ -446,17 +446,17 @@ mcp_servers:
     args: []
   filesystem:
     command: npx
-    args: ["-y", "@modelcontextprotocol/server-filesystem", "/srv/predictatrade"]
+    args: ["-y", "@modelcontextprotocol/server-filesystem", "/srv/hermes"]
   sqlite:
     command: uvx
-    args: ["mcp-server-sqlite", "--db-path", "/home/predictatrade/.hermes/hermes-vault.sqlite"]
+    args: ["mcp-server-sqlite", "--db-path", "/home/hermes/.hermes/hermes-vault.sqlite"]
 ```
 
 #### 3. Using MCP Servers Directly from CLI
 Each MCP engine can also be used directly as a standalone CLI tool in scripts or the terminal:
 ```bash
 # CodeGraph: Generate AST knowledge graph and impact search
-codegraph index /srv/predictatrade/my-project
+codegraph index /srv/hermes/my-project
 codegraph search "handleOrderExecution"
 
 # MCPToon: Compress JSON/MCP payloads by 99.2%
@@ -523,7 +523,7 @@ hermes -p default plugins enable openshell
      Installs and verifies in seconds without binary bloat.
 
 2. **Option B: Master SQLite Knowledge Vault (`hermes-vault.sqlite`, 301 MB)**:
-   - **File**: `/home/predictatrade/.hermes/hermes-vault.sqlite`
+   - **File**: `/home/hermes/.hermes/hermes-vault.sqlite`
    - **Contents**:
      - `curated_skills`: All 19,691 curated skills with complete markdown text and YAML frontmatter across 49 categories.
      - `community_skills`: 64,687 indexed community packages with star counts and triage categories.
@@ -590,7 +590,7 @@ bash /root/hermes-agent-production.sh --skip-sync
 
 ### Inspect Rootless Docker Status
 ```bash
-runuser -u predictatrade -- env XDG_RUNTIME_DIR=/run/user/1001 systemctl --user status docker
+runuser -u hermes -- env XDG_RUNTIME_DIR=/run/user/1001 systemctl --user status docker
 ```
 
 ---
@@ -658,7 +658,7 @@ To prevent agent context degradation and disk bloat (eliminating 12+ GB of redun
 
 | Component | Status | Verification Details |
 |---|---|---|
-| Dedicated Service User | **PASSED** | `predictatrade` (UID: 1001), strict isolation from `docker`, `sudo`, `adm` |
+| Dedicated Service User | **PASSED** | `hermes` (UID: 1001), strict isolation from `docker`, `sudo`, `adm` |
 | Rootless Docker | **PASSED** | Cgroup v2 active, socket `unix:///run/user/1001/docker.sock`, `hello-world` OK |
 | Desktop Sandbox Image | **PASSED** | `nousresearch/hermes-sandbox:desktop` (4.4 GB) cached and verified |
 | Hermes Agent Engine | **PASSED** | `v0.21.5+5853.g4ed093c`, audio-io extension compiled, config check passed |
@@ -666,10 +666,10 @@ To prevent agent context degradation and disk bloat (eliminating 12+ GB of redun
 | Community Skill Pool | **PASSED** | 64,687 packages cataloged with security triage |
 | Agent Library & Profiles | **PASSED** | 480 agent personas + 66 specialist profiles with Kanban initialized |
 | MCP Universe Catalog | **PASSED** | 4,837 servers indexed + 45 recommended production configurations |
-| 17 Extended AI Engines | **PASSED** | All binaries, libraries, and Python modules verified under user `predictatrade` |
+| 17 Extended AI Engines | **PASSED** | All binaries, libraries, and Python modules verified under user `hermes` |
 | Active Plugins | **PASSED** | 32 active enterprise plugins including `agentic-flow`, `geo-optimizer`, `openfactcheck`, `ai-governance`, `contract-lifecycle`, `gtm-engine`, `mcptoon`, `codegraph`, `mempalace`, `rea`, `openshell` |
 | SQLite Knowledge Vault | **PASSED** | `hermes-vault.sqlite` (301 MB with FTS5 BM25 index & triggers) |
-| ChromaDB Vector Registry | **PASSED** | `/home/predictatrade/.hermes/vector-registry` (69 MB, all 19,691 skills + 480 personas + 66 profiles + 45 MCPs + 32 plugins) |
+| ChromaDB Vector Registry | **PASSED** | `/home/hermes/.hermes/vector-registry` (69 MB, all 19,691 skills + 480 personas + 66 profiles + 45 MCPs + 32 plugins) |
 | Dynamic JIT Registry CLI | **PASSED** | `/usr/local/bin/hermes-registry` (hybrid resolve, activate, deactivate, stats) |
 | Option A Content Vault | **PASSED** | `hermes-content-vault-v1.1.0.tar.gz` (151 MB) in `dist/` verified with SHA-256 |
 | Self-Local Full Installer | **PASSED** | `hermes-self-contained-installer.tar.gz` (1.4 GB) 100% offline verified |

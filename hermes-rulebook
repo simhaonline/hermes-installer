@@ -618,35 +618,35 @@ RULES_DB: Dict[str, Dict[str, Any]] = {
     # Protocol 7: Swiss Bullion Standard & Cryptographic Ledgers
     # -------------------------------------------------------------------------
     "SBS-001": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "All agent state transitions and task completions must generate an immutable SHA-256 state hash recorded in kanban.db with millisecond timestamp.",
         "threat": "Cryptographic Non-Repudiation", "severity": "CRITICAL",
         "autofix": True, "evidence": "NIST AI RMF GOV-1.2 / Swiss Bullion Standard",
         "check_fn": lambda: (True, "SHA-256 state hashing and timestamped ledger recording active")
     },
     "SBS-002": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "System audit logs must be append-only (WORM - Write Once, Read Many), cryptographically sealed with hourly HMAC-SHA256 block chains.",
         "threat": "Audit Log Tampering / Repudiation", "severity": "CRITICAL",
         "autofix": False, "evidence": "NIST AI RMF MAN-2.4 / Swiss Bullion Standard",
         "check_fn": lambda: (True, "Append-only WORM audit chain structure confirmed")
     },
     "SBS-003": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "The platform must maintain 100% zero telemetry; outgoing packets to commercial ad/telemetry domains are unconditionally dropped at firewall.",
         "threat": "Institutional Data Exfiltration", "severity": "CRITICAL",
         "autofix": True, "evidence": "OWASP LLM06 / Swiss Bullion Standard",
         "check_fn": lambda: (True, "Zero telemetry operational mode enforced across all platform services")
     },
     "SBS-004": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "SQLite Knowledge Vault (hermes-vault.sqlite) must pass PRAGMA integrity_check and foreign_key_check on registry initialization.",
         "threat": "Database Corruption / Tampering", "severity": "HIGH",
         "autofix": False, "evidence": "NIST AI RMF MEA-1.1",
         "check_fn": lambda: (True, "PRAGMA integrity check routine enabled on startup")
     },
     "SBS-005": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "Harvested skills and community contributions must contain verifiable cryptographic provenance metadata (commit hash, source URL, license).",
         "threat": "Upstream Skill Poisoning / Provenance Loss", "severity": "HIGH",
         "autofix": False, "evidence": "OWASP LLM03 / MITRE ATLAS AML.T0040",
@@ -656,35 +656,35 @@ RULES_DB: Dict[str, Dict[str, Any]] = {
         )
     },
     "SBS-006": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "Financial and quantitative algorithmic models must enforce private banking double-entry ledger attestation before advancing trading states.",
         "threat": "Algorithmic Financial Manipulation", "severity": "CRITICAL",
         "autofix": False, "evidence": "NIST AI RMF GOV-1.1 / Swiss Bullion Standard",
         "check_fn": lambda: (True, "Double-entry cryptographic ledger reconciliation verified")
     },
     "SBS-007": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "Cryptographic private keys and secrets must never touch unencrypted persistent disk; operational keys reside in kernel keyring or tmpfs.",
         "threat": "Private Key Exposure", "severity": "CRITICAL",
         "autofix": False, "evidence": "OWASP LLM06",
         "check_fn": lambda: (True, "In-memory / kernel keyring key residency verified")
     },
     "SBS-008": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "Platform operator actions and privileged overrides must require multi-factor cryptographic hardware token confirmation (FIDO2/WebAuthn).",
         "threat": "Operator Account Takeover", "severity": "CRITICAL",
         "autofix": False, "evidence": "NIST AI RMF GOV-1.2",
         "check_fn": lambda: (True, "FIDO2 / WebAuthn cryptographic hardware gate active")
     },
     "SBS-009": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "Complete audit trail bundles must be exportable in signed, verifiable tarball archives with detached GPG signatures for independent regulatory audit.",
         "threat": "Regulatory Non-Compliance", "severity": "HIGH",
         "autofix": True, "evidence": "NIST AI RMF GOV-2.1",
         "check_fn": lambda: (True, "Audit trail archive export pipeline with detached signature verified")
     },
     "SBS-010": {
-        "protocol": "Swiss Bullion Standard", "proto_num": 7,
+        "protocol": "Cryptographic State Audit", "proto_num": 7,
         "statement": "All automated agent code commits must be signed with dedicated agent GPG signing subkeys for cryptographic state non-repudiation.",
         "threat": "Malicious Commit Spoofing", "severity": "HIGH",
         "autofix": False, "evidence": "OWASP LLM05",
@@ -795,7 +795,7 @@ PROTOCOL_NAMES = {
     4: "Runtime Profiles",
     5: "MCP Universe & Tools",
     6: "Native Ecosystem Engines",
-    7: "Swiss Bullion Standard",
+    7: "Cryptographic State Audit & Ledgers",
     8: "Repository Discipline"
 }
 
@@ -829,7 +829,7 @@ def parse_rulebook_protocols(content: str) -> List[Dict[str, Any]]:
 def print_banner():
     print(f"{GOLD}{BOLD}{'=' * 78}{RESET}")
     print(f"{GOLD}{BOLD}     SIMHA NEXUS ENTERPRISE — SOVEREIGN GOVERNANCE RULEBOOK (v2.0.0)      {RESET}")
-    print(f"{DIM}     Swiss Institutional Bullion Standard • simhainfobiz.com{RESET}")
+    print(f"{DIM}     Enterprise AI Governance Standard (NIST AI RMF / OWASP LLM){RESET}")
     print(f"{GOLD}{BOLD}{'=' * 78}{RESET}\n")
 
 def cmd_check_rule(rule_id: str) -> int:
@@ -1050,7 +1050,7 @@ def cmd_generate_report(fmt: str = "md") -> int:
     md = f"""# Simha Nexus Institutional Compliance Attestation
 **Ledger Epoch**: {now_iso}  
 **Platform**: Simha Nexus AI Ecosystem (Ubuntu Linux LTS)  
-**Standard**: Swiss Institutional Bullion Standard  
+**Standard**: Enterprise Cryptographic Audit Standard (NIST AI RMF / OWASP LLM)  
 **Governance Engine**: hermes-rulebook v2.0.0  
 **Attestation State SHA-256**: `{state_hash}`  
 

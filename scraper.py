@@ -214,7 +214,7 @@ class GitHubClient:
         cand_files = [
             Path("/root/.git-credentials"),
             Path.home() / ".git-credentials",
-            Path("/home/predictatrade/.git-credentials"),
+            Path("/home/hermes/.git-credentials"),
         ]
         for cred_file in cand_files:
             if cred_file.is_file():
@@ -402,8 +402,8 @@ class ScraperPipeline:
         self,
         client: GitHubClient,
         output_dir: Path,
-        db_path: Path = Path("/home/predictatrade/.hermes/hermes-vault.sqlite"),
-        chroma_dir: Path = Path("/home/predictatrade/.hermes/vector-registry"),
+        db_path: Path = Path("/srv/hermes-installer/hermes-vault.sqlite"),
+        chroma_dir: Path = Path("/srv/hermes-installer/vector-registry"),
         dry_run: bool = False,
     ):
         self.client = client
@@ -821,7 +821,7 @@ class ScraperPipeline:
                     logger.debug(f"FTS5 insertion error for {name}: {e}")
 
             # Sync to live runtime directory
-            runtime_dir = Path("/home/predictatrade/.hermes/skill-library") / category / name
+            runtime_dir = Path("/home/hermes/.hermes/skill-library") / category / name
             try:
                 runtime_dir.mkdir(parents=True, exist_ok=True)
                 (runtime_dir / "SKILL.md").write_text(skill_md, encoding="utf-8")
@@ -878,7 +878,7 @@ class ScraperPipeline:
                     logger.debug(f"FTS5 insertion error for agent {persona_id}: {e}")
 
             # Sync to live runtime directory
-            runtime_agent_dir = Path("/home/predictatrade/.hermes/agent-library") / division
+            runtime_agent_dir = Path("/home/hermes/.hermes/agent-library") / division
             try:
                 runtime_agent_dir.mkdir(parents=True, exist_ok=True)
                 (runtime_agent_dir / f"{persona_id}.md").write_text(system_prompt, encoding="utf-8")
@@ -923,7 +923,7 @@ class ScraperPipeline:
                 plugins_items.append((row_id, p_name, description))
 
             # Sync to live runtime directory
-            runtime_plug_dir = Path("/home/predictatrade/.hermes/plugins") / p_name
+            runtime_plug_dir = Path("/home/hermes/.hermes/plugins") / p_name
             try:
                 runtime_plug_dir.mkdir(parents=True, exist_ok=True)
                 (runtime_plug_dir / "plugin.yaml").write_text(yaml.dump(p, sort_keys=False), encoding="utf-8")
@@ -1017,7 +1017,7 @@ class ScraperPipeline:
 
         # Fix filesystem permissions
         if os.geteuid() == 0:
-            os.system("chown -R predictatrade:predictatrade /home/predictatrade/.hermes/skill-library /home/predictatrade/.hermes/agent-library /home/predictatrade/.hermes/plugins /home/predictatrade/.hermes/hermes-vault.sqlite /home/predictatrade/.hermes/vector-registry 2>/dev/null || true")
+            os.system("chown -R hermes:hermes /home/hermes/.hermes/skill-library /home/hermes/.hermes/agent-library /home/hermes/.hermes/plugins /home/hermes/.hermes/hermes-vault.sqlite /home/hermes/.hermes/vector-registry 2>/dev/null || true")
             os.system("chown -R hermes-installer:hermes-installer /srv/hermes-installer/harvested-* 2>/dev/null || true")
 
     def run_pipeline(

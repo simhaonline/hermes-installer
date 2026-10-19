@@ -16,7 +16,7 @@ unnecessary complexity. Preserve existing skills, agent profiles, MCP registrati
 provider credentials, memories and user customizations. Add capabilities and improve
 token efficiency without deleting the collected library. Never print credentials.
 
-**Host:** hostname `platform.predictatrade.com`, UTC; AMD Ryzen 9 7950X3D, 16 physical
+**Host:** hostname `platform.simhainfobiz.com`, UTC; AMD Ryzen 9 7950X3D, 16 physical
 cores/32 logical threads; 128305 MB non-ECC RAM; two 1920 GB NVMe devices
 `/dev/nvme0n1` and `/dev/nvme1n1`. Raw capacity 3576 GiB; installed RAID, partitions,
 filesystems, redundancy and usable capacity are unverified. Do not format or reinstall.
@@ -69,7 +69,7 @@ toolchain and current `.hermes/bin/hermes` launcher, with no upstream npm lockfi
 
 **Hermes target layout after the new script runs:** dedicated unprivileged `hermes` account,
 data `/home/hermes/.hermes`, source `/home/hermes/.local/share/hermes-agent`, development
-workspace `/srv/predictatrade-development`, rootless Docker socket
+workspace `/srv/hermes-development`, rootless Docker socket
 `/run/user/<hermes-uid>/docker.sock`. Production Docker is retained. Existing root Hermes
 data/pools are copied additively; original locations remain. SQLite files use consistent
 backup copying. The installer starts the user Docker service with linger, but does not
@@ -131,14 +131,14 @@ All following names are confirmed; service-role labels are planning interpretati
 
 | Domain | Intended role |
 | --- | --- |
-| predictatrade.com | Main website |
-| dataset.predictatrade.com | Dataset service |
-| status.predictatrade.com | Service status |
-| api.predictatrade.com | Public API |
-| platform.predictatrade.com | Platform/dashboard and server FQDN |
-| live.predictatrade.com | Live market service |
-| downloads.predictatrade.com | Downloads |
-| docs.predictatrade.com | Documentation |
+| simhainfobiz.com | Main website |
+| dataset.simhainfobiz.com | Dataset service |
+| status.simhainfobiz.com | Service status |
+| api.simhainfobiz.com | Public API |
+| platform.simhainfobiz.com | Platform/dashboard and server FQDN |
+| live.simhainfobiz.com | Live market service |
+| downloads.simhainfobiz.com | Downloads |
+| docs.simhainfobiz.com | Documentation |
 
 The user will configure DNS manually after server readiness and old-VPS migration.
 TLS method, reverse proxy, backend ports and whether to publish AAAA are undecided.
@@ -160,7 +160,7 @@ repository: `/workspace/scratch/2839179117db/` contains:
 09-configure-audit-metrics.sh
 10-configure-limits-shell-tmux.sh
 11-validate-base-server.sh
-predictatrade-base-server.sh
+hermes-base-server.sh
 12-install-production-docker.sh
 13-install-hermes.sh                    (new deliverable)
 Predict-A-Trade_Hetzner_Server_Baseline.md
@@ -182,7 +182,7 @@ Intended new Hermes files (not a remote filesystem observation):
 /usr/local/bin/hermes-mcp-universe             # retained MCP helper dispatcher
 /usr/local/bin/hermes-skill-catalog            # search/select retained skill packages
 /usr/local/bin/hermes-project-context          # zero-API inventory helper
-/home/hermes/.local/lib/predictatrade-hermes/   # helper implementations
+/home/hermes/.local/lib/hermes-agent/   # helper implementations
 /home/hermes/.local/share/hermes-agent/        # official source + .hermes/bin/hermes
 /home/hermes/.local/share/hermes-community-skill-pool/
 /home/hermes/.local/share/hermes-mcp-universe/
@@ -198,16 +198,16 @@ Intended new Hermes files (not a remote filesystem observation):
   configuration-backups/                      # private pre-edit config copies
   migration-conflicts/                        # incoming legacy variants without overwrites
   context-snapshots/                          # bounded per-project inventories
-  references/predictatrade-setup/
+  references/hermes-setup/
     submitted-installer.txt                   # complete original, retained as reference
     collection-manifest.json                  # original skill hashes + profile inventory
     profiles.json
     TOKEN_POLICY.md
     PROJECT_HANDOFF.md
-/srv/predictatrade-development/               # account-owned development workspace
+/srv/hermes-development/               # account-owned development workspace
 /home/hermes/.config/docker/daemon.json        # separate rootless daemon defaults
 /home/hermes/.config/systemd/user/docker.service
-/root/predictatrade-backups/hermes-*/           # private wrapper/config backup and refresh logs
+/root/hermes-backups/hermes-*/           # private wrapper/config backup and refresh logs
 ```
 
 Do not invent `/frontend`, `/backend`, framework/database versions, application tests,
@@ -248,7 +248,7 @@ catalog entry is remotely verified or usable without credentials.
   automatic validation/commit with a timed rollback guard; no `CONFIRM` question.
 - UFW inserted at position 1 when no rules existed: `ERROR: Invalid position '1'`.
   Firewall script corrected for an empty ruleset; preserve existing rules.
-- Chrony validation under `/root/predictatrade-backups/chrony-*/chrony.conf.new` failed
+- Chrony validation under `/root/hermes-backups/chrony-*/chrony.conf.new` failed
   `Permission denied` after privilege dropping. Validate at the readable installed config
   path; retain backup privately. Chrony must be synchronized, not merely running.
 - Auditd restart can be prohibited by its unit. Start/enable appropriately; do not rely on

@@ -12,6 +12,7 @@ DO_UPDATE=0
 INSTALL_CRON=0
 CRON_SCHEDULE="0 3 * * *"
 REMOVE_CRON=0
+ALL_USERS=0
 
 show_help() {
     cat <<'HELP'
@@ -22,6 +23,7 @@ Usage:
 
 Options:
   --update                Incrementally update Prompts, Skills, Agents, MCPs, and Plugins
+  --all-users             Synchronize vault across all system users with isolated .hermes environments
   --install-cron [sched]  Install automated periodic sync cron job (default: "0 3 * * *")
   --remove-cron           Remove automated sync cron job
   --user <account>        Target service user for isolated environment (default: hermes)
@@ -40,6 +42,11 @@ while [[ $# -gt 0 ]]; do
         --update)
             DO_UPDATE=1
             PASS_ARGS+=("--update")
+            shift
+            ;;
+        --all-users)
+            ALL_USERS=1
+            PASS_ARGS+=("--all-users")
             shift
             ;;
         --install-cron)

@@ -11,6 +11,7 @@ DO_UPDATE=0
 INSTALL_CRON=0
 CRON_SCHEDULE="0 3 * * *"
 REMOVE_CRON=0
+ALL_USERS=0
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -20,6 +21,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --update)
             DO_UPDATE=1
+            shift
+            ;;
+        --all-users)
+            ALL_USERS=1
             shift
             ;;
         --install-cron)
@@ -49,6 +54,7 @@ Usage:
 
 Options:
   --update                Incrementally update Prompts, Skills, Agents, MCPs, and Plugins
+  --all-users             Synchronize vault across all system users with isolated .hermes environments
   --install-cron [sched]  Install automated periodic sync cron job (default: "0 3 * * *")
   --remove-cron           Remove automated sync cron job
   --user <name>           Target isolated service account (default: hermes)
@@ -160,7 +166,7 @@ if [[ $INSTALL_CRON -eq 1 ]]; then
 # Checks and updates Prompts, Skills, Agents, MCPs, and Plugins periodically
 SHELL=/bin/bash
 PATH=/usr/local/bin:/usr/bin:/bin
-${CRON_SCHEDULE} root /usr/local/bin/hermes-installer --update >> /var/log/hermes-vault-sync.log 2>&1
+${CRON_SCHEDULE} root /usr/local/bin/hermes-installer --update --all-users >> /var/log/hermes-vault-sync.log 2>&1
 CRON
     chmod 0644 "$CRON_FILE"
     log "Installed automated update cron to $CRON_FILE"
@@ -182,9 +188,12 @@ if [[ $DO_UPDATE -eq 1 ]]; then
         python3 "$PAYLOAD_DIR/scraper.py" --convert --ingest --db-path "$PAYLOAD_DIR/hermes-vault.sqlite" --dry-run 2>/dev/null || true
     fi
 
-    # Re-sync to runtime directory
-    log '[3/4] Synchronizing updated vault and assets to runtime home'
+    # Re-sync to runtime directory and all system users
+    log '[3/4] Synchronizing updated vault and assets across system user environments'
+    
+    # 1. Update dedicated service user runtime ($HERMES_BASE_HOME)
     if [[ -d "$HERMES_BASE_HOME" ]]; then
+        log "  -> Updating primary service user '${HERMES_USER}' ($HERMES_BASE_HOME)"
         if [[ ! "$PAYLOAD_DIR/hermes-vault.sqlite" -ef "$HERMES_BASE_HOME/hermes-vault.sqlite" ]]; then
             cp -a "$PAYLOAD_DIR/hermes-vault.sqlite" "$HERMES_BASE_HOME/hermes-vault.sqlite"
         fi
@@ -192,6 +201,56 @@ if [[ $DO_UPDATE -eq 1 ]]; then
             cp -rp "$PAYLOAD_DIR/vector-registry" "$HERMES_BASE_HOME/vector-registry"
         fi
         chown -R "$ACCOUNT_UID:$ACCOUNT_GID" "$HERMES_BASE_HOME" 2>/dev/null || true
+    fi
+
+    # 2. If running as root or --all-users specified, scan and update all system users with isolated .hermes environments
+    if [[ $EUID == 0 || $ALL_USERS -eq 1 ]]; then
+        log '  -> Scanning and synchronizing all system users with isolated .hermes environments...'
+        updated_count=0
+        while IFS=: read -r uname _ uid gid _ uhome _; do
+            # Check users with UID >= 1000 or root (UID 0) that have an existing directory
+            if [[ ("$uid" -ge 1000 || "$uid" -eq 0) && -d "$uhome" && "$uhome" != "$ACCOUNT_HOME" ]]; then
+                user_hermes="$uhome/.hermes"
+                if [[ -d "$user_hermes" ]]; then
+                    log "     [+] Synchronizing user '$uname' (UID $uid): $user_hermes"
+                    if [[ ! "$PAYLOAD_DIR/hermes-vault.sqlite" -ef "$user_hermes/hermes-vault.sqlite" ]]; then
+                        cp -a "$PAYLOAD_DIR/hermes-vault.sqlite" "$user_hermes/hermes-vault.sqlite"
+                    fi
+                    if [[ -d "$PAYLOAD_DIR/vector-registry" && ! "$PAYLOAD_DIR/vector-registry" -ef "$user_hermes/vector-registry" ]]; then
+                        cp -rp "$PAYLOAD_DIR/vector-registry" "$user_hermes/vector-registry"
+                    fi
+                    chown -R "$uid:$gid" "$user_hermes" 2>/dev/null || true
+                    updated_count=$((updated_count + 1))
+                fi
+            fi
+        done < <(getent passwd)
+        log "  -> Completed sync across $updated_count additional system user environment(s)."
+
+        # 3. Update /etc/skel/.hermes template for future users
+        if [[ -d /etc/skel && $EUID == 0 ]]; then
+            mkdir -p /etc/skel/.hermes
+            cp -a "$PAYLOAD_DIR/hermes-vault.sqlite" /etc/skel/.hermes/hermes-vault.sqlite 2>/dev/null || true
+            if [[ -d "$PAYLOAD_DIR/vector-registry" ]]; then
+                cp -rp "$PAYLOAD_DIR/vector-registry" /etc/skel/.hermes/vector-registry 2>/dev/null || true
+            fi
+            log '  -> Updated /etc/skel/.hermes template for future system user accounts.'
+        fi
+    fi
+
+    # 4. If running as non-root user, synchronize the current user's ~/.hermes
+    if [[ $EUID != 0 ]]; then
+        caller_home="${HOME:-}"
+        if [[ -n "$caller_home" && -d "$caller_home/.hermes" && "$caller_home/.hermes" != "$HERMES_BASE_HOME" ]]; then
+            log "  -> Synchronizing invoking user environment ($caller_home/.hermes)"
+            if [[ ! "$PAYLOAD_DIR/hermes-vault.sqlite" -ef "$caller_home/.hermes/hermes-vault.sqlite" ]]; then
+                cp -a "$PAYLOAD_DIR/hermes-vault.sqlite" "$caller_home/.hermes/hermes-vault.sqlite"
+            fi
+            if [[ -d "$PAYLOAD_DIR/vector-registry" && ! "$PAYLOAD_DIR/vector-registry" -ef "$caller_home/.hermes/vector-registry" ]]; then
+                cp -rp "$PAYLOAD_DIR/vector-registry" "$caller_home/.hermes/vector-registry"
+            fi
+        fi
+        log '  Notice: To synchronize across ALL system user environments server-wide, run with sudo:'
+        log '          sudo hermes-installer --update --all-users'
     fi
 
     # Deploy CLI tools to /usr/local/bin

@@ -483,14 +483,17 @@ hermes-vault engines
 
 ### 3. Continuous Ecosystem Synchronization & Updates (`hermes-installer`)
 ```bash
-# Ingest newly improved Prompts, Skills, Agents, MCPs, and Plugins and hot-reload registry
+# Ingest newly improved Prompts, Skills, Agents, MCPs, and Plugins (syncs current user environment)
 hermes-installer --update
 
-# Install automated scheduled synchronization cron job (default: daily at 03:00 UTC)
-hermes-installer --install-cron "0 3 * * *"
+# Synchronize updated vault across ALL system user environments with isolated ~/.hermes
+sudo hermes-installer --update --all-users
+
+# Install automated scheduled synchronization cron job (syncs server-wide across all users at 03:00 UTC)
+sudo hermes-installer --install-cron "0 3 * * *"
 
 # Remove automated synchronization cron job
-hermes-installer --remove-cron
+sudo hermes-installer --remove-cron
 
 # View live ecosystem inventory and vault health
 hermes-installer --stats

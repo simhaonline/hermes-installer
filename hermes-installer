@@ -19,8 +19,10 @@ Core Commands:
   --update                Incrementally ingest improved Prompts, Skills, Agents,
                           MCP Servers & Plugins, re-index SQLite FTS5/vectors,
                           and hot-reload the registry daemon.
+  --all-users             Synchronize vault across all system users with isolated
+                          .hermes environments (default when run as root).
   --install-cron [cron]   Install/configure automated periodic sync cron job
-                          (default schedule: "0 3 * * *")
+                          (default schedule: "0 3 * * *", syncs all users)
   --remove-cron           Remove automated cron job
   --stats, --status       Display live ecosystem inventory and vault telemetry
   --validate              Run cryptographic integrity check and testbench
@@ -29,6 +31,7 @@ Core Commands:
 
 Examples:
   hermes-installer --update
+  sudo hermes-installer --update --all-users
   hermes-installer --install-cron "0 */4 * * *"
   hermes-installer --stats
   hermes-installer --validate
@@ -46,6 +49,12 @@ case "$1" in
         echo "   Hermes Enterprise AI Vault: Incremental Asset Synchronization Engine       "
         echo "=============================================================================="
         exec bash "${SCRIPT_DIR}/install.sh" --update "${@:2}"
+        ;;
+    --all-users)
+        echo "=============================================================================="
+        echo "   Hermes Enterprise AI Vault: All System Users Multi-Environment Sync Engine "
+        echo "=============================================================================="
+        exec bash "${SCRIPT_DIR}/install.sh" --update --all-users "${@:2}"
         ;;
     --install-cron)
         CRON_SCHEDULE="${2:-0 3 * * *}"

@@ -854,7 +854,8 @@ def cmd_check_rule(rule_id: str) -> int:
 
 def cmd_enforce(args) -> int:
     """Executes batch rule evaluation with strict exit code reporting."""
-    print_banner()
+    if not args.json:
+        print_banner()
 
     target_proto = None
     if args.protocol:
@@ -873,11 +874,15 @@ def cmd_enforce(args) -> int:
     }
 
     if not rules_to_run:
-        print(f"{RED}No rules found matching protocol criteria '{args.protocol}'.{RESET}")
+        if args.json:
+            print(json.dumps({"error": f"No rules found matching protocol '{args.protocol}'"}))
+        else:
+            print(f"{RED}No rules found matching protocol criteria '{args.protocol}'.{RESET}")
         return EXIT_ERROR
 
     scope_title = f"Protocol 0{target_proto}: {PROTOCOL_NAMES.get(target_proto)}" if target_proto else "All 8 Governance Protocols"
-    print(f"{BOLD}Enforcing Sovereign Ruleset:{RESET} {GOLD}{scope_title}{RESET} ({len(rules_to_run)} rules evaluated)\n")
+    if not args.json:
+        print(f"{BOLD}Enforcing Sovereign Ruleset:{RESET} {GOLD}{scope_title}{RESET} ({len(rules_to_run)} rules evaluated)\n")
 
     passed_count = 0
     fail_critical = 0
@@ -892,7 +897,12 @@ def cmd_enforce(args) -> int:
         results.append({
             "rule_id": rid,
             "protocol": r["protocol"],
+            "proto_num": r["proto_num"],
             "severity": r["severity"],
+            "statement": r["statement"],
+            "threat": r["threat"],
+            "evidence": r["evidence"],
+            "autofix": r["autofix"],
             "passed": passed,
             "message": msg
         })
@@ -911,18 +921,21 @@ def cmd_enforce(args) -> int:
                 fail_warn += 1
                 status_tag = f"{AMBER}[WARN]{RESET}"
 
-        sev_tag = f"[{r['severity']}]"
-        print(f"  {status_tag:<18} {GOLD}{rid:<8}{RESET} {DIM}{sev_tag:<10}{RESET} {r['statement'][:60]}...")
-
-    print(f"\n{BOLD}{'=' * 78}{RESET}")
-    print(f"{BOLD}Execution Summary:{RESET} Total: {len(rules_to_run)} | {EMERALD}Passed: {passed_count}{RESET} | "
-          f"{RED}Critical: {fail_critical}{RESET} | {RED}High: {fail_high}{RESET} | {AMBER}Warnings: {fail_warn}{RESET}")
+        if not args.json:
+            sev_tag = f"[{r['severity']}]"
+            print(f"  {status_tag:<18} {GOLD}{rid:<8}{RESET} {DIM}{sev_tag:<10}{RESET} {r['statement'][:60]}...")
 
     state_hash = compute_state_hash()
-    print(f"{DIM}Cryptographic State Attestation: SHA-256:{state_hash[:32]}...{RESET}\n")
+
+    if not args.json:
+        print(f"\n{BOLD}{'=' * 78}{RESET}")
+        print(f"{BOLD}Execution Summary:{RESET} Total: {len(rules_to_run)} | {EMERALD}Passed: {passed_count}{RESET} | "
+              f"{RED}Critical: {fail_critical}{RESET} | {RED}High: {fail_high}{RESET} | {AMBER}Warnings: {fail_warn}{RESET}")
+        print(f"{DIM}Cryptographic State Attestation: SHA-256:{state_hash[:32]}...{RESET}\n")
 
     if args.json:
         out_payload = {
+            "status": "pass" if (fail_critical == 0 and fail_high == 0) else "fail",
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "state_hash": state_hash,
             "summary": {
@@ -937,13 +950,16 @@ def cmd_enforce(args) -> int:
         print(json.dumps(out_payload, indent=2))
 
     if fail_critical > 0 or fail_high > 0:
-        print(f"{RED}{BOLD}GATE REJECTED:{RESET} Release blocked by failing CRITICAL or HIGH governance rules.")
+        if not args.json:
+            print(f"{RED}{BOLD}GATE REJECTED:{RESET} Release blocked by failing CRITICAL or HIGH governance rules.")
         return EXIT_CRITICAL_FAIL
     elif fail_warn > 0 and args.strict:
-        print(f"{AMBER}{BOLD}GATE BLOCKED:{RESET} Warnings present under --strict mode.")
+        if not args.json:
+            print(f"{AMBER}{BOLD}GATE BLOCKED:{RESET} Warnings present under --strict mode.")
         return EXIT_WARN
     else:
-        print(f"{EMERALD}{BOLD}SOVEREIGN PASS:{RESET} All evaluated governance rules passed verification.")
+        if not args.json:
+            print(f"{EMERALD}{BOLD}SOVEREIGN PASS:{RESET} All evaluated governance rules passed verification.")
         return EXIT_PASS
 
 def cmd_validate_profile(profile_id: Optional[str] = None, validate_all: bool = False) -> int:

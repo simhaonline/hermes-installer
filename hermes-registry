@@ -630,13 +630,66 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 "title": title.strip(),
                 "body": body.strip()
             } for num, title, body in matches]
+
+            rules_payload = []
+            state_hash = ""
+            try:
+                rb_proc = subprocess.run(["hermes-rulebook", "enforce", "--json"], capture_output=True, text=True, timeout=5)
+                if rb_proc.stdout:
+                    parsed = json.loads(rb_proc.stdout)
+                    rules_payload = parsed.get("results", [])
+                    state_hash = parsed.get("state_hash", "")
+            except Exception:
+                pass
+
             self._send_json({
-                "version": "1.0.0",
+                "version": "2.0.0",
                 "total_protocols": len(protocols),
+                "total_rules": len(rules_payload) or 80,
+                "state_hash": state_hash,
                 "protocols": protocols,
+                "rules": rules_payload,
                 "raw_markdown": content
             })
             return
+
+        if path == "/api/governance/audit":
+            try:
+                rb_proc = subprocess.run(["hermes-rulebook", "enforce", "--json"], capture_output=True, text=True, timeout=10)
+                if rb_proc.stdout:
+                    parsed = json.loads(rb_proc.stdout)
+                    self._send_json(parsed)
+                    return
+            except Exception as e:
+                self._send_json({"error": str(e), "status": "fail"}, status=500)
+                return
+            self._send_json({"error": "Failed to execute governance audit", "status": "fail"}, status=500)
+            return
+
+        if path == "/api/governance/yaml":
+            try:
+                rb_proc = subprocess.run(["hermes-rulebook", "export-yaml"], capture_output=True, text=True, timeout=5)
+                self._send_json({
+                    "status": "ok",
+                    "yaml": rb_proc.stdout
+                })
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
+
+        if path == "/api/governance/validate-profiles":
+            try:
+                rb_proc = subprocess.run(["hermes-rulebook", "validate", "--all"], capture_output=True, text=True, timeout=10)
+                self._send_json({
+                    "status": "ok" if rb_proc.returncode == 0 else "fail",
+                    "exit_code": rb_proc.returncode,
+                    "output": rb_proc.stdout
+                })
+                return
+            except Exception as e:
+                self._send_json({"error": str(e)}, status=500)
+                return
 
         if path == "/api/scrape/status":
             scraper_exists = os.path.exists("/srv/hermes-installer/scraper.py")

@@ -257,10 +257,10 @@
       object-fit: contain;
     }
 
-    :root, [data-theme=light] .brand-header-light { display: block !important; }
-    :root, [data-theme=light] .brand-header-dark { display: none !important; }
-    [data-theme=dark] .brand-header-light { display: none !important; }
-    [data-theme=dark] .brand-header-dark { display: block !important; }
+    html[data-theme=light] .brand-header-light { display: block !important; }
+    html[data-theme=light] .brand-header-dark { display: none !important; }
+    html[data-theme=dark] .brand-header-light { display: none !important; }
+    html[data-theme=dark] .brand-header-dark { display: block !important; }
 
     .header-tagline-badge {
       display: flex;

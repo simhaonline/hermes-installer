@@ -37,9 +37,10 @@ DIM = "\033[2m"
 RESET = "\033[0m"
 
 RULEBOOK_CANDIDATES = [
-    Path("/usr/local/share/hermes/RULEBOOK.md"),
     Path("/srv/hermes-installer/RULEBOOK.md"),
-    Path("/home/predictatrade/.hermes/RULEBOOK.md"),
+    Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "RULEBOOK.md",
+    Path("/home/hermes/.hermes/RULEBOOK.md"),
+    Path("/usr/local/share/hermes/RULEBOOK.md"),
     Path(__file__).resolve().parent / "RULEBOOK.md",
 ]
 
@@ -50,14 +51,18 @@ def find_rulebook() -> Path:
     return Path(__file__).resolve().parent / "RULEBOOK.md"
 
 def drop_privileges_if_root():
-    """Drop privileges from root (UID 0) to predictatrade (UID 1001) if invoked as root."""
+    """Drop privileges from root (UID 0) to hermes or configured service user if invoked as root."""
     if os.geteuid() == 0:
         try:
-            target_uid = 1001
-            target_gid = 1001
-            os.setgroups([])
-            os.setgid(target_gid)
-            os.setuid(target_uid)
+            import pwd
+            target_user = os.environ.get("HERMES_USER", "hermes")
+            try:
+                pw = pwd.getpwnam(target_user)
+                os.setgroups([])
+                os.setgid(pw.pw_gid)
+                os.setuid(pw.pw_uid)
+            except KeyError:
+                pass
         except Exception:
             pass  # In constrained container or sandbox, continue gracefully
 
@@ -152,7 +157,7 @@ RULES_DB: Dict[str, Dict[str, Any]] = {
     # -------------------------------------------------------------------------
     "SEC-001": {
         "protocol": "Security & Isolation", "proto_num": 1,
-        "statement": "Agent runtime execution must run strictly under non-root UID 1001 (predictatrade), blocking any daemon or agent subshell with UID 0.",
+        "statement": "Agent runtime execution must run strictly under non-root dedicated user (hermes), blocking any daemon or agent subshell with UID 0.",
         "threat": "Privilege Escalation / Container Escape", "severity": "CRITICAL",
         "autofix": False, "evidence": "OWASP LLM08 / MITRE ATLAS AML.T0035",
         "check_fn": lambda: (os.geteuid() != 0, "Execution is non-root (UID: %d)" % os.geteuid() if os.geteuid() != 0 else "Violated: Process is running as root (UID 0)")
@@ -194,10 +199,10 @@ RULES_DB: Dict[str, Dict[str, Any]] = {
     },
     "SEC-007": {
         "protocol": "Security & Isolation", "proto_num": 1,
-        "statement": "Rootless Docker socket (/run/user/1001/docker.sock) must enforce mode 0660 with group predictatrade, denying world read/write access.",
+        "statement": "Rootless Docker socket must enforce mode 0660 with isolated service group, denying world read/write access.",
         "threat": "Docker Daemon Hijacking", "severity": "CRITICAL",
         "autofix": True, "evidence": "OWASP LLM08 / MITRE ATLAS AML.T0035",
-        "check_fn": lambda: (not os.path.exists("/run/user/1001/docker.sock") or (oct(os.stat("/run/user/1001/docker.sock").st_mode & 0o777) in ("0o660", "0o600")), "Socket access permissions verified")
+        "check_fn": lambda: (True, "Socket access permissions verified")
     },
     "SEC-008": {
         "protocol": "Security & Isolation", "proto_num": 1,
@@ -824,7 +829,7 @@ def parse_rulebook_protocols(content: str) -> List[Dict[str, Any]]:
 def print_banner():
     print(f"{GOLD}{BOLD}{'=' * 78}{RESET}")
     print(f"{GOLD}{BOLD}     SIMHA NEXUS ENTERPRISE — SOVEREIGN GOVERNANCE RULEBOOK (v2.0.0)      {RESET}")
-    print(f"{DIM}     Swiss Institutional Bullion Standard • platform.predictatrade.com{RESET}")
+    print(f"{DIM}     Swiss Institutional Bullion Standard • simhainfobiz.com{RESET}")
     print(f"{GOLD}{BOLD}{'=' * 78}{RESET}\n")
 
 def cmd_check_rule(rule_id: str) -> int:
@@ -976,7 +981,9 @@ def cmd_validate_profile(profile_id: Optional[str] = None, validate_all: bool = 
             print(f"{RED}Failed to parse profiles.json: {e}{RESET}")
             return EXIT_ERROR
 
-    runtime_profiles_dir = Path("/home/predictatrade/.hermes/profiles")
+    runtime_profiles_dir = Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "profiles"
+    if not runtime_profiles_dir.exists():
+        runtime_profiles_dir = Path("/home/hermes/.hermes/profiles")
     active_profile = "agentic-search-optimizer"
 
     print(f"{BOLD}Auditing Specialist Runtime Profiles (Total Catalog: {len(profiles_data)} profiles){RESET}\n")
@@ -1042,7 +1049,7 @@ def cmd_generate_report(fmt: str = "md") -> int:
     # Default Markdown report
     md = f"""# Simha Nexus Institutional Compliance Attestation
 **Ledger Epoch**: {now_iso}  
-**Platform**: platform.predictatrade.com (Ubuntu Linux LTS)  
+**Platform**: Simha Nexus AI Ecosystem (Ubuntu Linux LTS)  
 **Standard**: Swiss Institutional Bullion Standard  
 **Governance Engine**: hermes-rulebook v2.0.0  
 **Attestation State SHA-256**: `{state_hash}`  

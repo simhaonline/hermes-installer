@@ -380,12 +380,12 @@ def convert_claude_plugin(plugin_json: Dict[str, Any], metadata: Optional[Dict[s
     metadata = metadata or {}
     results: List[Dict[str, Any]] = []
 
-    plugin_name = plugin_json.get("name") or metadata.get("name") or "claude-plugin"
-    plugin_desc = plugin_json.get("description") or metadata.get("description") or f"Claude plugin: {plugin_name}"
-    author = plugin_json.get("author") or metadata.get("author") or "Anthropic Ecosystem"
+    plugin_name = plugin_json.get("name") or metadata.get("name") or "agent-plugin"
+    plugin_desc = plugin_json.get("description") or metadata.get("description") or f"Agent plugin: {plugin_name}"
+    author = plugin_json.get("author") or metadata.get("author") or "Simha Ecosystem"
     version = plugin_json.get("version") or metadata.get("version") or "1.0.0"
     license_val = plugin_json.get("license") or metadata.get("license") or "MIT"
-    category = metadata.get("category") or "claude-skills"
+    category = metadata.get("category") or "ecosystem-skills"
 
     skills = plugin_json.get("skills")
     if isinstance(skills, list) and skills:
@@ -411,11 +411,11 @@ def convert_claude_plugin(plugin_json: Dict[str, Any], metadata: Optional[Dict[s
                 "metadata": {
                     "hermes": {
                         "category": category,
-                        "provider": "anthropic",
+                        "provider": "hermes",
                         "plugin": str(plugin_name),
                         "author": str(author),
                         "version": str(version),
-                        "tags": f"claude, plugin, {plugin_name}",
+                        "tags": f"hermes, plugin, {plugin_name}",
                     }
                 }
             }
@@ -455,10 +455,10 @@ def convert_claude_plugin(plugin_json: Dict[str, Any], metadata: Optional[Dict[s
             "metadata": {
                 "hermes": {
                     "category": category,
-                    "provider": "anthropic",
+                    "provider": "hermes",
                     "author": str(author),
                     "version": str(version),
-                    "tags": f"claude, plugin, {plugin_name}",
+                    "tags": f"hermes, plugin, {plugin_name}",
                 }
             }
         }
@@ -509,7 +509,7 @@ def convert_openai_plugin(
         ai_plugin_json.get("name_for_model")
         or ai_plugin_json.get("name_for_human")
         or metadata.get("name")
-        or "openai-plugin"
+        or "agent-plugin"
     )
     name = normalize_name(f"{raw_name}-plugin" if not raw_name.endswith("-plugin") else raw_name)
 
@@ -517,11 +517,11 @@ def convert_openai_plugin(
         ai_plugin_json.get("description_for_model")
         or ai_plugin_json.get("description_for_human")
         or metadata.get("description")
-        or f"OpenAI plugin for {raw_name} integration."
+        or f"Hermes sovereign agent tool for {raw_name} integration."
     )
     description = normalize_description(raw_desc, fallback_name=raw_name)
 
-    category = metadata.get("category") or "openai-plugins"
+    category = metadata.get("category") or "ecosystem-tools"
     auth_info = ai_plugin_json.get("auth") if isinstance(ai_plugin_json.get("auth"), dict) else {}
     auth_type = auth_info.get("type", "none")
 
@@ -531,9 +531,9 @@ def convert_openai_plugin(
         "metadata": {
             "hermes": {
                 "category": category,
-                "provider": "openai",
+                "provider": "hermes",
                 "auth_type": str(auth_type),
-                "tags": f"openai, chatgpt-plugin, {raw_name}",
+                "tags": f"hermes, tool, {raw_name}",
             }
         }
     }

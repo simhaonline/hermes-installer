@@ -17,9 +17,9 @@ echo "==========================================================================
 echo "    Packaging Hermes Pure Content Vault (Option A: Lightweight Release)       "
 echo "=============================================================================="
 
-DB_SOURCE="/home/predictatrade/.hermes/hermes-vault.sqlite"
+DB_SOURCE="$SCRIPT_DIR/hermes-vault.sqlite"
 if [[ ! -f "$DB_SOURCE" ]]; then
-    DB_SOURCE="$SCRIPT_DIR/hermes-vault.sqlite"
+    DB_SOURCE="${HERMES_HOME:-/home/hermes/.hermes}/hermes-vault.sqlite"
 fi
 
 if [[ ! -f "$DB_SOURCE" ]]; then
@@ -42,19 +42,26 @@ sqlite3 "$STAGE_DIR/hermes-vault.sqlite" "PRAGMA integrity_check;" | grep -q "ok
 echo "[2/4] Staging CLI tools and collection manifests..."
 cp -p "$SCRIPT_DIR/hermes-vault" "$STAGE_DIR/"
 cp -p "$SCRIPT_DIR/hermes-registry" "$STAGE_DIR/" 2>/dev/null || true
+cp -p "$SCRIPT_DIR/hermes-rulebook" "$STAGE_DIR/" 2>/dev/null || true
+cp -p "$SCRIPT_DIR/install.sh" "$STAGE_DIR/" 2>/dev/null || true
 cp -p "$SCRIPT_DIR/install-hermes-local.sh" "$STAGE_DIR/"
 cp -p "$SCRIPT_DIR/quick-install.sh" "$STAGE_DIR/" 2>/dev/null || true
+cp -p "$SCRIPT_DIR/dashboard.html" "$STAGE_DIR/" 2>/dev/null || true
+cp -p "$SCRIPT_DIR/RULEBOOK.md" "$STAGE_DIR/" 2>/dev/null || true
 cp -p "$SCRIPT_DIR/README-LOCAL-INSTALL.md" "$STAGE_DIR/"
 cp -p "$SCRIPT_DIR/README-HERMES.md" "$STAGE_DIR/"
 cp -p "$SCRIPT_DIR/README.md" "$STAGE_DIR/" 2>/dev/null || true
 
 mkdir -p "$STAGE_DIR/assets"
-cp -rp "$SCRIPT_DIR/assets/collection-manifest.json" "$STAGE_DIR/assets/"
-cp -rp "$SCRIPT_DIR/assets/profiles.json" "$STAGE_DIR/assets/"
-cp -rp "$SCRIPT_DIR/assets/recommended-mcp-servers.json" "$STAGE_DIR/assets/"
-cp -rp "$SCRIPT_DIR/assets/configure.py" "$STAGE_DIR/assets/"
+cp -rp "$SCRIPT_DIR/assets/collection-manifest.json" "$STAGE_DIR/assets/" 2>/dev/null || true
+cp -rp "$SCRIPT_DIR/assets/profiles.json" "$STAGE_DIR/assets/" 2>/dev/null || true
+cp -rp "$SCRIPT_DIR/assets/recommended-mcp-servers.json" "$STAGE_DIR/assets/" 2>/dev/null || true
+cp -rp "$SCRIPT_DIR/assets/configure.py" "$STAGE_DIR/assets/" 2>/dev/null || true
 
-CHROMA_SOURCE="/home/predictatrade/.hermes/vector-registry"
+CHROMA_SOURCE="$SCRIPT_DIR/vector-registry"
+if [[ ! -d "$CHROMA_SOURCE" ]]; then
+    CHROMA_SOURCE="${HERMES_HOME:-/home/hermes/.hermes}/vector-registry"
+fi
 if [[ -d "$CHROMA_SOURCE" ]]; then
     echo "  -> Staging ChromaDB vector registry embeddings..."
     cp -rp "$CHROMA_SOURCE" "$STAGE_DIR/vector-registry"

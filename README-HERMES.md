@@ -73,12 +73,12 @@ All projects and code repositories should reside in `/srv/predictatrade/` (or su
 
 ## 2. Included Components & Features
 
-### A. Skill Libraries (19,691+ Curated Skills across 52 Categories + 64,687 Community Pool)
+### A. Unified Curated Skill Library (84,378+ Skills across 52 Categories)
 
-The installation provides a comprehensive two-tiered skill architecture:
+The installation provides a comprehensive, unified enterprise skill architecture:
 
-#### 1. Retained Curated Library: 19,691+ Skills across 52 Categories
-Located in `/home/predictatrade/.hermes/skill-library` and `/home/predictatrade/.hermes/skills`:
+#### Consolidated Enterprise Skill Vault: 84,378+ Skills across 52 Categories
+Located in `~/.hermes/skill-library` and indexed in `hermes-vault.sqlite`:
 
 | Category | Skill Count | Primary Capabilities |
 |---|---|---|
@@ -321,7 +321,7 @@ Located in `/home/predictatrade/.hermes/plugins/`:
 
 ## 8. Practical Usage Guide: Skills, Agents, MCPs, and Plugins
 
-### A. How to Use SKILLS (1,688 Curated + 43,000 Community Pool)
+### A. How to Use SKILLS (84,000+ Curated Skills)
 
 #### 1. Discovering & Inspecting Skills
 ```bash

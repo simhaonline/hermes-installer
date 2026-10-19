@@ -1114,7 +1114,7 @@
         <div class="user-profile-badge" title="Hermes Administrator">
           <span class="user-dot"></span>
           <div style="display: flex; flex-direction: column; text-align: left; line-height: 1.15;">
-            <span class="user-profile-name">predictatrade (UID 1001)</span>
+            <span class="user-profile-name">hermes (Dedicated Service Engine)</span>
             <span class="user-profile-sub">System Super Admin</span>
           </div>
         </div>
@@ -1265,11 +1265,11 @@
               <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
                 <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--corp-border); padding-bottom: 6px;">
                   <span class="muted">Platform Domain:</span>
-                  <strong class="font-mono">platform.predictatrade.com</strong>
+                  <strong class="font-mono">simhainfobiz.com</strong>
                 </div>
                 <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--corp-border); padding-bottom: 6px;">
                   <span class="muted">Runtime Execution UID:</span>
-                  <code style="color: var(--corp-accent-link)">predictatrade (UID 1001 / GID 1001)</code>
+                  <code style="color: var(--corp-accent-link)">hermes (Multi-User Isolated Runtime)</code>
                 </div>
                 <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--corp-border); padding-bottom: 6px;">
                   <span class="muted">Dedicated Workspace User:</span>
@@ -1573,7 +1573,7 @@
 
               <div class="terminal-box" id="govAuditTerminal">
                 <div><span class="t-ts">[00:00:00]</span> <span class="t-nexus">[NEXUS]</span> Simha Nexus Governance Engine CLI v2.0.0 initialized.</div>
-                <div><span class="t-ts">[00:00:00]</span> <span class="t-info">[INFO]</span> Swiss Institutional Bullion Standard • platform.predictatrade.com</div>
+                <div><span class="t-ts">[00:00:00]</span> <span class="t-info">[INFO]</span> Swiss Institutional Bullion Standard • simhainfobiz.com</div>
                 <div><span class="t-ts">[00:00:00]</span> <span class="t-pass">[PASS]</span> System ready for audit execution. Click 'Run Live Audit' to evaluate all 80 rules.</div>
               </div>
             </div>
@@ -1624,7 +1624,7 @@
           <div class="stats-grid">
             <div class="stat-card">
               <span class="stat-label">CURATED SKILLS</span>
-              <span class="stat-value" id="kpiVaultCurated">19,840</span>
+              <span class="stat-value" id="kpiVaultCurated">84,527</span>
               <span class="stat-sub">High-Dimensional Semantic Embeddings</span>
             </div>
             <div class="stat-card">
@@ -1793,7 +1793,7 @@
             <div class="stat-card">
               <span class="stat-label">CONVERSION PIPELINE</span>
               <span class="stat-value">AST Verified</span>
-              <span class="stat-sub">Claude Plugins &amp; AgentSkills Spec</span>
+              <span class="stat-sub">Simha Sovereign AgentSkills Spec</span>
             </div>
           </div>
 
@@ -1803,8 +1803,8 @@
 
             <div class="row" style="margin-bottom: 16px;">
               <div class="field grow">
-                <label for="scraperUrlInput">Target GitHub or Plugin Repository URL</label>
-                <input type="text" id="scraperUrlInput" placeholder="https://github.com/owner/repository" value="https://github.com/anthropics/anthropic-tools" />
+                <label for="scraperUrlInput">Target Git Repository URL</label>
+                <input type="text" id="scraperUrlInput" placeholder="https://github.com/owner/repository" value="https://github.com/simhaonline/hermes-agent-skills" />
               </div>
               <div>
                 <button class="btn-primary" onclick="runScraperTest()" id="btnRunScraper">Ingest &amp; Verify</button>
@@ -1824,13 +1824,13 @@
           <div class="stats-grid">
             <div class="stat-card">
               <span class="stat-label">PLATFORM HOST</span>
-              <span class="stat-value font-mono" style="font-size: 1.3rem;">platform</span>
-              <span class="stat-sub">predictatrade.com production node</span>
+              <span class="stat-value font-mono" style="font-size: 1.3rem;">simhainfobiz.com</span>
+              <span class="stat-sub">Simha Nexus production node</span>
             </div>
             <div class="stat-card">
               <span class="stat-label">RUNTIME PERMISSIONS</span>
-              <span class="stat-value" style="color: var(--status-ok);">UID 1001 OK</span>
-              <span class="stat-sub">Rootless privilege separation verified</span>
+              <span class="stat-value" style="color: var(--status-ok);">hermes OK</span>
+              <span class="stat-sub">Multi-user privilege separation verified</span>
             </div>
             <div class="stat-card">
               <span class="stat-label">SERVICE STATUS</span>
@@ -1860,8 +1860,8 @@
                 <tbody id="diagTableBody">
                   <tr>
                     <td><strong>Execution Privileges</strong></td>
-                    <td>Non-root UID 1001 (predictatrade)</td>
-                    <td>UID=1001(predictatrade) GID=1001</td>
+                    <td>Dedicated Service User (hermes)</td>
+                    <td>hermes (Multi-User Isolation Enabled)</td>
                     <td style="text-align: right;"><span class="badge ok">PASS</span></td>
                   </tr>
                   <tr>
@@ -1966,7 +1966,7 @@
       <div style="margin-bottom: 16px;">
         <label style="font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--corp-text-muted); display: block; margin-bottom: 6px;">Recommended Model &amp; Temperature</label>
         <div style="display: flex; gap: 8px;">
-          <span class="badge blue" id="modalProfileModel">anthropic/claude-3-7-sonnet</span>
+          <span class="badge blue" id="modalProfileModel">hermes-sovereign-llm</span>
           <span class="badge ok" id="modalProfileTemp">Temperature: 0.2</span>
         </div>
       </div>
@@ -2286,7 +2286,7 @@
             </div>
           </td>
           <td>
-            <code style="font-size: 0.76rem; color: var(--corp-accent-link);">${escapeHtml(p.model || 'claude-3-7-sonnet')}</code>
+            <code style="font-size: 0.76rem; color: var(--corp-accent-link);">${escapeHtml(p.model || 'hermes-sovereign-llm')}</code>
           </td>
           <td style="text-align: right;">
             <button class="btn-action blue" onclick="inspectProfile('${escapeHtml(p.name)}')">Inspect JSON</button>
@@ -2328,7 +2328,7 @@
       document.getElementById('modalProfileTier').innerText = p.tier || 'AUTONOMOUS SPECIALIST PROFILE';
       document.getElementById('modalProfileName').innerText = p.name;
       document.getElementById('modalProfileRole').innerText = p.description || 'Specialist Autonomous Runtime Persona';
-      document.getElementById('modalProfileModel').innerText = p.model || 'anthropic/claude-3-7-sonnet';
+      document.getElementById('modalProfileModel').innerText = p.model || 'hermes-sovereign-llm';
       document.getElementById('modalProfileTemp').innerText = `Temperature: ${p.temperature !== undefined ? p.temperature : 0.2}`;
       document.getElementById('modalProfilePrompt').innerText = p.system_prompt || JSON.stringify(p, null, 2);
 
@@ -2684,7 +2684,7 @@
 ================================================================================
 Standard: Swiss Institutional Bullion Standard (SIBS-Level-4)
 Governance Specification: RULEBOOK.md (v2.0.0 Sovereign Edition)
-Platform Host: platform.predictatrade.com
+Platform Host: simhainfobiz.com
 Audit Timestamp: 2026-10-19T00:00:00Z
 Cryptographic Seal (SHA-256): ${hash}
 

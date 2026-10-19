@@ -68,9 +68,9 @@ Hermes includes a built-in, zero-dependency **Interactive Web Dashboard** served
 ```text
 ┌──────────────────────────────────────────────────────────────────────────────────────────┐
 │  🌌 HERMES HYBRID VECTOR REGISTRY                                  [Port 8998: ACTIVE]   │
-│  [ 🔎 Search across 19,840 Skills, 554 Personas, 45 MCPs... ] [ Filter: 56 Domains ▼ ]   │
+│  [ 🔎 Search across 84,527 Skills, 554 Personas, 45 MCPs... ] [ Filter: 56 Domains ▼ ]   │
 ├──────────────────────────────────────────────────────────────────────────────────────────┤
-│  📊 19,840 Curated Skills  •  64,687 Community Pool  •  66 Profiles  •  35 Plugins       │
+│  📊 84,527 Curated Skills  •  66 Profiles  •  45 MCP Servers  •  35 Plugins              │
 ├────────────────────────────────────────┬─────────────────────────────────────────────────┤
 │  CATEGORIES & DOMAINS                  │  SKILL DETAILS & JIT ACTIONS                    │
 │  ► Foundation Systems (13,748)         │  Name: web3-audit                               │
@@ -192,7 +192,7 @@ The ecosystem contains **19,840 curated, production-ready skills** with full YAM
 | 33 | **`enterprise-operations`** | **10** | Autonomous browser tasks, proxy configuration, Crawlee scrapers, and enterprise search APIs. | `browser-skill`, `crawlee-scraper-skill`, `proxy-config-skill`, `serper-search-skill`, `brave-search-skill` |
 | 34 | **`qwen-suite`** | **9** | Alibaba Qwen Code skills, Qwen-Agent multi-turn reasoning, tool calling, and multimodal enhancements. | `qwen-agent`, `qwen-image-enhance`, `qwen-coding-standards` |
 | 35 | **`skill-forge`** | **9** | Skill development tooling, Conda-Forge recipes, Pydantic Evals, Ratler build, Typst typesetting. | `conda-forge`, `pydantic-evals`, `rattler-build`, `typst`, `sqlalchemy`, `textual` |
-| 36 | **`claude-skills`** | **6** | Anthropic Claude Code plugins and skill adapters extracted from official and community sources. | `claude-code-guide`, `claude-code-sessions`, `claude-code-expert`, `claude-design` |
+| 36 | **`ecosystem-skills`** | **6** | Specialized ecosystem skills and tool adapters. | `code-guide`, `agent-sessions`, `code-expert`, `agent-design` |
 | 37 | **`skill-tutorials`** | **6** | Documentation frameworks, Fumadocs i18n sync, philosophical illustration, skill article publishing. | `fumadocs-i18n`, `fumadocs-article-importer`, `philosophical-illustrator`, `skill-article-publisher` |
 | 38 | **`token-saving`** | **6** | Ultra-fast token trimming, progressive disclosure, prompt budget governance, and context pruning. | `trim-1`, `token-efficiency-optimizer`, `token-saver`, `token-saver-config` |
 | 39 | **`autonomous-ai-agents`** | **5** | Autonomous agent frameworks, recursive self-improvement loops, plan execution monitors. | `autoagent`, `goal-loop`, `agentic-verifier` |
@@ -200,7 +200,7 @@ The ecosystem contains **19,840 curated, production-ready skills** with full YAM
 | 41 | **`graph-database`** | **1** | Graph data architecture, Omnigraph graph database integration, relational-to-graph mapping. | `omnigraph`, `cypher-query-builder`, `graph-schema-design` |
 | 42 | **`custom`** | **352** | Custom enterprise automations, internal workflows, and domain-specific agent playbooks. | `custom-workflow`, `custom-pipeline`, `internal-tools` |
 | - | **Other Domains (14 Categories)** | **38** | Micro-specialist categories across AI governance, computer vision, executive operations, and legal. | `ai-governance`, `deep-learning-nlp`, `finance-investment-ops` |
-| - | **Community Skill Pool** | **64,687** | Massive indexed database of developer tools, CLI utilities, and community skill packages. | *Full pool indexed in `community_skills` with BM25 FTS5* |
+| - | **Curated Skills Expansion** | **64,687** | Consolidated enterprise skills library spanning engineering, finance, security, and operations. | *Unified into `curated_skills` with BM25 FTS5 (Total: 84,378)* |
 
 ---
 
@@ -468,8 +468,8 @@ hermes-vault stats
 hermes-vault skills quant
 hermes-vault skills --category seo-growth-marketing
 
-# Search the 64,687 community skill pool
-hermes-vault community "fact-check"
+# Search the 84,000+ curated skill catalog
+hermes-vault skills "fact-check"
 
 # Search 480 agent personas
 hermes-vault agents "computer vision"
@@ -484,15 +484,15 @@ hermes-vault engines
 ### 3. Direct SQLite Database Queries
 ```bash
 # Query curated skills by category
-sqlite3 /home/predictatrade/.hermes/hermes-vault.sqlite \
+sqlite3 hermes-vault.sqlite \
   "SELECT category, count(*) FROM curated_skills GROUP BY category ORDER BY count(*) DESC;"
 
 # Query recommended production MCP servers
-sqlite3 /home/predictatrade/.hermes/hermes-vault.sqlite \
+sqlite3 hermes-vault.sqlite \
   "SELECT server_name, command FROM mcp_servers WHERE is_recommended=1;"
 
 # Search agent personas by role
-sqlite3 /home/predictatrade/.hermes/hermes-vault.sqlite \
+sqlite3 hermes-vault.sqlite \
   "SELECT name, division FROM agent_personas WHERE name LIKE '%quant%';"
 ```
 
@@ -501,13 +501,13 @@ sqlite3 /home/predictatrade/.hermes/hermes-vault.sqlite \
 ## 🛡️ Enterprise Security & Process Isolation
 
 1. **Non-Root Execution**:
-   Hermes executes strictly as the dedicated non-root service account `predictatrade` (`UID=1001`, `GID=1001`). The account is excluded from `sudo` and privileged groups.
+   Hermes executes strictly as the dedicated non-root service account `hermes` (or the configured isolated environment user). The account is excluded from `sudo` and privileged groups.
 2. **Rootless Docker Daemon**:
-   Containers execute through `unix:///run/user/1001/docker.sock` in unprivileged user namespaces. Platform host Docker (`/var/run/docker.sock`) remains strictly reserved for system infrastructure.
+   Containers execute through `unix:///run/user/<uid>/docker.sock` in unprivileged user namespaces. Platform host Docker (`/var/run/docker.sock`) remains strictly reserved for system infrastructure.
 3. **Automatic Privilege Dropping**:
-   All CLI wrappers in `/usr/local/bin` (`hermes`, `hermes-registry`, `hermes-vault`, `codegraph`, `mcptoon`, `trim`, `mempalace`, `rea`, `auto`, `pentagi`) automatically drop privileges from `root` to `predictatrade` using `runuser -u predictatrade`.
+   All CLI wrappers in `/usr/local/bin` (`hermes`, `hermes-registry`, `hermes-vault`, `codegraph`, `mcptoon`, `trim`, `mempalace`, `rea`, `auto`, `pentagi`) automatically drop privileges from `root` to `hermes` (or target user) using `runuser -u <user>`.
 4. **Zero API Key Leakage**:
-   Secrets reside strictly in `/home/predictatrade/.hermes/.env` (mode `0600`). Never hardcode API keys in repository files or commit histories.
+   Secrets reside strictly in `~/.hermes/.env` (mode `0600`). Never hardcode API keys in repository files or commit histories.
 
 ---
 

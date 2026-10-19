@@ -19,15 +19,35 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+def get_hermes_home() -> Path:
+    base = os.environ.get("HERMES_BASE_HOME") or os.environ.get("HERMES_HOME")
+    if base and Path(base).is_dir():
+        return Path(base)
+    user_home = Path.home() / ".hermes"
+    if user_home.is_dir():
+        return user_home
+    hermes_user_home = Path("/home/hermes/.hermes")
+    if hermes_user_home.is_dir():
+        return hermes_user_home
+    if Path("/srv/hermes-installer").is_dir():
+        return Path("/srv/hermes-installer")
+    return Path.cwd()
+
 DB_CANDIDATES = [
-    Path("/home/predictatrade/.hermes/hermes-vault.sqlite"),
     Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "hermes-vault.sqlite",
-    Path("/root/hermes-vault.sqlite")
+    Path("/srv/hermes-installer/hermes-vault.sqlite"),
+    Path("/home/hermes/.hermes/hermes-vault.sqlite"),
+    Path("/root/hermes-vault.sqlite"),
+    Path("/home/predictatrade/.hermes/hermes-vault.sqlite"),
+    Path.cwd() / "hermes-vault.sqlite"
 ]
 
 CHROMA_CANDIDATES = [
+    Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "vector-registry",
+    Path("/srv/hermes-installer/vector-registry"),
+    Path("/home/hermes/.hermes/vector-registry"),
     Path("/home/predictatrade/.hermes/vector-registry"),
-    Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "vector-registry"
+    Path.cwd() / "vector-registry"
 ]
 
 db_path = next((p for p in DB_CANDIDATES if p.is_file()), None)
@@ -43,7 +63,7 @@ def get_db():
 def get_chroma():
     try:
         import chromadb
-        path = str(chroma_path) if chroma_path else "/home/predictatrade/.hermes/vector-registry"
+        path = str(chroma_path) if chroma_path else str(get_hermes_home() / "vector-registry")
         return chromadb.PersistentClient(path=path)
     except Exception:
         return None
@@ -51,7 +71,7 @@ def get_chroma():
 def get_active_skills_map():
     """Returns a dict mapping profile_name -> set of active skill names."""
     active_map = {}
-    profiles_root = Path("/home/predictatrade/.hermes/profiles")
+    profiles_root = get_hermes_home() / "profiles"
     if not profiles_root.exists():
         return active_map
     
@@ -213,11 +233,11 @@ def cmd_activate(args):
 
     source_path = Path(row['path'])
     if not source_path.exists():
-        candidate = Path(f"/home/predictatrade/.hermes/skill-library/{row['category']}/{row['name']}")
+        candidate = get_hermes_home() / f"skill-library/{row['category']}/{row['name']}"
         if candidate.exists():
             source_path = candidate
 
-    target_dir = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills/{row['category']}")
+    target_dir = get_hermes_home() / f"profiles/{profile}/skills/{row['category']}"
     target_dir.mkdir(parents=True, exist_ok=True)
     target_link = target_dir / skill_name
 
@@ -240,13 +260,13 @@ def cmd_deactivate(args):
     row = cur.execute("SELECT category FROM curated_skills WHERE name=?", (skill_name,)).fetchone()
     category = row['category'] if row else "*"
 
-    skill_path = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills/{category}/{skill_name}")
+    skill_path = get_hermes_home() / f"profiles/{profile}/skills/{category}/{skill_name}"
     if skill_path.is_symlink() or skill_path.exists():
         skill_path.unlink()
         print(f"✅ Evicted '{skill_name}' from profile '{profile}' (context cleared).")
     else:
         found = False
-        skills_root = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills")
+        skills_root = get_hermes_home() / f"profiles/{profile}/skills"
         if skills_root.exists():
             for p in skills_root.rglob(skill_name):
                 if p.is_symlink() or p.exists():
@@ -383,9 +403,9 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
     def _handle_api_get(self, path, params, conn, cur):
         if path == "/api/stats":
             meta = {r['key']: r['value'] for r in cur.execute("SELECT key, value FROM metadata")}
+            curated_cnt = cur.execute("SELECT count(*) FROM curated_skills").fetchone()[0]
             counts = {
-                "curated_skills": cur.execute("SELECT count(*) FROM curated_skills").fetchone()[0],
-                "community_skills": cur.execute("SELECT count(*) FROM community_skills").fetchone()[0],
+                "curated_skills": curated_cnt,
                 "profiles": cur.execute("SELECT count(*) FROM profiles").fetchone()[0],
                 "agent_personas": cur.execute("SELECT count(*) FROM agent_personas").fetchone()[0],
                 "recommended_mcp": cur.execute("SELECT count(*) FROM mcp_servers WHERE is_recommended=1").fetchone()[0],
@@ -586,7 +606,6 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
 
             profiles_cnt = cur.execute("SELECT count(*) FROM profiles").fetchone()[0]
             curated_cnt = cur.execute("SELECT count(*) FROM curated_skills").fetchone()[0]
-            community_cnt = cur.execute("SELECT count(*) FROM community_skills").fetchone()[0]
             agent_cnt = cur.execute("SELECT count(*) FROM agent_personas").fetchone()[0]
             mcp_cnt = cur.execute("SELECT count(*) FROM mcp_servers").fetchone()[0]
             plugin_cnt = cur.execute("SELECT count(*) FROM plugins").fetchone()[0]
@@ -602,7 +621,6 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
                 "chromadb_size_mb": chroma_size_mb,
                 "profiles_count": profiles_cnt,
                 "curated_skills": curated_cnt,
-                "community_skills": community_cnt,
                 "agent_personas": agent_cnt,
                 "mcp_servers": mcp_cnt,
                 "plugins": plugin_cnt,
@@ -615,8 +633,8 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
         if path == "/api/rulebook":
             rulebook_candidates = [
                 Path("/srv/hermes-installer/RULEBOOK.md"),
-                Path("/usr/local/share/hermes/RULEBOOK.md"),
-                Path("/home/predictatrade/.hermes/RULEBOOK.md")
+                get_hermes_home() / "RULEBOOK.md",
+                Path("/usr/local/share/hermes/RULEBOOK.md")
             ]
             rf = next((p for p in rulebook_candidates if p.is_file()), None)
             if not rf:
@@ -830,7 +848,7 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
             content = ""
             skill_md = skill_path / "SKILL.md" if skill_path.is_dir() else skill_path
             if not skill_md.exists():
-                candidate = Path(f"/home/predictatrade/.hermes/skill-library/{row['category']}/{row['name']}/SKILL.md")
+                candidate = get_hermes_home() / f"skill-library/{row['category']}/{row['name']}/SKILL.md"
                 if candidate.exists():
                     skill_md = candidate
 
@@ -937,7 +955,7 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
             if not profile_name:
                 self._send_json({"error": "Missing profile name"}, status=400)
                 return
-            p_dir = Path(f"/home/predictatrade/.hermes/profiles/{profile_name}")
+            p_dir = get_hermes_home() / f"profiles/{profile_name}"
             if not p_dir.exists():
                 self._send_json({"error": f"Profile '{profile_name}' does not exist"}, status=404)
                 return
@@ -965,11 +983,11 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
 
             source_path = Path(row['path'])
             if not source_path.exists():
-                candidate = Path(f"/home/predictatrade/.hermes/skill-library/{row['category']}/{row['name']}")
+                candidate = get_hermes_home() / f"skill-library/{row['category']}/{row['name']}"
                 if candidate.exists():
                     source_path = candidate
 
-            target_dir = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills/{row['category']}")
+            target_dir = get_hermes_home() / f"profiles/{profile}/skills/{row['category']}"
             target_dir.mkdir(parents=True, exist_ok=True)
             target_link = target_dir / skill_name
 
@@ -992,13 +1010,13 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
             row = cur.execute("SELECT category FROM curated_skills WHERE name=?", (skill_name,)).fetchone()
             category = row['category'] if row else "*"
 
-            skill_path = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills/{category}/{skill_name}")
+            skill_path = get_hermes_home() / f"profiles/{profile}/skills/{category}/{skill_name}"
             found = False
             if skill_path.is_symlink() or skill_path.exists():
                 skill_path.unlink()
                 found = True
             else:
-                skills_root = Path(f"/home/predictatrade/.hermes/profiles/{profile}/skills")
+                skills_root = get_hermes_home() / f"profiles/{profile}/skills"
                 if skills_root.exists():
                     for p in skills_root.rglob(skill_name):
                         if p.is_symlink() or p.exists():
@@ -1024,7 +1042,7 @@ def cmd_ui(args):
     print("  🌌 HERMES HYBRID VECTOR REGISTRY & WEB DASHBOARD LAUNCHED")
     print("=" * 70)
     print(f"  • Local Dashboard URL : http://{host if host != '0.0.0.0' else 'localhost'}:{port}")
-    print(f"  • External Access URL  : http://platform.predictatrade.com:{port}")
+    print(f"  • Web Dashboard URL   : http://localhost:{port}")
     print(f"  • Hybrid Database     : {db_path}")
     print(f"  • ChromaDB Store      : {chroma_path}")
     print("-" * 70)

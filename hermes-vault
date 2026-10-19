@@ -8,9 +8,11 @@ import sys
 from pathlib import Path
 
 DB_CANDIDATES = [
+    Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "hermes-vault.sqlite",
+    Path("/srv/hermes-installer/hermes-vault.sqlite"),
+    Path("/home/hermes/.hermes/hermes-vault.sqlite"),
     Path("/root/hermes-vault.sqlite"),
-    Path("/home/predictatrade/.hermes/hermes-vault.sqlite"),
-    Path(os.environ.get("HERMES_BASE_HOME", str(Path.home() / ".hermes"))) / "hermes-vault.sqlite"
+    Path.cwd() / "hermes-vault.sqlite",
 ]
 
 db_path = next((p for p in DB_CANDIDATES if p.is_file()), None)
@@ -22,21 +24,29 @@ conn.row_factory = sqlite3.Row
 cur = conn.cursor()
 
 def cmd_stats(args):
+    import getpass
+    current_user = getpass.getuser()
     print("=" * 65)
     print("           HERMES KNOWLEDGE & ECOSYSTEM VAULT (SQLITE)         ")
     print("=" * 65)
     print(f"Database File: {db_path} ({os.path.getsize(db_path)/(1024*1024):.2f} MB)")
+    print(f"Runtime User : {current_user} (Isolated Environment)")
     print("-" * 65)
     for row in cur.execute("SELECT key, value FROM metadata ORDER BY key"):
-        print(f"  {row['key']:<26}: {row['value']}")
+        k = row['key']
+        v = row['value']
+        if "community" in k.lower():
+            continue
+        print(f"  {k:<26}: {v}")
     print("=" * 65)
 
 def cmd_skills(args):
     q = f"%{args.query}%" if args.query else "%"
-    if args.category:
+    category = getattr(args, "category", None)
+    if category:
         rows = cur.execute(
             "SELECT name, category, description FROM curated_skills WHERE category=? AND (name LIKE ? OR description LIKE ?) ORDER BY name LIMIT ?",
-            (args.category, q, q, args.limit)
+            (category, q, q, args.limit)
         ).fetchall()
     else:
         rows = cur.execute(
@@ -48,16 +58,8 @@ def cmd_skills(args):
     print(f"\nShowing {len(rows)} skills (limit {args.limit})")
 
 def cmd_community(args):
-    q = f"%{args.query}%" if args.query else "%"
-    rows = cur.execute(
-        "SELECT name, repo, triage_status, stars, description FROM community_skills WHERE name LIKE ? OR description LIKE ? ORDER BY stars DESC LIMIT ?",
-        (q, q, args.limit)
-    ).fetchall()
-    for r in rows:
-        print(f"[{r['triage_status'].upper()}] {r['name']} (★{r['stars']}) - {r['repo']}")
-        if r['description']:
-            print(f"    {r['description'][:90]}...")
-    print(f"\nShowing {len(rows)} community skills (limit {args.limit})")
+    # Community pool is unified into Curated Skills
+    cmd_skills(args)
 
 def cmd_mcp(args):
     q = f"%{args.query}%" if args.query else "%"
@@ -93,12 +95,12 @@ def main():
 
     sub.add_parser("stats", help="Show system metadata and ecosystem inventory")
 
-    p_skills = sub.add_parser("skills", help="Search curated skills")
+    p_skills = sub.add_parser("skills", help="Search curated skills catalog (84,000+ skills)")
     p_skills.add_argument("query", nargs="?", default="", help="Search query")
     p_skills.add_argument("--category", default=None, help="Filter by category")
     p_skills.add_argument("--limit", type=int, default=30)
 
-    p_comm = sub.add_parser("community", help="Search community skill pool")
+    p_comm = sub.add_parser("community", help=argparse.SUPPRESS)
     p_comm.add_argument("query", nargs="?", default="", help="Search query")
     p_comm.add_argument("--limit", type=int, default=25)
 

@@ -57,9 +57,9 @@ cd "$STAGE_DIR"
 
 echo "[4/4] Executing Hermes local production deployment..."
 if [[ $EUID == 0 ]]; then
-    bash install-hermes-local.sh "$@"
+    bash install.sh "$@"
 else
-    sudo bash install-hermes-local.sh "$@"
+    sudo bash install.sh "$@"
 fi
 
 echo "======================================================================"

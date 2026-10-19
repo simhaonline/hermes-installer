@@ -5,7 +5,7 @@
 # ==============================================================================
 set -euo pipefail
 
-HERMES_USER="predictatrade"
+HERMES_USER="${HERMES_USER:-hermes}"
 VALIDATE_ONLY=0
 
 while [[ $# -gt 0 ]]; do
@@ -27,7 +27,7 @@ Usage:
   bash install-hermes-local.sh [options]
 
 Options:
-  --user <name>       Target isolated service account (default: predictatrade)
+  --user <name>       Target isolated service account (default: hermes)
   --validate-only     Run validation testbench without modifying system files
   -h, --help          Show this help message
 HELP
@@ -302,14 +302,13 @@ printf 'Hermes Home      : %s\n' "$HERMES_BASE_HOME"
 printf 'SQLite Vault     : %s/hermes-vault.sqlite\n' "$HERMES_BASE_HOME"
 printf 'Vector Store     : %s/vector-registry\n' "$HERMES_BASE_HOME"
 printf 'Workspace        : %s\n' "$WORKSPACE"
-printf 'Curated Skills   : 19,840 Skills across 52 Categories\n'
-printf 'Community Pool   : 64,687 Indexed Packages\n'
+printf 'Curated Skills   : 84,527 Enterprise Skills across 52 Categories\n'
 printf 'MCP Universe     : 4,842 Indexed Servers + 45 Curated Production Servers\n'
 printf 'Agent Library    : 554 Personas & 66 Specialist Profiles\n'
 printf 'Active Plugins   : 35 Enterprise Plugins\n'
 printf 'Hybrid Registry  : hermes-registry resolve "<intent>"\n'
 printf 'Web Dashboard    : hermes-registry ui (or systemctl status hermes-registry)\n'
-printf 'Web UI URL       : http://localhost:8998 (http://platform.predictatrade.com:8998)\n'
+printf 'Web UI URL       : http://localhost:8998 (http://localhost:8998)\n'
 printf '==============================================================================\n'
 printf 'CLI Status       : hermes-vault stats | hermes-registry stats\n'
 printf 'Launch Agent     : hermes\n'

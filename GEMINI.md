@@ -5,8 +5,8 @@ This workspace houses the repository for the **Hermes Agent Production Installer
 
 * **Workspace Directory**: `/srv/hermes-installer`
 * **Dedicated Service User**: `hermes-installer` (`UID=1002`, `GID=1002`)
-* **Hermes Agent Runtime**: `/home/predictatrade/.hermes` (`predictatrade`, `UID=1001`)
-* **Live Knowledge Vault**: `/home/predictatrade/.hermes/hermes-vault.sqlite` (232.75 MB)
+* **Hermes Agent Runtime**: `/home/hermes/.hermes` (`hermes`)
+* **Live Knowledge Vault**: `/srv/hermes-installer/hermes-vault.sqlite` (404.79 MB)
 
 ## 2. Available Development Skills in `.agents/skills/`
 * `hermes-packager`: Build offline installer bundles, regenerate SHA256SUMS, and test asset payloads.

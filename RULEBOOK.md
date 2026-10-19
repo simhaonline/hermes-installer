@@ -1,6 +1,6 @@
 # Simha Nexus Enterprise Edition: Exhaustive Governance Rulebook & Protocol Specification
-**Platform**: platform.predictatrade.com (Ubuntu Linux LTS)  
-**Standard**: Swiss Institutional Bullion Standard (simharefinery.com & Predict-A-Trade)  
+**Platform**: Simha Nexus AI Ecosystem (Ubuntu Linux LTS)  
+**Standard**: Swiss Institutional Bullion Standard (Simha Enterprise)  
 **Governance Frameworks**: OWASP Top 10 for LLM Applications (2025), NIST AI Risk Management Framework (AI RMF 1.0), MITRE ATLAS  
 **Version**: 2.0.0 Enterprise Production  
 **Last Updated**: 2026-10-18  
@@ -63,10 +63,10 @@ hermes-rulebook export-yaml        # Export top 20 critical rules YAML rule pack
 The CLI governs all 66 specialist runtime profiles and guarantees Linux Discretionary Access Control (DAC) boundaries:
 
 1. **Privilege Dropping Mechanism**:
-   When invoked by `root` (`UID=0`), the binary inspects its execution context and immediately drops ambient capabilities and changes UID/GID to `predictatrade:predictatrade` (`UID=1001, GID=1001`) via `os.setgroups([])`, `os.setgid(1001)`, and `os.setuid(1001)`. Developer tasks in `/srv/hermes-installer` are restricted to `hermes-installer` (`UID=1002`). Direct root execution of LLM prompts or tool subshells is prevented by kernel `PR_SET_NO_NEW_PRIVS`.
+   When invoked by `root` (`UID=0`), the binary inspects its execution context and immediately drops ambient capabilities and changes UID/GID to dedicated service user `hermes:hermes` (or the configured isolated environment account) via `os.setgroups([])`, `os.setgid(gid)`, and `os.setuid(uid)`. Developer tasks in `/srv/hermes-installer` are restricted to `hermes-installer` (`UID=1002`). Direct root execution of LLM prompts or tool subshells is prevented by kernel `PR_SET_NO_NEW_PRIVS`.
 
 2. **Validation of 66 Specialist Runtime Profiles**:
-   Each profile residing in `/home/predictatrade/.hermes/profiles/<profile_name>/` is audited through a 5-point verification matrix:
+   Each profile residing in `~/.hermes/profiles/<profile_name>/` is audited through a 5-point verification matrix:
    - **Schema Conformity**: Profile `config.json` is validated against Pydantic V2 models (`model_name`, `temperature`, `max_context_tokens`, `system_prompt`).
    - **Tool Allowlist Integrity**: Symlinked active skills in `.agents/skills/` are cross-referenced with `hermes-vault.sqlite` to verify existence, license validity, and SHA-256 hash attestation.
    - **Environment Parity**: Host environment variables are scrubbed, passing only explicitly whitelisted variables (`PATH`, `LANG`, `HERMES_*`).
@@ -86,7 +86,7 @@ When `hermes-rulebook report --format md` is executed, it outputs a reproducible
 ```markdown
 # Simha Nexus Institutional Compliance Attestation
 **Ledger Epoch**: 2026-10-18T22:30:00Z  
-**Platform**: platform.predictatrade.com (Ubuntu Linux LTS)  
+**Platform**: Simha Nexus AI Ecosystem (Ubuntu Linux LTS)  
 **Standard**: Swiss Institutional Bullion Standard  
 **Governance Engine**: hermes-rulebook v2.0.0  
 **Attestation State SHA-256**: `3a8f9c2d5e7b1a4f8c6e2d1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a10`  
@@ -117,13 +117,13 @@ Every rule in this section is binary, testable, and enforceable via `hermes-rule
 
 | Rule ID | Protocol | Rule Statement (Strict & Testable) | Threat Mitigated | Severity | CLI Check Command | Autofixable |
 | :--- | :--- | :--- | :--- | :--- | :--- | :---: |
-| **SEC-001** | Security & Isolation | Agent runtime execution must run strictly under non-root UID 1001 (`predictatrade`), blocking any daemon or agent subshell with UID 0. | Privilege Escalation / Container Escape | CRITICAL | `hermes-rulebook check SEC-001` | false |
+| **SEC-001** | Security & Isolation | Agent runtime execution must run strictly under non-root dedicated user (`hermes`), blocking any daemon or agent subshell with UID 0. | Privilege Escalation / Container Escape | CRITICAL | `hermes-rulebook check SEC-001` | false |
 | **SEC-002** | Security & Isolation | Outbound agent network namespace must block loopback and cloud metadata endpoints (`169.254.169.254`, `127.0.0.1/8`) to prevent SSRF. | Server-Side Request Forgery (SSRF) | CRITICAL | `hermes-rulebook check SEC-002` | true |
 | **SEC-003** | Security & Isolation | Dynamic agent tool executions must execute inside gVisor (`runsc`) or Firecracker microVM sandboxes with isolated root filesystems. | Sandbox Escape / Host Compromise | CRITICAL | `hermes-rulebook check SEC-003` | false |
 | **SEC-004** | Security & Isolation | Memory caches and contextual log files must redact API keys, JWTs, and private tokens matching Shannon entropy heuristics (>4.5) prior to persistence. | Sensitive Information Disclosure | HIGH | `hermes-rulebook check SEC-004` | true |
 | **SEC-005** | Security & Isolation | All raw model prompt inputs must pass through regex and delimiter heuristic guards to block system prompt injection overrides. | Direct & Indirect Prompt Injection | CRITICAL | `hermes-rulebook check SEC-005` | false |
 | **SEC-006** | Security & Isolation | Inter-agent RPC calls must present mutual HMAC-SHA256 bearer tokens with a maximum allowed timestamp drift of 60 seconds. | Rogue Agent Impersonation | HIGH | `hermes-rulebook check SEC-006` | true |
-| **SEC-007** | Security & Isolation | Rootless Docker socket (`/run/user/1001/docker.sock`) must enforce mode `0660` with group `predictatrade`, denying world read/write access. | Docker Daemon Hijacking | CRITICAL | `hermes-rulebook check SEC-007` | true |
+| **SEC-007** | Security & Isolation | Rootless Docker socket (`/run/user/<uid>/docker.sock`) must enforce mode `0660` with isolated service group, denying world read/write access. | Docker Daemon Hijacking | CRITICAL | `hermes-rulebook check SEC-007` | true |
 | **SEC-008** | Security & Isolation | Outbound agent HTTP requests must route through egress proxy enforcing an allowlist of sanctioned domains; all unlisted IPs are dropped. | Command & Control / Data Exfiltration | HIGH | `hermes-rulebook check SEC-008` | false |
 | **SEC-009** | Security & Isolation | Project workspace `/srv/hermes-installer` must maintain DAC ownership of `hermes-installer:hermes-installer` with mode `0755` or stricter. | Workspace Tampering / Cross-User Injection | HIGH | `hermes-rulebook check SEC-009` | true |
 | **SEC-010** | Security & Isolation | Reverse shell syscall sequences (`socket` -> `dup2` -> `execve`) within agent subprocesses must be intercepted and terminated via seccomp-bpf. | Interactive Reverse Shell Attack | CRITICAL | `hermes-rulebook check SEC-010` | false |
@@ -259,7 +259,7 @@ rules:
     protocol: "Security & Isolation"
     severity: "critical"
     applies_to: ["runtime", "daemon", "cli"]
-    statement: "Agent runtime execution must run strictly under non-root UID 1001 (predictatrade), blocking any daemon or agent subshell with UID 0."
+    statement: "Agent runtime execution must run strictly under non-root dedicated user (hermes), blocking any daemon or agent subshell with UID 0."
     threat_mitigated: "Privilege Escalation / Container Escape"
     check: "hermes-rulebook check SEC-001"
     autofix: false
@@ -532,9 +532,9 @@ jobs:
 
 ### Protocol 1 Reference: Platform Security & User Boundaries
 * **Service Account Boundaries**:
-  * `predictatrade` (`UID=1001`, `GID=1001`): Hermes Agent runtime daemon, Rootless Docker (`/run/user/1001/docker.sock`), live SQLite Vault (`/home/predictatrade/.hermes/hermes-vault.sqlite`).
+  * `hermes`: Hermes Agent dedicated service user, Rootless Docker, live SQLite Vault (`~/.hermes/hermes-vault.sqlite`).
   * `hermes-installer` (`UID=1002`, `GID=1002`): Installer workspace (`/srv/hermes-installer`), package build pipelines.
-* **Privilege Dropping**: CLI tools must automatically drop root privileges to `predictatrade` when invoked by `root`.
+* **Privilege Dropping**: CLI tools must automatically drop root privileges to `hermes` (or the configured isolated environment account) when invoked by `root`.
 * **Zero Contamination**: Root directory `/root` must remain clean; no temporary databases, tarballs, or logs.
 
 ### Protocol 2 Reference: AI CLI Operational Standards
@@ -557,7 +557,7 @@ The platform coordinates **554 Specialist Agent Personas** across **8 Enterprise
 8. DevOps & SRE Reliability (8 personas)
 
 ### Protocol 4 Reference: Runtime Profiles & Context Injection
-All 66 profiles in `/home/predictatrade/.hermes/profiles/` inject context dynamically via `config.json` and `.agents/skills/`. The default active profile is `agentic-search-optimizer`.
+All 66 profiles in `~/.hermes/profiles/` inject context dynamically via `config.json` and `.agents/skills/`. The default active profile is `agentic-search-optimizer`.
 
 ### Protocol 5 Reference: MCP Universe & Tool Suite
 * **Universe Scale**: 4,842 indexed MCP servers.

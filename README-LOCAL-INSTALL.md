@@ -15,13 +15,13 @@ To eliminate all GitHub and internet dependencies when installing or backing up 
 1. **Option A: Pure Content & Vector Vault (151 MB, Recommended)**:
    - **Archive**: `hermes-content-vault-v1.0.0.tar.gz`
    - **What it contains**:
-     - `hermes-vault.sqlite` — Master database with 19,691 curated skills, 64,687 community skills, 4,837 MCPs, 480 personas, 66 profiles, 32 plugins, and FTS5 BM25 search tables (301 MB uncompressed).
+     - `hermes-vault.sqlite` — Master database with 84,378 curated skills, 4,837 MCPs, 480 personas, 66 profiles, 32 plugins, and FTS5 BM25 search tables (404 MB uncompressed).
      - `vector-registry/` — ChromaDB dense vector store with local ONNX embeddings across all skills, personas, profiles, and MCPs (69 MB uncompressed).
      - `hermes-registry` & `hermes-vault` — Dynamic JIT execution and query CLIs.
      - `assets/` — Complete collection manifests and JSON configurations.
    - **Advantage**: **Zero binary bloat**, fast transfer, instant semantic search, and zero-copy JIT dynamic activation without duplicating files across profiles.
 
-2. **Option B: Standalone SQLite Knowledge Vault (301 MB)**:
+2. **Option B: Standalone SQLite Knowledge Vault (404 MB)**:
    - **File**: `hermes-vault.sqlite`
    - **What it contains**: Full relational schema, B-Tree indexes, and FTS5 full-text tables.
    - **Use case**: Database-only backup or embedding in custom pipelines.
@@ -43,11 +43,11 @@ cd hermes-content-vault-v1.0.0
 
 ### Step 3: Run the Local Installer
 ```bash
-# Standard installation under default dedicated user 'predictatrade'
-sudo bash install-hermes-local.sh
+# Standard installation under default dedicated service user 'hermes'
+sudo bash install.sh
 
 # Or install for a custom service account
-sudo bash install-hermes-local.sh --user myagent
+sudo bash install.sh --user myagent
 ```
 
 ### Step 4: Verify Installation
@@ -65,12 +65,10 @@ The installer deploys `/usr/local/bin/hermes-vault` allowing instant querying an
 # View ecosystem metadata & inventory totals
 hermes-vault stats
 
-# Search curated skills by query or category
+# Search curated skills (84,000+ skills)
 hermes-vault skills math
 hermes-vault skills --category mathematics-ai
-
-# Search community skills pool (64,500+ packages)
-hermes-vault community scrapfly
+hermes-vault skills scrapfly
 
 # List recommended production MCP servers
 hermes-vault mcp --recommended

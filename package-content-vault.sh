@@ -43,6 +43,7 @@ echo "[2/4] Staging CLI tools and collection manifests..."
 cp -p "$SCRIPT_DIR/hermes-vault" "$STAGE_DIR/"
 cp -p "$SCRIPT_DIR/hermes-registry" "$STAGE_DIR/" 2>/dev/null || true
 cp -p "$SCRIPT_DIR/hermes-rulebook" "$STAGE_DIR/" 2>/dev/null || true
+cp -p "$SCRIPT_DIR/hermes-installer" "$STAGE_DIR/" 2>/dev/null || true
 cp -p "$SCRIPT_DIR/install.sh" "$STAGE_DIR/" 2>/dev/null || true
 cp -p "$SCRIPT_DIR/install-hermes-local.sh" "$STAGE_DIR/"
 cp -p "$SCRIPT_DIR/quick-install.sh" "$STAGE_DIR/" 2>/dev/null || true

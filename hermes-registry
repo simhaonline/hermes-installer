@@ -995,7 +995,7 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
             })
             return
 
-        if path == "/api/search":
+        if path in ("/api/search", "/api/skills"):
             query = params.get("q", [""])[0].strip()
             cat = params.get("category", [""])[0].strip()
             mode = params.get("mode", ["hybrid"])[0].strip().lower()
@@ -1106,6 +1106,7 @@ class RegistryHTTPHandler(BaseHTTPRequestHandler):
 
             self._send_json({
                 "results": results,
+                "skills": results,
                 "total": total,
                 "limit": limit,
                 "offset": offset

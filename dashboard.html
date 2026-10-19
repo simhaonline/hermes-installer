@@ -851,15 +851,14 @@
       <!-- Left Sidebar Navigation -->
       <aside class="admin-sidebar">
         <div class="admin-sidebar-header">
-          <span class="admin-sidebar-title">Core Ecosystem Menu</span>
+          <span class="admin-sidebar-title">Menu</span>
         </div>
         <nav class="admin-sidebar-menu">
           <button class="admin-nav-item active" id="navItemOverview" onclick="switchNav('overview')">
             <span class="admin-nav-left">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-              Overview &amp; Fleet
+              Overview
             </span>
-            <span class="badge-nav" style="background-color: #0284C7; color: #FFFFFF;">Live</span>
           </button>
 
           <button class="admin-nav-item" id="navItemPrompts" onclick="switchNav('prompts')">
@@ -867,7 +866,6 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
               Prompts Library
             </span>
-            <span class="badge-nav" id="sidebarPromptsBadge">480+</span>
           </button>
 
           <button class="admin-nav-item" id="navItemSkills" onclick="switchNav('skills')">
@@ -875,7 +873,6 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
               Skills Catalog
             </span>
-            <span class="badge-nav" style="background-color: #15803D; color: #FFFFFF;" id="sidebarSkillsBadge">84,378</span>
           </button>
 
           <button class="admin-nav-item" id="navItemAgents" onclick="switchNav('agents')">
@@ -883,7 +880,6 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
               Agent Personas
             </span>
-            <span class="badge-nav" id="sidebarAgentsBadge">480</span>
           </button>
 
           <button class="admin-nav-item" id="navItemMcp" onclick="switchNav('mcp')">
@@ -891,7 +887,6 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
               MCP Universe
             </span>
-            <span class="badge-nav" id="sidebarMcpBadge">4,837</span>
           </button>
 
           <button class="admin-nav-item" id="navItemPlugins" onclick="switchNav('plugins')">
@@ -899,7 +894,6 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
               Plugins &amp; Tools
             </span>
-            <span class="badge-nav" id="sidebarPluginsBadge">32</span>
           </button>
 
           <button class="admin-nav-item" id="navItemGovernance" onclick="switchNav('governance')">
@@ -907,7 +901,6 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
               AI Governance
             </span>
-            <span class="badge-nav" style="background-color: #0284C7; color: #FFFFFF;">80 Rules</span>
           </button>
 
           <button class="admin-nav-item" id="navItemDiagnostics" onclick="switchNav('diagnostics')">
@@ -915,7 +908,6 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
               System Diagnostics
             </span>
-            <span class="status-dot online" style="width: 8px; height: 8px;" title="All Services Healthy"></span>
           </button>
 
           <button class="admin-nav-item" id="navItemApi" onclick="switchNav('api')">
@@ -923,7 +915,6 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
               API Explorer
             </span>
-            <span class="badge-nav">REST</span>
           </button>
         </nav>
       </aside>
@@ -1051,7 +1042,7 @@
                   </tr>
                 </thead>
                 <tbody id="overviewAgentsTableBody">
-                  <tr><td colspan="5" style="text-align: center; padding: 1rem;">Loading agent fleet...</td></tr>
+                  <tr><td colspan="5" style="text-align: center; padding: 1rem;">Loading agent personas...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1850,7 +1841,7 @@
         overview: { eyebrow: 'Enterprise AI Knowledge Vault', title: 'Universal AI Vault Control Plane & Registry', desc: 'Production registry for Prompts, Skills, Autonomous Agents, MCP Servers, and Plugins with OpenAI & Anthropic compatibility.' },
         prompts: { eyebrow: 'Curated Prompt Ecosystem', title: 'Prompts & Reasoning Chains Library', desc: '480+ System Prompts, Agent Roles, and Templates exportable in OpenAI and Anthropic JSON formats.' },
         skills: { eyebrow: 'Unified Skills Catalog', title: '84,378 Curated Skills & Execution Specs', desc: 'Instant FTS5 search across all enterprise skills with live OpenAI function schemas and Anthropic tool definitions.' },
-        agents: { eyebrow: 'Autonomous Agent Fleet', title: 'Specialist Agent Personas & Profiles', desc: '480 specialist agents across 66 operational profiles for multi-agent swarm delegation.' },
+        agents: { eyebrow: 'Autonomous Agent Personas', title: 'Specialist Agent Personas & Profiles', desc: '480 specialist agents across 66 operational profiles for multi-agent swarm delegation.' },
         mcp: { eyebrow: 'Model Context Protocol', title: 'Model Context Protocol (MCP) Universe', desc: '4,837 MCP Servers with stdio/SSE execution parameters and OpenAI tool bridges.' },
         plugins: { eyebrow: 'Enterprise Tool Adapters', title: 'Plugins & Tool Manifests', desc: '32 enterprise plugins with OpenAI ai-plugin.json manifests and Anthropic tool configurations.' },
         governance: { eyebrow: 'Enterprise AI Governance', title: 'NIST AI RMF & OWASP LLM Governance Studio', desc: '80 mathematically testable binary rules enforced by hermes-rulebook CLI.' },
@@ -1897,13 +1888,6 @@
         document.getElementById('kpiOverviewMcp').innerText = mcps.toLocaleString();
         document.getElementById('kpiOverviewPlugins').innerText = plugins;
         document.getElementById('kpiOverviewDbSize').innerText = `${dbSize} MB`;
-
-        // Sidebar Badges
-        document.getElementById('sidebarSkillsBadge').innerText = curated.toLocaleString();
-        document.getElementById('sidebarPromptsBadge').innerText = prompts.toLocaleString() + '+';
-        document.getElementById('sidebarAgentsBadge').innerText = agents;
-        document.getElementById('sidebarMcpBadge').innerText = mcps.toLocaleString();
-        document.getElementById('sidebarPluginsBadge').innerText = plugins;
 
         // View KPIs
         const kSkills = document.getElementById('kpiSkillsTotal');

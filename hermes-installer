@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# hermes-installer: Unified Lifecycle, Update & Synchronization Engine
+# Enterprise AI Knowledge Vault for Prompts, Skills, Agents, MCP & Plugins
+# ==============================================================================
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+[[ -f "$SCRIPT_DIR/install.sh" ]] || SCRIPT_DIR="/srv/hermes-installer"
+
+show_help() {
+    cat <<'HELP'
+Hermes Enterprise AI Vault - Unified Installer & Synchronization CLI
+
+Usage:
+  hermes-installer [command|option]
+
+Core Commands:
+  --update                Incrementally ingest improved Prompts, Skills, Agents,
+                          MCP Servers & Plugins, re-index SQLite FTS5/vectors,
+                          and hot-reload the registry daemon.
+  --install-cron [cron]   Install/configure automated periodic sync cron job
+                          (default schedule: "0 3 * * *")
+  --remove-cron           Remove automated cron job
+  --stats, --status       Display live ecosystem inventory and vault telemetry
+  --validate              Run cryptographic integrity check and testbench
+  --install               Execute full production platform deployment
+  -h, --help              Show this help message
+
+Examples:
+  hermes-installer --update
+  hermes-installer --install-cron "0 */4 * * *"
+  hermes-installer --stats
+  hermes-installer --validate
+HELP
+}
+
+if [[ $# -eq 0 ]]; then
+    show_help
+    exit 0
+fi
+
+case "$1" in
+    --update|-u)
+        echo "=============================================================================="
+        echo "   Hermes Enterprise AI Vault: Incremental Asset Synchronization Engine       "
+        echo "=============================================================================="
+        exec bash "${SCRIPT_DIR}/install.sh" --update "${@:2}"
+        ;;
+    --install-cron)
+        CRON_SCHEDULE="${2:-0 3 * * *}"
+        echo "=============================================================================="
+        echo "   Hermes Enterprise AI Vault: Automated Synchronization Cron Scheduler      "
+        echo "=============================================================================="
+        exec bash "${SCRIPT_DIR}/install.sh" --install-cron "$CRON_SCHEDULE"
+        ;;
+    --remove-cron)
+        echo "=============================================================================="
+        echo "   Hermes Enterprise AI Vault: Removing Cron Scheduler                       "
+        echo "=============================================================================="
+        exec bash "${SCRIPT_DIR}/install.sh" --remove-cron
+        ;;
+    --stats|--status)
+        if [[ -x "${SCRIPT_DIR}/hermes-vault" ]]; then
+            exec "${SCRIPT_DIR}/hermes-vault" stats
+        else
+            exec hermes-vault stats
+        fi
+        ;;
+    --validate)
+        exec bash "${SCRIPT_DIR}/install.sh" --validate-only
+        ;;
+    --install)
+        exec bash "${SCRIPT_DIR}/install.sh" "${@:2}"
+        ;;
+    -h|--help)
+        show_help
+        exit 0
+        ;;
+    *)
+        exec bash "${SCRIPT_DIR}/install.sh" "$@"
+        ;;
+esac

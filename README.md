@@ -481,7 +481,25 @@ hermes-vault mcp --recommended
 hermes-vault engines
 ```
 
-### 3. Direct SQLite Database Queries
+### 3. Continuous Ecosystem Synchronization & Updates (`hermes-installer`)
+```bash
+# Ingest newly improved Prompts, Skills, Agents, MCPs, and Plugins and hot-reload registry
+hermes-installer --update
+
+# Install automated scheduled synchronization cron job (default: daily at 03:00 UTC)
+hermes-installer --install-cron "0 3 * * *"
+
+# Remove automated synchronization cron job
+hermes-installer --remove-cron
+
+# View live ecosystem inventory and vault health
+hermes-installer --stats
+
+# Run cryptographic integrity validation testbench
+hermes-installer --validate
+```
+
+### 4. Direct SQLite Database Queries
 ```bash
 # Query curated skills by category
 sqlite3 hermes-vault.sqlite \

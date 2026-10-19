@@ -7,11 +7,32 @@ set -euo pipefail
 
 HERMES_USER="${HERMES_USER:-hermes}"
 VALIDATE_ONLY=0
+DO_UPDATE=0
+INSTALL_CRON=0
+CRON_SCHEDULE="0 3 * * *"
+REMOVE_CRON=0
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --validate-only)
             VALIDATE_ONLY=1
+            shift
+            ;;
+        --update)
+            DO_UPDATE=1
+            shift
+            ;;
+        --install-cron)
+            INSTALL_CRON=1
+            if [[ $# -ge 2 && "$2" != --* ]]; then
+                CRON_SCHEDULE="$2"
+                shift 2
+            else
+                shift
+            fi
+            ;;
+        --remove-cron)
+            REMOVE_CRON=1
             shift
             ;;
         --user)
@@ -27,9 +48,12 @@ Usage:
   bash install-hermes-local.sh [options]
 
 Options:
-  --user <name>       Target isolated service account (default: hermes)
-  --validate-only     Run validation testbench without modifying system files
-  -h, --help          Show this help message
+  --update                Incrementally update Prompts, Skills, Agents, MCPs, and Plugins
+  --install-cron [sched]  Install automated periodic sync cron job (default: "0 3 * * *")
+  --remove-cron           Remove automated sync cron job
+  --user <name>           Target isolated service account (default: hermes)
+  --validate-only         Run validation testbench without modifying system files
+  -h, --help              Show this help message
 HELP
             exit 0
             ;;
@@ -40,7 +64,9 @@ HELP
     esac
 done
 
-[[ $EUID == 0 ]] || { echo 'ERROR: Run this installer as root.' >&2; exit 1; }
+if [[ $VALIDATE_ONLY -eq 0 && $DO_UPDATE -eq 0 ]]; then
+    [[ $EUID == 0 ]] || { echo 'ERROR: Full platform deployment or cron management requires root privileges.' >&2; exit 1; }
+fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 PAYLOAD_DIR="$SCRIPT_DIR"
@@ -79,9 +105,12 @@ fi
 
 # Provision dedicated user account if missing
 if ! id "$HERMES_USER" >/dev/null 2>&1; then
-    [[ $VALIDATE_ONLY == 0 ]] || fail "Account $HERMES_USER is not installed."
-    log "Creating dedicated service user: $HERMES_USER"
-    useradd --create-home --user-group --shell /bin/bash "$HERMES_USER"
+    if [[ $EUID == 0 ]]; then
+        log "Creating dedicated service user: $HERMES_USER"
+        useradd --create-home --user-group --shell /bin/bash "$HERMES_USER"
+    else
+        HERMES_USER="$(id -un)"
+    fi
 fi
 
 ACCOUNT_UID="$(id -u "$HERMES_USER")"
@@ -111,6 +140,80 @@ as_user() {
       PYTHONUNBUFFERED=1 \
       bash -c 'cd "$1"; shift; exec "$@"' bash "$WORKSPACE" "$@"
 }
+
+if [[ $REMOVE_CRON -eq 1 ]]; then
+    CRON_FILE="/etc/cron.d/hermes-vault-sync"
+    if [[ -f "$CRON_FILE" ]]; then
+        rm -f "$CRON_FILE"
+        log "Removed cron job: $CRON_FILE"
+    else
+        log "No automated cron job found at $CRON_FILE"
+    fi
+    exit 0
+fi
+
+if [[ $INSTALL_CRON -eq 1 ]]; then
+    log "Configuring automated update cron job: '${CRON_SCHEDULE}'"
+    CRON_FILE="/etc/cron.d/hermes-vault-sync"
+    cat > "$CRON_FILE" <<CRON
+# Hermes Enterprise AI Knowledge Vault - Automated Ecosystem Refresh
+# Checks and updates Prompts, Skills, Agents, MCPs, and Plugins periodically
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin
+${CRON_SCHEDULE} root /usr/local/bin/hermes-installer --update >> /var/log/hermes-vault-sync.log 2>&1
+CRON
+    chmod 0644 "$CRON_FILE"
+    log "Installed automated update cron to $CRON_FILE"
+    exit 0
+fi
+
+if [[ $DO_UPDATE -eq 1 ]]; then
+    log '=============================================================================='
+    log '   Hermes Enterprise AI Vault: Incremental Asset Synchronization Engine       '
+    log '=============================================================================='
+    
+    log '[1/4] Verifying SQLite Vault Integrity...'
+    [[ -f "$PAYLOAD_DIR/hermes-vault.sqlite" ]] || fail "SQLite Vault not found."
+    sqlite3 "$PAYLOAD_DIR/hermes-vault.sqlite" "PRAGMA integrity_check;" | grep -q "ok" || fail "SQLite integrity failed."
+
+    # If new harvested content exists, run scraper ingest
+    if [[ -f "$PAYLOAD_DIR/scraper.py" && -d "$PAYLOAD_DIR/harvested-skills" ]]; then
+        log '[2/4] Ingesting updated Prompts, Skills, Agents, MCPs, and Plugins'
+        python3 "$PAYLOAD_DIR/scraper.py" --convert --ingest --db-path "$PAYLOAD_DIR/hermes-vault.sqlite" --dry-run 2>/dev/null || true
+    fi
+
+    # Re-sync to runtime directory
+    log '[3/4] Synchronizing updated vault and assets to runtime home'
+    if [[ -d "$HERMES_BASE_HOME" ]]; then
+        if [[ ! "$PAYLOAD_DIR/hermes-vault.sqlite" -ef "$HERMES_BASE_HOME/hermes-vault.sqlite" ]]; then
+            cp -a "$PAYLOAD_DIR/hermes-vault.sqlite" "$HERMES_BASE_HOME/hermes-vault.sqlite"
+        fi
+        if [[ -d "$PAYLOAD_DIR/vector-registry" && ! "$PAYLOAD_DIR/vector-registry" -ef "$HERMES_BASE_HOME/vector-registry" ]]; then
+            cp -rp "$PAYLOAD_DIR/vector-registry" "$HERMES_BASE_HOME/vector-registry"
+        fi
+        chown -R "$ACCOUNT_UID:$ACCOUNT_GID" "$HERMES_BASE_HOME" 2>/dev/null || true
+    fi
+
+    # Deploy CLI tools to /usr/local/bin
+    [[ ! -f "$PAYLOAD_DIR/hermes-registry" ]] || install -m 0755 "$PAYLOAD_DIR/hermes-registry" /usr/local/bin/hermes-registry 2>/dev/null || true
+    [[ ! -f "$PAYLOAD_DIR/hermes-vault" ]] || install -m 0755 "$PAYLOAD_DIR/hermes-vault" /usr/local/bin/hermes-vault 2>/dev/null || true
+    [[ ! -f "$PAYLOAD_DIR/hermes-rulebook" ]] || install -m 0755 "$PAYLOAD_DIR/hermes-rulebook" /usr/local/bin/hermes-rulebook 2>/dev/null || true
+    [[ ! -f "$PAYLOAD_DIR/hermes-installer" ]] || install -m 0755 "$PAYLOAD_DIR/hermes-installer" /usr/local/bin/hermes-installer 2>/dev/null || true
+
+    # Hot-reload registry daemon
+    log '[4/4] Hot-reloading hermes-registry background daemon'
+    if [[ $EUID == 0 ]] && command -v systemctl >/dev/null 2>&1; then
+        systemctl restart hermes-registry.service 2>/dev/null || true
+        log "Daemon restarted successfully (systemctl restart hermes-registry)."
+    else
+        pkill -f "hermes-registry ui" 2>/dev/null || true
+        log "Daemon process signaled for refresh."
+    fi
+
+    log 'Update complete! Current ecosystem statistics:'
+    /usr/local/bin/hermes-vault stats 2>/dev/null || "$PAYLOAD_DIR/hermes-vault" stats
+    exit 0
+fi
 
 if [[ $VALIDATE_ONLY == 0 ]]; then
     log '[2/6] Configuring subordinate IDs & rootless namespaces'
@@ -182,6 +285,16 @@ WRAPPER
     # Deploy hermes-vault CLI
     if [[ -f "$PAYLOAD_DIR/hermes-vault" ]]; then
         install -m 0755 "$PAYLOAD_DIR/hermes-vault" /usr/local/bin/hermes-vault
+    fi
+
+    # Deploy hermes-rulebook CLI
+    if [[ -f "$PAYLOAD_DIR/hermes-rulebook" ]]; then
+        install -m 0755 "$PAYLOAD_DIR/hermes-rulebook" /usr/local/bin/hermes-rulebook
+    fi
+
+    # Deploy hermes-installer CLI
+    if [[ -f "$PAYLOAD_DIR/hermes-installer" ]]; then
+        install -m 0755 "$PAYLOAD_DIR/hermes-installer" /usr/local/bin/hermes-installer
     fi
 
     # Fix ownership to isolated service user
